@@ -1,0 +1,78 @@
+<dom-module id="civ-map">
+  <template>
+    <custom-style>
+      <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    </custom-style>
+    <style>
+      .container, .layout {
+        /* background-color: #ccc; */
+        /* padding: 1px;*/
+      }
+      .container div, .layout div {
+        background-color: white;
+        /* padding: 1px 0px 0px 0px; */
+        /* margin: 1px; */
+        border-width : 1px 1px 1px 1px;
+        border-style: solid;
+        border-color: #ccc;
+      }
+    </style>
+    
+    
+     <template id="map" is="dom-repeat" items="{{rows}}">
+  <div class="layout horizontal">
+     <template is="dom-repeat" items="{{cols}}" index-as="colno">
+        <div>
+          <civ-square row="{{index}}" col="{{colno}}"></civ-square>
+        </div>        
+     </template>        
+  </div>        
+    </template>
+    </div>
+  
+  </template>
+  <script>
+    Polymer(
+		  {is: "civ-map",
+		      properties: {
+		          rownumb: {
+		            type: Number,
+		            value: -1
+		          },
+		          colnumb: {
+			            type: Number,
+			            value: -1
+			      }
+		      },
+	      observers: [
+	          '_render(rownumb,colnumb)'
+	        ],
+	        ready: function() {
+	            this.rows = [];
+	            this.cols = [];
+	        },
+	        attached : function() {
+	        	
+	        },
+	        created : function() {
+	        	
+	        },
+           _render: function(rownumb,colnumb) {
+        	   this.rows = []
+        	   this.cols = []
+        	   if (rownumb == -1 || colnumb == -1) return
+        	   for(var i = 0; i < rownumb; i++) {
+        		    this.rows.push({});
+        		}
+        	   for(var i = 0; i < colnumb; i++) {
+       		    this.cols.push({});
+       		}
+        	   
+           }
+	        
+
+		  }
+	);
+  </script>
+
+    </dom-module>

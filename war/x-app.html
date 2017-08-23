@@ -1,0 +1,255 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="bower_components/paper-item/paper-item.html">
+
+
+<link rel="import" href="bower_components/font-roboto/roboto.html">
+  <link rel="import" href="bower_components/paper-item/paper-icon-item.html">
+  <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+  <link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
+  <link rel="import" href="bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+  <link rel="import" href="bower_components/app-layout/app-header/app-header.html">
+  <link rel="import" href="bower_components/app-layout/app-header-layout/app-header-layout.html">
+  <link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
+  
+  <link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog.html">
+  <link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog-icon-header.html">
+  
+<dom-module id="x-app">
+
+  <template>
+
+<xcustom-style>
+ <style is="custom-style">
+    app-header {
+      background-color: #4285f4;
+      color: #fff;
+    }
+    app-header paper-icon-button {
+      --paper-icon-button-ink-color: #fff;
+    }
+    app-drawer-layout {
+      --app-drawer-layout-content-transition: margin 0.2s;
+    }
+    app-drawer {
+      --app-drawer-content-container: {
+        background-color: #eee;
+      }
+    }   
+    .drawer-content {
+      margin-top: 80px;
+      height: calc(100% - 80px);
+      overflow: auto;
+    }
+    </style>
+  </xcustom-style>
+
+  <app-header-layout>
+
+    <app-header fixed effects="waterfall" slot="header">
+      <app-toolbar>
+           <div main-title>Civilization</div>
+            <div style="width:5%;"></div>
+            <div>[[activecivname]]</div>
+            <div style="width:5%;"></div>
+            <div>[[turnno]]</div>
+            <div style="width:5%;"></div>
+            <div>[[phase]]</div>
+            <div style="width:30%;"></div>
+      </app-toolbar>
+    </app-header>
+
+    <app-drawer-layout id="drawerLayout">
+
+      <app-drawer slot="drawer" hidden >
+        <div class="drawer-content">
+        <paper-item><div>[[civname]]</div></paper-item>
+        <paper-item><div>[[numberoftrade]]</div></paper-item>
+        <paper-item><div>[[citieslimit]]</div></paper-item>
+        <paper-item><div>[[armieslimit]]</div></paper-item>
+        <paper-item><div>[[scoutslimit]]</div></paper-item>
+        <paper-item><div>[[currentcommand]]</div></paper-item>
+          <paper-icon-item id="setcapital" on-click="_onClick">
+            <iron-icon icon="inbox" slot="item-icon"></iron-icon> <span>Capital</span>
+          </paper-icon-item>
+          <paper-icon-item id="setcity" on-click="_onClick">
+            <iron-icon icon="euro-symbol" slot="item-icon"></iron-icon> <span>Set City/span>
+          </paper-icon-item>
+          <paper-icon-item id="endofphase" on-click="_onClick">
+            <iron-icon icon="done" slot="item-icon"></iron-icon> <span>EndOfPhase</span>
+          </paper-icon-item>
+          <paper-icon-item id="setarmy" on-click="_onClick">
+            <iron-icon icon="face" slot="item-icon"></iron-icon> <span>Set up Army</span>
+          </paper-icon-item>
+          <paper-icon-item id="setscout" on-click="_onClick">
+            <iron-icon icon="perm-identity" slot="item-icon"></iron-icon> <span>Set up Scout</span>
+          </paper-icon-item>
+          <paper-icon-item id="buyarmy" on-click="_onClick">
+            <iron-icon icon="face" slot="item-icon"></iron-icon> <span>Buy Army</span>
+          </paper-icon-item>
+          <paper-icon-item id="buyscout" on-click="_onClick">
+            <iron-icon icon="rowing" slot="item-icon"></iron-icon> <span>Buy Scout</span>
+          </paper-icon-item>
+          </paper-icon-item>
+          <paper-icon-item id="startmove" on-click="_onClick">
+            <iron-icon icon="fingerprint" slot="item-icon"></iron-icon> <span>Start Move</span>
+          </paper-icon-item>
+          <paper-icon-item id="move" on-click="_onClick">
+            <iron-icon icon="rowing" slot="item-icon"></iron-icon> <span>Continue Move</span>
+          </paper-icon-item>
+          <paper-icon-item id="revealtile" on-click="_onClick">
+            <iron-icon icon="lock-open" slot="item-icon"></iron-icon> <span>Reveal Tile</span>
+          </paper-icon-item>
+          <paper-icon-item id="endofmove" on-click="_onClick">
+            <iron-icon icon="pan-tool" slot="item-icon"></iron-icon> <span>End of Move</span>
+          </paper-icon-item>
+        </div>
+      </app-drawer>
+      
+         <civ-content></civ-content>    
+         <civ-map hidden="true"></civ-map> 
+         
+
+    </app-drawer-layout>
+
+  </app-header-layout>
+
+</template>
+
+  <script>
+  Polymer({
+      is: 'x-app',
+      properties: {
+    	  
+      civname: {
+            type: String,
+            value: undefined
+          },
+          activecivname: {
+              type: String,
+              value: undefined
+            },
+      turnno: {
+          type: String,
+          value: undefined
+        },
+      phase: {
+          type: String,
+          value: undefined
+       },
+      numberoftrade : {
+    	  type : String,
+    	  value : undefined
+      },
+      citieslimit : {
+    	  type : String,
+    	  value : undefined
+      },
+      armieslimit : {
+    	  type : String,
+    	  value : undefined
+      },
+      scoutslimit : {
+    	  type : String,
+    	  value : undefined
+      },
+      currentcommand : {
+    	  type : String,
+    	  value : undefined
+      },
+      itemizedcommand : {
+    	  type : String,
+    	  value : undefined
+      },
+      jsboard : {
+    	  type : String,
+    	  value : undefined
+      }
+      },
+      observers: [
+          'draw(jsboard)'
+        ],
+      _onClick : function(source) {
+    	  var id = source.currentTarget.id
+    	  if (id == "endofphase") {
+      		this.currentcommand = null
+    		var p = this.jsboard
+    		var b = JSON.parse(p).board
+    		var g= b.game
+    		var phase = g.phase
+   		    C.confexecutedialog("Do you want end of phase " + phase + " now ?",id,-1,-1,phase)
+    		return
+    	  }
+    	  if (id == "endofmove") {
+      		this.currentcommand = null
+   		    C.confexecutedialog("Do you want finish the current move ?",id,-1,-1,null)
+      		return
+      	  }
+    	  this.currentcommand = id
+    	  window.itemizecommand(id.toUpperCase())
+      },
+      buttons : [
+    	  "setcapital",
+    	  "endofphase",
+    	  "setarmy",
+    	  "setscout",    	 
+    	  "buyarmy",
+    	  "buyscout",
+    	  "startmove",
+    	  "move",
+    	  "revealtile",
+    	  "endofmove",
+    	  "setcity"
+      ],
+	  draw: function(jsboard) {
+          if (C.emptyS(jsboard)) return
+		  var b = JSON.parse(jsboard).board
+		  var g= b.game
+		  var y = b.you
+		  this.turnno = "Round " + (g.roundno + 1)
+		  this.activecivname = "Now playing: " + g.active
+		  this.civname=y.civ
+		  this.phase = g.phase
+		  this.numberoftrade = "Trade: " + y.trade
+		  this.citieslimit = "Cities left: " + y.citylimit
+		  this.armieslimit = "Armies left: " + y.armieslimit
+		  this.scoutslimit = "Scouts left: " + y.scoutslimit
+		  var x = this.shadowRoot.getElementById("drawerLayout");
+		  x.drawer.removeAttribute("hidden")
+		  for (var i=0; i < this.buttons.length; i++) {
+			  var id = this.buttons[i]
+			  var bu = this.shadowRoot.getElementById(id);
+//			  console.log(id)
+			  bu.hidden = "true"
+		  }
+		  for (var i=0; i<y.commands.length; i++) {
+			  var command = y.commands[i]
+			  var id = command.command.toLowerCase()
+			  var bu = this.shadowRoot.getElementById(id);
+			  bu.removeAttribute("hidden")			  
+		  }
+	  }
+    });
+  </script>
+    
+</dom-module>

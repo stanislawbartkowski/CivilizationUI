@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <title>Getting Started</title>
+  
+  <script type="text/javascript" language="javascript" src="civilizationui/civilizationui.nocache.js"></script>
+
+
+<dom-bind id="dialog-demo"> 
+  <template> 
+      <paper-alert-dialog id="dialog" title="Congratulations" dismiss-button="Cancel"
+	                      confirm-button="OK" on-confirm="confirm" on-dismiss="dismiss">
+{{message}} 
+      </paper-alert-dialog> 
+      <paper-button on-tap="openDialog" raised>Open</paper-button>
+  </template> 
+</dom-bind>
+
+<dom-bind id="dialog-command-failure">
+  <template>
+    <paper-alert-dialog id="dialog" confirm-button="Got it">
+      <paper-alert-dialog-icon-header icon="icons:warning">Action failed, read message below from server</paper-alert-dialog-icon-header>
+      {{message}}
+    </paper-alert-dialog>
+
+    <paper-button on-tap="openDialogWithHeader" raised>Open</paper-button>
+  </template>
+</dom-bind>
+
+<dom-bind id="dialog-command-alert">
+  <template>
+    <paper-alert-dialog id="dialog" confirm-button="Got it">
+      <paper-alert-dialog-icon-header icon="icons:warning">Cannot execute action</paper-alert-dialog-icon-header>
+      {{message}}
+    </paper-alert-dialog>
+
+    <paper-button on-tap="openDialogWithHeader" raised>Open</paper-button>
+  </template>
+</dom-bind>
+
+
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  
+  <script type="text/javascript" language="javascript" src="civ-js.js"></script>
+   
+  <link rel="import" href="x-app.html"> 
+  <link rel="import" href="civ-choose.html">  
+  <link rel="import" href="civ-content.html">
+  <link rel="import" href="civ-map.html">
+  <link rel="import" href="civ-square.html">
+   
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f1f1f1;
+    }
+  </style>
+  
+</head>
+<body unresolved>
+
+  <x-app></x-app>
+
+</body>
+</html>

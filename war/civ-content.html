@@ -1,0 +1,72 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<dom-module id="civ-content">
+
+  <script>
+    Polymer({
+      is: 'civ-content',
+      properties: {
+        label: {
+          value: ''
+        },
+        padding: {
+          value: '16px'
+        },
+        margin: {
+          value: '24px'
+        },
+        boxShadow: {
+          value: '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2)'
+        },
+        listofciv: {
+        	type : String,
+        	value : undefined
+        }
+      },
+      observers: [
+        '_render(label, padding, margin, boxShadow,listofciv)'
+      ],
+      ready: function() {
+        this.style.display = 'block';
+      },
+      _randomString: function(size) {
+        var ls = this._lorem_ipsum_strings;
+        var s  = '';
+        do {
+          s += ls[Math.floor(Math.random() * ls.length)];
+          size--;
+        } while (size > 0);
+        return s;
+      },
+      _randomLetter: function() {
+        return String.fromCharCode(65 + Math.floor(Math.random() * 26));
+      },
+      _render: function(label, padding, margin, boxShadow,listofciv) {
+    	if (C.emptyS(listofciv)) {
+    		this.innerHTML = "";
+    		return
+    	}
+        var a = JSON.parse(listofciv)
+        var html = '';
+        for (var i = 0; i < a.length; i++) {
+          html +=
+            '<div style="box-shadow: ' + boxShadow +  '; padding: ' + padding + '; margin: ' + margin + '; border-radius: 5px; background-color: #fff; color: #757575;">' +
+            '<div style="display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #555; text-align: center;">' + this._randomLetter() + '</div>' +
+            '<div style="font-size: 22px; margin: 16px 0; color: #212121;">' + this.label + '</div>' +
+            '<p style="font-size: 16px;">' + "<civ-choose civname=\"" + a[i]  + "\"></civ-choose>" + '</p>' +
+            '</div>';
+          this.innerHTML = html;
+        }
+      }
+    });
+  </script>
+
+</dom-module>
