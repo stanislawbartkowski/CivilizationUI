@@ -1,0 +1,86 @@
+<project name="CivilizationBoardGame" default="build">
+  
+   <property environment="env"/>
+   <property name="proj.gwtCache" value="gwt-unitCache" /> 
+   <property name="proj.target" value="target" />
+   <property name="proj.output" value="output" />
+   <property name="proj.war" value="war"/>
+   <property name="proj.classes" value="out.classes" />
+   
+   <path id="dep.jars">
+      <fileset dir="war/WEB-INF/">
+          <include name="**/*.jar"/>
+      </fileset>
+   </path>
+
+   
+   
+   <condition property="gwthome" value="${env.GWT_HOME}" else="/home/opt/gwt-2.8.1">
+    <isset property="env.GWT_HOME" />
+   </condition>
+   <echo message="GWT_HOME is set to ${gwthome}" />
+   <property name="gwt-user" value="${gwthome}/gwt-user.jar" />
+   <property name="gwt-dev" value="${gwthome}/gwt-dev.jar" />
+   <property name="gwt-servlet" value="${gwthome}/gwt-servlet.jar" />
+   <property name="gwt-validation" value="${gwthome}/validation-api-1.0.0.GA-sources.jar" />
+   <property name="gwt-validation1" value="${gwthome}/validation-api-1.0.0.GA.jar"/>
+   
+    <target name="clean" description="clean up">
+	<delete dir="${proj.gwtCache}" />
+	<delete dir="${proj.target}" />
+   	<delete dir="${proj.output}" />
+   </target>
+   
+   <target name="javac" >
+       <delete dir="${proj.classes}" />
+       <mkdir dir="${proj.classes}" />
+       <echo message="gwtguiclient ${gwtuiclient}" />
+       <echo message="gwt user ${gwt-user}" />
+       <javac fork="true" srcdir="src" destdir="${proj.classes}"
+               source="1.8" target="1.8">
+           <classpath> 
+              <path refid="dep.jars"/>
+	      <pathelement location="${gwt-user}" />
+           </classpath>
+        </javac>
+   </target>
+   
+   <target name="gwtc" description="GWT compile to JavaScript">
+      <echo message="gwt-user ${gwt-user}" />
+      <echo message="gwt-dev ${com.google.gwt:gwt-dev:jar}" />
+      <echo message="gwt-dev ${gwt-dev}" />
+      <echo message="classes ${proj.classes}"/> 
+
+      <java fork="true" classname="com.google.gwt.dev.Compiler">
+          <jvmarg value="-Xmx512M"/>
+             <classpath>
+	       <!-- <pathelement location="${proj.classes}"/> -->
+ 	       <pathelement location="${gwt-user}" />
+               <pathelement location="${gwt-dev}"/>			
+	       <pathelement location="${gwt-validation}"/>
+               <pathelement location="${gwt-validation1}"/>
+						
+               <pathelement location="src"/>
+               <path refid="dep.jars"/>
+            </classpath>
+            <arg line="com/civilization/ui/CIvilizationUI"/>
+      </java>   
+    </target> 
+    
+    <target name="war">  
+       <copy todir="${proj.war}/WEB-INF/classes">
+          <fileset dir="${proj.classes}"/>
+        </copy>
+	
+       <copy todir="${proj.war}/WEB-INF/lib">
+           <fileset file="${gwt-servlet}"/>
+       </copy>
+                     
+       <jar destfile="target/civilization.war" compress="true" basedir="war"/>
+
+    </target>
+    
+   
+   <target name="build" description="Build Civilization Board Game WAR" depends="clean, javac, gwtc, war"/>
+
+</project>
