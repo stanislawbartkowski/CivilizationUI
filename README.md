@@ -2,10 +2,12 @@
 
 # Import Eclipse project from GutHub
 
-Eclipse -> Import -> Project from Git
+Eclipse -> File -> Import -> Git -> Projects from Git
 
 * URI: https://github.com/stanislawbartkowski/CivilizationUI
 * Host: github
 * Repository path: /stanislawbartkowski/CivilizationUI
 
-Chose: Import existing Eclipse Project
+Choose : Import existing Eclipse Project
+
+
