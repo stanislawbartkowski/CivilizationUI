@@ -6,9 +6,10 @@
    <property name="proj.output" value="output" />
    <property name="proj.war" value="war"/>
    <property name="proj.classes" value="out.classes" />
+   <property name="proj.resources" value="resources" />
    
    <path id="dep.jars">
-      <fileset dir="war/WEB-INF/">
+      <fileset dir="war/WEB-INF/lib">
           <include name="**/*.jar"/>
       </fileset>
    </path>
@@ -29,12 +30,12 @@
 	<delete dir="${proj.gwtCache}" />
 	<delete dir="${proj.target}" />
    	<delete dir="${proj.output}" />
-   </target>
+        <delete dir="${proj.war}/WEB-INF/classes" />
+    </target>        
    
    <target name="javac" >
        <delete dir="${proj.classes}" />
        <mkdir dir="${proj.classes}" />
-       <echo message="gwtguiclient ${gwtuiclient}" />
        <echo message="gwt user ${gwt-user}" />
        <javac fork="true" srcdir="src" destdir="${proj.classes}"
                source="1.8" target="1.8">
@@ -71,7 +72,11 @@
        <copy todir="${proj.war}/WEB-INF/classes">
           <fileset dir="${proj.classes}"/>
         </copy>
-	
+
+        <copy todir="${proj.war}/WEB-INF/classes">
+          <fileset dir="${proj.resources}"/>
+        </copy>
+
        <copy todir="${proj.war}/WEB-INF/lib">
            <fileset file="${gwt-servlet}"/>
        </copy>
