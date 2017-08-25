@@ -240,6 +240,8 @@ public class CIvilizationUI implements EntryPoint {
 		if (param instanceof String)
 			return "\"" + (String) param + "\"";
 		JSONObject o = new JSONObject((JavaScriptObject) param);
+		log("JS:" + o.getClass().getName());
+		if (o.isString() != null) log("IS STRING");
 		return o.isObject().toString();
 	}
 
