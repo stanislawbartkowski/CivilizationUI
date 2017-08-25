@@ -126,7 +126,11 @@ var C = (function() {
 	dialogDemo.openDialog = function(e) {
 		this.$.dialog.open()
 	}
-	dialogDemo.confirm = e => window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
+	console.log(typeof pa.param)
+	if (typeof pa.param == 'string') console.log("String")
+	else console.log("Object")
+	if (typeof pa.param == 'string') dialogDemo.confirm = e => window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
+	else dialogDemo.confirm = e => window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
 	dialogDemo.dismiss = e => {}
 	dialogDemo.message = question
 	dialogDemo.openDialog()
