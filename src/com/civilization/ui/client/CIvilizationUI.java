@@ -235,6 +235,8 @@ public class CIvilizationUI implements EntryPoint {
 	private static String jsParamtoS(Object param) {
 		if (param == null)
 			return null;
+		log(param.toString());
+		log(param.getClass().getName());
 		if (param instanceof String)
 			return "\"" + (String) param + "\"";
 		JSONObject o = new JSONObject((JavaScriptObject) param);
@@ -256,6 +258,11 @@ public class CIvilizationUI implements EntryPoint {
 	public static native void commandfailure(String message)/*-{
 		$wnd.C.dialogexecutefailure(message);
 	}-*/;
+
+	public static native void log(String message)/*-{
+	    $wnd.C.log(message);
+    }-*/;
+
 
 	/**
 	 * Wrapper for server itemize command, 

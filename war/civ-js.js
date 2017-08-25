@@ -159,8 +159,13 @@ var C = (function() {
         var res = window.getsquare(window.fixrow(row),window.fixcol(col))
         return res
     },
+    
+    log : function(s) {
+       console.log(s);
+    },
 	  
     emptyS : function(s) { return s == null || s == "" } 
+    
   
   }  // return
  } // function
