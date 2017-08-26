@@ -3,7 +3,9 @@
 ## Introduction
 
 The purpose of this project is to develop the implementation of Civilization The Board Game [https://www.fantasyflightgames.com/en/products/civilization/].
+
 The project consists of two subprojects: CivilizationEngine back end [https://github.com/stanislawbartkowski/CivilizationEngine] and user interface front end.
+
 At this stage, it is only the beginning. A few basic features are implemented and the user interface is purely functional and very rude.
 Demo version is deployed to Heroku [https://civilizationboardgame.herokuapp.com/]. It is a free quota and please wait a moment until container/dyno is activated.
 
