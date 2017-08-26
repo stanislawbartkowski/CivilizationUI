@@ -4,19 +4,19 @@
 
 The purpose of this project is to develop the implementation of Civilization The Board Game [https://www.fantasyflightgames.com/en/products/civilization/].
 The project consists of two subprojects: CivilizationEngine back end [https://github.com/stanislawbartkowski/CivilizationEngine] and user interface front end.
-At this stage, it is only the beginning. A few basic features are implemented and user interface is pure functional and very rude.
+At this stage, it is only the beginning. A few basic features are implemented and the user interface is purely functional and very rude.
 Demo version is deployed to Heroku [https://civilizationboardgame.herokuapp.com/]. It is a free quota and please wait a moment until container/dyno is activated.
 
 ## Interface description
 
-Only single player training game is implemented. First screen allows to choose civilization you want to play and the second is the game itself.
+Only single player training game is implemented. The first screen allows to choose civilization you want to play and the second is the game itself.
 
 Civilization selection.
  ![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-08-26%2011-25-09.png)
  
  Game board
  ![](https://github.com/stanislawbartkowski/CivilizationEngine/blob/master/screenshots/Zrzut%20ekranu%20z%202017-08-26%2011-28-05.png)
- The left panel contains status information and user options available at this stage of the command. In order to play the command, the user has to click the option in the left panel (now "Capital" only ) and click the square where the capital is supposed to be build. After command is executed, the play board is refreshed and next options are activated. After bulding the capital, there are "Set up Army", "Set up Scout" and "EnfOfPhase". When all options available at the given game stage are executed, the player has to click "EnfOfPhase" button to push game to the next phase or activate the next player.
+ The left panel contains status information and user options available at this stage of the command. In order to play the command, the user has to click the option in the left panel (now "Capital" only ) and click the square where the capital is supposed to be built. After the command is executed, the play board is refreshed and next options are activated. After building the capital, there are "Set up Army", "Set up Scout" and "EnfOfPhase". When all options available at the given game stage are executed, the player has to click "EnfOfPhase" button to push the game to the next phase or activate the next player.
 So far only the following actions are implemented:
 * Set Capital (at the beginning only)
 * Set up Army (at the beginning only)
@@ -27,7 +27,17 @@ So far only the following actions are implemented:
 * Reveal tile (Movement)
 * Set up City (StartOfTurn)
 
+## Figure movement
 
+* StartMove: click the square where the figure is standing. Starting from this moment no more actions are possible until figure movement is completed. Next step is to move the figure or reveal the tile if possible.
+* ContinueMove : click the next square where you want to move the figure
+* RevealTile: if the figure is standing close to hidden tile, touch the figure again and adjacent tile is revealed
+* ContinueMove/EndOfMove: you can move the figure to the next square or complete the move. If player speed limit is exhausted (speed limit is 2 and figure has moved 2 squares already), only EnfOfMove option is active
+* When figure movement is completed, other options are activated again. You can touch next figure or click EndOfPhase.
+
+## Action validation
+
+The program controls if actions are conducted according to game rules. For instance, you cannot set up figure on the water. Just now an alert dialog pops up and the action is blocked. In the future version, more user-friendly actions will be implemented. For instance: after triggering the figure movement, squares, where figure can be positioned, will be highlighted.
 
 # Import Eclipse project from GutHub
 
