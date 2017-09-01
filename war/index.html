@@ -4,16 +4,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
-  <title>Getting Started</title>
+  <title>Civilization, Getting Started</title>
+  
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   
   <script type="text/javascript" language="javascript" src="civilizationui/civilizationui.nocache.js"></script>
-
-
+    
+  <script type="text/javascript" language="javascript" src="civ-js.js"></script>
+   
+  <link rel="import" href="x-app.html"> 
+  <link rel="import" href="civ-choose.html">  
+  <link rel="import" href="civ-content.html">
+  <link rel="import" href="civ-map.html">
+  <link rel="import" href="civ-square.html">
+   
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f1f1f1;
+    }
+  </style>
+  
 <dom-bind id="dialog-demo"> 
   <template> 
       <paper-alert-dialog id="dialog" title="Congratulations" dismiss-button="Cancel"
 	                      confirm-button="OK" on-confirm="confirm" on-dismiss="dismiss">
-{{message}} 
+  {{message}} 
       </paper-alert-dialog> 
       <paper-button on-tap="openDialog" raised>Open</paper-button>
   </template> 
@@ -40,25 +57,7 @@
     <paper-button on-tap="openDialogWithHeader" raised>Open</paper-button>
   </template>
 </dom-bind>
-
-
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   
-  <script type="text/javascript" language="javascript" src="civ-js.js"></script>
-   
-  <link rel="import" href="x-app.html"> 
-  <link rel="import" href="civ-choose.html">  
-  <link rel="import" href="civ-content.html">
-  <link rel="import" href="civ-map.html">
-  <link rel="import" href="civ-square.html">
-   
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background-color: #f1f1f1;
-    }
-  </style>
   
 </head>
 <body unresolved>

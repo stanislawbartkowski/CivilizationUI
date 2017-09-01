@@ -44,6 +44,9 @@ public class CIvilizationUI implements EntryPoint {
 	private static JSONObject board;
 	
 	private final static String CIVMAP = "civ-map";
+	private final static String GAMEMENU = "gamemenu";
+	private final static String STARTMENU = "startmenu";
+	
 
 	/**
 	 * Internal validation, if list of civilization is available
@@ -56,7 +59,7 @@ public class CIvilizationUI implements EntryPoint {
 		if (a.length() == 0)
 			Window.alert("Internal error, no civilizations available");
 	}
-	
+
 
 	/**
 	 * Refresh squares in the map
@@ -155,6 +158,7 @@ public class CIvilizationUI implements EntryPoint {
 			redrawheader();
 			// there is a delay until map is available
 			t.schedule(100);
+			showelem(GAMEMENU,true);
 		});
 	}
 
@@ -181,6 +185,7 @@ public class CIvilizationUI implements EntryPoint {
 		civ = civs;
 		call(GreetingService.REGISTEROWNER, civs, token -> {
 			civtoken = token;
+			showelem(STARTMENU, false);
 			startMap();
 		});
 	}
@@ -264,6 +269,10 @@ public class CIvilizationUI implements EntryPoint {
 
 	public static native void log(String message)/*-{
 	    $wnd.C.log(message);
+    }-*/;
+		
+	public static native void showelem(String id, boolean show)/*-{
+       $wnd.C.showelem(id,show);
     }-*/;
 
 
@@ -350,7 +359,8 @@ public class CIvilizationUI implements EntryPoint {
 		expose();
 
 		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
-		
+		showelem(STARTMENU, true);
+		showelem(GAMEMENU,false);
 	}
 
 	/**

@@ -41,6 +41,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <xcustom-style>
  <style is="custom-style">
+ 
+  paper-button {
+    font-family: 'Roboto', 'Noto', sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased; 
+    margin : 10px;
+  }
+  paper-button.pink {
+    color: var(--paper-pink-a200);
+    --paper-button-ink-color: var(--paper-pink-a200);
+  }
+  paper-button.pink:hover {
+    background-color: var(--paper-pink-100);
+  }
+  paper-button.indigo {
+    background-color: var(--paper-indigo-500);
+    color: white;
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--paper-pink-a200) !important;
+      color: white !important;
+    };
+  }
+  paper-button.indigo:hover {
+    background-color: var(--paper-indigo-400);
+  }
+  paper-button.green {
+    background-color: var(--paper-green-500);
+    color: white;
+  }
+  paper-button.green[active] {
+    background-color: var(--paper-red-500);
+  }
+  paper-button.disabled {
+    color: white;
+  }
+
+ 
     app-header {
       background-color: #4285f4;
       color: #fff;
@@ -80,9 +118,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-header>
 
     <app-drawer-layout id="drawerLayout">
+    
 
-      <app-drawer slot="drawer" hidden >
+      <app-drawer slot="drawer">
         <div class="drawer-content">
+        <div id="gamemenu"  hidden>
         <paper-item><div>[[civname]]</div></paper-item>
         <paper-item><div>[[numberoftrade]]</div></paper-item>
         <paper-item><div>[[citieslimit]]</div></paper-item>
@@ -123,7 +163,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-item id="endofmove" on-click="_onClick">
             <iron-icon icon="pan-tool" slot="item-icon"></iron-icon> <span>End of Move</span>
           </paper-icon-item>
+          </div>
+          
+        <div id="startmenu" hidden>
+           <div>
+             <paper-button raised class="indigo">New game</paper-button>
+           </div>
+           <div>
+             <paper-button raised class="indigo"><div>Resume game</div></paper-button>
+           </div>             
         </div>
+          
+        </div>
+        
+        
       </app-drawer>
       
          <civ-content></civ-content>    
@@ -234,8 +287,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		  this.citieslimit = "Cities left: " + y.citylimit
 		  this.armieslimit = "Armies left: " + y.armieslimit
 		  this.scoutslimit = "Scouts left: " + y.scoutslimit
-		  var x = this.shadowRoot.getElementById("drawerLayout");
-		  x.drawer.removeAttribute("hidden")
 		  for (var i=0; i < this.buttons.length; i++) {
 			  var id = this.buttons[i]
 			  var bu = this.shadowRoot.getElementById(id);

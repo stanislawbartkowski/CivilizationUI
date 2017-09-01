@@ -143,6 +143,13 @@ var C = (function() {
        var e = document.getElementsByTagName("x-app")
        return e[0]     
      },
+     
+    showelem : function(id,show) {
+      var x = this.getxapp()
+      var e = x.shadowRoot.getElementById(id)
+      if (show) e.removeAttribute("hidden")
+      else e["hidden"] = true      
+    } ,
  	  
     getcurrentcommand : function() {
         return this.getxapp().currentcommand

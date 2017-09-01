@@ -35,7 +35,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 				Context xmlNode = (Context) context.lookup("java:comp/env");
 				Integer port = (Integer) xmlNode.lookup("redisport");
 				String host = (String) xmlNode.lookup("redishost");
-				RR.setConnection(host, port);
+				RR.setConnection(host, port,0);
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
