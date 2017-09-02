@@ -50,10 +50,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return String.fromCharCode(65 + Math.floor(Math.random() * 26));
       },
       _render: function(label, padding, margin, boxShadow,listofciv) {
-    	if (C.emptyS(listofciv)) {
-    		this.innerHTML = "";
-    		return
-    	}
+  		this.innerHTML = "";
+    	if (C.emptyS(listofciv)) return
         var a = JSON.parse(listofciv)
         var html = '';
         for (var i = 0; i < a.length; i++) {

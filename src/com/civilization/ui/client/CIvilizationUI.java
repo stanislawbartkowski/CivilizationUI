@@ -12,6 +12,7 @@
  */
 package com.civilization.ui.client;
 
+import java.util.Date;
 import java.util.function.Consumer;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -21,6 +22,7 @@ import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -46,6 +48,11 @@ public class CIvilizationUI implements EntryPoint {
 	private final static String CIVMAP = "civ-map";
 	private final static String GAMEMENU = "gamemenu";
 	private final static String STARTMENU = "startmenu";
+	
+	public static String dateToS(int time) {
+		Date d = new Date(time);
+		return DateTimeFormat.getMediumDateTimeFormat().format(d);
+	}
 	
 
 	/**
@@ -144,6 +151,7 @@ public class CIvilizationUI implements EntryPoint {
 		call(GreetingService.GETBOARD, civtoken, js -> {
 			// hide civ-choose
 			setListOfCiv("");
+			setListOfGames("");
 			// display map
 			JSONValue j = JSONParser.parseStrict(js);
 			board = j.isObject();
@@ -176,6 +184,12 @@ public class CIvilizationUI implements EntryPoint {
 		setxappattribute("jsboard", board.toString());
 
 	}
+	
+	private static void startGame(String token) {
+		civtoken = token;
+		showelem(STARTMENU, false);
+		startMap();		
+	}
 
 	/**
 	 * Wrapper for command to register the game
@@ -183,11 +197,7 @@ public class CIvilizationUI implements EntryPoint {
 	 */
 	public static void chooseCiv(String civs) {
 		civ = civs;
-		call(GreetingService.REGISTEROWNER, civs, token -> {
-			civtoken = token;
-			showelem(STARTMENU, false);
-			startMap();
-		});
+		call(GreetingService.REGISTEROWNER, civs, token -> startGame(token));
 	}
 
 	/**
@@ -300,6 +310,17 @@ public class CIvilizationUI implements EntryPoint {
 		Object ss = ee.getPropertyObject("shadowRoot");
 		return (Element) ss;
 	}
+	
+	public static void resumeGame(int gameid, String cov) {
+		greetingService.resumeGame(gameid, cov, new AsyncBack() {
+
+			@Override
+			public void onSuccess(String result) {
+				startGame(result);
+			}
+			
+		});
+	}
 
 	/**
 	 * Called at the beginning.
@@ -330,6 +351,21 @@ public class CIvilizationUI implements EntryPoint {
 		}
 		$wnd.fixcol = function(param1) {
 			return @com.civilization.ui.client.CIvilizationUI::fixcol(*)(param1)
+		}
+		$wnd.readgames = function() {
+			return @com.civilization.ui.client.CIvilizationUI::readGames(*)()
+		}
+		$wnd.readcivs = function() {
+			return @com.civilization.ui.client.CIvilizationUI::readCivs(*)()
+		}
+		$wnd.findbytag = function(param) {
+			return @com.civilization.ui.client.CIvilizationUI::findContent(*)(param)
+		}
+		$wnd.datetos = function(param) {
+			return @com.civilization.ui.client.CIvilizationUI::dateToS(*)(param)
+		}
+		$wnd.resumegame = function(param1,param2) {
+			@com.civilization.ui.client.CIvilizationUI::resumeGame(*)(param1,param2)
 		}
 
 	}-*/;
@@ -362,13 +398,23 @@ public class CIvilizationUI implements EntryPoint {
 		showelem(STARTMENU, true);
 		showelem(GAMEMENU,false);
 	}
+	
+	public static void readGames() {
+		call(GreetingService.GETGAMES, null, s -> setListOfGames(s));
+		
+	}
+
+	public static void readCivs() {
+		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
+		
+	}
 
 	/**
 	 * Find element in x-app by tag name
 	 * @param tagName
 	 * @return Element found
 	 */
-	private static Element findContent(String tagName) {
+	public static Element findContent(String tagName) {
 		Node ss = getxApp();
 		Element fe = findelem((Node) ss, tagName);
 		return fe;
@@ -408,6 +454,10 @@ public class CIvilizationUI implements EntryPoint {
 		fe.setAttribute("listofciv", listofciv);
 	}
 
+	private static void setListOfGames(String listofgames) {
+		Element fe = findContent("civ-games");
+		fe.setAttribute("listofgames", listofgames);
+	}
 
 	
 	// common failure handling

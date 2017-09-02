@@ -133,7 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="inbox" slot="item-icon"></iron-icon> <span>Capital</span>
           </paper-icon-item>
           <paper-icon-item id="setcity" on-click="_onClick">
-            <iron-icon icon="euro-symbol" slot="item-icon"></iron-icon> <span>Set City/span>
+            <iron-icon icon="euro-symbol" slot="item-icon"></iron-icon> <span>Set City</span>
           </paper-icon-item>
           <paper-icon-item id="endofphase" on-click="_onClick">
             <iron-icon icon="done" slot="item-icon"></iron-icon> <span>EndOfPhase</span>
@@ -167,10 +167,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           
         <div id="startmenu" hidden>
            <div>
-             <paper-button raised class="indigo">New game</paper-button>
+             <paper-button raised class="indigo" on-click="_onClickNew">New game</paper-button>
            </div>
            <div>
-             <paper-button raised class="indigo"><div>Resume game</div></paper-button>
+             <paper-button raised class="indigo" on-click="_onClickGames"><div>Resume game</div></paper-button>
            </div>             
         </div>
           
@@ -180,8 +180,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </app-drawer>
       
          <civ-content></civ-content>    
-         <civ-map hidden="true"></civ-map> 
-         
+         <civ-games></civ-games> 
+         <civ-map></civ-map>          
 
     </app-drawer-layout>
 
@@ -242,6 +242,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       observers: [
           'draw(jsboard)'
         ],
+      _onClickNew : function() {
+    	  C.showcivorgames(false);
+    	  C.readcivs()
+      },
+      _onClickGames : function() {
+    	  C.showcivorgames(true);
+    	  C.readgames();
+      },
       _onClick : function(source) {
     	  var id = source.currentTarget.id
     	  if (id == "endofphase") {

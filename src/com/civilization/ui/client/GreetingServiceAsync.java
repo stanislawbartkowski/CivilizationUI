@@ -24,5 +24,7 @@ public interface GreetingServiceAsync {
 	void executeCommand(String token, String action, int row, int col, String jsparam, AsyncCallback<String> callback);
 
 	void itemizeCommand(String token, String command, AsyncCallback<String> callback);
+
+	void resumeGame(int gameid, String civ,AsyncCallback<String> callback);
 	
 }

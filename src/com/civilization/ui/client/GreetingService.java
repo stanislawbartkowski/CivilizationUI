@@ -24,6 +24,7 @@ public interface GreetingService extends RemoteService {
 	int LISTOFCIV = 0;
 	int REGISTEROWNER = 1;
 	int GETBOARD = 2;
+	int GETGAMES = 3;
 
 	
 	String getCivData(int what, String param);
@@ -31,4 +32,6 @@ public interface GreetingService extends RemoteService {
 	String executeCommand(String token,String action, int row, int col,String jsparam);
 	
 	String itemizeCommand(String token,String command);
+	
+	String resumeGame(int gameid, String civ);
 }

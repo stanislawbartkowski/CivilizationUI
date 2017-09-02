@@ -35,7 +35,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 				Context xmlNode = (Context) context.lookup("java:comp/env");
 				Integer port = (Integer) xmlNode.lookup("redisport");
 				String host = (String) xmlNode.lookup("redishost");
-				RR.setConnection(host, port,0);
+				RR.setConnection(host, port, 0);
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -61,6 +61,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		case GETBOARD:
 			w = II.GETBOARDGAME();
 			break;
+		case GETGAMES:
+			w = II.LISTOFGAMES();
+			break;
 		}
 		return II.getData(w, param);
 	}
@@ -78,5 +81,11 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public String itemizeCommand(String token, String command) {
 		setRedis();
 		return II.itemizeCommand(token, command);
+	}
+
+	@Override
+	public String resumeGame(int gameid, String civ) {
+		String token = II.resumeGame(gameid, civ);
+		return token;
 	}
 }

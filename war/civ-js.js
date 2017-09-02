@@ -108,10 +108,32 @@ var C = (function() {
 		};
 		dialogDemo.message = message;
 		dialogDemo.openDialog();
-	  }
+	  };
+	  
+  function setattr(e,attr,value) {
+     e.setAttribute(attr,value)
+  };
   
+  function removeattr(e,attr) {
+    e.removeAttribute(attr)
+  }      	  
 
   return {
+  
+  resumedialog : function(index) {
+    var li = JSON.parse(C.getlistofgames())
+    var e = li[index]
+    var gameid = e.gameid
+    var civ = e.civ[0]
+	const dialogDemo = document.getElementById("dialog-demo")
+	dialogDemo.openDialog = function(e) {
+		this.$.dialog.open()
+	}
+	dialogDemo.confirm = e => C.resumegame(gameid,civ)
+	dialogDemo.dismiss = e => {}
+	dialogDemo.message = "Do you want to resume this have as " + civ + " ?"
+	dialogDemo.openDialog()
+  },
   
   confexecutedialog : function (question,co,row,col,param) {
     var iparam = {}
@@ -144,11 +166,37 @@ var C = (function() {
        return e[0]     
      },
      
+    showeleme(e,show) {
+      if (show) removeattr(e,"hidden")
+      else e["hidden"] = true      
+    },
+     
     showelem : function(id,show) {
       var x = this.getxapp()
       var e = x.shadowRoot.getElementById(id)
-      if (show) e.removeAttribute("hidden")
-      else e["hidden"] = true      
+      this.showeleme(e,show)
+    } ,
+    
+    findbytag : function(tag) {
+      var ee = window.findbytag(tag)
+      return ee
+    },
+    
+    showelembytag : function(tag,show) {
+      var e = this.findbytag(tag)
+      this.showeleme(e,show)      
+    },
+    
+    showcivorgames : function(games) {
+      var gamese = this.findbytag("civ-games")
+      var civse = this.findbytag("civ-content")
+      if (games) setattr(civse,"listofciv","")
+      else setattr(gamese,"listofgames","")
+    } ,
+    
+    getlistofgames : function() {
+      var gamese = this.findbytag("civ-games")
+      return gamese.listofgames
     } ,
  	  
     getcurrentcommand : function() {
@@ -171,9 +219,28 @@ var C = (function() {
     log : function(s) {
        console.log(s);
     },
-	  
-    emptyS : function(s) { return s == null || s == "" } 
     
+    readgames : function() {
+      window.readgames();
+    },
+
+    readcivs : function() {
+      window.readcivs();
+    },
+    
+    toS : function(o) {
+      return JSON.stringify(o)
+    },
+    
+    datetos : function(d) {
+      return window.datetos(d)
+    },
+    
+    resumegame : function(gameid,civ) {
+      window.resumegame(gameid,civ)
+    },
+    	  
+    emptyS : function(s) { return s == null || s == "" } 
   
   }  // return
  } // function
