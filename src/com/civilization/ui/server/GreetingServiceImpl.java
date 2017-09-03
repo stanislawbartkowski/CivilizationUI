@@ -64,6 +64,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		case GETGAMES:
 			w = II.LISTOFGAMES();
 			break;
+		case UNREGISTERTOKEN:
+			w = II.UNREGISTERTOKEN();
+			break;
 		}
 		return II.getData(w, param);
 	}

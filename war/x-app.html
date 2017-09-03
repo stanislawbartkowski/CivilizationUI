@@ -42,6 +42,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <xcustom-style>
  <style is="custom-style">
  
+  paper-icon-button[hidden] {
+       display: none;
+   }
+ 
   paper-button {
     font-family: 'Roboto', 'Noto', sans-serif;
     font-weight: normal;
@@ -114,6 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div style="width:5%;"></div>
             <div>[[phase]]</div>
             <div style="width:30%;"></div>
+            <paper-icon-button id="close-button" hidden="true" icon="close" on-click="_onClose" title="Leave the game"></paper-icon-button>
       </app-toolbar>
     </app-header>
 
@@ -243,12 +248,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           'draw(jsboard)'
         ],
       _onClickNew : function() {
-    	  C.showcivorgames(false);
+    	  C.showcivorgames(1);
     	  C.readcivs()
       },
       _onClickGames : function() {
-    	  C.showcivorgames(true);
+    	  C.showcivorgames(2);
     	  C.readgames();
+      },
+      _onClose : function() {
+    	C.leavedialog()
       },
       _onClick : function(source) {
     	  var id = source.currentTarget.id
@@ -283,7 +291,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	  "setcity"
       ],
 	  draw: function(jsboard) {
-          if (C.emptyS(jsboard)) return
+          if (C.emptyS(jsboard)) {
+    		  this.turnno = null
+    		  this.activecivname = null
+    		  this.civname=null
+    		  this.phase =null
+    		  return
+          }
 		  var b = JSON.parse(jsboard).board
 		  var g= b.game
 		  var y = b.you
@@ -298,7 +312,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		  for (var i=0; i < this.buttons.length; i++) {
 			  var id = this.buttons[i]
 			  var bu = this.shadowRoot.getElementById(id);
-//			  console.log(id)
 			  bu.hidden = "true"
 		  }
 		  for (var i=0; i<y.commands.length; i++) {

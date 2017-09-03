@@ -116,9 +116,41 @@ var C = (function() {
   
   function removeattr(e,attr) {
     e.removeAttribute(attr)
-  }      	  
+  };      	  
+
+  function showeleme (e,show) {
+      if (show) removeattr(e,"hidden")
+      else e["hidden"] = true      
+  };
+  
+  // TODO: remove ? 
+  function showelembytag(tag,show) {
+      var e = findbytag(tag)
+      showeleme(e,show)      
+    };
+    
+  function findbytag(tag) {
+      var ee = window.findbytag(tag)
+      return ee
+    };
+    
+  // id="close-button"
+  function showhideclosebuttuon(show) {
+     C.showelem("close-button",show)
+  }    
 
   return {
+  
+  startgamedialog : function(civ) {
+	const dialogDemo = document.getElementById("dialog-demo")
+	dialogDemo.openDialog = function(e) {
+		this.$.dialog.open()
+	}
+	dialogDemo.confirm = e => window.chooseciv(civ);
+	dialogDemo.dismiss = e => {}
+	dialogDemo.message = "Do you want to start new game as " + civ + " ?"
+	dialogDemo.openDialog()
+  },
   
   resumedialog : function(index) {
     var li = JSON.parse(C.getlistofgames())
@@ -135,6 +167,17 @@ var C = (function() {
 	dialogDemo.openDialog()
   },
   
+  leavedialog : function() {
+	const dialogDemo = document.getElementById("dialog-demo")
+	dialogDemo.openDialog = function(e) {
+		this.$.dialog.open()
+	}
+	dialogDemo.confirm = e => C.leavegame()
+	dialogDemo.dismiss = e => {}
+	dialogDemo.message = "Do you want to leave the game ? You can resume the game later."
+	dialogDemo.openDialog()  
+  },
+             
   confexecutedialog : function (question,co,row,col,param) {
     var iparam = {}
     iparam.square = null
@@ -165,37 +208,28 @@ var C = (function() {
        var e = document.getElementsByTagName("x-app")
        return e[0]     
      },
-     
-    showeleme(e,show) {
-      if (show) removeattr(e,"hidden")
-      else e["hidden"] = true      
-    },
-     
+          
     showelem : function(id,show) {
       var x = this.getxapp()
       var e = x.shadowRoot.getElementById(id)
-      this.showeleme(e,show)
+      showeleme(e,show)
     } ,
-    
-    findbytag : function(tag) {
-      var ee = window.findbytag(tag)
-      return ee
-    },
-    
-    showelembytag : function(tag,show) {
-      var e = this.findbytag(tag)
-      this.showeleme(e,show)      
-    },
-    
-    showcivorgames : function(games) {
-      var gamese = this.findbytag("civ-games")
-      var civse = this.findbytag("civ-content")
-      if (games) setattr(civse,"listofciv","")
-      else setattr(gamese,"listofgames","")
+
+
+    // what = 1 show civs (switch off the rest)
+    //      = 2 show games (switch off the test)
+    //      = 0 switch off all       
+    showcivorgames : function(what) {
+      var gamese = findbytag("civ-games")
+      var civse = findbytag("civ-content")
+      if (what == 0 || what == 2) setattr(civse,"listofciv","")
+      if (what == 0 || what == 1) setattr(gamese,"listofgames","")
+      if (what == 0) showhideclosebuttuon(true)
+      else showhideclosebuttuon(false)
     } ,
     
     getlistofgames : function() {
-      var gamese = this.findbytag("civ-games")
+      var gamese = findbytag("civ-games")
       return gamese.listofgames
     } ,
  	  
@@ -238,6 +272,10 @@ var C = (function() {
     
     resumegame : function(gameid,civ) {
       window.resumegame(gameid,civ)
+    },
+    
+    leavegame : function() {
+      window.leavegame()
     },
     	  
     emptyS : function(s) { return s == null || s == "" } 
