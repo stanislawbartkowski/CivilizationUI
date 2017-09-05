@@ -25,18 +25,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready: function() {
         this.style.display = 'block';
       },
-      _randomString: function(size) {
-        var ls = this._lorem_ipsum_strings;
-        var s  = '';
-        do {
-          s += ls[Math.floor(Math.random() * ls.length)];
-          size--;
-        } while (size > 0);
-        return s;
-      },
-      _randomLetter: function() {
-        return String.fromCharCode(65 + Math.floor(Math.random() * 26));
-      },
       _render: function(listofciv) {
   		this.innerHTML = "";
     	if (C.emptyS(listofciv)) return

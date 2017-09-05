@@ -218,12 +218,15 @@ var C = (function() {
 
     // what = 1 show civs (switch off the rest)
     //      = 2 show games (switch off the test)
+    //      = 3 show joins
     //      = 0 switch off all       
     showcivorgames : function(what) {
       var gamese = findbytag("civ-games")
       var civse = findbytag("civ-content")
-      if (what == 0 || what == 2) setattr(civse,"listofciv","")
-      if (what == 0 || what == 1) setattr(gamese,"listofgames","")
+      var civjoin = findbytag("civ-join")
+      if (what == 0 || what == 2 || what == 3) setattr(civse,"listofciv","")
+      if (what == 0 || what == 1 || what == 3) setattr(gamese,"listofgames","")
+      if (what == 0 || what == 1 || what == 2) setattr(civjoin,"listofjoins","")
       if (what == 0) showhideclosebuttuon(true)
       else showhideclosebuttuon(false)
     } ,
@@ -236,7 +239,7 @@ var C = (function() {
     getcurrentcommand : function() {
         return this.getxapp().currentcommand
       },
-	  
+      	  
     getitemizedcommand : function() {
          return this.getxapp().itemizedcommand
       },
@@ -260,6 +263,10 @@ var C = (function() {
 
     readcivs : function() {
       window.readcivs();
+    },
+    
+    readjoingames : function() {
+      window.readjoingames();
     },
     
     toS : function(o) {

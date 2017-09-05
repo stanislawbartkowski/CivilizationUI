@@ -1,0 +1,91 @@
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+
+<dom-module id="civ-joingame">
+
+<template>
+
+<style>
+    /* local styles go here */
+    :host {
+      display: inline-block;
+      text-transform: none;
+    }
+    paper-button {
+      font-family: 'Roboto', 'Noto', sans-serif;
+      font-weight: normal;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased; 
+      text-transform: none;
+  }
+  
+  paper-button.green {
+    background-color: var(--paper-green-500);
+    color: white;
+  }
+  paper-button.green[active] {
+    background-color: var(--paper-red-500);
+  }
+  
+    
+  </style>
+  
+    <!-- shadow DOM goes here -->
+    <span>
+      <paper-button  raised class="green"  on-click="handleClick">{{button()}}</paper-button>
+      <span style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 
+                   border-radius: 5px; 
+                   background-color: #fff; 
+                   color: #444; 
+                   padding:10px;"> {{content()}} </span>
+    </span>
+    
+  </template>
+
+<script>
+class CivJoinGame extends Polymer.Element {
+
+    static get is() { return 'civ-joingame'; }
+    
+    handleClick() {
+    	C.resumedialog(this.index)
+    } ;
+
+    button() {
+        var li = JSON.parse(C.getlistofgames())
+        var e = li[this.index]
+        var s = ""
+        for (var i = 0; i < e.civ.length; i++) {
+            s += e.civ[i] + " "
+         }
+        return s    	
+    }
+    
+    content() {
+        var li = JSON.parse(C.getlistofgames())
+        var e = li[this.index]
+        var createdS = C.datetos(e.createtime)
+        var accessedS = C.datetos(e.accesstime)
+        var phaseS = e.phase
+        var no = e.round
+    	return accessedS + " Created: " + createdS + "   Phase: " + phaseS + "   Round : " + (no + 1) 
+    }
+
+
+    // Declare properties for the element's public API
+    static get properties() {
+      return {
+        index: {
+          type: Number,
+          value: "not defined"
+        }
+      }
+    }
+
+  }
+
+  // Register the x-custom element with the browser
+  customElements.define(CivJoinGame.is, CivJoinGame);
+</script></script>
+
+</dom-module>
+

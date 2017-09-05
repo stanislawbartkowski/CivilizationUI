@@ -26,5 +26,7 @@ public interface GreetingServiceAsync {
 	void itemizeCommand(String token, String command, AsyncCallback<String> callback);
 
 	void resumeGame(int gameid, String civ,AsyncCallback<String> callback);
+
+	void allPlayersReady(String token, AsyncCallback<Boolean> callback);
 	
 }

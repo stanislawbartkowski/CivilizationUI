@@ -405,6 +405,10 @@ public class CIvilizationUI implements EntryPoint {
 		$wnd.leavegame = function() {
 			@com.civilization.ui.client.CIvilizationUI::leaveGame(*)()
 		}
+		$wnd.readjoingames = function() {
+			@com.civilization.ui.client.CIvilizationUI::readJoinGames(*)()
+		}
+		// readJoinGames()
 
 	}-*/;
 
@@ -439,7 +443,10 @@ public class CIvilizationUI implements EntryPoint {
 
 	public static void readGames() {
 		call(GreetingService.GETGAMES, null, s -> setListOfGames(s));
-
+	}
+	
+	public static void readJoinGames() {
+		call(GreetingService.WAITINGGAMES, null, s -> setListOfJoinGames(s));
 	}
 
 	public static void readCivs() {
@@ -498,6 +505,11 @@ public class CIvilizationUI implements EntryPoint {
 	private static void setListOfGames(String listofgames) {
 		Element fe = findContent("civ-games");
 		fe.setAttribute("listofgames", listofgames);
+	}
+
+	private static void setListOfJoinGames(String listofjoins) {
+		Element fe = findContent("civ-join");
+		fe.setAttribute("listofjoins", listofjoins);
 	}
 
 	// common failure handling

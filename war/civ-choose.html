@@ -26,7 +26,17 @@
     
       <span style="display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #555; text-align: center;">{{letter()}}</span>
       
-      <paper-button on-click="handleClick">{{civname}}</paper-button>
+<!--       <paper-button on-click="handleClick">{{civname}}</paper-button> -->
+       
+      <span style="padding-left:10px;">{{civname}}</span> 
+      
+      <paper-menu-button>
+         <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
+         <paper-listbox slot="dropdown-content">
+            <paper-item>Two players game</paper-item>
+            <paper-item on-click="handleClick">Training</paper-item>
+        </paper-listbox>
+      </paper-menu-button>
       
     </div>
   </template>

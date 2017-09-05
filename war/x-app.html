@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="bower_components/paper-item/paper-item.html">
-
+<link rel="import" href="bower_components/paper-menu-button/paper-menu-button.html">
 
 <link rel="import" href="bower_components/font-roboto/roboto.html">
   <link rel="import" href="bower_components/paper-item/paper-icon-item.html">
@@ -177,6 +177,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            <div>
              <paper-button raised class="indigo" on-click="_onClickGames"><div>Resume game</div></paper-button>
            </div>             
+           <div>
+             <paper-button raised class="indigo" on-click="_onClickJoinGame"><div>Join game</div></paper-button>
+           </div>             
         </div>
           
         </div>
@@ -185,7 +188,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </app-drawer>
       
          <civ-content></civ-content>    
-         <civ-games></civ-games> 
+         <civ-games></civ-games>
+         <civ-join></civ-join> 
          <civ-map></civ-map>          
 
     </app-drawer-layout>
@@ -254,6 +258,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _onClickGames : function() {
     	  C.showcivorgames(2);
     	  C.readgames();
+      },
+      _onClickJoinGame : function() {
+    	  C.showcivorgames(3);
+    	  C.readjoingames();
       },
       _onClose : function() {
     	C.leavedialog()
