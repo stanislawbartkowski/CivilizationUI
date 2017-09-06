@@ -1,0 +1,96 @@
+ <dom-module id="join-dialog">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+      
+  paper-button {
+    font-family: 'Roboto', 'Noto', sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased; 
+    margin : 10px;
+    border-radius: 5px;
+  }
+  
+  paper-button.green {
+    background-color: var(--paper-green-500);
+    color: white;
+  }
+  paper-button.green[active] {
+    background-color: var(--paper-red-500);
+  }
+  paper-button.disabled {
+    color: white;
+  }
+      
+    </style>
+    
+    
+    <paper-dialog id="dialog" modal>
+      <h3>Creating two players game</h3>
+      <p/>
+      <p>
+        <span
+         style="
+         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 
+         padding:12px;
+         margin: 0px,24px;
+         border-radius: 5px; background-color: #fff; color: #252525;"
+         >  
+        You are playing {{civname}}
+        </span>
+      </p>
+      
+      <p>Choose opponent civilization</p>
+      <p/><p/>
+      
+      <p>
+      <template id="civs" is="dom-repeat" filter="notUsed" items="{{lines}}">
+      
+       <paper-button id="{{item}}" raised class="green" on-click="_onClickNew">{{item}}</paper-button>
+                
+      </template>
+      </p>
+                  
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+      </div>
+      
+    </paper-dialog>
+  </template>
+
+  <script>
+    class JoinDialog extends Polymer.Element {
+      static get is() { return 'join-dialog'; }
+      static get properties() {
+        return {
+          civname: {
+            type: String,
+            value: undefined
+          },
+          lines : {
+        	  type : Array,
+              value : []
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+      }
+      
+      notUsed(item) {
+    	  return item != this.civname
+      }
+      
+      openIt() {
+          this.$.dialog.open();
+        }
+
+    }
+
+    window.customElements.define(JoinDialog.is, JoinDialog);
+  </script>
+</dom-module>

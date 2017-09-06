@@ -175,9 +175,23 @@ var C = (function() {
 	dialogDemo.confirm = e => C.leavegame()
 	dialogDemo.dismiss = e => {}
 	dialogDemo.message = "Do you want to leave the game ? You can resume the game later."
-	dialogDemo.openDialog()  
+	dialogDemo.openDialog()
   },
-             
+  
+ joindialog : function(civ) {
+	const dialogDemo = document.getElementById("join-dialog")
+	dialogDemo.openDialog = function(e) {
+	    this.$.dialog.civname = civ
+	    var c = JSON.parse(C.getlistofcivs())
+	    this.$.dialog.lines = c
+		this.$.dialog.openIt()
+	}
+//	dialogDemo.confirm = e => C.leavegame()
+//	dialogDemo.dismiss = e => {}
+//	dialogDemo.message = "Do you want to leave the game ? You can resume the game later."
+	dialogDemo.openDialog()
+  },
+               
   confexecutedialog : function (question,co,row,col,param) {
     var iparam = {}
     iparam.square = null
@@ -229,6 +243,11 @@ var C = (function() {
       if (what == 0 || what == 1 || what == 2) setattr(civjoin,"listofjoins","")
       if (what == 0) showhideclosebuttuon(true)
       else showhideclosebuttuon(false)
+    } ,
+    
+    getlistofcivs : function() {
+      var civse = findbytag("civ-content")
+      return civse.listofciv
     } ,
     
     getlistofgames : function() {

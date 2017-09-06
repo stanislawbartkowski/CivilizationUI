@@ -33,7 +33,7 @@
       <paper-menu-button>
          <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
          <paper-listbox slot="dropdown-content">
-            <paper-item>Two players game</paper-item>
+            <paper-item on-click="twoplayersClick">Two players game</paper-item>
             <paper-item on-click="handleClick">Training</paper-item>
         </paper-listbox>
       </paper-menu-button>
@@ -48,6 +48,10 @@ class CivChoose extends Polymer.Element {
     
     handleClick() {
       C.startgamedialog(this.civname)
+    }
+    
+    twoplayersClick() {
+      C.joindialog(this.civname)
     }
 
     // Declare properties for the element's public API

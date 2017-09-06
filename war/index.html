@@ -21,6 +21,7 @@
   <link rel="import" href="civ-games.html">
   <link rel="import" href="civ-join.html">
   <link rel="import" href="civ-joingame.html">
+  <link rel="import" href="join-dialog.html">
    
   <style>
     body {
@@ -61,7 +62,12 @@
     <paper-button on-tap="openDialogWithHeader" raised>Open</paper-button>
   </template>
 </dom-bind>
-  
+
+<dom-bind id="join-dialog">
+  <template>
+   <join-dialog id="dialog"></join-dialog>
+  </template>
+</dom-bind>
   
 </head>
 <body unresolved>
