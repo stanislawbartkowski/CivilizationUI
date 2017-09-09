@@ -49,6 +49,23 @@ public class CIvilizationUI implements EntryPoint {
 	private final static String GAMEMENU = "gamemenu";
 	private final static String STARTMENU = "startmenu";
 
+	// private static boolean multigame = false;
+	// private static boolean second = false;
+
+	enum T {
+		TRANINGGAME, STARTTWOPLAYERGAME, JOINTWOPLAYERGAME;
+
+		boolean ismulti() {
+			return this != TRANINGGAME;
+		}
+
+		boolean opposite() {
+			return this == JOINTWOPLAYERGAME;
+		}
+	}
+
+	private static T gamet = T.TRANINGGAME;
+
 	public static String dateToS(int time) {
 		Date d = new Date(time);
 		return DateTimeFormat.getMediumDateTimeFormat().format(d);
@@ -111,8 +128,11 @@ public class CIvilizationUI implements EntryPoint {
 
 		@Override
 		public void run() {
-			if (refreshMap())
+			if (refreshMap()) {
 				cancel();
+				if (gamet.ismulti())
+					trefresh.scheduleRepeating(500);
+			}
 		}
 
 	};
@@ -122,7 +142,7 @@ public class CIvilizationUI implements EntryPoint {
 	/**
 	 * Read Map again from server
 	 */
-	public static void rereadMap() {
+	private static void rereadMap() {
 		call(GreetingService.GETBOARD, civtoken, js -> {
 			// change to JSON object
 			JSONValue j = JSONParser.parseStrict(js);
@@ -146,7 +166,33 @@ public class CIvilizationUI implements EntryPoint {
 	public static native void setxappattribute(String attr, String value)/*-{
 		$wnd.C.setxappparam(attr, value);
 	}-*/;
-	
+
+	interface IMapDimension {
+		int rows();
+
+		int cols();
+	}
+
+	private static IMapDimension getDimensions() {
+		JSONArray a = getMap();
+		int arows = a.size();
+		int acols = a.get(0).isArray().size();
+		return new IMapDimension() {
+
+			@Override
+			public int rows() {
+				return arows;
+			}
+
+			@Override
+			public int cols() {
+				return acols;
+			}
+
+		};
+
+	}
+
 	/**
 	 * Trigger map generation
 	 */
@@ -158,13 +204,11 @@ public class CIvilizationUI implements EntryPoint {
 			JSONValue j = JSONParser.parseStrict(js);
 			board = j.isObject();
 			// map dimension
-			JSONArray a = getMap();
-			int rows = a.size();
-			int cols = a.get(0).isArray().size();
+			IMapDimension d = getDimensions();
 			Element fe = findContent(CIVMAP);
 			fe.removeAttribute("hidden");
-			fe.setAttribute("rownumb", "" + rows);
-			fe.setAttribute("colnumb", "" + cols);
+			fe.setAttribute("rownumb", "" + d.rows());
+			fe.setAttribute("colnumb", "" + d.cols());
 			redrawheader();
 			// there is a delay until map is available
 			t.schedule(100);
@@ -187,8 +231,22 @@ public class CIvilizationUI implements EntryPoint {
 
 	}
 
-	private static void startGame(String token) {
+	private static Timer trefresh = new Timer() {
+
+		@Override
+		public void run() {
+			if (civtoken == null) {
+				cancel();
+				return;
+			}
+			rereadMap();
+		}
+
+	};
+
+	private static void startGame(String token, T t) {
 		civtoken = token;
+		gamet = t;
 		showelem(STARTMENU, false);
 		startMap();
 	}
@@ -201,7 +259,7 @@ public class CIvilizationUI implements EntryPoint {
 	 */
 	public static void chooseCiv(String civs) {
 		civ = civs;
-		call(GreetingService.REGISTEROWNER, civs, token -> startGame(token));
+		call(GreetingService.REGISTEROWNER, civs, token -> startGame(token, T.TRANINGGAME));
 	}
 
 	/**
@@ -214,8 +272,10 @@ public class CIvilizationUI implements EntryPoint {
 	public static int fixrow(int row) {
 		if (row == -1)
 			return -1;
-		JSONArray a = getMap();
-		return a.size() - 1 - row;
+		if (gamet.opposite())
+			return row;
+		IMapDimension d = getDimensions();
+		return d.rows() - 1 - row;
 	}
 
 	/**
@@ -226,7 +286,12 @@ public class CIvilizationUI implements EntryPoint {
 	 * @return adjusted
 	 */
 	public static int fixcol(int col) {
-		return col;
+		if (col == -1)
+			return -1;
+		if (!gamet.opposite())
+			return col;
+		IMapDimension d = getDimensions();
+		return d.cols() - 1 - col;
 	}
 
 	/**
@@ -259,8 +324,9 @@ public class CIvilizationUI implements EntryPoint {
 	 * 
 	 * @param param
 	 *            JSON object
-	 * @return stirng
+	 * @return string
 	 */
+
 	private static String jsParamtoS(Object param) {
 		if (param == null)
 			return null;
@@ -308,6 +374,10 @@ public class CIvilizationUI implements EntryPoint {
 		$wnd.C.showcivorgames(what);
 	}-*/;
 
+	public static native void closejoindialog()/*-{
+		$wnd.C.closejoindialog();
+	}-*/;
+
 	/**
 	 * Wrapper for server itemize command, Sets itemizedcommand attribute in x-app
 	 * 
@@ -338,24 +408,81 @@ public class CIvilizationUI implements EntryPoint {
 		greetingService.resumeGame(gameid, cov, new AsyncBack() {
 			@Override
 			public void onSuccess(String result) {
-				startGame(result);
+				startGame(result, T.TRANINGGAME);
 			}
 		});
 	}
 
 	private static void greetingMenu() {
+		trefresh.cancel();
 		civtoken = null;
 		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
 		showelem(STARTMENU, true);
 		showelem(GAMEMENU, false);
 		setxappattribute("jsboard", "");
 		Element fe = findContent(CIVMAP);
-		fe.setAttribute("hidden","true");
+		fe.setAttribute("hidden", "true");
 		showcivorgames(1);
-   }
+	}
 
 	public static void leaveGame() {
 		call(GreetingService.UNREGISTERTOKEN, civtoken, p -> greetingMenu());
+	}
+
+	public static void unregisterToken() {
+		if (civtoken == null)
+			return;
+		call(GreetingService.UNREGISTERTOKEN, civtoken, p -> {
+			civtoken = null;
+			if (twait != null) {
+				twait.cancel();
+				twait = null;
+			}
+		});
+	}
+
+	private static TWait twait = null;
+
+	public static class TWait extends Timer {
+
+		private final String token;
+
+		TWait(String token) {
+			this.token = token;
+		}
+
+		@Override
+		public void run() {
+			greetingService.allPlayersReady(token, new AsyncBackBoolean() {
+
+				@Override
+				public void onSuccess(Boolean result) {
+					if (result) {
+						closejoindialog();
+						startGame(token, T.STARTTWOPLAYERGAME);
+						cancel();
+					}
+				}
+			});
+		}
+
+	};
+
+	public static void registerTwoPlayersGame(String civ1, String civ2) {
+		call(GreetingService.TWOPLAYERSGAME, civ1 + "," + civ2, s -> {
+			// every half a second
+			twait = new TWait(s);
+			twait.scheduleRepeating(500);
+		});
+	}
+
+	public static void joinGame(int gameid, String civ) {
+		greetingService.joinGame(gameid, civ, new AsyncBack() {
+			@Override
+			public void onSuccess(String s) {
+				startGame(s, T.JOINTWOPLAYERGAME);
+			}
+		});
 	}
 
 	/**
@@ -408,7 +535,15 @@ public class CIvilizationUI implements EntryPoint {
 		$wnd.readjoingames = function() {
 			@com.civilization.ui.client.CIvilizationUI::readJoinGames(*)()
 		}
-		// readJoinGames()
+		$wnd.unregistertoken = function() {
+			@com.civilization.ui.client.CIvilizationUI::unregisterToken(*)()
+		}
+		$wnd.twoplayersgame = function(civ1, civ2) {
+			@com.civilization.ui.client.CIvilizationUI::registerTwoPlayersGame(*)(civ1,civ2)
+		}
+		$wnd.joingame = function(gameid, civ) {
+			@com.civilization.ui.client.CIvilizationUI::joinGame(*)(gameid,civ)
+		}
 
 	}-*/;
 
@@ -444,7 +579,7 @@ public class CIvilizationUI implements EntryPoint {
 	public static void readGames() {
 		call(GreetingService.GETGAMES, null, s -> setListOfGames(s));
 	}
-	
+
 	public static void readJoinGames() {
 		call(GreetingService.WAITINGGAMES, null, s -> setListOfJoinGames(s));
 	}
@@ -514,6 +649,14 @@ public class CIvilizationUI implements EntryPoint {
 
 	// common failure handling
 	abstract static class AsyncBack implements AsyncCallback<String> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			commandfailure(caught.toString() + " Check server logs");
+		}
+	}
+
+	abstract static class AsyncBackBoolean implements AsyncCallback<Boolean> {
 
 		@Override
 		public void onFailure(Throwable caught) {

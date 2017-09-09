@@ -1,5 +1,3 @@
-<link rel="import" href="bower_components/paper-button/paper-button.html">
-
 <dom-module id="civ-square">
 
 <template>
@@ -73,13 +71,10 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
     	}
     
     handleClick() {    	
-//        console.log(this.row);
-//        console.log(this.col);        
         var res = C.getsquare(this.row,this.col)        
         if (res.terrain == null) return
         var co = C.getcurrentcommand()
         var i = C.getitemizedcommand()
-//        console.log(i)
         if (C.emptyS(co)) return        
         C.confexecutedialog("Do you want " + co + " here ?",co,this.row,this.col,null)
     }
@@ -118,6 +113,11 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
         jsdata : {
         	type : String,
         	val : undefined
+        },
+        terrains : {
+        	type : Array,
+        	readOnly: true,
+        	value : ["mountain","water","forest","grassland","desert"]
         }
       }
     }
@@ -137,7 +137,13 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
    refresh(jsdata) {
 	   if (C.emptyS(jsdata)) return
 	   var res = JSON.parse(jsdata);
+	   	   
+	   // remove previously assigned attributes
+	   for (var i=0; i<this.terrains.length; i++) {
+		   C.removeattr(this,this.terrains[i])
+	   }
 	   if (res.terrain == null) return
+		   
        this.setAttribute(res.terrain,1)
        if (res.city != null) {
     	   this.line1 = res.city

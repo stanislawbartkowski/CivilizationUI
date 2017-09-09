@@ -17,6 +17,7 @@
     "paper-dialog-behavior" : "PolymerElements/paper-dialog-behavior",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#2.0",
     "paper-listbox": "PolymerElements/paper-listbox#2.0",
+    "paper-spinner": "PolymerElements/paper-spinner#2.0",
     "web-animations-js": "web-animations/web-animations-js#2.2.2",
      "paper-alert-dialog" : "Collaborne/paper-alert-dialog"       
   },

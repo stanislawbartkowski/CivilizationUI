@@ -109,26 +109,7 @@ var C = (function() {
 		dialogDemo.message = message;
 		dialogDemo.openDialog();
 	  };
-	  
-  function setattr(e,attr,value) {
-     e.setAttribute(attr,value)
-  };
-  
-  function removeattr(e,attr) {
-    e.removeAttribute(attr)
-  };      	  
-
-  function showeleme (e,show) {
-      if (show) removeattr(e,"hidden")
-      else e["hidden"] = true      
-  };
-  
-  // TODO: remove ? 
-  function showelembytag(tag,show) {
-      var e = findbytag(tag)
-      showeleme(e,show)      
-    };
-    
+	      
   function findbytag(tag) {
       var ee = window.findbytag(tag)
       return ee
@@ -141,8 +122,23 @@ var C = (function() {
 
   return {
   
+  getconfirmdialog : function() {
+    return document.getElementById("dialog-demo")
+  },
+  
+  joingamedialog : function(gameid,civ) {
+	const dialogDemo = C.getconfirmdialog()
+	dialogDemo.openDialog = function(e) {
+		this.$.dialog.open()
+	}
+	dialogDemo.confirm = e => C.joingame(gameid,civ)
+	dialogDemo.dismiss = e => {}
+	dialogDemo.message = "Do you want to join game as " + civ + " ?"
+	dialogDemo.openDialog()  
+  }, 
+  
   startgamedialog : function(civ) {
-	const dialogDemo = document.getElementById("dialog-demo")
+	const dialogDemo = C.getconfirmdialog()
 	dialogDemo.openDialog = function(e) {
 		this.$.dialog.open()
 	}
@@ -176,6 +172,11 @@ var C = (function() {
 	dialogDemo.dismiss = e => {}
 	dialogDemo.message = "Do you want to leave the game ? You can resume the game later."
 	dialogDemo.openDialog()
+  },
+  
+  closejoindialog : function() {
+	 const dialogjoin = document.getElementById("join-dialog")
+	 dialogjoin.$.dialog.closeIt()
   },
   
  joindialog : function(civ) {
@@ -222,14 +223,31 @@ var C = (function() {
        var e = document.getElementsByTagName("x-app")
        return e[0]     
      },
-          
+     
+   showeleme :function (e,show) {
+      if (show) C.removeattr(e,"hidden")
+      else e["hidden"] = true      
+    },
+
+   disableleme :function (e,disable) {
+      if (disable) C.setattr(e,"disabled",true)
+      else C.removeattr(e,"disabled")      
+    },
+               
     showelem : function(id,show) {
-      var x = this.getxapp()
+      var x = C.getxapp()
       var e = x.shadowRoot.getElementById(id)
-      showeleme(e,show)
+      C.showeleme(e,show)
     } ,
-
-
+    
+    setattr : function (e,attr,value) {
+       e.setAttribute(attr,value)
+    } ,
+  
+    removeattr : function (e,attr) {
+       e.removeAttribute(attr)
+    },      	  
+    
     // what = 1 show civs (switch off the rest)
     //      = 2 show games (switch off the test)
     //      = 3 show joins
@@ -238,9 +256,9 @@ var C = (function() {
       var gamese = findbytag("civ-games")
       var civse = findbytag("civ-content")
       var civjoin = findbytag("civ-join")
-      if (what == 0 || what == 2 || what == 3) setattr(civse,"listofciv","")
-      if (what == 0 || what == 1 || what == 3) setattr(gamese,"listofgames","")
-      if (what == 0 || what == 1 || what == 2) setattr(civjoin,"listofjoins","")
+      if (what == 0 || what == 2 || what == 3) C.setattr(civse,"listofciv","")
+      if (what == 0 || what == 1 || what == 3) C.setattr(gamese,"listofgames","")
+      if (what == 0 || what == 1 || what == 2) C.setattr(civjoin,"listofjoins","")
       if (what == 0) showhideclosebuttuon(true)
       else showhideclosebuttuon(false)
     } ,
@@ -254,6 +272,11 @@ var C = (function() {
       var gamese = findbytag("civ-games")
       return gamese.listofgames
     } ,
+    
+    getlistofjoingames : function() {
+       var civjoin = findbytag("civ-join")
+       return civjoin.listofjoins
+    },
  	  
     getcurrentcommand : function() {
         return this.getxapp().currentcommand
@@ -300,8 +323,20 @@ var C = (function() {
       window.resumegame(gameid,civ)
     },
     
+    unregistertoken : function() {
+      window.unregistertoken()
+    },
+    
+    registertwoplayersgame : function(civ1,civ2) {
+      window.twoplayersgame(civ1,civ2)
+    },
+    
     leavegame : function() {
       window.leavegame()
+    },
+    
+    joingame : function(gameid,civ) {
+      window.joingame(gameid,civ)
     },
     	  
     emptyS : function(s) { return s == null || s == "" } 

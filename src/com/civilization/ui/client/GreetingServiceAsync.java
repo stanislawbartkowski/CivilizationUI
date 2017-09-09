@@ -28,5 +28,7 @@ public interface GreetingServiceAsync {
 	void resumeGame(int gameid, String civ,AsyncCallback<String> callback);
 
 	void allPlayersReady(String token, AsyncCallback<Boolean> callback);
+
+	void joinGame(int gameid, String civ, AsyncCallback<String> callback);
 	
 }

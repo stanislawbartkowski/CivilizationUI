@@ -27,6 +27,7 @@ public interface GreetingService extends RemoteService {
 	int GETGAMES = 3;
 	int UNREGISTERTOKEN = 4;
 	int WAITINGGAMES = 5;
+	int TWOPLAYERSGAME = 6;
 
 	
 	String getCivData(int what, String param);
@@ -38,5 +39,7 @@ public interface GreetingService extends RemoteService {
 	String resumeGame(int gameid, String civ);
 	
 	boolean allPlayersReady(String  token);	
+	
+	String joinGame(int gameid, String civ);
 	
 }

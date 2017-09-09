@@ -1,5 +1,3 @@
-<link rel="import" href="bower_components/paper-button/paper-button.html">
-
 <dom-module id="civ-joingame">
 
 <template>
@@ -30,47 +28,47 @@
   </style>
   
     <!-- shadow DOM goes here -->
-    <span>
-      <paper-button  raised class="green"  on-click="handleClick">{{button()}}</paper-button>
+    <template id="civs" is="dom-repeat" items="{{lines()}}">      
+       <paper-button id="{{item}}" raised class="green" on-click="_handleClick">{{item}}</paper-button>                       
+    </template>
+    
       <span style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 
                    border-radius: 5px; 
                    background-color: #fff; 
                    color: #444; 
-                   padding:10px;"> {{content()}} </span>
-    </span>
-    
-  </template>
+                   padding:10px;"> {{content()}} </span>    
+         
+     </template>
+     
 
 <script>
 class CivJoinGame extends Polymer.Element {
 
     static get is() { return 'civ-joingame'; }
     
-    handleClick() {
-    	C.resumedialog(this.index)
-    } ;
-
-    button() {
-        var li = JSON.parse(C.getlistofgames())
+    _handleClick(p) {
+        var li = JSON.parse(C.getlistofjoingames())
         var e = li[this.index]
-        var s = ""
-        for (var i = 0; i < e.civ.length; i++) {
-            s += e.civ[i] + " "
-         }
-        return s    	
+    	C.joingamedialog(e.gameid,p.target.id)
+    } ;
+    
+    lines() {
+        var li = JSON.parse(C.getlistofjoingames())
+        var e = li[this.index]
+    	return e.waiting
     }
     
     content() {
-        var li = JSON.parse(C.getlistofgames())
+        var li = JSON.parse(C.getlistofjoingames())
         var e = li[this.index]
-        var createdS = C.datetos(e.createtime)
-        var accessedS = C.datetos(e.accesstime)
-        var phaseS = e.phase
-        var no = e.round
-    	return accessedS + " Created: " + createdS + "   Phase: " + phaseS + "   Round : " + (no + 1) 
+        var s = "Opponent"
+        if (e.players.length > 1) s += "s"
+        s += " " 
+        for (var i = 0; i<e.players.length; i++) s += e.players[i] + " "
+        s += " Created: " + C.datetos(e.createtime)
+        return s
     }
-
-
+    
     // Declare properties for the element's public API
     static get properties() {
       return {

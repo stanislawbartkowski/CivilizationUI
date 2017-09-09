@@ -49,13 +49,18 @@
       <p>
       <template id="civs" is="dom-repeat" filter="notUsed" items="{{lines}}">
       
-       <paper-button id="{{item}}" raised class="green" on-click="_onClickNew">{{item}}</paper-button>
-                
+       <paper-button id="{{item}}" raised class="green" on-click="_onClickCiv">{{item}}</paper-button>
+                       
       </template>
       </p>
+
+       <span id="waiting" hidden>
+         <span style="padding-right:10px; ">Waiting for opponent to join</span> <paper-spinner active></paper-spinner>
+       </span>      
                   
       <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
+<!--       <paper-button dialog-dismiss on-click="_onCancel">Cancel</paper-button> -->
+        <paper-button on-click="_onCancel">Cancel</paper-button> 
       </div>
       
     </paper-dialog>
@@ -85,9 +90,51 @@
     	  return item != this.civname
       }
       
+      _disablecivs(disable) {
+    	  var d = this.$.dialog
+          for (var i = 0; i < this.lines.length; i++) {
+       	     var ge=d.querySelector("#" + this.lines[i])
+       	     if (ge != null) C.disableleme(ge,disable)
+          }
+       	     
+      }
+      
+      _showwaiting(show) {
+    	  var e = this.$.waiting
+    	  C.showeleme(e,show)    	  
+      }
+      
+      _onCancel() {
+    	  C.unregistertoken()
+    	  C.closejoindialog()
+      }
+      
       openIt() {
+    	  this._showwaiting(false)
+    	  this._disablecivs(false)
           this.$.dialog.open();
         }
+      
+      closeIt() {
+          this.$.dialog.close();
+        }
+
+      
+      _onClickCiv(p) {
+    	  const civo = p.target.id
+   		  const dialogDemo = C.getconfirmdialog()
+    	  dialogDemo.openDialog = function(e) {
+    		 this.$.dialog.open()
+          }
+    	  dialogDemo.confirm = e => {
+        	  this._disablecivs(true)
+        	  this._showwaiting(true)
+        	  C.registertwoplayersgame(this.civname,civo)
+    	  }
+    	  dialogDemo.dismiss = e => {}
+    	  dialogDemo.message = "Do you want to start two players game as " + this.civname + " against " + civo + " ?"
+    	  dialogDemo.openDialog()
+      }
 
     }
 

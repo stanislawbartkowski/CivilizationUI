@@ -70,6 +70,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		case WAITINGGAMES:
 			w = II.LISTOFWAITINGGAMES();
 			break;
+		case TWOPLAYERSGAME:
+			w = II.REGISTEROWNERTWOGAME();
+			break;
 		}
 		return II.getData(w, param);
 	}
@@ -99,5 +102,11 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public boolean allPlayersReady(String token) {
 		return II.allPlayersReady(token);
 	}
+
+	@Override
+	public String joinGame(int gameid, String civ) {
+		return II.joinGame(gameid, civ);
+	}
+	
 
 }
