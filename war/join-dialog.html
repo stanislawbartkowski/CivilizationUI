@@ -29,7 +29,7 @@
     
     
     <paper-dialog id="dialog" modal>
-      <h3>Creating two players game</h3>
+      <h3>{{header}}</h3>
       <p/>
       <p>
         <span
@@ -43,7 +43,7 @@
         </span>
       </p>
       
-      <p>Choose opponent civilization</p>
+      <p>Choose opponent civilization to start</p>
       <p/><p/>
       
       <p>
@@ -74,6 +74,14 @@
           civname: {
             type: String,
             value: undefined
+          },
+          header: {
+              type: String,
+              value: undefined
+          },
+          gameid : {
+        	  type : Number,
+        	  value : undefined
           },
           lines : {
         	  type : Array,
@@ -129,7 +137,8 @@
     	  dialogDemo.confirm = e => {
         	  this._disablecivs(true)
         	  this._showwaiting(true)
-        	  C.registertwoplayersgame(this.civname,civo)
+        	  if (this.gameid > 0) C.resumetwoplayersgame(this.gameid,this.civname)
+        	  else C.registertwoplayersgame(this.civname,civo)
     	  }
     	  dialogDemo.dismiss = e => {}
     	  dialogDemo.message = "Do you want to start two players game as " + this.civname + " against " + civo + " ?"

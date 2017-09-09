@@ -118,6 +118,20 @@ var C = (function() {
   // id="close-button"
   function showhideclosebuttuon(show) {
      C.showelem("close-button",show)
+  };
+    
+  function _resumemultidialog(e) {
+	const dialogDemo = document.getElementById("join-dialog")
+	dialogDemo.openDialog = function() {
+	    this.$.dialog.civname = e.civ[0]
+	    this.$.dialog.header = "Resume two players game"
+	    this.$.dialog.gameid = e.gameid	    
+	    lines = []
+	    lines.push(e.civ[1])
+	    this.$.dialog.lines = lines
+		this.$.dialog.openIt()
+	}
+	dialogDemo.openDialog()  
   }    
 
   return {
@@ -147,12 +161,17 @@ var C = (function() {
 	dialogDemo.message = "Do you want to start new game as " + civ + " ?"
 	dialogDemo.openDialog()
   },
-  
+    
   resumedialog : function(index) {
     var li = JSON.parse(C.getlistofgames())
     var e = li[index]
-    var gameid = e.gameid
+    if (e.civ.length > 1) {
+      _resumemultidialog(e)
+      return;
+    }
+        
     var civ = e.civ[0]
+    var gameid = e.gameid
 	const dialogDemo = document.getElementById("dialog-demo")
 	dialogDemo.openDialog = function(e) {
 		this.$.dialog.open()
@@ -183,13 +202,12 @@ var C = (function() {
 	const dialogDemo = document.getElementById("join-dialog")
 	dialogDemo.openDialog = function(e) {
 	    this.$.dialog.civname = civ
+	    this.$.dialog.gameid = -1
+	    this.$.dialog.header = "Creating two players game"
 	    var c = JSON.parse(C.getlistofcivs())
 	    this.$.dialog.lines = c
 		this.$.dialog.openIt()
 	}
-//	dialogDemo.confirm = e => C.leavegame()
-//	dialogDemo.dismiss = e => {}
-//	dialogDemo.message = "Do you want to leave the game ? You can resume the game later."
 	dialogDemo.openDialog()
   },
                
@@ -329,6 +347,10 @@ var C = (function() {
     
     registertwoplayersgame : function(civ1,civ2) {
       window.twoplayersgame(civ1,civ2)
+    },
+    
+    resumetwoplayersgame : function(gameid,civ) {
+       window.resumetwoplayersgame(gameid,civ)
     },
     
     leavegame : function() {

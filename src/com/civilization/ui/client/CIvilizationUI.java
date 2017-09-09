@@ -48,6 +48,7 @@ public class CIvilizationUI implements EntryPoint {
 	private final static String CIVMAP = "civ-map";
 	private final static String GAMEMENU = "gamemenu";
 	private final static String STARTMENU = "startmenu";
+	private final static String JSDATA="jsdata";
 
 	// private static boolean multigame = false;
 	// private static boolean second = false;
@@ -100,10 +101,16 @@ public class CIvilizationUI implements EntryPoint {
 			JSONArray a = getMap();
 			JSONObject o = a.get(fixrow(row)).isArray().get(fixcol(col)).isObject();
 			String s = o.toString();
-			e.setAttribute("jsdata", s);
+			e.setAttribute(JSDATA, s);
 			n.ok = true;
 		});
 		return n.ok;
+	}
+	
+	private static void clearMap() {
+		Element fe = findContent(CIVMAP);
+		Node ss1 = (Node) fe.getPropertyObject("shadowRoot");
+		walkforTag(ss1, "civ-square", e -> e.setAttribute(JSDATA, ""));		
 	}
 
 	/**
@@ -426,6 +433,7 @@ public class CIvilizationUI implements EntryPoint {
 	}
 
 	public static void leaveGame() {
+		clearMap();
 		call(GreetingService.UNREGISTERTOKEN, civtoken, p -> greetingMenu());
 	}
 
@@ -475,6 +483,17 @@ public class CIvilizationUI implements EntryPoint {
 			twait.scheduleRepeating(500);
 		});
 	}
+	
+	public static void resumeTwoPlayersGame(int gameid, String cov) {
+		greetingService.resumeGame(gameid, cov, new AsyncBack() {
+			@Override
+			public void onSuccess(String s) {
+				twait = new TWait(s);
+				twait.scheduleRepeating(500);
+			}
+		});
+	}
+
 
 	public static void joinGame(int gameid, String civ) {
 		greetingService.joinGame(gameid, civ, new AsyncBack() {
@@ -528,6 +547,9 @@ public class CIvilizationUI implements EntryPoint {
 		}
 		$wnd.resumegame = function(param1, param2) {
 			@com.civilization.ui.client.CIvilizationUI::resumeGame(*)(param1,param2)
+		}
+		$wnd.resumetwoplayersgame = function(param1, param2) {
+			@com.civilization.ui.client.CIvilizationUI::resumeTwoPlayersGame(*)(param1,param2)
 		}
 		$wnd.leavegame = function() {
 			@com.civilization.ui.client.CIvilizationUI::leaveGame(*)()

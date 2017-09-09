@@ -122,10 +122,6 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
       }
     }
     
-//   ready() {
-//	   console.log("ready")
-//   }
-
    created() {
 	   console.log("created")
    }
@@ -133,17 +129,24 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
    attached() {
 	   console.log("attached")
    }
-    
-   refresh(jsdata) {
-	   if (C.emptyS(jsdata)) return
-	   var res = JSON.parse(jsdata);
-	   	   
+   
+   _clearsquare() {
 	   // remove previously assigned attributes
 	   for (var i=0; i<this.terrains.length; i++) {
 		   C.removeattr(this,this.terrains[i])
 	   }
-	   if (res.terrain == null) return
-		   
+	   this.line1 = ""
+	   this.line2 = ""
+	   this.line3 = ""	   
+   }
+    
+   refresh(jsdata) {
+	   if (C.emptyS(jsdata)) {
+		   this._clearsquare()
+		   return
+	   }
+	   var res = JSON.parse(jsdata);	   	   
+	   if (res.terrain == null) return		   
        this.setAttribute(res.terrain,1)
        if (res.city != null) {
     	   this.line1 = res.city
