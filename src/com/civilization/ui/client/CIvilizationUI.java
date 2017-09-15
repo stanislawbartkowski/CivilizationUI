@@ -12,7 +12,9 @@
  */
 package com.civilization.ui.client;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Consumer;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -44,6 +46,7 @@ public class CIvilizationUI implements EntryPoint {
 	private static String civ;
 	private static String civtoken;
 	private static JSONObject board;
+	private static List<String> civs = new ArrayList<String>();
 
 	private final static String CIVMAP = "civ-map";
 	private final static String GAMEMENU = "gamemenu";
@@ -199,6 +202,20 @@ public class CIvilizationUI implements EntryPoint {
 		};
 
 	}
+	
+	private static void addC(JSONValue o) {
+		String civ  = o.isObject().get("civ").isString().stringValue();
+		civs.add(civ.toLowerCase());		
+	}
+	
+	private static void buildCivs() {
+		civs.clear();
+		JSONObject oo = board.get("board").isObject();
+		addC(oo.get("you"));
+		JSONArray other = (JSONArray)  oo.get("others");
+		for (int i = 0; i<other.size(); i++)
+			addC(other.get(i));
+	}
 
 	/**
 	 * Trigger map generation
@@ -210,6 +227,7 @@ public class CIvilizationUI implements EntryPoint {
 			// display map
 			JSONValue j = JSONParser.parseStrict(js);
 			board = j.isObject();
+			buildCivs();
 			// map dimension
 			IMapDimension d = getDimensions();
 			Element fe = findContent(CIVMAP);
@@ -235,7 +253,6 @@ public class CIvilizationUI implements EntryPoint {
 	 */
 	private static void redrawheader() {
 		setxappattribute("jsboard", board.toString());
-
 	}
 
 	private static Timer trefresh = new Timer() {
@@ -503,7 +520,15 @@ public class CIvilizationUI implements EntryPoint {
 			}
 		});
 	}
-
+	
+	public static int civToNumb(String civ) {
+		for (int i=0; i<civs.size(); i++) {
+			String s = civs.get(i);
+			if (s.equalsIgnoreCase(civ)) return i;
+		}
+		return -1;
+	}
+	
 	/**
 	 * Called at the beginning. Defines all GWT functions available from JS code
 	 */
@@ -565,6 +590,9 @@ public class CIvilizationUI implements EntryPoint {
 		}
 		$wnd.joingame = function(gameid, civ) {
 			@com.civilization.ui.client.CIvilizationUI::joinGame(*)(gameid,civ)
+		}
+		$wnd.civtonumb = function(civ) {
+			return @com.civilization.ui.client.CIvilizationUI::civToNumb(*)(civ)
 		}
 
 	}-*/;

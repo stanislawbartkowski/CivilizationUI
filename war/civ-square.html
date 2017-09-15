@@ -3,57 +3,111 @@
 <template>
 
 <style>
-    /* local styles go here */
-    :host {
-      display: inline-block;  
-      /* display: none;*/
-      width : 120px;
-      height : 40px;
-      /* background: transparent; */
-      background: #eaeaea;
-    }
     paper-button {
       text-transform: none;
    }
-    :host([Water]) {
-        background: LightBlue;
-        }
-
-    :host([Desert]) {
-        background: LightGoldenRodYellow;
-        }
-        
-    :host([Forest]) {
-        background: ForestGreen 
-        }
-
-    :host([Grassland]) {
-        background: DarkSeaGreen 
-        }
-
-    :host([Mountain]) {
-        background: DarkOliveGreen 
-        } 
-       
-      paper-item {
-      --paper-item-min-height : 10px;
-      --paper-item: {
-          font-size: 80%;
-          line-height: 120%; 
-        };
-      }
-  </style>
-</custom-style>
    
-  </style>
-  
-   <paper-item>
-  <paper-item-body three-line>
-    <div>[[line1]]</div>
-    <div secondary>[[line2]]</div>
-    <div>[[line3]]</div>
-  </paper-item-body>
-</paper-item>
+  :host {
+    display: inline-block;
+    /* border: ridge; */
+    border: 1px solid;
+    border-color: DarkGray;
+    background-size: 100% 100%;
+    position : relative;
+  }
+
+  :host([Glowing]) {
+    display: inline-block;
+    background-size: 100% 100%;
+    position : relative;
+
+    border: 2px solid #dadada;
+    border-radius: 7px;
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+  }
+
+  :host([Capital]) {
+    background-image: url("images/cities/capital.svg");
+    background-repeat: no-repeat;
+    background-color: ForestGreen;
+    background-size: 60%;
+    background-position: top;
+  }
+
+  :host([City]) {
+    background-image: url("images/cities/city.svg");
+    background-repeat: no-repeat;
+    background-color: ForestGreen;
+    background-size: 60%;
+    background-position: top;
+  }
+
+
+  :host([Forest]) {
+    background-image: url("images/terrain/forest.svg");
+    background-size: 60% 60%;
+    background-repeat: no-repeat;
+    background-color: ForestGreen;
+    background-position: center;
+  }
+
+  :host([Water]) {
+    background-image: url("images/terrain/water.svg");
+    background-color: lightblue;
+  }
+
+  :host([Mountain]) {
+    background-image: url("images/terrain/mountain.svg");
+    background-color: DarkOliveGreen;
+  }
+
+  :host([Grassland]) {
+    background-image: url("images/terrain/grassland.svg");
+    background-color: DarkSeaGreen;
+  }
+
+  :host([Desert]) {
+    background-image: url("images/terrain/desert.svg");
+    background-color: LightGoldenRodYellow;
+  }
+
+ </style>
+
+   <div style="width : {{boxwidth}}px; height : {{boxheight}}px; ">
+     <img id="trade" hidden src="images/tokens/trade.svg"      style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <img id="prod1" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <img id="prod2" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <img id="iron" hidden src="images/resource/iron.svg"      style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <img id="wheat" hidden src="images/resource/wheat.svg"  title="Wheat"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <img id="incense" hidden src="images/resource/incense.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <img id="silk" hidden src="images/resource/silk.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <img id="coin" hidden src="images/resource/coin.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <img id="hut" hidden src="images/huts/hut.svg"    style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;">
+     <img id="village" hidden src="images/huts/village.svg"    style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;">
+
+     <img id="prodcity" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
+     <paper-badge id="prodcitynumber" hidden for="prodcity" label="0">
+     </paper-badge>
+     
+     <img id="defencecity" hidden src="images/cities/shield.svg" style="z-index:1; position:absolute; bottom:0px; right:13px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <paper-badge id="defencecitynumber" hidden for="defencecity" label="0">
+     </paper-badge>
+
+      <s-svg fill="{{figurecolor1}}" src="images/figures/army.svg"></s-svg>
+     </span>
+     <paper-badge hidden id="armynumber" for="army" label="5">
+     </paper-badge>
+
+     <span id="scout" style="z-index:2; position:absolute; display:none; width:50%; height:50%; top:{{scouttop}}px; right:{{scoutright}}px">
+      <s-svg fill="{{figurecolor1}}" src="images/figures/scout.svg"></s-svg>
+     </span>
+     <paper-badge hidden id="scoutnumber" for="scout" label="5">
+      </paper-badge>
+     
+   </div>
+
 
 </template>
 
@@ -65,21 +119,20 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
         Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
     }
 
-    static get is() { 
-    	
-    	return 'civ-square';  
+    static get is() {
+    	return 'civ-square';
     	}
-    
-    handleClick() {    	
-        var res = C.getsquare(this.row,this.col)        
+
+    handleClick() {
+        var res = C.getsquare(this.row,this.col)
         if (res.terrain == null) return
         var co = C.getcurrentcommand()
         var i = C.getitemizedcommand()
-        if (C.emptyS(co)) return        
+        if (C.emptyS(co)) return
         C.confexecutedialog("Do you want " + co + " here ?",co,this.row,this.col,null)
     }
-    
-  static get observers() { 
+
+  static get observers() {
 	  return [
     'refresh(jsdata)'
     ]
@@ -89,85 +142,159 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
     // Declare properties for the element's public API
     static get properties() {
       return {
-    	line1 : {
-    		type : String,
-    		value : undefined
-    	},
-    	line2 : {
-    		type : String,
-    		value : undefined
-    	},
-    	line3 : {
-    		type : String,
-    		value : undefined
-    	},
-
-        row: {
+          boxwidth: {
+              type: Number,
+              readOnly: true,
+              value: 60
+          },
+        boxheight: {
+            type: Number,
+            readOnly: true,
+            value: 50
+          },
+        tokenwidth  : {
+            type: Number,
+            readOnly: true,
+            value: 16
+        },
+        tokenheight  : {
+            type: Number,
+            readOnly: true,
+            value: 12
+          },
+        hutwidth  : {
+              type: Number,
+              readOnly: true,
+              value: 45
+          },
+        hutheight  : {
+              type: Number,
+              readOnly: true,
+              value: 45
+            },
+        hutbottom  : {
           type: Number,
-          value: -1
+          value: function() { return (this.boxheight-this.hutheight)/2 }
+          },
+        hutleft  : {
+            type: Number,
+            value: function() { return (this.boxwidth - this.hutwidth)/2 }
+            },
+        armytop : {
+          type : Number,
+          readOnly: true,
+          value : 9
         },
-        col : {
-        	type : Number,
-        	val : -1
+        armyleft : {
+          type : Number,
+          readOnly: true,
+          value : 2
         },
+        scouttop : {
+          type : Number,
+          readOnly: true,
+          value : 7
+        },
+        scoutright : {
+          type : Number,
+          readOnly: true,
+          value : 2
+        },
+
         jsdata : {
-        	type : String,
-        	val : undefined
-        },
-        terrains : {
-        	type : Array,
-        	readOnly: true,
-        	value : ["mountain","water","forest","grassland","desert"]
-        }
-      }
+             type : String,
+             val : undefined
+         },
+         figurecolor1 : {
+           type: String,
+           value: function() { return C.color1(); }
+         },
+         figurecolor2 : {
+             type: String,
+             value: function() { return C.color2(); }
+         },
+         terrains : {
+           type : Array,
+           readOnly: true,
+           value : ["mountain","water","forest","grassland","desert", "capital", "city"]
+         }
     }
-    
-   created() {
-	   console.log("created")
+    }
+
+   _removearmy() {
+     C.displayelem(this.$.army, false)
+     C.showeleme(this.$.armynumber,false)	   
    }
    
-   attached() {
-	   console.log("attached")
+   _removescout() {
+	     C.displayelem(this.$.scout, false)
+	     C.showeleme(this.$.scoutnumber,false)      
    }
-   
+
    _clearsquare() {
 	   // remove previously assigned attributes
-	   for (var i=0; i<this.terrains.length; i++) {
+	   for (var i=0; i<this.terrains.length; i++)
 		   C.removeattr(this,this.terrains[i])
-	   }
-	   this.line1 = ""
-	   this.line2 = ""
-	   this.line3 = ""	   
-   }
-    
+        C.showeleme(this.$.prodcity,false)
+        C.showeleme(this.$.defencecity,false)
+        C.showeleme(this.$.prodcitynumber,false)
+        C.showeleme(this.$.defencecitynumber,false)
+        
+        this._removearmy()
+        this._removescout()
+                
+        C.showeleme(this.$.trade,false)
+        C.showeleme(this.$.prod1,false)
+        C.showeleme(this.$.prod2,false)
+        C.showeleme(this.$.iron,false)
+        C.showeleme(this.$.wheat,false)
+        C.showeleme(this.$.incense,false)
+        C.showeleme(this.$.silk,false)
+        C.showeleme(this.$.coin,false)
+        C.showeleme(this.$.hut,false)
+        C.showeleme(this.$.village,false)        
+    }
+
    refresh(jsdata) {
-	   if (C.emptyS(jsdata)) {
-		   this._clearsquare()
-		   return
-	   }
-	   var res = JSON.parse(jsdata);	   	   
-	   if (res.terrain == null) return		   
-       this.setAttribute(res.terrain,1)
-       if (res.city != null) {
-    	   this.line1 = res.city
-    	   this.line2 = res.civ
-    	   this.line3 = "P:" + res.production
-    	   return
-       }
-       if (res.capciv == null) this.line1 = res.terrain
-       else this.line1 = "*" + res.terrain + "* Capital"
-       var s = ""
-       if (res.trade != -1) s = s + "T:" + res.trade + " "
-       if (res.production != -1) s = s + "P:" + res.production + " "
-       if (res.resource != null) s = s + "R:" + res.resource
-       this.line2 = s
-       s = ""
-       if (res.numberofArmies > 0 || res.numberofScouts > 0) {
-    	   s = res.civ + " A:" + res.numberofArmies + " S:" + res.numberofScouts
-       }
-       this.line3 = s
-   }
-       
+
+	     if (C.emptyS(jsdata)) {
+	         this._clearsquare()
+	         return
+	       }
+         const j = JSON.parse(jsdata);
+         if (j.city != null) {
+            C.showeleme(this.$.prodcity,true)
+            C.setColorForCity(this,j.civ,j.city)
+            this.setAttribute(j.city,1);
+            C.displaybadge(this.$.prodcitynumber,j.production)
+            C.displaybadge(this.$.defencecitynumber,"+"+j.defence)
+            C.showeleme(this.$.defencecity,true)
+            return;
+         }
+	     if (j.terrain == null) return
+	     this.setAttribute(j.terrain,1)
+	     if (j.production >= 1) C.showeleme(this.$.prod1,true)
+	     if (j.production >= 2) C.showeleme(this.$.prod2,true)
+	     if (j.trade >= 1) C.showeleme(this.$.trade,true)
+	     if (j.resource == "Iron") C.showeleme(this.$.iron,true)
+	     if (j.resource == "Wheat") C.showeleme(this.$.wheat,true)
+	     if (j.resource == "Incense") C.showeleme(this.$.incense,true)
+	     if (j.resource == "Silk") C.showeleme(this.$.silk,true)
+	     if (j.resource == "Coin") C.showeleme(this.$.coin,true)
+	     if (j.hv == "Hut") C.showeleme(this.$.hut,true)
+	     if (j.hv == "Village") C.showeleme(this.$.village,true)
+         if (j.numberofArmies > 0) {
+             C.displayelem(this.$.army, true)
+             if (j.numberofArmies > 1) C.displaybadge(this.$.armynumber,j.numberofArmies)
+         } 
+         else this._removearmy()
+         
+         if (j.numberofScouts > 0) {
+             C.displayelem(this.$.scout, true)
+             if (j.numberofScouts > 1) C.displaybadge(this.$.scoutnumber,j.numberofScouts)
+         }
+         else this._removescout()
+	}
 
   }
 
@@ -176,4 +303,3 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
 </script>
 
 </dom-module>
-

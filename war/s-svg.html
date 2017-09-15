@@ -1,0 +1,71 @@
+<!--
+@license
+Copyright (c) 2016 The StartPolymer Project Authors. All rights reserved.
+This code may only be used under the MIT License found at https://github.com/StartPolymer/license
+The complete set of authors may be found at https://github.com/StartPolymer/authors
+The complete set of contributors may be found at https://github.com/StartPolymer/contributors
+-->
+
+<dom-module id="s-svg">
+<template>
+
+<style>
+:host {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+path {
+  @apply(--s-svg-path);
+}
+</style>
+
+</template>
+<script>
+Polymer({
+  is: 's-svg',
+  properties: {
+    fill: {
+      type: String,
+      value: null
+    },
+    src: {
+      type: String,
+      value: null
+    }
+  },
+  observers: [
+    '_srcChanged(src, isAttached)'
+  ],
+  /**
+   * Get the image and displays it.
+   */
+  _srcChanged: function(src, isAttached) {
+    // Get SVG file content.
+    if (src && isAttached) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var responseText = xhr.responseText;
+          // Set new SVG Attributes.
+//          responseText = responseText.replace(/<svg[\s\S]*?>/i, '<svg ' + xmlns + viewBox + preserveAspectRatio + 'style="' + style + '">');
+          if (this.fill != null)
+            responseText = responseText.replace(/fill=\"[\s\S]*?\"/ig,'fill=\"'+this.fill +'\"');
+          var svg = new DOMParser().parseFromString(responseText, 'application/xml').documentElement;
+          // Remove previous SVG.
+          if (Polymer.dom(this.root).firstChild) {
+            Polymer.dom(this.root).removeChild(Polymer.dom(this.root).firstChild);
+          }
+          // Update the view.
+          Polymer.dom(this.root).appendChild(svg.cloneNode(true));
+          this.fire('s-svg-load');
+        }
+      }.bind(this);
+      xhr.open('GET', src, true);
+      xhr.send();
+    }
+  }
+});
+</script>
+</dom-module>

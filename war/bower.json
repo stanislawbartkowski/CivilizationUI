@@ -11,15 +11,18 @@
     "polymer": "Polymer/polymer#^2.0.0",
     "paper-button": "PolymerElements/paper-button#1 - 2",
     "iron-flex-layout" : "PolymerElements/iron-flex-layout",
-    "paper-item" : "PolymerElements/paper-item",    
+    "paper-item" : "PolymerElements/paper-item",
     "paper-menu-button" : "PolymerElements/paper-menu-button",
     "paper-dialog" : "PolymerElements/paper-dialog",
     "paper-dialog-behavior" : "PolymerElements/paper-dialog-behavior",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#2.0",
     "paper-listbox": "PolymerElements/paper-listbox#2.0",
     "paper-spinner": "PolymerElements/paper-spinner#2.0",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#2.1.0",
+    "paper-badge ": "PolymerElements/paper-badge",
+    "app-localize-behavior" : "PolymerElements/app-localize-behavior",
     "web-animations-js": "web-animations/web-animations-js#2.2.2",
-     "paper-alert-dialog" : "Collaborne/paper-alert-dialog"       
+   "paper-alert-dialog" : "Collaborne/paper-alert-dialog"
   },
   "variants": {
     "1.x": {
