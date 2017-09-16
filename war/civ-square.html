@@ -6,14 +6,15 @@
     paper-button {
       text-transform: none;
    }
-   
+
   :host {
     display: inline-block;
     /* border: ridge; */
-    border: 1px solid;
+    border: 0px solid;
     border-color: DarkGray;
     background-size: 100% 100%;
     position : relative;
+    float:left;
   }
 
   :host([Glowing]) {
@@ -36,7 +37,7 @@
     background-position: top;
   }
 
-  :host([City]) {
+  :host([Normal]) {
     background-image: url("images/cities/city.svg");
     background-repeat: no-repeat;
     background-color: ForestGreen;
@@ -76,36 +77,52 @@
  </style>
 
    <div style="width : {{boxwidth}}px; height : {{boxheight}}px; ">
-     <img id="trade" hidden src="images/tokens/trade.svg"      style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <img id="prod1" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <img id="prod2" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <img id="iron" hidden src="images/resource/iron.svg"      style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <img id="wheat" hidden src="images/resource/wheat.svg"  title="Wheat"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <img id="incense" hidden src="images/resource/incense.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <img id="silk" hidden src="images/resource/silk.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <img id="coin" hidden src="images/resource/coin.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <img id="hut" hidden src="images/huts/hut.svg"    style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;">
-     <img id="village" hidden src="images/huts/village.svg"    style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;">
+     <img id="trade" hidden src="images/tokens/trade.svg"      style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="prod1" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="prod2" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="iron" hidden src="images/resource/iron.svg"      style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="wheat" hidden src="images/resource/wheat.svg"  title="Wheat"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="incense" hidden src="images/resource/incense.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="silk" hidden src="images/resource/silk.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="coin" hidden src="images/resource/coin.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="hut" hidden src="images/huts/hut.svg"    style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
+     <img id="village" hidden src="images/huts/village.svg"    style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
 
-     <img id="prodcity" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;">
-     <paper-badge id="prodcitynumber" hidden for="prodcity" label="0">
-     </paper-badge>
-     
-     <img id="defencecity" hidden src="images/cities/shield.svg" style="z-index:1; position:absolute; bottom:0px; right:13px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <paper-badge id="defencecitynumber" hidden for="defencecity" label="0">
-     </paper-badge>
+     <span id="attcity" style="display:none">
+       <img id="prodcity" src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+       <paper-badge id="prodcitynumber" for="prodcity" label="0">
+       </paper-badge>
 
-      <s-svg fill="{{figurecolor1}}" src="images/figures/army.svg"></s-svg>
+       <img id="defencecity" src="images/cities/shield.svg" style="z-index:1; position:absolute; bottom:0px; right:13px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+       <paper-badge id="defencecitynumber" for="defencecity" label="0">
+       </paper-badge>
+    </span>
+
+
+     <span id="army1" style="z-index:2; position:absolute; display:none; width:50%; height:50%; top:{{armytop}}px; left:{{armyleft}}px">
+       <s-svg fill="{{figurecolor1}}" src="images/figures/army.svg" ></s-svg>
      </span>
-     <paper-badge hidden id="armynumber" for="army" label="5">
+     <paper-badge hidden id="army1number" for="army1" label="5">
      </paper-badge>
 
-     <span id="scout" style="z-index:2; position:absolute; display:none; width:50%; height:50%; top:{{scouttop}}px; right:{{scoutright}}px">
+     <span id="scout1" style="z-index:2; position:absolute; display:none; width:50%; height:50%; top:{{scouttop}}px; right:{{scoutright}}px">
       <s-svg fill="{{figurecolor1}}" src="images/figures/scout.svg"></s-svg>
      </span>
-     <paper-badge hidden id="scoutnumber" for="scout" label="5">
+     <paper-badge hidden id="scout1number" for="scout1" label="5">
       </paper-badge>
-     
+
+     <span id="army2" style="z-index:2; position:absolute; display:none; width:50%; height:50%; top:{{armytop}}px; left:{{armyleft}}px">
+       <s-svg fill="{{figurecolor2}}" src="images/figures/army.svg" ></s-svg>
+     </span>
+     <paper-badge hidden id="army2number" for="army2" label="5">
+     </paper-badge>
+
+     <span id="scout2" style="z-index:2; position:absolute; display:none; width:50%; height:50%; top:{{scouttop}}px; right:{{scoutright}}px">
+      <s-svg fill="{{figurecolor2}}" src="images/figures/scout.svg"></s-svg>
+     </span>
+     <paper-badge hidden id="scout2number" for="scout2" label="5">
+      </paper-badge>
+
    </div>
 
 
@@ -120,8 +137,8 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
     }
 
     static get is() {
-    	return 'civ-square';
-    	}
+        return 'civ-square';
+        }
 
     handleClick() {
         var res = C.getsquare(this.row,this.col)
@@ -133,7 +150,7 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
     }
 
   static get observers() {
-	  return [
+      return [
     'refresh(jsdata)'
     ]
   }
@@ -150,7 +167,7 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
         boxheight: {
             type: Number,
             readOnly: true,
-            value: 50
+            value: 45
           },
         tokenwidth  : {
             type: Number,
@@ -216,85 +233,100 @@ class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
          terrains : {
            type : Array,
            readOnly: true,
-           value : ["mountain","water","forest","grassland","desert", "capital", "city"]
+           value : ["mountain","water","forest","grassland","desert", "capital", "normal"]
          }
     }
     }
 
    _removearmy() {
-     C.displayelem(this.$.army, false)
-     C.showeleme(this.$.armynumber,false)	   
-   }
-   
-   _removescout() {
-	     C.displayelem(this.$.scout, false)
-	     C.showeleme(this.$.scoutnumber,false)      
+     C.displayelem(this.$.army1, false)
+     C.showeleme(this.$.army1number,false)
+     C.displayelem(this.$.army1, false)
+     C.showeleme(this.$.army1number,false)
    }
 
-   _clearsquare() {
-	   // remove previously assigned attributes
-	   for (var i=0; i<this.terrains.length; i++)
-		   C.removeattr(this,this.terrains[i])
-        C.showeleme(this.$.prodcity,false)
-        C.showeleme(this.$.defencecity,false)
-        C.showeleme(this.$.prodcitynumber,false)
-        C.showeleme(this.$.defencecitynumber,false)
-        
+   _removescout() {
+         C.displayelem(this.$.scout1, false)
+         C.showeleme(this.$.scout1number,false)
+         C.displayelem(this.$.scout1, false)
+         C.showeleme(this.$.scout1number,false)
+   }
+
+   _removeterrain() {
+       for (var i=0; i<this.terrains.length; i++)
+           C.removeattr(this,this.terrains[i])
+       C.showeleme(this.$.trade,false)
+       C.showeleme(this.$.prod1,false)
+       C.showeleme(this.$.prod2,false)
+       C.showeleme(this.$.iron,false)
+       C.showeleme(this.$.wheat,false)
+       C.showeleme(this.$.incense,false)
+       C.showeleme(this.$.silk,false)
+       C.showeleme(this.$.coin,false)
+       C.showeleme(this.$.hut,false)
+       C.showeleme(this.$.village,false)
+   }
+
+   _clearsquare() {        
+        C.displayelem(this.$.attcity,false)
         this._removearmy()
         this._removescout()
-                
-        C.showeleme(this.$.trade,false)
-        C.showeleme(this.$.prod1,false)
-        C.showeleme(this.$.prod2,false)
-        C.showeleme(this.$.iron,false)
-        C.showeleme(this.$.wheat,false)
-        C.showeleme(this.$.incense,false)
-        C.showeleme(this.$.silk,false)
-        C.showeleme(this.$.coin,false)
-        C.showeleme(this.$.hut,false)
-        C.showeleme(this.$.village,false)        
+        this._removeterrain()
+
     }
 
    refresh(jsdata) {
 
-	     if (C.emptyS(jsdata)) {
-	         this._clearsquare()
-	         return
-	       }
+         if (C.emptyS(jsdata)) {
+             this._clearsquare()
+             return
+           }
          const j = JSON.parse(jsdata);
          if (j.city != null) {
-            C.showeleme(this.$.prodcity,true)
+            this._removeterrain()
+            C.displayelem(this.$.attcity,true)
             C.setColorForCity(this,j.civ,j.city)
             this.setAttribute(j.city,1);
             C.displaybadge(this.$.prodcitynumber,j.production)
             C.displaybadge(this.$.defencecitynumber,"+"+j.defence)
-            C.showeleme(this.$.defencecity,true)
             return;
          }
-	     if (j.terrain == null) return
-	     this.setAttribute(j.terrain,1)
-	     if (j.production >= 1) C.showeleme(this.$.prod1,true)
-	     if (j.production >= 2) C.showeleme(this.$.prod2,true)
-	     if (j.trade >= 1) C.showeleme(this.$.trade,true)
-	     if (j.resource == "Iron") C.showeleme(this.$.iron,true)
-	     if (j.resource == "Wheat") C.showeleme(this.$.wheat,true)
-	     if (j.resource == "Incense") C.showeleme(this.$.incense,true)
-	     if (j.resource == "Silk") C.showeleme(this.$.silk,true)
-	     if (j.resource == "Coin") C.showeleme(this.$.coin,true)
-	     if (j.hv == "Hut") C.showeleme(this.$.hut,true)
-	     if (j.hv == "Village") C.showeleme(this.$.village,true)
+         if (j.terrain == null) return
+         this.setAttribute(j.terrain,1)
+         if (j.production >= 1) C.showeleme(this.$.prod1,true)
+         if (j.production >= 2) C.showeleme(this.$.prod2,true)
+         if (j.trade >= 1) C.showeleme(this.$.trade,true)
+         if (j.resource == "Iron") C.showeleme(this.$.iron,true)
+         if (j.resource == "Wheat") C.showeleme(this.$.wheat,true)
+         if (j.resource == "Incense") C.showeleme(this.$.incense,true)
+         if (j.resource == "Silk") C.showeleme(this.$.silk,true)
+         if (j.resource == "Coin") C.showeleme(this.$.coin,true)
+         if (j.hv == "Hut") C.showeleme(this.$.hut,true)
+         if (j.hv == "Village") C.showeleme(this.$.village,true)
          if (j.numberofArmies > 0) {
-             C.displayelem(this.$.army, true)
-             if (j.numberofArmies > 1) C.displaybadge(this.$.armynumber,j.numberofArmies)
-         } 
+             if (C.civtonumb(j.civ) == 0) {
+               C.displayelem(this.$.army1, true)
+               if (j.numberofArmies > 1) C.displaybadge(this.$.army1number,j.numberofArmies)
+             }
+             else {
+                 C.displayelem(this.$.army2, true)
+                 if (j.numberofArmies > 1) C.displaybadge(this.$.army2number,j.numberofArmies)
+             }
+         }
          else this._removearmy()
-         
+
          if (j.numberofScouts > 0) {
-             C.displayelem(this.$.scout, true)
-             if (j.numberofScouts > 1) C.displaybadge(this.$.scoutnumber,j.numberofScouts)
+             if (C.civtonumb(j.civ) == 0) {
+               C.displayelem(this.$.scout1, true)
+               if (j.numberofScouts > 1) C.displaybadge(this.$.scout1number,j.numberofScouts)
+             }
+             else {
+                 C.displayelem(this.$.scout2, true)
+                 if (j.numberofScouts > 1) C.displaybadge(this.$.scout2number,j.numberofScouts)
+             }
          }
          else this._removescout()
-	}
+    }
 
   }
 

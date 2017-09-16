@@ -254,6 +254,7 @@ var C = (function() {
 
     displaybadge : function(e,number) {
       C.showeleme(e,true)
+      e.updatePosition()
       e.label = number
     },
 
@@ -373,7 +374,7 @@ var C = (function() {
 
     emptyS : function(s) { return s == null || s == "" },
     
-    color1 : function() { return "Green" },
+    color1 : function() { return "Aqua" },
     color2 : function() { return "Red" },
     
     civtonumb : function(civ) {

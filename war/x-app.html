@@ -48,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <template>
 
  <style is="custom-style">
- 
+     
   paper-icon-button[hidden] {
        display: none;
    }
@@ -104,17 +104,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       --app-drawer-content-container: {
         background-color: #eee;
       }
-    }   
+    }  
+     
     .drawer-content {
       margin-top: 80px;
       height: calc(100% - 80px);
       overflow: auto;
     }
+    
+    .map-show {
+      padding-top: 5px;
+      padding-left: 5px;
+    }
+       
     </style>
 
-  <app-header-layout>
+  <app-header-layout fullbleed>
 
-    <app-header title="Version: 2017/09/15" fixed effects="waterfall" slot="header">
+    <app-header title="Version: 2017/09/15" fixed slot="header" >
       <app-toolbar>
             <div main-title>Civilization</div>
             <div style="width:5%;"></div>
@@ -122,7 +129,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div style="width:5%;"></div>
             <div>[[turnno]]</div>
             <div style="width:5%;"></div>
-            <div>[[phase]]</div>
             <div style="width:30%;"></div>
             <paper-icon-button id="close-button" hidden="true" icon="close" on-click="_onClose" title="Leave the game"></paper-icon-button>
       </app-toolbar>
@@ -193,10 +199,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
       </app-drawer>
       
+      <div content>
          <civ-content></civ-content>    
          <civ-games></civ-games>
-         <civ-join></civ-join> 
-         <civ-map></civ-map>          
+         <civ-join></civ-join>
+         
+         <div class="map-show">
+           <civ-map></civ-map>      
+         </div>
+     </div>         
 
     </app-drawer-layout>
 
