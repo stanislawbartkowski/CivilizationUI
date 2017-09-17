@@ -1,8 +1,10 @@
 <dom-module id="civ-map">
   <template>
+  
     <custom-style>
       <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
     </custom-style>
+    
     <style>
       .container, .layout {
         /* background-color: #ccc; */
@@ -19,16 +21,15 @@
     </style>
     
     
-     <template id="map" is="dom-repeat" items="{{rows}}">
-  <div class="layout horizontal">
-     <template is="dom-repeat" items="{{cols}}" index-as="colno">
-        <div>
-          <civ-square row="{{index}}" col="{{colno}}"></civ-square>
-        </div>        
-     </template>        
-  </div>        
-    </template>
-    </div>
+   <template id="map" is="dom-repeat" items="{{rows}}">
+      <div class="layout horizontal">
+        <template is="dom-repeat" items="{{cols}}" index-as="colno">
+          <div>
+            <civ-square row="{{index}}" col="{{colno}}"></civ-square>
+          </div>        
+        </template>        
+      </div>        
+   </template>
   
   </template>
   <script>
@@ -66,12 +67,9 @@
         		}
         	   for(var i = 0; i < colnumb; i++) {
        		    this.cols.push({});
-       		}
-        	   
-           }
-	        
-
-		  }
+       		}        	   
+           }	        
+        }
 	);
   </script>
 

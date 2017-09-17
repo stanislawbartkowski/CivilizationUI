@@ -65,7 +65,9 @@ class CivGameLine extends Polymer.Element {
         var accessedS = C.datetos(e.accesstime)
         var phaseS = e.phase
         var no = e.round
-    	return accessedS + " Created: " + createdS + "   Phase: " + phaseS + "   Round : " + (no + 1) 
+    	const q = C.localize('resumegameline','accesstime',accessedS,'createtime',createdS,'phase',phaseS,'roundno',no+1)
+    	return q
+    			
     }
 
 
@@ -83,7 +85,7 @@ class CivGameLine extends Polymer.Element {
 
   // Register the x-custom element with the browser
   customElements.define(CivGameLine.is, CivGameLine);
-</script></script>
+</script>
 
 </dom-module>
 

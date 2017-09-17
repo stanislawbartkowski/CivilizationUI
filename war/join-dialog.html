@@ -1,6 +1,7 @@
  <dom-module id="join-dialog">
   <template>
     <style>
+    
        :host {
         display: block;
       }
@@ -43,7 +44,7 @@
         </span>
       </p>
       
-      <p>Choose opponent civilization to start</p>
+      <p>{{localize('chooseopponentlabel')}}</p>
       <p/><p/>
       
       <p>
@@ -55,19 +56,18 @@
       </p>
 
        <span id="waiting" hidden>
-         <span style="padding-right:10px; ">Waiting for opponent to join</span> <paper-spinner active></paper-spinner>
+         <span style="padding-right:10px; ">{{localize('waitingforopponentlabel')}}</span> <paper-spinner active></paper-spinner>
        </span>      
                   
       <div class="buttons">
-<!--       <paper-button dialog-dismiss on-click="_onCancel">Cancel</paper-button> -->
-        <paper-button on-click="_onCancel">Cancel</paper-button> 
+        <paper-button on-click="_onCancel">{{localize('cancellabel')}}</paper-button> 
       </div>
       
     </paper-dialog>
   </template>
 
   <script>
-    class JoinDialog extends Polymer.Element {
+    class JoinDialog extends Polymer.CivLocalize(Polymer.Element) {
       static get is() { return 'join-dialog'; }
       static get properties() {
         return {
@@ -141,7 +141,7 @@
         	  else C.registertwoplayersgame(this.civname,civo)
     	  }
     	  dialogDemo.dismiss = e => {}
-    	  dialogDemo.message = "Do you want to start two players game as " + this.civname + " against " + civo + " ?"
+		  dialogDemo.message = this.localize('doyouwanttostartquestion','civname',this.civname,'civopposite',civo)
     	  dialogDemo.openDialog()
       }
 

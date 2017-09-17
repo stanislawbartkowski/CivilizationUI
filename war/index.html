@@ -12,6 +12,7 @@
     
   <script type="text/javascript" language="javascript" src="civ-js.js"></script>
    
+  <link rel="import" href="civ-localize.html"> 
   <link rel="import" href="x-app.html"> 
   <link rel="import" href="civ-choose.html">  
   <link rel="import" href="civ-gameline.html">  
@@ -22,6 +23,9 @@
   <link rel="import" href="civ-join.html">
   <link rel="import" href="civ-joingame.html">
   <link rel="import" href="join-dialog.html">
+  <link rel="import" href="civ-player.html">
+  <link rel="import" href="civ-gamestate.html">
+  
    
   <style>
     body {
@@ -37,7 +41,6 @@
 	                      confirm-button="OK" on-confirm="confirm" on-dismiss="dismiss">
   {{message}} 
       </paper-alert-dialog> 
-      <paper-button on-tap="openDialog" raised>Open</paper-button>
   </template> 
 </dom-bind>
 

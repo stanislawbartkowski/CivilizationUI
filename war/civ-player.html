@@ -1,0 +1,148 @@
+<dom-module id="civ-player"> <template>
+
+	<paper-item>
+	<div>[[civname]]</div>
+	</paper-item>
+	<paper-item>
+	<div>[[numberoftrade]]</div>
+	</paper-item>
+	<paper-item>
+	<div>[[citieslimit]]</div>
+	</paper-item>
+	<paper-item>
+	<div>[[armieslimit]]</div>
+	</paper-item>
+	<paper-item>
+	<div>[[scoutslimit]]</div>
+	</paper-item>
+	<paper-item>
+	<div>[[currentcommand]]</div>
+	</paper-item>
+	<paper-icon-item id="setcapital" on-click="_onClick">
+	<iron-icon icon="inbox" slot="item-icon"></iron-icon> <span>Capital</span>
+	</paper-icon-item>
+	<paper-icon-item id="setcity" on-click="_onClick"> <iron-icon
+		icon="euro-symbol" slot="item-icon"></iron-icon> <span>Set City</span>
+	</paper-icon-item>
+	<paper-icon-item id="endofphase" on-click="_onClick">
+	<iron-icon icon="done" slot="item-icon"></iron-icon> <span>EndOfPhase</span>
+	</paper-icon-item>
+	<paper-icon-item id="setarmy" on-click="_onClick"> <iron-icon
+		icon="face" slot="item-icon"></iron-icon> <span>Deploy Army</span> </paper-icon-item>
+	<paper-icon-item id="setscout" on-click="_onClick"> <iron-icon
+		icon="perm-identity" slot="item-icon"></iron-icon> <span>Deploy
+		Scout</span> </paper-icon-item>
+	<paper-icon-item id="buyarmy" on-click="_onClick"> <iron-icon
+		icon="face" slot="item-icon"></iron-icon> <span>Purchase Army</span> </paper-icon-item>
+	<paper-icon-item id="buyscout" on-click="_onClick"> <iron-icon
+		icon="rowing" slot="item-icon"></iron-icon> <span>Purchase
+		Scout</span> </paper-icon-item>
+	</paper-icon-item>
+	<paper-icon-item id="startmove" on-click="_onClick">
+	<iron-icon icon="fingerprint" slot="item-icon"></iron-icon> <span>Start
+		Move</span> </paper-icon-item>
+	<paper-icon-item id="move" on-click="_onClick"> <iron-icon
+		icon="rowing" slot="item-icon"></iron-icon> <span>Continue Move</span>
+	</paper-icon-item>
+	<paper-icon-item id="revealtile" on-click="_onClick">
+	<iron-icon icon="lock-open" slot="item-icon"></iron-icon> <span>Reveal
+		Tile</span> </paper-icon-item>
+	<paper-icon-item id="endofmove" on-click="_onClick">
+	<iron-icon icon="pan-tool" slot="item-icon"></iron-icon> <span>End
+		of Move</span> </paper-icon-item>
+		
+</template> <script>
+      
+Polymer({
+    is: 'civ-player',
+       
+    properties: {
+                               
+              civname: {
+                  type: String,
+                   value: undefined
+               },
+               numberoftrade : {
+                    type : String,
+                    value : undefined
+                },
+                citieslimit : {
+                    type : String,
+                    value : undefined
+                },
+                armieslimit : {
+                    type : String,
+                    value : undefined
+                },
+                scoutslimit : {
+                    type : String,
+                    value : undefined
+                },
+                currentcommand : {
+                    type : String,
+                    value : undefined
+                },
+                itemizedcommand : {
+                    type : String,
+                    value : undefined
+                }
+        },
+                          
+        _onClick : function(source) {
+             var id = source.currentTarget.id
+             if (id == "endofphase") {
+                this.currentcommand = null
+                const g= C.getjsboard().board.game
+                const phase = g.phase
+                C.confexecutedialog("Do you want end of phase " + phase + " now ?",id,-1,-1,phase)
+                return
+             }
+            if (id == "endofmove") {
+               this.currentcommand = null
+               C.confexecutedialog("Do you want finish the current move ?",id,-1,-1,null)
+               return
+            }
+            
+           this.currentcommand = id
+           window.itemizecommand(id.toUpperCase())
+         },
+         
+         buttons : [
+                    "setcapital",
+                    "endofphase",
+                    "setarmy",
+                    "setscout",        
+                    "buyarmy",
+                    "buyscout",
+                    "startmove",
+                    "move",
+                    "revealtile",
+                    "endofmove",
+                    "setcity"
+          ],
+          
+          draw: function(b) {
+        	   if (b == null) return;
+               var y = b.board.you
+               this.civname=y.civ
+               this.numberoftrade = "Trade: " + y.trade
+               this.citieslimit = "Cities left: " + y.citylimit
+               this.armieslimit = "Armies left: " + y.armieslimit
+               this.scoutslimit = "Scouts left: " + y.scoutslimit
+               for (var i=0; i < this.buttons.length; i++) {
+                  const id = this.buttons[i]
+                  const bu = this.shadowRoot.getElementById(id);
+                  C.showeleme(bu,false)
+               }
+              for (var i=0; i<y.commands.length; i++) {
+                  const command = y.commands[i]
+                  const id = command.command.toLowerCase()
+                  const bu = this.shadowRoot.getElementById(id);
+                  C.showeleme(bu,true)
+                 }
+             }
+        });
+        
+</script> 
+
+</dom-module>

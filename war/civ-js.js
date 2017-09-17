@@ -119,6 +119,11 @@ var C = (function() {
   function showhideclosebuttuon(show) {
      C.showelem("close-button",show)
   };
+  
+  function _getxapp() {
+       var e = document.getElementsByTagName("x-app")
+       return e[0]
+    };
 
   function _resumemultidialog(e) {
 	const dialogDemo = document.getElementById("join-dialog")
@@ -152,45 +157,37 @@ var C = (function() {
   },
 
   startgamedialog : function(civ) {
-	const dialogDemo = C.getconfirmdialog()
-	dialogDemo.openDialog = function(e) {
-		this.$.dialog.open()
-	}
-	dialogDemo.confirm = e => window.chooseciv(civ);
-	dialogDemo.dismiss = e => {}
-	dialogDemo.message = "Do you want to start new game as " + civ + " ?"
-	dialogDemo.openDialog()
+    this.confirmdialog("Do you want to start new game as " + civ + " ?",e => window.chooseciv(civ))
   },
-
+  
+  confirmdialog: function(message,fun) {
+    const dialogDemo = this.getconfirmdialog() 
+    dialogDemo.$.dialog.title = C.localize('confirmdialogtitle')
+    dialogDemo.openDialog = function(e) {
+        this.$.dialog.open()
+    }
+    dialogDemo.confirm = fun
+    dialogDemo.dismiss = e => {}
+    dialogDemo.message = message
+    dialogDemo.openDialog()    
+  },
+  
+  
   resumedialog : function(index) {
-    var li = JSON.parse(C.getlistofgames())
-    var e = li[index]
+    const li = JSON.parse(C.getlistofgames())
+    const e = li[index]
     if (e.civ.length > 1) {
       _resumemultidialog(e)
       return;
     }
 
-    var civ = e.civ[0]
-    var gameid = e.gameid
-	const dialogDemo = document.getElementById("dialog-demo")
-	dialogDemo.openDialog = function(e) {
-		this.$.dialog.open()
-	}
-	dialogDemo.confirm = e => C.resumegame(gameid,civ)
-	dialogDemo.dismiss = e => {}
-	dialogDemo.message = "Do you want to resume this have as " + civ + " ?"
-	dialogDemo.openDialog()
+    const civ = e.civ[0]
+    const gameid = e.gameid
+    this.confirmdialog(C.localize('doyouwanttoresumequestion','civ',civ),e => C.resumegame(gameid,civ))
   },
 
-  leavedialog : function() {
-	const dialogDemo = document.getElementById("dialog-demo")
-	dialogDemo.openDialog = function(e) {
-		this.$.dialog.open()
-	}
-	dialogDemo.confirm = e => C.leavegame()
-	dialogDemo.dismiss = e => {}
-	dialogDemo.message = "Do you want to leave the game ? You can resume the game later."
-	dialogDemo.openDialog()
+  leavedialog : function() {    
+    this.confirmdialog(C.localize('leavegamequestion'),e => C.leavegame())
   },
 
   closejoindialog : function() {
@@ -237,11 +234,6 @@ var C = (function() {
       dialogalert("dialog-command-failure",message)
    },
 
-    getxapp : function() {
-       var e = document.getElementsByTagName("x-app")
-       return e[0]
-     },
-
    showeleme :function (e,show) {
       if (show) C.removeattr(e,"hidden")
       else e["hidden"] = true
@@ -264,10 +256,10 @@ var C = (function() {
     },
 
     showelem : function(id,show) {
-      var x = C.getxapp()
-      var e = x.shadowRoot.getElementById(id)
+      const x = _getxapp()
+      const e = x.shadowRoot.getElementById(id)
       C.showeleme(e,show)
-    } ,
+    },
 
     setattr : function (e,attr,value) {
        e.setAttribute(attr,value)
@@ -301,6 +293,15 @@ var C = (function() {
       var gamese = findbytag("civ-games")
       return gamese.listofgames
     } ,
+    
+    getgamestate : function() {
+      const b = findbytag("civ-gamestate")
+      return b
+    },
+    
+    localize : function(...args) {
+      return _getxapp().localize(...args)
+    },
 
     getlistofjoingames : function() {
        var civjoin = findbytag("civ-join")
@@ -308,17 +309,30 @@ var C = (function() {
     },
 
     getcurrentcommand : function() {
-        return this.getxapp().currentcommand
+        return this.getyouplay().currentcommand
       },
 
     getitemizedcommand : function() {
-         return this.getxapp().itemizedcommand
+         return this.getyouplay().itemizedcommand
       },
 
-    setxappparam : function(attr,value) {
-       this.getxapp()[attr] = value
+    setyouplayparam : function(attr,value) {
+       this.getyouplay()[attr] = value
     },
-
+    
+    getyouplay : function() {
+      var y = _getxapp().$.youplay
+      return y
+    },
+    
+    setjsboard : function(jsboard) {
+       _getxapp()["jsboard"] = jsboard      
+    },
+    
+    getjsboard : function() {
+       return _getxapp()["jsboard"]
+    },
+    
     getsquare : function(row,col) {
         var res = window.getsquare(window.fixrow(row),window.fixcol(col))
         return res

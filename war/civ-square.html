@@ -80,8 +80,8 @@
      <img id="trade" hidden src="images/tokens/trade.svg"      style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="prod1" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="prod2" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="iron" hidden src="images/resource/iron.svg"      style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="wheat" hidden src="images/resource/wheat.svg"  title="Wheat"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="iron" hidden src="images/resource/iron.svg"    title="{{localize('ironlabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="wheat" hidden src="images/resource/wheat.svg"  title="{{localize('wheatlabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="incense" hidden src="images/resource/incense.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="silk" hidden src="images/resource/silk.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="coin" hidden src="images/resource/coin.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
@@ -129,7 +129,8 @@
 </template>
 
 <script>
-class CivSquare extends Polymer.GestureEventListeners(Polymer.Element) {
+
+class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polymer.Element)) {
 
     constructor() {
         super();

@@ -1,0 +1,57 @@
+ <dom-module id="civ-gamestate">
+  <template>
+    <style>
+     :host {
+        display: block;
+      }
+            
+    </style>
+    
+        <span style="display: inline-block; width:40%;">[[activecivname]]</span>
+        <span style="display: inline-block; width:20%">[[turnno]]</span>
+        <span style="display: inline-block; width:30%;">[[phase]]</span>
+    
+  </template>
+
+  <script>
+    class CivGameState extends Polymer.CivLocalize(Polymer.Element) {
+    	
+      static get is() { return 'civ-gamestate'; }
+              
+      static get properties() {
+        return {
+            activecivname: {
+                type: String,
+                value: undefined
+              },
+              turnno: {
+                type: String,
+                value: undefined
+              },
+              phase: {
+                type: String,
+                value: undefined
+              }
+        };
+      }
+      
+      draw(b) {
+          if (b == null) {
+              this.turnno = null
+              this.activecivname = null
+              this.phase = null
+              return
+          }
+          const g = b.board.game
+//          this.turnno = "Round " + (g.roundno + 1)
+          this.turnno = this.localize('labelroundno','roundno',g.roundno + 1)
+//          this.activecivname = "Now playing: " + g.active
+          this.activecivname = this.localize('nowplayinglabel','active',g.active)
+          this.phase = g.phase
+      }
+      
+    }
+
+    window.customElements.define(CivGameState.is, CivGameState);
+  </script>
+</dom-module>

@@ -173,8 +173,8 @@ public class CIvilizationUI implements EntryPoint {
 	 * @param value
 	 *            attribute value
 	 */
-	public static native void setxappattribute(String attr, String value)/*-{
-		$wnd.C.setxappparam(attr, value);
+	public static native void setyouplayparam(String attr, String value)/*-{
+		$wnd.C.setyouplayparam(attr, value);
 	}-*/;
 
 	interface IMapDimension {
@@ -245,14 +245,14 @@ public class CIvilizationUI implements EntryPoint {
 	 * Clean current command attribute
 	 */
 	private static void cleanCommand() {
-		setxappattribute("currentcommand", "");
+		setyouplayparam("currentcommand", "");
 	}
 
 	/**
 	 * Trigger buttons refreshin, panel outside map
 	 */
 	private static void redrawheader() {
-		setxappattribute("jsboard", board.toString());
+		setjsboard(board.getJavaScriptObject());
 	}
 
 	private static Timer trefresh = new Timer() {
@@ -401,6 +401,11 @@ public class CIvilizationUI implements EntryPoint {
 	public static native void closejoindialog()/*-{
 		$wnd.C.closejoindialog();
 	}-*/;
+	
+	public static native void setjsboard(JavaScriptObject board)  /*-{
+		$wnd.C.setjsboard(board);
+	}-*/;
+	
 
 	/**
 	 * Wrapper for server itemize command, Sets itemizedcommand attribute in x-app
@@ -413,7 +418,7 @@ public class CIvilizationUI implements EntryPoint {
 
 			@Override
 			public void onSuccess(String result) {
-				setxappattribute("itemizedcommand", result);
+				setyouplayparam("itemizedcommand", result);
 			}
 		});
 
@@ -443,7 +448,7 @@ public class CIvilizationUI implements EntryPoint {
 		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
 		showelem(STARTMENU, true);
 		showelem(GAMEMENU, false);
-		setxappattribute("jsboard", "");
+		setjsboard(null);
 		Element fe = findContent(CIVMAP);
 		fe.setAttribute("hidden", "true");
 		showcivorgames(1);

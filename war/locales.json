@@ -1,0 +1,24 @@
+{
+  "en": {
+    "appversion": "Version: 2017/09/17",
+    "newgamebutton" : "New game",
+    "resumegamebutton" : "Resume game",
+    "joingamebutton" : "Join game",
+    "leavegamebutton" : "Leave the game",
+    "labelroundno" : "Round {roundno}",
+    "nowplayinglabel" : "Now playing: {active}",
+    "twoplayersgamelabel" : "Two players game",
+    "traininggamelabel" : "Training",
+    "waitingforopponentlabel" : "Waiting for opponent to join",
+    "chooseopponentlabel" : "Choose opponent civilization to start",
+    "cancellabel" : "Cancel",
+    "doyouwanttostartquestion" : "Do you want to start two players game as {civname} against {civopposite} ?",
+    "resumegameline" : "{accesstime} Created: {createtime} Phase: {phase} Round : {roundno}",
+    "doyouwanttoresumequestion" : "Do you want to resume this gave as {civ} ?",
+    "wheatlabel" : "Wheat",
+    "ironlabel" : "Iron",
+    "leavegamequestion" : "Do you want to leave the game ? You can resume the game later.",
+    "confirmdialogtitle" : "Answer the question, please",
+    "oklabel" : "OK"
+  }
+}
