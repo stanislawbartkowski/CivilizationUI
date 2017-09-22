@@ -16,13 +16,13 @@ var C = (function() {
          return pa
          }
 
-      dialogalert("dialog-command-alert","Cannot " + co + " at this point. Try another point.")
+//      dialogalert("dialog-command-alert","Cannot " + co + " at this point. Try another point.")
       return null
   };
 
   function checkarmy(iparam) {
      if (iparam.square.numberofArmies > 0 || iparam.square.numberofScouts > 0) return true
-     dialogalert("dialog-command-alert","Neither armies nor scouts here")
+//     dialogalert("dialog-command-alert","Neither armies nor scouts here")
      return false
   };
 
@@ -47,7 +47,7 @@ var C = (function() {
        pa.param = list[i].f
        return pa
     }
-    dialogalert("dialog-command-alert","Cannot move these figures now. Try another point.")
+//    dialogalert("dialog-command-alert","Cannot move these figures now. Try another point.")
     return null
   };
 
@@ -55,7 +55,7 @@ var C = (function() {
      var list = iparam.list.moves
      var i = findpoint(iparam,list)
      if (i != -1) return pa
-     dialogalert("dialog-command-alert","Cannot move figures to this point. Try another point.")
+//     dialogalert("dialog-command-alert","Cannot move figures to this point. Try another point.")
      return null
   };
 
@@ -63,7 +63,7 @@ var C = (function() {
      var list = iparam.list
      var i = findpoint(iparam,list)
      if (i == -1) {
-           dialogalert("dialog-command-alert","Cannot " + co + " at this point. Try another point.")
+//           dialogalert("dialog-command-alert","Cannot " + co + " at this point. Try another point.")
            return null
      }
      return pa
@@ -74,7 +74,7 @@ var C = (function() {
     if (!checkarmy(iparam)) return null
     var list = iparam.list
     if (!eqp(iparam,list.p)) {
-       dialogalert("dialog-command-alert","Cannot reveal tile using this figure. Try proper one.")
+//       dialogalert("dialog-command-alert","Cannot reveal tile using this figure. Try proper one.")
        return null
     }
     var r = list.tiles[0]
@@ -86,7 +86,6 @@ var C = (function() {
 
   function verifycommand(co,iparam) {
      var itemized = C.getitemizedcommand()
-//     console.log(itemized)
      pa = {}
      pa.row = iparam.row
      pa.col = iparam.col
@@ -137,9 +136,50 @@ var C = (function() {
 		this.$.dialog.openIt()
 	}
 	dialogDemo.openDialog()
+  };
+  
+  function _clearMap() {
+     const y = C.getyouplay()
+     y.draw(null)
   }
 
   return {
+  
+  getcommanddecr(co) {
+     var key = co
+     switch(co) {
+        case "setcapital" : { key = "capital"; break; }
+        case "setarmy" : { key = "deployarmy"; break; }
+        case "setscout" : { key = "deployscout"; break; }
+        case "buyscout" : { key = "purchasescout"; break; }
+        case "buyarmy" : { key = "purchasearmy"; break; }
+        case "move" : { key = "continuemove"; break; }
+     }      
+     return C.localize(key)  
+  },
+  
+  getphasedescr(phase) {
+    return C.localize(phase.toLowerCase() + "label")
+  },
+  
+  getlistofpoints(co,itemized) {
+     if (itemized == null) return null
+     const itemize = JSON.parse(itemized)
+     if (co == "startmove") {
+        var a = []
+        for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
+        return a
+     }
+     if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") {
+        var a = []
+        for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
+        return a
+     
+     }
+     if (co == "move")  return itemize.moves     
+     if (co == "setcity" || co == "setcapital") return itemize
+     return null     
+  },
 
   getconfirmdialog : function() {
     return document.getElementById("dialog-demo")
@@ -207,7 +247,7 @@ var C = (function() {
 	}
 	dialogDemo.openDialog()
   },
-
+  
   confexecutedialog : function (question,co,row,col,param) {
     var iparam = {}
     iparam.square = null
@@ -379,17 +419,34 @@ var C = (function() {
     },
 
     leavegame : function() {
+      _clearMap()
       window.leavegame()
     },
 
     joingame : function(gameid,civ) {
       window.joingame(gameid,civ)
     },
+    
+    highlightGame : function(a,highlight) {
+      window.highlightMap(a,highlight)
+    },
+    
+    highlightSquare : function(e,hightlight) {
+       e.highlight(hightlight)
+    }, 
+    
+    clearCommand : function() {
+      const y = C.getyouplay()
+      y.clearCommand()
+    },
 
     emptyS : function(s) { return s == null || s == "" },
     
     color1 : function() { return "Aqua" },
     color2 : function() { return "Red" },
+    
+    colorback1 : function() { return "Aqua" },
+    colorback2 : function() { return "Red" },
     
     civtonumb : function(civ) {
       return window.civtonumb(civ)
@@ -398,6 +455,11 @@ var C = (function() {
     colorForCiv : function(civ) {
       if (C.civtonumb(civ) == 0) return this.color1()
       return this.color2()
+    },
+
+    backcolorForCiv : function(civ) {
+      if (C.civtonumb(civ) == 0) return this.colorback1()
+      return this.colorback2()
     },
 
     testcolorForCiv : function(civ) {
@@ -414,8 +476,8 @@ var C = (function() {
       if (p == null) return null
       return p.nodeValue
     },
-
-    setColorForCity : function(e,civ,city) {
+    
+    setColorForCity : function(e,city,color) {
       city = city.toLowerCase()
       var sha = e.shadowRoot
       var st = sha.styleSheets
@@ -426,7 +488,7 @@ var C = (function() {
         var sel = s.selectorText
         var inde = sel.search(city)
         if (inde > 0) {
-           s.style.backgroundColor = C.colorForCiv(civ)
+           s.style.backgroundColor = color
            return;
         }
       }

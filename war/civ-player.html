@@ -1,62 +1,135 @@
-<dom-module id="civ-player"> <template>
+<dom-module id="civ-player"> 
 
-	<paper-item>
-	<div>[[civname]]</div>
-	</paper-item>
-	<paper-item>
-	<div>[[numberoftrade]]</div>
-	</paper-item>
-	<paper-item>
-	<div>[[citieslimit]]</div>
-	</paper-item>
-	<paper-item>
-	<div>[[armieslimit]]</div>
-	</paper-item>
-	<paper-item>
-	<div>[[scoutslimit]]</div>
-	</paper-item>
-	<paper-item>
-	<div>[[currentcommand]]</div>
-	</paper-item>
+<template>
+
+<style>
+
+  .civname {
+    border-radius: 15px;
+    width: 90%;
+    height: 30px; 
+    text-align: center;
+    font-size: 150%;
+    padding-top: 5px;
+    background-color : white;
+    margin-left: 5px;
+  }
+  
+  .statusstyle {
+  }
+  
+  .actionbox {
+     margin-left: 5px;
+     margin-top: 2px;
+     border:1px ridge gray ; 
+     display: block; 
+     border-radius: 5px;
+     width: 90%;
+  }
+    
+  #startofturn  {
+  }
+
+  #trade  {
+  }
+
+  #citymanagement  {   
+  }
+
+  #movement  {   
+  }
+  
+  #research  {   
+  }  
+   
+</style>
+	
+	<div class="civname">[[civname]]</div>
+
+<span class = "statusstyle actionbox">
+  <paper-icon-item>
+    <iron-icon src="images/tokens/trade.svg" slot="item-icon"></iron-icon>
+    [[numberoftrade]]
+  </paper-icon-item>
+	
+  <paper-icon-item>
+    <iron-icon src="images/cities/city.svg" slot="item-icon"></iron-icon>
+    [[citieslimit]]
+  </paper-icon-item>
+
+  <paper-icon-item>
+    <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon>
+    [[armieslimit]]
+  </paper-icon-item>
+
+  <paper-icon-item>
+    <iron-icon src="images/figures/scout.svg" slot="item-icon"></iron-icon>
+    [[scoutslimit]]
+  </paper-icon-item>
+
+</span>
+
+<paper-item>
+  <div>[[currentcommand]]</div>
+ </paper-item>
+
+ <paper-icon-item id="endofphase" on-click="_onClick">
+  <iron-icon icon="done" slot="item-icon"></iron-icon> <span>EndOfPhase</span>
+ </paper-icon-item>
+
+<span id="startofturn" class="actionbox">
+ 
 	<paper-icon-item id="setcapital" on-click="_onClick">
-	<iron-icon icon="inbox" slot="item-icon"></iron-icon> <span>Capital</span>
+	<iron-icon src="images/cities/capital.svg" slot="item-icon"></iron-icon> <span>{{localize('capital')}}</span>
 	</paper-icon-item>
 	<paper-icon-item id="setcity" on-click="_onClick"> <iron-icon
-		icon="euro-symbol" slot="item-icon"></iron-icon> <span>Set City</span>
+		src="images/cities/city.svg" slot="item-icon"></iron-icon> <span>{{localize('setcity')}}</span>
 	</paper-icon-item>
-	<paper-icon-item id="endofphase" on-click="_onClick">
-	<iron-icon icon="done" slot="item-icon"></iron-icon> <span>EndOfPhase</span>
-	</paper-icon-item>
+	
 	<paper-icon-item id="setarmy" on-click="_onClick"> <iron-icon
-		icon="face" slot="item-icon"></iron-icon> <span>Deploy Army</span> </paper-icon-item>
+		 src="images/figures/army.svg"  slot="item-icon"></iron-icon> <span>{{localize('deployarmy')}}</span> </paper-icon-item>
+		
 	<paper-icon-item id="setscout" on-click="_onClick"> <iron-icon
-		icon="perm-identity" slot="item-icon"></iron-icon> <span>Deploy
-		Scout</span> </paper-icon-item>
+		 src="images/figures/scout.svg"  slot="item-icon"></iron-icon> <span>{{localize('deployscout')}}</span> </paper-icon-item>
+</span>
+
+<span id="trade" class="actionbox" style="display:none">
+</span>
+
+<span id="citymanagement" class="actionbox" style="display:none">		
 	<paper-icon-item id="buyarmy" on-click="_onClick"> <iron-icon
-		icon="face" slot="item-icon"></iron-icon> <span>Purchase Army</span> </paper-icon-item>
+		src="images/figures/army.svg" slot="item-icon"></iron-icon> <span>{{localize('purchasearmy')}}</span> </paper-icon-item>
 	<paper-icon-item id="buyscout" on-click="_onClick"> <iron-icon
-		icon="rowing" slot="item-icon"></iron-icon> <span>Purchase
-		Scout</span> </paper-icon-item>
+		src="images/figures/scout.svg" slot="item-icon"></iron-icon> <span>{{localize('purchasescout')}}</span> </paper-icon-item>
 	</paper-icon-item>
+</span>
+
+<span id="movement" class="actionbox" style="display:none">     
+	
 	<paper-icon-item id="startmove" on-click="_onClick">
-	<iron-icon icon="fingerprint" slot="item-icon"></iron-icon> <span>Start
-		Move</span> </paper-icon-item>
+	<iron-icon icon="fingerprint" slot="item-icon"></iron-icon> <span>{{localize('startmove')}}</span> </paper-icon-item>
 	<paper-icon-item id="move" on-click="_onClick"> <iron-icon
-		icon="rowing" slot="item-icon"></iron-icon> <span>Continue Move</span>
+		icon="rowing" slot="item-icon"></iron-icon> <span>{{localize('continuemove')}}</span>
 	</paper-icon-item>
 	<paper-icon-item id="revealtile" on-click="_onClick">
-	<iron-icon icon="lock-open" slot="item-icon"></iron-icon> <span>Reveal
-		Tile</span> </paper-icon-item>
+	<iron-icon icon="lock-open" slot="item-icon"></iron-icon> <span>{{localize('revealtile')}}</span> </paper-icon-item>
 	<paper-icon-item id="endofmove" on-click="_onClick">
-	<iron-icon icon="pan-tool" slot="item-icon"></iron-icon> <span>End
-		of Move</span> </paper-icon-item>
-		
-</template> <script>
+	<iron-icon icon="pan-tool" slot="item-icon"></iron-icon> <span>{{localize('endofmove')}}</span> </paper-icon-item>
+</span>		
+
+<span id="research" class="actionbox" style="display:none">     
+</span>		
+</template> 
+
+<script>
       
-Polymer({
-    is: 'civ-player',
-       
-    properties: {
+class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polymer.Element)) {
+      
+	static get is() { return 'civ-player' }
+
+    static get properties() {
+		
+		return {
                                
               civname: {
                   type: String,
@@ -84,64 +157,133 @@ Polymer({
                 },
                 itemizedcommand : {
                     type : String,
-                    value : undefined
-                }
-        },
-                          
-        _onClick : function(source) {
+                    value : undefined,
+                    observer: '_itemized'
+                },
+                figurecolor1 : {
+                    type: String,
+                    value: function() { return C.color1(); }
+                },
+                
+                listofpoints : {
+                	type : Array,
+                	value : null
+                },
+                
+                actionpanels : {
+                	type : Array,
+                	value :
+                    [
+                         "startofturn",
+                         "trade",
+                         "citymanagement",
+                         "movement",        
+                         "research"
+                    ]
+                },
+                 
+               buttons : {
+            	   type : Array,
+            	   value : [            	   
+                            "setcapital",
+                            "endofphase",
+                            "setarmy",
+                            "setscout",        
+                            "buyarmy",
+                            "buyscout",
+                            "startmove",
+                            "move",
+                            "revealtile",
+                            "endofmove",
+                            "setcity"
+                  ],
+             }
+	   }
+    }
+            
+    _itemized(newValue,oldValue) {
+    	const a = C.getlistofpoints(this.currentcommand,newValue);
+    	C.highlightGame(this.listofpoints,false);
+        C.highlightGame(a,true);
+        this.listofpoints = a;
+    }
+                 
+    _callitemize(id) {
+       this.currentcommand = id
+       window.itemizecommand(id.toUpperCase())    	
+    }
+    
+    _onClick(source) {
              var id = source.currentTarget.id
              if (id == "endofphase") {
                 this.currentcommand = null
                 const g= C.getjsboard().board.game
                 const phase = g.phase
-                C.confexecutedialog("Do you want end of phase " + phase + " now ?",id,-1,-1,phase)
+                const labelphase = C.getphasedescr(phase)
+                C.confexecutedialog(this.localize("doyouwantendquestion","phase",labelphase),id,-1,-1,phase)
                 return
              }
             if (id == "endofmove") {
                this.currentcommand = null
-               C.confexecutedialog("Do you want finish the current move ?",id,-1,-1,null)
+               C.confexecutedialog(this.localize("doyouwantfinishmovequestion"),id,-1,-1,null)
                return
             }
             
-           this.currentcommand = id
-           window.itemizecommand(id.toUpperCase())
-         },
+           this._callitemize(id) 
+         }
+    
+     
+         clear() {
+             this.itemizedcommand = null;
+             this.listofpoints = null;
+             this.currentcommand = null;        
+         }
          
-         buttons : [
-                    "setcapital",
-                    "endofphase",
-                    "setarmy",
-                    "setscout",        
-                    "buyarmy",
-                    "buyscout",
-                    "startmove",
-                    "move",
-                    "revealtile",
-                    "endofmove",
-                    "setcity"
-          ],
-          
-          draw: function(b) {
-        	   if (b == null) return;
-               var y = b.board.you
+         clearCommand() {
+        	 this.clear()
+         }
+                  
+         draw(b) {
+        	   if (b == null) {
+        		   this.clear()
+        		   return;
+        	   }
+               const y = b.board.you
+               C.setColorForCity(this,"civname",C.backcolorForCiv(y.civ))
                this.civname=y.civ
                this.numberoftrade = "Trade: " + y.trade
                this.citieslimit = "Cities left: " + y.citylimit
                this.armieslimit = "Armies left: " + y.armieslimit
                this.scoutslimit = "Scouts left: " + y.scoutslimit
+               
+               const g = b.board.game
+               const pha = g.phase.toLowerCase()
+               for (var i=0; i < this.actionpanels.length; i++) {
+                   const id = this.actionpanels[i]
+                   const pa = this.shadowRoot.getElementById(id);
+                   if (id == pha) C.displayelem(pa,true)
+                   else C.displayelem(pa,false)
+                }
+
+               
                for (var i=0; i < this.buttons.length; i++) {
                   const id = this.buttons[i]
                   const bu = this.shadowRoot.getElementById(id);
-                  C.showeleme(bu,false)
+                  C.disableleme(bu,true)
                }
               for (var i=0; i<y.commands.length; i++) {
                   const command = y.commands[i]
                   const id = command.command.toLowerCase()
                   const bu = this.shadowRoot.getElementById(id);
-                  C.showeleme(bu,true)
+                  C.disableleme(bu,false)
+                  if (id == "move") this._callitemize(id)
                  }
-             }
-        });
+             }         
+           
+        }
+        
+window.customElements.define(CivPlayer.is, CivPlayer);
+        
         
 </script> 
 

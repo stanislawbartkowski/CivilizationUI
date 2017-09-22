@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/09/17",
+    "appversion": "Version: 2017/09/22",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -19,6 +19,29 @@
     "ironlabel" : "Iron",
     "leavegamequestion" : "Do you want to leave the game ? You can resume the game later.",
     "confirmdialogtitle" : "Answer the question, please",
-    "oklabel" : "OK"
+    "oklabel" : "OK",
+    "capital" : "Build Capital",
+    "setcity" : "Build City",
+    "deployarmy" : "Deploy Army",
+    "deployscout" : "Deploy Scout",
+    "purchasearmy" : "Purchase Army",
+    "purchasescout" :"Purchase Scout",
+    "startmove" : "Start Move",
+    "continuemove" : "Continue Move",
+    "revealtile" : "Reveal Tile",
+    "endofmove" : "End of Move",
+    "silklabel" : "Silk",
+    "coinlabel" : "Coin",
+    "incenselabel" : "Incense",
+    "hutlabel" : "Hut",
+    "villagelabel" : "Village",
+    "executecommandquestion" : "Do you want {command} here ?",
+    "startofturnlabel" : "Start Of Turn",
+    "tradelabel" : "Trade",
+    "citymanagementlabel" : "City Management",
+    "movementlabel" : "Movement",
+    "researchlabel" : "Research",
+    "doyouwantendquestion" : "Do you want to end {phase} now ?",
+    "doyouwantfinishmovequestion" : "Do you want finish the current move ?"
   }
 }

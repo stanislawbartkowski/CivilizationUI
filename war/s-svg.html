@@ -48,8 +48,6 @@ Polymer({
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
           var responseText = xhr.responseText;
-          // Set new SVG Attributes.
-//          responseText = responseText.replace(/<svg[\s\S]*?>/i, '<svg ' + xmlns + viewBox + preserveAspectRatio + 'style="' + style + '">');
           if (this.fill != null)
             responseText = responseText.replace(/fill=\"[\s\S]*?\"/ig,'fill=\"'+this.fill +'\"');
           var svg = new DOMParser().parseFromString(responseText, 'application/xml').documentElement;

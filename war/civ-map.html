@@ -10,9 +10,9 @@
         /* background-color: #ccc; */
         /* padding: 1px;*/
       }
+      
       .container div, .layout div {
         background-color: white;
-        /* padding: 1px 0px 0px 0px; */
         /* margin: 1px; */
         border-width : 1px 1px 1px 1px;
         border-style: solid;
@@ -48,16 +48,12 @@
 	      observers: [
 	          '_render(rownumb,colnumb)'
 	        ],
+	        
 	        ready: function() {
 	            this.rows = [];
 	            this.cols = [];
 	        },
-	        attached : function() {
-	        	
-	        },
-	        created : function() {
-	        	
-	        },
+	        
            _render: function(rownumb,colnumb) {
         	   this.rows = []
         	   this.cols = []

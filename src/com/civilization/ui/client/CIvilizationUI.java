@@ -20,6 +20,7 @@ import java.util.function.Consumer;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
@@ -51,7 +52,7 @@ public class CIvilizationUI implements EntryPoint {
 	private final static String CIVMAP = "civ-map";
 	private final static String GAMEMENU = "gamemenu";
 	private final static String STARTMENU = "startmenu";
-	private final static String JSDATA="jsdata";
+	private final static String JSDATA = "jsdata";
 
 	// private static boolean multigame = false;
 	// private static boolean second = false;
@@ -89,6 +90,47 @@ public class CIvilizationUI implements EntryPoint {
 			Window.alert("Internal error, no civilizations available");
 	}
 
+	static class P {
+		int row, col;
+
+		P(int row, int col) {
+			this.row = row;
+			this.col = col;
+		}
+
+		boolean eq(int rrow, int rcol) {
+			return fixrow(rrow) == row && fixcol(rcol) == col;
+		}
+	}
+
+	private static boolean onList(List<P> plist, int rrow, int rcol) {
+		return plist.stream().filter(p -> p.eq(rrow, rcol)).findFirst().isPresent();
+	}
+
+	public static void highlightMap(JavaScriptObject list, boolean highlight) {
+		if (list == null)
+			return;
+		JsArray al = list.cast();
+		List<P> plist = new ArrayList<P>();
+		for (int i = 0; i < al.length(); i++) {
+			JSONObject o = new JSONObject(al.get(i));
+			int row = (int) o.get("row").isNumber().doubleValue();
+			int col = (int) o.get("col").isNumber().doubleValue();
+			plist.add(new P(row, col));
+		}
+
+		Element fe = findContent(CIVMAP);
+		Node ss1 = (Node) fe.getPropertyObject("shadowRoot");
+		walkforTag(ss1, "civ-square", e -> {
+			int row = e.getPropertyInt("row");
+			int col = e.getPropertyInt("col");
+			if (onList(plist, row, col)) {
+				JavaScriptObject o = e.cast();
+				highlightSquare(o, highlight);
+			}
+		});
+	}
+
 	/**
 	 * Refresh squares in the map
 	 * 
@@ -109,11 +151,11 @@ public class CIvilizationUI implements EntryPoint {
 		});
 		return n.ok;
 	}
-	
+
 	private static void clearMap() {
 		Element fe = findContent(CIVMAP);
 		Node ss1 = (Node) fe.getPropertyObject("shadowRoot");
-		walkforTag(ss1, "civ-square", e -> e.setAttribute(JSDATA, ""));		
+		walkforTag(ss1, "civ-square", e -> e.setAttribute(JSDATA, ""));
 	}
 
 	/**
@@ -202,18 +244,18 @@ public class CIvilizationUI implements EntryPoint {
 		};
 
 	}
-	
+
 	private static void addC(JSONValue o) {
-		String civ  = o.isObject().get("civ").isString().stringValue();
-		civs.add(civ.toLowerCase());		
+		String civ = o.isObject().get("civ").isString().stringValue();
+		civs.add(civ.toLowerCase());
 	}
-	
+
 	private static void buildCivs() {
 		civs.clear();
 		JSONObject oo = board.get("board").isObject();
 		addC(oo.get("you"));
-		JSONArray other = (JSONArray)  oo.get("others");
-		for (int i = 0; i<other.size(); i++)
+		JSONArray other = (JSONArray) oo.get("others");
+		for (int i = 0; i < other.size(); i++)
 			addC(other.get(i));
 	}
 
@@ -239,13 +281,6 @@ public class CIvilizationUI implements EntryPoint {
 			t.schedule(100);
 			showelem(GAMEMENU, true);
 		});
-	}
-
-	/**
-	 * Clean current command attribute
-	 */
-	private static void cleanCommand() {
-		setyouplayparam("currentcommand", "");
 	}
 
 	/**
@@ -401,11 +436,18 @@ public class CIvilizationUI implements EntryPoint {
 	public static native void closejoindialog()/*-{
 		$wnd.C.closejoindialog();
 	}-*/;
-	
-	public static native void setjsboard(JavaScriptObject board)  /*-{
+
+	public static native void setjsboard(JavaScriptObject board) /*-{
 		$wnd.C.setjsboard(board);
 	}-*/;
-	
+
+	public static native void highlightSquare(JavaScriptObject o, boolean highlight) /*-{
+		$wnd.C.highlightSquare(o, highlight);
+	}-*/;
+
+	public static native void cleanCommand() /*-{
+		$wnd.C.clearCommand();
+	}-*/;
 
 	/**
 	 * Wrapper for server itemize command, Sets itemizedcommand attribute in x-app
@@ -505,7 +547,7 @@ public class CIvilizationUI implements EntryPoint {
 			twait.scheduleRepeating(500);
 		});
 	}
-	
+
 	public static void resumeTwoPlayersGame(int gameid, String cov) {
 		greetingService.resumeGame(gameid, cov, new AsyncBack() {
 			@Override
@@ -516,7 +558,6 @@ public class CIvilizationUI implements EntryPoint {
 		});
 	}
 
-
 	public static void joinGame(int gameid, String civ) {
 		greetingService.joinGame(gameid, civ, new AsyncBack() {
 			@Override
@@ -525,15 +566,16 @@ public class CIvilizationUI implements EntryPoint {
 			}
 		});
 	}
-	
+
 	public static int civToNumb(String civ) {
-		for (int i=0; i<civs.size(); i++) {
+		for (int i = 0; i < civs.size(); i++) {
 			String s = civs.get(i);
-			if (s.equalsIgnoreCase(civ)) return i;
+			if (s.equalsIgnoreCase(civ))
+				return i;
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * Called at the beginning. Defines all GWT functions available from JS code
 	 */
@@ -598,6 +640,10 @@ public class CIvilizationUI implements EntryPoint {
 		}
 		$wnd.civtonumb = function(civ) {
 			return @com.civilization.ui.client.CIvilizationUI::civToNumb(*)(civ)
+		}
+
+		$wnd.highlightMap = function(a, highlight) {
+			return @com.civilization.ui.client.CIvilizationUI::highlightMap(*)(a,highlight)
 		}
 
 	}-*/;

@@ -10,7 +10,7 @@
   :host {
     display: inline-block;
     /* border: ridge; */
-    border: 0px solid;
+    border: 0px none;
     border-color: DarkGray;
     background-size: 100% 100%;
     position : relative;
@@ -19,14 +19,9 @@
 
   :host([Glowing]) {
     display: inline-block;
-    background-size: 100% 100%;
+    border : 1px solid red;
     position : relative;
-
-    border: 2px solid #dadada;
-    border-radius: 7px;
-    outline: none;
-    border-color: #9ecaed;
-    box-shadow: 0 0 10px #9ecaed;
+    border-radius: 20px;
   }
 
   :host([Capital]) {
@@ -82,11 +77,11 @@
      <img id="prod2" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="iron" hidden src="images/resource/iron.svg"    title="{{localize('ironlabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="wheat" hidden src="images/resource/wheat.svg"  title="{{localize('wheatlabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="incense" hidden src="images/resource/incense.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="silk" hidden src="images/resource/silk.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="coin" hidden src="images/resource/coin.svg"    style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="hut" hidden src="images/huts/hut.svg"    style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
-     <img id="village" hidden src="images/huts/village.svg"    style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
+     <img id="incense" hidden src="images/resource/incense.svg" title="{{localize('incenselabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="silk" hidden src="images/resource/silk.svg"  title="{{localize('silklabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="coin" hidden src="images/resource/coin.svg"  title="{{localize('silkcoin')}}" style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="hut" hidden src="images/huts/hut.svg" title="{{localize('hutlabel')}}"   style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
+     <img id="village" hidden src="images/huts/village.svg" title="{{localize('villagelabel')}}" style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
 
      <span id="attcity" style="display:none">
        <img id="prodcity" src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
@@ -141,13 +136,17 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
         return 'civ-square';
         }
 
+    _constructcommandquestion(command) {
+        return this.localize("executecommandquestion","command",C.getcommanddecr(command))        
+      }
+          
     handleClick() {
         var res = C.getsquare(this.row,this.col)
         if (res.terrain == null) return
         var co = C.getcurrentcommand()
         var i = C.getitemizedcommand()
         if (C.emptyS(co)) return
-        C.confexecutedialog("Do you want " + co + " here ?",co,this.row,this.col,null)
+        C.confexecutedialog(this._constructcommandquestion(co),co,this.row,this.col,null)
     }
 
   static get observers() {
@@ -273,8 +272,12 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
         this._removearmy()
         this._removescout()
         this._removeterrain()
-
     }
+   
+   highlight(hightlight) {
+	   if (hightlight) this.setAttribute("glowing",1) 
+	   else C.removeattr(this,"glowing")
+   }
 
    refresh(jsdata) {
 
@@ -286,7 +289,7 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
          if (j.city != null) {
             this._removeterrain()
             C.displayelem(this.$.attcity,true)
-            C.setColorForCity(this,j.civ,j.city)
+            C.setColorForCity(this,j.city,C.colorForCiv(j.civ))
             this.setAttribute(j.city,1);
             C.displaybadge(this.$.prodcitynumber,j.production)
             C.displaybadge(this.$.defencecitynumber,"+"+j.defence)

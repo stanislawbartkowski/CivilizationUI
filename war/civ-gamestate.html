@@ -9,7 +9,7 @@
     
         <span style="display: inline-block; width:40%;">[[activecivname]]</span>
         <span style="display: inline-block; width:20%">[[turnno]]</span>
-        <span style="display: inline-block; width:30%;">[[phase]]</span>
+        <span style="display: inline-block; width:30%;">[[phaselabel]]</span>
     
   </template>
 
@@ -30,9 +30,27 @@
               },
               phase: {
                 type: String,
+                value: undefined,
+                observer: '_setphasename'
+              },
+              phaselabel: {
+            	type: String,
                 value: undefined
               }
         };
+      }
+      
+      _setphasename(newValue,oldValue) {
+    	  if (C.emptyS(newValue)) {
+    		  this.phaselabel = null;
+    		  return;
+    	  }
+    	  this.phaselabel = C.getphasedescr(newValue);     	  
+      }
+      
+      phasename() {
+    	  if (this.phase == null) return null
+    	  return C.getphasedescr(this.phase)
       }
       
       draw(b) {
@@ -43,9 +61,7 @@
               return
           }
           const g = b.board.game
-//          this.turnno = "Round " + (g.roundno + 1)
           this.turnno = this.localize('labelroundno','roundno',g.roundno + 1)
-//          this.activecivname = "Now playing: " + g.active
           this.activecivname = this.localize('nowplayinglabel','active',g.active)
           this.phase = g.phase
       }
