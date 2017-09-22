@@ -42,6 +42,12 @@
     "movementlabel" : "Movement",
     "researchlabel" : "Research",
     "doyouwantendquestion" : "Do you want to end {phase} now ?",
-    "doyouwantfinishmovequestion" : "Do you want finish the current move ?"
+    "doyouwantfinishmovequestion" : "Do you want finish the current move ?",
+    "doyouwantstartnegamequestion" : "Do you want to start new game as {civ} ?",
+    "revealtwotiles" : "You are about to reveal one of two tiles",
+    "choosetilequestion" : "Which one do you want to touch ?",
+    "tileup" : "Tile up",
+    "tileright" : "Tile right",
+    "areyousurequestion" : "Are you sure ?"
   }
 }

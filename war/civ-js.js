@@ -138,6 +138,14 @@ var C = (function() {
 	dialogDemo.openDialog()
   };
   
+  function _twotilereveal(iparam) {
+    if (iparam.list.tiles.length <= 1) return false;
+    const dialog = document.getElementById("reveal2-dialog")
+    dialog.$.dialog.openIt(iparam)
+    return true;
+  }
+  
+  
   function _clearMap() {
      const y = C.getyouplay()
      y.draw(null)
@@ -178,6 +186,11 @@ var C = (function() {
      }
      if (co == "move")  return itemize.moves     
      if (co == "setcity" || co == "setcapital") return itemize
+     if (co == "revealtile") {
+       var a = []
+       a.push(itemize.p)
+       return a     
+     }
      return null     
   },
 
@@ -197,7 +210,7 @@ var C = (function() {
   },
 
   startgamedialog : function(civ) {
-    this.confirmdialog("Do you want to start new game as " + civ + " ?",e => window.chooseciv(civ))
+    this.confirmdialog(C.localize("doyouwantstartnegamequestion","civ",civ),e => window.chooseciv(civ))
   },
   
   confirmdialog: function(message,fun) {
@@ -257,10 +270,12 @@ var C = (function() {
     iparam.param = param
     var pa = verifycommand(co,iparam)
     if (pa == null) return
-	const dialogDemo = document.getElementById("dialog-demo")
+    if (co == "revealtile") 
+    if (_twotilereveal(iparam)) return
+    const dialogDemo = document.getElementById("dialog-demo")
 	dialogDemo.openDialog = function(e) {
-		this.$.dialog.open()
-	}
+		   this.$.dialog.open()
+    }
 	if (typeof pa.param == 'string') dialogDemo.confirm = e => window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
 	else dialogDemo.confirm = e => window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
 	dialogDemo.dismiss = e => {}
