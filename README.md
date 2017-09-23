@@ -9,25 +9,74 @@ The project consists of two subprojects: CivilizationEngine back end https://git
 At this stage, it is only the beginning. A few basic features are implemented and the user interface is purely functional and very rude.
 Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/. It is a free quota and please wait a moment until container/dyno is activated.
 
+## History
+
+### 2017/09/23 : new version deployed
+* Game progress saved in persistent storage
+* Game resume
+* Two players game
+* Leave the game
+
+### 2017/08/27 : first draft
+
+## Game progress saved
+
+The game progress is saved in persistent memory. This process is done in the background in transparent way. Game is stored in ![redis](https://redis.io/) key/value database. 
+
+## Game resume
+
+![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-23%2010-16-02.png)
+
+Just click the game you want to resume and you will be transported into the middle of the battle.
+
+You can also resume two player game but you need an opponent to continue.
+
+## Two players game
+
+![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-23%2010-20-16.png)
+
+Two options are available:
+* Training, just to click and beat the bush around
+* Two players game, you need an opponent
+
+Choose the civilization you want to play againt.
+
+![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-23%2010-25-10.png)
+
+Wait for your contester.
+
+![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-23%2010-27-14.png)
+
+## Joining the game
+
+Choose the game you want to join
+
+![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-23%2010-30-27.png)
+
+And you, together with your opponent, are transported into the middle of the action.
+
+## Leaving the game
+
+Tap the close icon in the upper right corner of the board and you can call it a day.
+
+Important: 
+The game is stored constantly in the background. So even if you abruptly close the browser you can resume the game later being at the same stage. But by leaving the game legally, you remove the game from the list of active games. "Active game" status is closed automatically after 24 hours of inactivity.
+
 ## Interface description
 
-Only single player training game is implemented. The first screen allows to choose civilization you want to play and the second is the game itself.
-
-Civilization selection.
- ![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-08-26%2011-25-09.png)
- 
  Game board
+ 
  ![](https://github.com/stanislawbartkowski/CivilizationEngine/blob/master/screenshots/Zrzut%20ekranu%20z%202017-08-26%2011-28-05.png)
  The left panel contains status information and user options available at this stage of the command. In order to play the command, the user has to click the option in the left panel (now "Capital" only ) and click the square where the capital is supposed to be built. After the command is executed, the play board is refreshed and next options are activated. After building the capital, there are "Set up Army", "Set up Scout" and "EnfOfPhase". When all options available at the given game stage are executed, the player has to click "EnfOfPhase" button to push the game to the next phase or activate the next player.
 So far only the following actions are implemented:
-* Set Capital (at the beginning only)
-* Set up Army (at the beginning only)
-* Set up Scout (at the beginning only)
+* Build Capital (at the beginning only)
+* Deploy Army (at the beginning only)
+* Deploy Scout (at the beginning only)
 * Buy Army (City Managementy)
 * Buy Scout (City Management)
 * Move figure (Movement)
 * Reveal tile (Movement)
-* Set up City (StartOfTurn)
+* Build City (StartOfTurn)
 
 ## Figure movement
 
