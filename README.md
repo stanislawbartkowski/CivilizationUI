@@ -9,12 +9,15 @@ The project consists of two subprojects: CivilizationEngine back end https://git
 At this stage, it is only the beginning. A few basic features are implemented and the user interface is purely functional and very rude.
 Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/. It is a free quota and please wait a moment until container/dyno is activated.
 
-## Versions
+## History
 
 ### 2017/09/23 : new version deployed
 * Game progress saved in persistent storage
 * Game resume
 * Two players game
+* Leave the game
+
+### 2017/08/27 : first draft
 
 ## Game progress saved
 
