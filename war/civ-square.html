@@ -144,8 +144,8 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
         var res = C.getsquare(this.row,this.col)
         if (res.terrain == null) return
         var co = C.getcurrentcommand()
-        var i = C.getitemizedcommand()
         if (C.emptyS(co)) return
+        var i = C.getitemizedcommand()
         C.confexecutedialog(this._constructcommandquestion(co),co,this.row,this.col,null)
     }
 

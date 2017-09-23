@@ -48,6 +48,13 @@
     "choosetilequestion" : "Which one do you want to touch ?",
     "tileup" : "Tile up",
     "tileright" : "Tile right",
-    "areyousurequestion" : "Are you sure ?"
+    "areyousurequestion" : "Are you sure ?" ,
+    "youareaboutmovingtwofigures": "You are about to move stacked figures",
+    "choosenumberoffigures" : "Choose number of figures you want to move or move them all",
+    "numberofarmies" : "Number of armies",
+    "numberofscouts" : "Number of scouts",
+    "nothingtomove" : "Both number of scouts and armies are 0, cannot move",
+    "numberofarmiesexceeds" : "Number of armies to move exceeds the number of armies at this point : {max}",
+    "numberofscoutsexceeds" : "Number of scouts to move exceeds the number of scouts at this point : {max}"
   }
 }

@@ -26,6 +26,8 @@
   <link rel="import" href="civ-player.html">
   <link rel="import" href="civ-gamestate.html">
   <link rel="import" href="reveal2-dialog.html">
+  <link rel="import" href="multifigures-dialog.html">
+  <link rel="import" href="figurenumber-dialog.html">
   
    
   <style>
@@ -36,11 +38,20 @@
     }
   </style>
   
-<dom-bind id="dialog-demo"> 
+<dom-bind id="dialog-question"> 
   <template> 
       <paper-alert-dialog id="dialog" title="Congratulations" dismiss-button="Cancel"
 	                      confirm-button="OK" on-confirm="confirm" on-dismiss="dismiss">
-  {{message}} 
+        {{message}} 
+      </paper-alert-dialog> 
+  </template> 
+</dom-bind>
+
+<dom-bind id="dialog-alert"> 
+  <template> 
+      <paper-alert-dialog id="dialog" confirm-button="OK">
+      <paper-alert-dialog-icon-header icon="icons:warning"></paper-alert-dialog-icon-header>
+      {{message}}
       </paper-alert-dialog> 
   </template> 
 </dom-bind>
@@ -51,8 +62,6 @@
       <paper-alert-dialog-icon-header icon="icons:warning">Action failed, read message below from server</paper-alert-dialog-icon-header>
       {{message}}
     </paper-alert-dialog>
-
-    <paper-button on-tap="openDialogWithHeader" raised>Open</paper-button>
   </template>
 </dom-bind>
 
@@ -62,8 +71,6 @@
       <paper-alert-dialog-icon-header icon="icons:warning">Cannot execute action</paper-alert-dialog-icon-header>
       {{message}}
     </paper-alert-dialog>
-
-    <paper-button on-tap="openDialogWithHeader" raised>Open</paper-button>
   </template>
 </dom-bind>
 
@@ -76,6 +83,12 @@
 <dom-bind id="reveal2-dialog">
   <template>
    <reveal2-dialog id="dialog"></reveal2-dialog>
+  </template>
+</dom-bind>  
+
+<dom-bind id="multifigures-dialog">
+  <template>
+   <multifigures-dialog id="dialog"></multifigures-dialog>
   </template>
 </dom-bind>  
   

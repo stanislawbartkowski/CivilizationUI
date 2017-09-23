@@ -215,7 +215,7 @@ public class CIvilizationUI implements EntryPoint {
 	 * @param value
 	 *            attribute value
 	 */
-	public static native void setyouplayparam(String attr, String value)/*-{
+	public static native void setyouplayparam(String attr, JavaScriptObject value)/*-{
 		$wnd.C.setyouplayparam(attr, value);
 	}-*/;
 
@@ -460,7 +460,15 @@ public class CIvilizationUI implements EntryPoint {
 
 			@Override
 			public void onSuccess(String result) {
-				setyouplayparam("itemizedcommand", result);
+				if (result == null)
+					setyouplayparam("itemizedcommand", null);
+				else {
+					JSONValue js = JSONParser.parseLenient(result);
+					if (js.isArray() != null)
+						setyouplayparam("itemizedcommand", js.isArray().getJavaScriptObject());
+					else
+						setyouplayparam("itemizedcommand", js.isObject().getJavaScriptObject());
+				}
 			}
 		});
 

@@ -1,0 +1,91 @@
+ <dom-module id="multifigures-dialog">
+  <template>
+  
+    <style>   
+       :host {
+        display: block;
+      }
+            
+    </style>
+    
+    
+    <paper-dialog id="dialog" modal>
+      <h3>{{localize('youareaboutmovingtwofigures')}}</h3>
+      <p/>
+      
+      <div>{{localize('choosenumberoffigures')}}</div>
+      
+      <figurenumber-widget id="armynumb"></figurenumber-widget>
+      <figurenumber-widget id="scoutnumb"></figurenumber-widget>
+                        
+      <div class="buttons">
+
+        <paper-button on-click="_onMove">
+            <iron-icon icon="fingerprint"></iron-icon>  
+           {{localize('startmove')}}
+        </paper-button>
+                
+        <paper-button dialog-dismiss>{{localize('cancellabel')}}</paper-button> 
+      </div>
+      
+    </paper-dialog>
+  </template>
+
+  <script>
+    class MultiFiguresDialog extends Polymer.CivLocalize(Polymer.Element) {
+      static get is() { return 'multifigures-dialog'; }
+      
+      static get properties() {
+          return {
+            iparam: {
+              type: Object,
+              value: undefined
+            }
+          }
+      }
+      
+      _verify(label,numb,max) {
+          if (numb > max) {
+              C.alertdialog(this.localize(label,'max',''+max))
+              return true
+          }
+          return false    	  
+      }
+      
+      _onMove() {
+          const armies = Number(this.$.armynumb.numb)
+          const scouts = Number(this.$.scoutnumb.numb)
+          if (armies == 0 && scouts == 0) {
+        	  C.alertdialog(this.localize('nothingtomove'))
+        	  return
+          }
+          if (this._verify('numberofarmiesexceeds',armies,this.iparam.param.numberofArmies)) return
+          if (this._verify('"numberofscoutsexceeds"',scouts,this.iparam.param.numberofScouts)) return
+          C.confirmdialog(this.localize('areyousurequestion'),e => {
+              this.closeIt()
+              const pa = this.iparam
+              pa.param.numberofArmies = armies
+              pa.param.numberofScouts = scouts
+              C.executeC("STARTMOVE",pa)
+          })          
+
+      }
+      
+      openIt(iparam) {
+    	  this.iparam = iparam
+          this.$.dialog.open();
+    	  const e = this.$.armynumb
+    	  e.draw('numberofarmies',iparam.param.numberofArmies)
+          const e1 = this.$.scoutnumb
+          e1.draw('numberofscouts',iparam.param.numberofScouts)
+      }
+      
+      closeIt() {
+          this.$.dialog.close();
+        }
+     
+    }
+
+    window.customElements.define(MultiFiguresDialog.is, MultiFiguresDialog);
+  </script>
+</dom-module>

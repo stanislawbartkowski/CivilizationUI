@@ -90,8 +90,8 @@ var C = (function() {
      pa.row = iparam.row
      pa.col = iparam.col
      pa.param = iparam.param
-     if (C.emptyS(itemized)) return pa
-     iparam.list = JSON.parse(itemized)
+     if (itemized == null) return pa
+     iparam.list = itemized
      if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") return verifysetfigures(co,iparam,pa)
      if (co == "startmove") return verifystartmove(co,iparam,pa)
      if (co == "move") return verifymove(co,iparam,pa)
@@ -145,6 +145,14 @@ var C = (function() {
     return true;
   }
   
+  function _multifigures(iparam) {
+    const no = iparam.param.numberofArmies + iparam.param.numberofScouts
+    if (no <= 1) return false
+    const dialog = document.getElementById("multifigures-dialog")
+    dialog.$.dialog.openIt(iparam)
+    return true;
+  }
+  
   
   function _clearMap() {
      const y = C.getyouplay()
@@ -170,9 +178,8 @@ var C = (function() {
     return C.localize(phase.toLowerCase() + "label")
   },
   
-  getlistofpoints(co,itemized) {
-     if (itemized == null) return null
-     const itemize = JSON.parse(itemized)
+  getlistofpoints(co,itemize) {
+     if (itemize == null) return null
      if (co == "startmove") {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
@@ -195,7 +202,7 @@ var C = (function() {
   },
 
   getconfirmdialog : function() {
-    return document.getElementById("dialog-demo")
+    return document.getElementById("dialog-question")
   },
 
   joingamedialog : function(gameid,civ) {
@@ -223,6 +230,16 @@ var C = (function() {
     dialogDemo.dismiss = e => {}
     dialogDemo.message = message
     dialogDemo.openDialog()    
+  },
+
+  alertdialog: function(message) {
+    const dialogalert = document.getElementById("dialog-alert") 
+    dialogalert.openDialog = function(e) {
+        this.$.dialog.open()
+    }
+    dialogalert.confirm = e => {}
+    dialogalert.message = message
+    dialogalert.openDialog()    
   },
   
   
@@ -261,6 +278,11 @@ var C = (function() {
 	dialogDemo.openDialog()
   },
   
+  executeC : function(co,pa) {
+    if (typeof pa.param == 'string') window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
+    else window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)  
+  },
+  
   confexecutedialog : function (question,co,row,col,param) {
     var iparam = {}
     iparam.square = null
@@ -271,13 +293,16 @@ var C = (function() {
     var pa = verifycommand(co,iparam)
     if (pa == null) return
     if (co == "revealtile") 
-    if (_twotilereveal(iparam)) return
-    const dialogDemo = document.getElementById("dialog-demo")
+       if (_twotilereveal(iparam)) return
+    if (co == "startmove")
+       if (_multifigures(pa)) return   
+    const dialogDemo = C.getconfirmdialog()
 	dialogDemo.openDialog = function(e) {
 		   this.$.dialog.open()
     }
-	if (typeof pa.param == 'string') dialogDemo.confirm = e => window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
-	else dialogDemo.confirm = e => window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
+//	if (typeof pa.param == 'string') dialogDemo.confirm = e => window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
+//	else dialogDemo.confirm = e => window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
+    dialogDemo.confirm = e => C.executeC(co,pa)
 	dialogDemo.dismiss = e => {}
 	dialogDemo.message = question
 	dialogDemo.openDialog()
