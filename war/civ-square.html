@@ -243,6 +243,10 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
      C.showeleme(this.$.army1number,false)
      C.displayelem(this.$.army1, false)
      C.showeleme(this.$.army1number,false)
+     C.displayelem(this.$.army2, false)
+     C.showeleme(this.$.army2number,false)
+     C.displayelem(this.$.army2, false)
+     C.showeleme(this.$.army2number,false)
    }
 
    _removescout() {
@@ -250,6 +254,10 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
          C.showeleme(this.$.scout1number,false)
          C.displayelem(this.$.scout1, false)
          C.showeleme(this.$.scout1number,false)
+         C.displayelem(this.$.scout2, false)
+         C.showeleme(this.$.scout2number,false)
+         C.displayelem(this.$.scout2, false)
+         C.showeleme(this.$.scout2number,false)
    }
 
    _removeterrain() {
@@ -310,11 +318,11 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
          if (j.numberofArmies > 0) {
              if (C.civtonumb(j.civ) == 0) {
                C.displayelem(this.$.army1, true)
-               if (j.numberofArmies > 1) C.displaybadge(this.$.army1number,j.numberofArmies)
+               C.displaybadge(this.$.army1number,j.numberofArmies)
              }
              else {
                  C.displayelem(this.$.army2, true)
-                 if (j.numberofArmies > 1) C.displaybadge(this.$.army2number,j.numberofArmies)
+                 C.displaybadge(this.$.army2number,j.numberofArmies)
              }
          }
          else this._removearmy()

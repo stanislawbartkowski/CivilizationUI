@@ -177,6 +177,10 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                 	value : null
                 },
                 
+                opponent : {
+                	type : Boolean
+                },
+                
                 actionpanels : {
                 	type : Array,
                 	value :
@@ -221,6 +225,7 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
     }
     
     _onClick(source) {
+    	     if (this.opponent) return
              var id = source.currentTarget.id
              if (id == "endofphase") {
                 this.currentcommand = null
@@ -250,12 +255,12 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
         	 this.clear()
          }
                   
-         draw(b) {
+         draw(b, y, opponent) {
         	   if (b == null) {
         		   this.clear()
         		   return;
         	   }
-               const y = b.board.you
+        	   this.opponent = opponent
                C.setColorForCity(this,"civname",C.backcolorForCiv(y.civ))
                this.civname=y.civ
                this.numberoftrade = "Trade: " + y.trade
@@ -283,7 +288,8 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                   const id = command.command.toLowerCase()
                   const bu = this.shadowRoot.getElementById(id);
                   C.disableleme(bu,false)
-                  if (id == "move") this._callitemize(id)
+                  if (!opponent && id == "move" && this.currentcommand != "revealtile") 
+                	  this._callitemize(id)
                  }
              }         
            

@@ -325,9 +325,12 @@ var C = (function() {
     },
 
     displaybadge : function(e,number) {
-      C.showeleme(e,true)
-      e.updatePosition()
-      e.label = number
+      if (number <= 1) C.showeleme(e,false)
+      else {      
+        C.showeleme(e,true)
+        e.updatePosition()
+        e.label = number
+      }
     },
 
    disableleme :function (e,disable) {
@@ -402,6 +405,11 @@ var C = (function() {
     
     getyouplay : function() {
       var y = _getxapp().$.youplay
+      return y
+    },
+
+    getopponentplay : function() {
+      var y = _getxapp().$.opponentplay
       return y
     },
     
@@ -515,6 +523,14 @@ var C = (function() {
       const p = al.getNamedItem(aname)
       if (p == null) return null
       return p.nodeValue
+    },
+    
+    seconddrawerClose : function(close) {
+      const x = _getxapp()
+      const e = x.$.internalDrawer
+      e.forceNarrow = close
+      const d = x.$.opponentplay
+      C.showeleme(d,!close)
     },
     
     setColorForCity : function(e,city,color) {

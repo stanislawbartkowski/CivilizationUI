@@ -579,7 +579,8 @@ public class CIvilizationUI implements EntryPoint {
 		for (int i = 0; i < civs.size(); i++) {
 			String s = civs.get(i);
 			if (s.equalsIgnoreCase(civ))
-				return i;
+				if (gamet.opposite()) return civs.size() -i -1;
+				else return i;
 		}
 		return -1;
 	}

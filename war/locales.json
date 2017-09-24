@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/09/22",
+    "appversion": "Version: 2017/09/24",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -55,6 +55,7 @@
     "numberofscouts" : "Number of scouts",
     "nothingtomove" : "Both number of scouts and armies are 0, cannot move",
     "numberofarmiesexceeds" : "Number of armies to move exceeds the number of armies at this point : {max}",
-    "numberofscoutsexceeds" : "Number of scouts to move exceeds the number of scouts at this point : {max}"
+    "numberofscoutsexceeds" : "Number of scouts to move exceeds the number of scouts at this point : {max}",
+    "multiplayermorethen2" : "Multip player game with more then 2 players not supported yet"
   }
 }
