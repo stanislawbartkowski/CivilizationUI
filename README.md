@@ -66,11 +66,12 @@ The game is stored constantly in the background. So even if you abruptly close t
 
  Game board
  
- #One player training game
+ ### One player training game
  
  ![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-26%2023-35-20.png)
  
- #Two player game
+ 
+ ### Two player game
  
  ![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-26%2023-44-10.png)
  
