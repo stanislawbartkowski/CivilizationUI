@@ -20,6 +20,7 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 * Game resume
 * Two players game
 * Leave the game
+
 https://hoteljavaopensource.blogspot.com/2017/09/introduction-i-deployed-next-version-of.html
 
 ### 2017/08/27 : first draft
