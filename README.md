@@ -11,11 +11,16 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 
 ## History
 
+### 2017/09/27 : new version deployed
+* new interface,  more user friendly
+* two players game, opponent player desk visible
+
 ### 2017/09/23 : new version deployed
 * Game progress saved in persistent storage
 * Game resume
 * Two players game
 * Leave the game
+https://hoteljavaopensource.blogspot.com/2017/09/introduction-i-deployed-next-version-of.html
 
 ### 2017/08/27 : first draft
 
@@ -71,7 +76,7 @@ The game is stored constantly in the background. So even if you abruptly close t
  ![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-26%2023-35-20.png)
  
  
- ### Two player game
+ ### Two players game
  
  ![](https://github.com/stanislawbartkowski/CivilizationUI/blob/master/screenshots/Zrzut%20ekranu%20z%202017-09-26%2023-44-10.png)
  
