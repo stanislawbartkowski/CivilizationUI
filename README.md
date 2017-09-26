@@ -15,7 +15,7 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 * new interface,  more user friendly
 * two players game, opponent player desk visible
 
-https://hoteljavaopensource.blogspot.com/2017/09/next-version-of-civilization-board-game.html
+https://hoteljavaopensource.blogspot.com/2017/09/next-version-of-civilization-board-game_26.html
 
 ### 2017/09/23 : new version deployed
 * Game progress saved in persistent storage
