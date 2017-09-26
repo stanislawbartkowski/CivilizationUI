@@ -66,7 +66,7 @@ The game is stored constantly in the background. So even if you abruptly close t
 
  Game board
  
- ![](https://github.com/stanislawbartkowski/CivilizationEngine/blob/master/screenshots/Zrzut%20ekranu%20z%202017-08-26%2011-28-05.png)
+ ![](https://github.com/stanislawbartkowski/CivilizationEngine/blob/master/screenshots/Zrzut ekranu z 2017-09-26 23-35-20.png)
  The left panel contains status information and user options available at this stage of the command. In order to play the command, the user has to click the option in the left panel (now "Capital" only ) and click the square where the capital is supposed to be built. After the command is executed, the play board is refreshed and next options are activated. After building the capital, there are "Set up Army", "Set up Scout" and "EnfOfPhase". When all options available at the given game stage are executed, the player has to click "EnfOfPhase" button to push the game to the next phase or activate the next player.
 So far only the following actions are implemented:
 * Build Capital (at the beginning only)
