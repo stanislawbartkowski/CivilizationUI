@@ -56,6 +56,15 @@
     "nothingtomove" : "Both number of scouts and armies are 0, cannot move",
     "numberofarmiesexceeds" : "Number of armies to move exceeds the number of armies at this point : {max}",
     "numberofscoutsexceeds" : "Number of scouts to move exceeds the number of scouts at this point : {max}",
-    "multiplayermorethen2" : "Multip player game with more then 2 players not supported yet"
+    "multiplayermorethen2" : "Multip player game with more then 2 players not supported yet",
+    "spendtrade" : "Spend Trade",
+    "undospendtrade" : "Undo Spend",
+    "youareabouttospendtrade" : "You are about to spend trade for production",
+    "specifyamountofproduction" : "Specify the amount of production to increase",
+    "amountofproduction" : "Amount of production to increase",
+    "tradetospend" : "Trade to spend : ",
+    "productionfromtradeshouldbe" : "Production should be the number between 1 and {max}",
+    "sendproduction" : "Send Production",
+    "undosendproduction" : "Undo Send"
   }
 }

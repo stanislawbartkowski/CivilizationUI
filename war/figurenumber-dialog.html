@@ -29,19 +29,29 @@
             },
             numb : {
             	type : Number,
-            	value : undefined
+            	observer: 'numberChanged'
             }
           
           }
       }
       
-      draw(label,numb) {
+      numberChanged(newValue,oldValue) {    	  
+      }
+      
+      draw(label,numb,max) {
     	  this.text = this.localize(label)
     	  this.numb = numb
-    	  this.$.input.max = numb
+    	  if (max == null) max=numb
+    	  this.$.input.max = max
     	  if (numb == 0) C.disableleme(this.$.input, true)
     	  else C.disableleme(this.$.input, false)
       }
+      
+      getNumb() {
+    	  if (this.numb == null) return 0
+    	  return Number(this.numb)
+      }
+      
                  
     }
 

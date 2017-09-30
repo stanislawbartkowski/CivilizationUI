@@ -16,13 +16,11 @@ var C = (function() {
          return pa
          }
 
-//      dialogalert("dialog-command-alert","Cannot " + co + " at this point. Try another point.")
       return null
   };
 
   function checkarmy(iparam) {
      if (iparam.square.numberofArmies > 0 || iparam.square.numberofScouts > 0) return true
-//     dialogalert("dialog-command-alert","Neither armies nor scouts here")
      return false
   };
 
@@ -47,7 +45,6 @@ var C = (function() {
        pa.param = list[i].f
        return pa
     }
-//    dialogalert("dialog-command-alert","Cannot move these figures now. Try another point.")
     return null
   };
 
@@ -55,17 +52,13 @@ var C = (function() {
      var list = iparam.list.moves
      var i = findpoint(iparam,list)
      if (i != -1) return pa
-//     dialogalert("dialog-command-alert","Cannot move figures to this point. Try another point.")
      return null
   };
 
   function verifysetcity(co,iparam,pa) {
      var list = iparam.list
      var i = findpoint(iparam,list)
-     if (i == -1) {
-//           dialogalert("dialog-command-alert","Cannot " + co + " at this point. Try another point.")
-           return null
-     }
+     if (i == -1) return null
      return pa
   };
 
@@ -73,10 +66,7 @@ var C = (function() {
   function verifyrevealtile(co,iparam,pa) {
     if (!checkarmy(iparam)) return null
     var list = iparam.list
-    if (!eqp(iparam,list.p)) {
-//       dialogalert("dialog-command-alert","Cannot reveal tile using this figure. Try proper one.")
-       return null
-    }
+    if (!eqp(iparam,list.p)) return null
     var r = list.tiles[0]
     pa.row = r.p.row
     pa.col = r.p.col
@@ -158,6 +148,11 @@ var C = (function() {
      const y = C.getyouplay()
      y.draw(null)
   }
+  
+  function _spendtradecommand(pa) {
+    const dialog = document.getElementById("spendtrade-dialog")
+    dialog.$.dialog.openIt(pa)     
+  }
 
   return {
   
@@ -192,7 +187,7 @@ var C = (function() {
      
      }
      if (co == "move")  return itemize.moves     
-     if (co == "setcity" || co == "setcapital") return itemize
+     if (co == "setcity" || co == "setcapital" || co == "spendtrade" || co == "undospendtrade") return itemize
      if (co == "revealtile") {
        var a = []
        a.push(itemize.p)
@@ -280,6 +275,7 @@ var C = (function() {
   
   executeC : function(co,pa) {
     if (typeof pa.param == 'string') window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
+    if (typeof pa.param == "number") window.executecommandN(co.toUpperCase(),pa.row,pa.col,pa.param)
     else window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)  
   },
   
@@ -295,13 +291,15 @@ var C = (function() {
     if (co == "revealtile") 
        if (_twotilereveal(iparam)) return
     if (co == "startmove")
-       if (_multifigures(pa)) return   
+       if (_multifigures(pa)) return
+    if (co == "spendtrade") {
+       _spendtradecommand(pa)
+       return
+    } 
     const dialogDemo = C.getconfirmdialog()
 	dialogDemo.openDialog = function(e) {
 		   this.$.dialog.open()
     }
-//	if (typeof pa.param == 'string') dialogDemo.confirm = e => window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
-//	else dialogDemo.confirm = e => window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
     dialogDemo.confirm = e => C.executeC(co,pa)
 	dialogDemo.dismiss = e => {}
 	dialogDemo.message = question
@@ -406,6 +404,10 @@ var C = (function() {
     getyouplay : function() {
       var y = _getxapp().$.youplay
       return y
+    },
+    
+    getyourdeck: function() {
+      return C.getjsboard().board.you
     },
 
     getopponentplay : function() {

@@ -391,6 +391,8 @@ public class CIvilizationUI implements EntryPoint {
 			return null;
 		if (param instanceof String)
 			return "\"" + (String) param + "\"";
+		if (param instanceof Double)
+			return ((Double) param).toString();
 		JSONObject o = new JSONObject((JavaScriptObject) param);
 		return o.isObject().toString();
 	}
@@ -413,6 +415,11 @@ public class CIvilizationUI implements EntryPoint {
 	}
 
 	public static void executeCommandS(String s, int row, int col, String param) {
+		String pa = jsParamtoS(param);
+		execute(s, row, col, pa);
+	}
+
+	public static void executeCommandN(String s, int row, int col, Double param) {
 		String pa = jsParamtoS(param);
 		execute(s, row, col, pa);
 	}
@@ -579,8 +586,10 @@ public class CIvilizationUI implements EntryPoint {
 		for (int i = 0; i < civs.size(); i++) {
 			String s = civs.get(i);
 			if (s.equalsIgnoreCase(civ))
-				if (gamet.opposite()) return civs.size() -i -1;
-				else return i;
+				if (gamet.opposite())
+					return civs.size() - i - 1;
+				else
+					return i;
 		}
 		return -1;
 	}
@@ -604,6 +613,9 @@ public class CIvilizationUI implements EntryPoint {
 		}
 		$wnd.executecommandS = function(param1, param2, param3, param4) {
 			@com.civilization.ui.client.CIvilizationUI::executeCommandS(*)(param1,param2,param3,param4);
+		}
+		$wnd.executecommandN = function(param1, param2, param3, param4) {
+			@com.civilization.ui.client.CIvilizationUI::executeCommandN(*)(param1,param2,param3,param4);
 		}
 		$wnd.itemizecommand = function(param1) {
 			@com.civilization.ui.client.CIvilizationUI::itemizecommand(*)(param1);
