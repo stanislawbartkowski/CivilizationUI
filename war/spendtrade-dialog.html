@@ -33,7 +33,9 @@
   </template>
 
   <script>
-    class SpendTradeDialog extends Polymer.CivLocalize(Polymer.Element) {
+//    class SpendTradeDialog extends Polymer.CivLocalize(Polymer.Element) {
+//    class SpendTradeDialog extends Polymer.mixinBehaviors([Polymer.CivLocalize,Polymer.DialDraggable],Polymer.Element) {
+      class SpendTradeDialog extends Polymer.CivLocalize(Polymer.DialDraggable(Polymer.Element)) {
       static get is() { return 'spendtrade-dialog'; }
       
       static get properties() {

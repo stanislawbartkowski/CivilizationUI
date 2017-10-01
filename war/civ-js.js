@@ -183,9 +183,13 @@ var C = (function() {
      if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
-        return a
-     
+        return a     
      }
+     if (co == "sendproduction") {
+        const a = []
+        for (var i=0; i<itemize.length; i++) a.push(itemize[i].city)
+        return a                 
+       }
      if (co == "move")  return itemize.moves     
      if (co == "setcity" || co == "setcapital" || co == "spendtrade" || co == "undospendtrade") return itemize
      if (co == "revealtile") {
