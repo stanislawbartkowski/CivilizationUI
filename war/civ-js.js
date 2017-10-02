@@ -1,15 +1,11 @@
 var C = (function() {
 
-  function eqp(p1,p2) {
-    return p1.row == p2.row && p1.col == p2.col
-  };
-
   function verifysetfigures(co,iparam,pa) {
 
      var list = iparam.list
 
      for (var i=0; i<list.length; i++)
-       if (eqp(iparam,list[i].param)) {
+       if (C.eqp(iparam,list[i].param)) {
          pa.row = list[i].p.row
          pa.col = list[i].p.col
          pa.param = list[i].param
@@ -26,13 +22,13 @@ var C = (function() {
 
   function findpointp(iparam,list) {
     for (var i=0; i<list.length; i++)
-      if (eqp(iparam,list[i].p)) return i
+      if (C.eqp(iparam,list[i].p)) return i
     return -1
   }
 
   function findpoint(iparam,list) {
     for (var i=0; i<list.length; i++)
-      if (eqp(iparam,list[i])) return i
+      if (C.eqp(iparam,list[i])) return i
     return -1
   }
 
@@ -66,12 +62,19 @@ var C = (function() {
   function verifyrevealtile(co,iparam,pa) {
     if (!checkarmy(iparam)) return null
     var list = iparam.list
-    if (!eqp(iparam,list.p)) return null
+    if (!C.eqp(iparam,list.p)) return null
     var r = list.tiles[0]
     pa.row = r.p.row
     pa.col = r.p.col
     pa.param = r.orientation
     return pa;
+  }
+  
+  function verifypoints(pa) {
+      const list = C.currentlistofpoints()
+      const i = findpoint(pa,list)
+      if (i == -1) return null
+      return pa
   }
 
   function verifycommand(co,iparam) {
@@ -80,6 +83,8 @@ var C = (function() {
      pa.row = iparam.row
      pa.col = iparam.col
      pa.param = iparam.param
+     pa.square = iparam.square
+     pa.itemized = itemized
      if (itemized == null) return pa
      iparam.list = itemized
      if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") return verifysetfigures(co,iparam,pa)
@@ -87,7 +92,7 @@ var C = (function() {
      if (co == "move") return verifymove(co,iparam,pa)
      if (co == "revealtile") return verifyrevealtile(co,iparam,pa)
      if (co == "setcapital" || co == "setcity") return verifysetcity(co,iparam,pa)
-     return pa
+     return verifypoints(pa)
   };
 
    function dialogalert(dialogid,message) {
@@ -154,8 +159,22 @@ var C = (function() {
     dialog.$.dialog.openIt(pa)     
   }
 
+  function _sendproductioncommand(pa) {
+    const dialog = document.getElementById("sendproduction-dialog")
+    dialog.$.dialog.openIt(pa)     
+  }  
+  
+  function _sendproductionsetscout(pa) {
+    const dialog = document.getElementById("sendproduction-dialog")
+    dialog.$.dialog.setScout(pa)     
+  }  
+
   return {
   
+  eqp(p1,p2) {
+    return p1.row == p2.row && p1.col == p2.col
+  },
+    
   getcommanddecr(co) {
      var key = co
      switch(co) {
@@ -171,6 +190,14 @@ var C = (function() {
   
   getphasedescr(phase) {
     return C.localize(phase.toLowerCase() + "label")
+  },
+  
+  setlistofpoints(a) {
+     C.getyouplay().setListOfPoints(a)
+  },
+  
+  currentlistofpoints() {
+    return C.getyouplay().listofpoints
   },
   
   getlistofpoints(co,itemize) {
@@ -296,10 +323,18 @@ var C = (function() {
        if (_twotilereveal(iparam)) return
     if (co == "startmove")
        if (_multifigures(pa)) return
+    if (co == "sendproduction") {
+       _sendproductioncommand(pa)
+       return
+    }   
     if (co == "spendtrade") {
        _spendtradecommand(pa)
        return
     } 
+    if (co == "selectscout") {
+      _sendproductionsetscout(pa)
+      return
+    }
     const dialogDemo = C.getconfirmdialog()
 	dialogDemo.openDialog = function(e) {
 		   this.$.dialog.open()
@@ -396,10 +431,18 @@ var C = (function() {
     getcurrentcommand : function() {
         return this.getyouplay().currentcommand
       },
-
+      
+    setcurrentcommand : function(co) {
+       this.getyouplay().currentcommand = co
+    },  
+    
     getitemizedcommand : function() {
          return this.getyouplay().itemizedcommand
       },
+      
+    issendproductionscout : function() {
+      return C.getcurrentcommand() == "selectscout"
+    },
 
     setyouplayparam : function(attr,value) {
        this.getyouplay()[attr] = value
@@ -539,7 +582,28 @@ var C = (function() {
       C.showeleme(d,!close)
     },
     
+    setShadowStyleAttribute : function(e,selval,attr,value) {
+      selval = selval.toLowerCase()
+      const sha = e.shadowRoot
+      const st = sha.styleSheets
+      const rule = st[0]
+      const a = rule.cssRules
+      for (var i = 0; i<a.length; i++) {
+        const s = a[i]
+        const sel = s.selectorText
+        const inde = sel.search(selval)
+        if (inde >= 0) {
+           s.style[attr] = value
+           return;
+        }
+      }
+    },
+    
     setColorForCity : function(e,city,color) {
+       C.setShadowStyleAttribute(e,city,"backgroundColor",color)
+    },
+        
+    xxxsetColorForCity : function(e,city,color) {
       city = city.toLowerCase()
       var sha = e.shadowRoot
       var st = sha.styleSheets
@@ -549,8 +613,8 @@ var C = (function() {
         var s = a[i]
         var sel = s.selectorText
         var inde = sel.search(city)
-        if (inde > 0) {
-           s.style.backgroundColor = color
+        if (inde >= 0) {
+           s.style["backgroundColor"] = color
            return;
         }
       }

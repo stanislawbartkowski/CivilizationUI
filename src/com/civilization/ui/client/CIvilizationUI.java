@@ -54,9 +54,6 @@ public class CIvilizationUI implements EntryPoint {
 	private final static String STARTMENU = "startmenu";
 	private final static String JSDATA = "jsdata";
 
-	// private static boolean multigame = false;
-	// private static boolean second = false;
-
 	enum T {
 		TRANINGGAME, STARTTWOPLAYERGAME, JOINTWOPLAYERGAME;
 
@@ -145,8 +142,7 @@ public class CIvilizationUI implements EntryPoint {
 			int col = e.getPropertyInt("col");
 			JSONArray a = getMap();
 			JSONObject o = a.get(fixrow(row)).isArray().get(fixcol(col)).isObject();
-			String s = o.toString();
-			e.setAttribute(JSDATA, s);
+			e.setPropertyObject(JSDATA, o.getJavaScriptObject());
 			n.ok = true;
 		});
 		return n.ok;
@@ -155,7 +151,7 @@ public class CIvilizationUI implements EntryPoint {
 	private static void clearMap() {
 		Element fe = findContent(CIVMAP);
 		Node ss1 = (Node) fe.getPropertyObject("shadowRoot");
-		walkforTag(ss1, "civ-square", e -> e.setAttribute(JSDATA, ""));
+		walkforTag(ss1, "civ-square", e -> e.setPropertyObject(JSDATA, null));
 	}
 
 	/**

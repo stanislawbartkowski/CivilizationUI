@@ -219,7 +219,7 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
         },
 
         jsdata : {
-             type : String,
+             type : Object,
              val : undefined
          },
          figurecolor1 : {
@@ -289,11 +289,11 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
 
    refresh(jsdata) {
 
-         if (C.emptyS(jsdata)) {
+         if (jsdata == null) {
              this._clearsquare()
              return
            }
-         const j = JSON.parse(jsdata);
+         const j = jsdata
          if (j.city != null) {
             this._removeterrain()
             C.displayelem(this.$.attcity,true)

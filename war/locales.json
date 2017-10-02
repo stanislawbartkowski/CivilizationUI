@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/09/24",
+    "appversion": "Version: 2017/10/02",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -65,6 +65,8 @@
     "tradetospend" : "Trade to spend : ",
     "productionfromtradeshouldbe" : "Production should be the number between 1 and {max}",
     "sendproduction" : "Send Production",
-    "undosendproduction" : "Undo Send"
+    "undosendproduction" : "Undo Send",
+    "youareabouttosendproduction" : "You are about to send production to city",
+    "specifythesuqretoharvest" : "Specify the square you want to harvest"
   }
 }

@@ -1,0 +1,116 @@
+ <dom-module id="sendproduction-dialog">
+    <template>
+  
+    <style>   
+       :host {
+        display: block;
+      }
+            
+    </style>
+    
+    
+    <paper-dialog id="dialog" noCancelOnOutsideClick>
+      <h3>{{localize('youareabouttosendproduction')}}</h3>
+      <p/>
+
+      <civ-square id="square" row="-1" col ="-1"></civ-square>
+      
+      <div>{{localize('specifythesuqretoharvest')}}</div>
+      
+      </p>
+      <div><civ-square id="scout" row="-1" col ="-1"></civ-square></div>
+            
+            
+      <div class="buttons">
+
+        <paper-button on-click="_onSend">
+            <iron-icon src="images/tokens/production.svg"></iron-icon>  
+           {{localize('sendproduction')}}
+        </paper-button>
+                
+        <paper-button on-click="_onCancel" dialog-dismiss>{{localize('cancellabel')}}</paper-button> 
+      </div>
+      
+    </paper-dialog>
+  </template>
+
+  <script>
+      class SendProductionDialog extends Polymer.CivLocalize(Polymer.DialDraggable(Polymer.Element)) {
+    	  
+      static get is() { return 'sendproduction-dialog'; }
+      
+      static get properties() {
+          return {
+            pa: {
+              type: Object,
+              value: undefined
+            },
+            
+            scout : {
+            	type : Object
+            }
+                                   
+          }
+      }
+      
+      _setScoutPoints() {
+    	  const pa = this.pa
+    	  const itemize = pa.itemized
+          const a = []
+          for (var i=0; i<itemize.length; i++) {
+        	  const ci = itemize[i].city
+        	  const sco = itemize[i].scout
+        	  if (C.eqp(ci,pa)) a.push(sco)
+          }
+    	  C.setlistofpoints(a)
+      }
+      
+      _onSend() {
+    	  if (this.scout == null) {
+    		  C.alertdialog(C.localize('specifythesuqretoharvest') + " !")
+    		  return
+    	  }
+      }
+      
+      _clearSquare() {
+          C.clearCommand()
+          const sq = this.$.square
+          sq.jsdata = null
+          const sc = this.$.scout
+          sc.jsdata = null    	  
+      }
+      
+      _onCancel() {
+    	  this._clearSquare()
+      }
+      
+      setScout(pa) {
+          const sc = this.$.scout
+    	  this.scout = pa
+    	  sc.jsdata = pa.square
+      }
+      
+      openIt(pa) {    	  
+          const sq = this.$.square
+          C.setShadowStyleAttribute(sq,":host","float",null)
+          const sc = this.$.scout
+          C.setShadowStyleAttribute(sc,":host","float",null)
+          sc.jsdata = null
+          sq.jsdata = pa.square
+          this.pa = pa
+          this.scout = null
+          this.$.dialog.open();
+    	  this.$.dialog.noCancelOnOutsideClick = true
+    	  C.setcurrentcommand("selectscout")
+    	  this._setScoutPoints()
+      }
+      
+      closeIt() {
+          this.$.dialog.close();
+        }
+     
+    }
+
+    window.customElements.define(SendProductionDialog.is, SendProductionDialog);
+  </script>
+</dom-module>
