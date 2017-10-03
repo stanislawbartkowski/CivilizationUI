@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/10/02",
+    "appversion": "Version: 2017/10/03",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -58,14 +58,14 @@
     "numberofscoutsexceeds" : "Number of scouts to move exceeds the number of scouts at this point : {max}",
     "multiplayermorethen2" : "Multip player game with more then 2 players not supported yet",
     "spendtrade" : "Spend Trade",
-    "undospendtrade" : "Undo Spend",
+    "undospendtrade" : "Undo Spend Trade",
     "youareabouttospendtrade" : "You are about to spend trade for production",
     "specifyamountofproduction" : "Specify the amount of production to increase",
     "amountofproduction" : "Amount of production to increase",
     "tradetospend" : "Trade to spend : ",
     "productionfromtradeshouldbe" : "Production should be the number between 1 and {max}",
     "sendproduction" : "Send Production",
-    "undosendproduction" : "Undo Send",
+    "undosendproduction" : "Undo Send Production",
     "youareabouttosendproduction" : "You are about to send production to city",
     "specifythesuqretoharvest" : "Specify the square you want to harvest"
   }

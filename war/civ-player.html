@@ -4,6 +4,17 @@
 
 <style>
 
+  .undobuttons {
+    position: relative;
+    margin: 0;
+    @apply --layout-horizontal;
+/*    @apply --layout-end-justified; */ 
+  }
+  
+  .undo {
+    width: 15px;
+  }
+
   .civname {
     border-radius: 15px;
     width: 90%;
@@ -104,20 +115,57 @@
 </span>
 
 <span id="citymanagement" class="actionbox" style="display:none">		
-	<paper-icon-item id="buyarmy" on-click="_onClick"> <iron-icon
-		src="images/figures/army.svg" slot="item-icon"></iron-icon> <span>{{localize('purchasearmy')}}</span> </paper-icon-item>
-	<paper-icon-item id="buyscout" on-click="_onClick"> <iron-icon
-		src="images/figures/scout.svg" slot="item-icon"></iron-icon> <span>{{localize('purchasescout')}}</span> </paper-icon-item>
-    <paper-icon-item id="spendtrade" on-click="_onClick"> 
-        <iron-icon src="images/tokens/trade.svg" slot="item-icon"></iron-icon>{{localize('spendtrade')}}</paper-icon-item>
-    <paper-icon-item id="undospendtrade" on-click="_onClick"> 
-        <iron-icon icon="icons:undo" slot="item-icon"></iron-icon> <span>{{localize('undospendtrade')}}</span> </paper-icon-item> -
+	<paper-icon-item id="buyarmy" on-click="_onClick"> 
+	  <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon> 
+	  <span>{{localize('purchasearmy')}}</span> 
 	</paper-icon-item>
-    <paper-icon-item id="sendproduction" on-click="_onClick"> <iron-icon
-        src="images/tokens/production.svg" slot="item-icon"></iron-icon> <span>{{localize('sendproduction')}}</span> </paper-icon-item>
-    <paper-icon-item id="undosendproduction" on-click="_onClick"> <iron-icon
-        icon="icons:undo" slot="item-icon"></iron-icon> <span>{{localize('undosendproduction')}}</span> </paper-icon-item>
+	
+	<paper-icon-item id="buyscout" on-click="_onClick"> 
+	  <iron-icon src="images/figures/scout.svg" slot="item-icon"></iron-icon> 
+	  <span>{{localize('purchasescout')}}</span>
     </paper-icon-item>
+    
+<!--     
+    <paper-icon-item id="undospendtrade" on-click="_onClick"> 
+        <iron-icon icon="icons:undo" slot="item-icon"></iron-icon> 
+        <span>{{localize('undospendtrade')}}</span> 
+    </paper-icon-item> -
+-->    
+
+    <div class="undobuttons">
+            
+      <paper-icon-item id="sendproduction" on-click="_onClick"> 
+        <iron-icon src="images/tokens/production.svg" slot="item-icon"></iron-icon> 
+        {{localize('sendproduction')}}
+      </paper-icon-item>
+      
+      <paper-icon-item class="undo" id="undosendproduction" on-click="_onClick" title="{{localize('undosendproduction')}}">
+       <iron-icon icon="icons:undo" slot="item-icon"></iron-icon> 
+      </paper-icon-item>
+      
+    </div>
+    
+    <div class="undobuttons">
+        
+      <paper-icon-item id="spendtrade" on-click="_onClick"> 
+        <iron-icon src="images/tokens/trade.svg" slot="item-icon"></iron-icon>        
+         {{localize('spendtrade')}}
+      </paper-icon-item>
+        
+      <paper-icon-item class="undo" id="undospendtrade" on-click="_onClick" title="{{localize('undospendtrade')}}"> 
+          <iron-icon icon="icons:undo" slot="item-icon"></iron-icon> 
+      </paper-icon-item>
+      
+    </div>
+    
+
+<!--     
+    <paper-icon-item id="undosendproduction" on-click="_onClick">
+     <iron-icon icon="icons:undo" slot="item-icon"></iron-icon> 
+     <span>{{localize('undosendproduction')}}</span> 
+    </paper-icon-item>
+-->    
+    
 </span>
 
 <span id="movement" class="actionbox" style="display:none">     

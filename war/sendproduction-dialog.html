@@ -70,6 +70,14 @@
     		  C.alertdialog(C.localize('specifythesuqretoharvest') + " !")
     		  return
     	  }
+    	  const scout = this.scout
+          C.confirmdialog(this.localize('areyousurequestion'),e => {
+              this.closeIt()
+              const pa = this.pa
+              const c = this.scout              
+              pa.param = C.constructP(c.row,c.col)              
+              C.executeC("SENDPRODUCTION",pa)
+          })          
       }
       
       _clearSquare() {

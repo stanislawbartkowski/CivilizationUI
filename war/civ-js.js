@@ -92,6 +92,7 @@ var C = (function() {
      if (co == "move") return verifymove(co,iparam,pa)
      if (co == "revealtile") return verifyrevealtile(co,iparam,pa)
      if (co == "setcapital" || co == "setcity") return verifysetcity(co,iparam,pa)
+     if (co == "endofmove") return pa
      return verifypoints(pa)
   };
 
@@ -169,6 +170,17 @@ var C = (function() {
     dialog.$.dialog.setScout(pa)     
   }  
 
+  function _undosendproductioncommand(question,pa) {
+    C.confirmdialog(question,e => {
+      const ite = pa.itemized
+      for (var i=0; i< ite.length; i++) 
+         if (C.eqp(ite[i].city,pa)) {
+           pa.param = ite[i].scout
+           C.executeC("UNDOSENDPRODUCTION",pa)
+         }                   
+      })     
+  }
+
   return {
   
   eqp(p1,p2) {
@@ -212,7 +224,7 @@ var C = (function() {
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
         return a     
      }
-     if (co == "sendproduction") {
+     if (co == "sendproduction" || co == "undosendproduction") {
         const a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].city)
         return a                 
@@ -325,6 +337,10 @@ var C = (function() {
        if (_multifigures(pa)) return
     if (co == "sendproduction") {
        _sendproductioncommand(pa)
+       return
+    }   
+    if (co == "undosendproduction") {
+       _undosendproductioncommand(question,pa)
        return
     }   
     if (co == "spendtrade") {
@@ -539,6 +555,10 @@ var C = (function() {
 
     emptyS : function(s) { return s == null || s == "" },
     
+    constructP : function(row,col) {
+      return {"row" : row, "col" : col }
+    },
+    
     color1 : function() { return "Aqua" },
     color2 : function() { return "Red" },
     
@@ -601,25 +621,8 @@ var C = (function() {
     
     setColorForCity : function(e,city,color) {
        C.setShadowStyleAttribute(e,city,"backgroundColor",color)
-    },
-        
-    xxxsetColorForCity : function(e,city,color) {
-      city = city.toLowerCase()
-      var sha = e.shadowRoot
-      var st = sha.styleSheets
-      var rule = st[0]
-      var a = rule.cssRules
-      for (var i = 0; i<a.length; i++) {
-        var s = a[i]
-        var sel = s.selectorText
-        var inde = sel.search(city)
-        if (inde >= 0) {
-           s.style["backgroundColor"] = color
-           return;
-        }
-      }
     }
-
+        
   }  // return
  } // function
 
