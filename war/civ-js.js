@@ -318,8 +318,10 @@ var C = (function() {
   
   executeC : function(co,pa) {
     if (typeof pa.param == 'string') window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
+    else
     if (typeof pa.param == "number") window.executecommandN(co.toUpperCase(),pa.row,pa.col,pa.param)
-    else window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)  
+    else 
+    window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)  
   },
   
   confexecutedialog : function (question,co,row,col,param) {

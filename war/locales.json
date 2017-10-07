@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/10/03",
+    "appversion": "Version: 2017/10/08",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -67,6 +67,11 @@
     "sendproduction" : "Send Production",
     "undosendproduction" : "Undo Send Production",
     "youareabouttosendproduction" : "You are about to send production to city",
-    "specifythesuqretoharvest" : "Specify the square you want to harvest"
+    "specifythesuqretoharvest" : "Specify the square you want to harvest",
+    "buymounted" : "Purchase Mounted",
+    "buyartillery" : "Purchase Artillery",
+    "buyinfantry" : "Purchase Infantry",
+    "buyaircraft" : "Purchase Aircraft",
+    "units" : "Units"
   }
 }
