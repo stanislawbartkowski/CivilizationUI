@@ -197,15 +197,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </template>
 
   <script>
-  Polymer({
-      is: 'x-app',
-      
-      behaviors: [
-    	  Polymer.AppLocalizeBehavior
-      ],
-      
-      properties: {
+  class XApp extends Polymer.CivLocalize(Polymer.Element) {
+
+      static get is() { return 'x-app'; }
+                
+      static get properties() {
           
+    	 return { 
          jsboard : {
             type : Object,
             value : undefined
@@ -214,33 +212,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          language: {
              value: 'en'
          }
-      },
+      }
+      }
       
-      observers: [
-          'draw(jsboard)'
-       ],
+      static get observers() {
+       return [
+      	  'draw(jsboard)'
+        ]
+      }
+
        
-       attached: function() {
+      attached() {
            this.loadResources(this.resolveUrl('locales.json'));
-       },
+       }
       
-      _onClickNew : function() {
+      connectedCallback() {
+    	  super.connectedCallback(); // DO THIS
+    	  // this.attachShadow(...)  // DON'T DO THIS
+
+    	  console.log('container', this.shadowRoot.querySelector("#container"));
+    	  var aaa = this.shadowRoot
+    	}
+       
+      _onClickNew() {
     	  C.showcivorgames(1);
     	  C.readcivs()
-      },
-      _onClickGames : function() {
+      }
+      
+      _onClickGames() {
     	  C.showcivorgames(2);
     	  C.readgames();
-      },
-      _onClickJoinGame : function() {
+      }
+      
+      _onClickJoinGame() {
     	  C.showcivorgames(3);
     	  C.readjoingames();
-      },
-      _onClose : function() {
+      }
+      
+      _onClose() {
           C.leavedialog()
-       },
+       }
        
-       draw: function(jsboard) {
+       draw (jsboard) {
            const b = jsboard           
            C.getgamestate().draw(b)
            if (b == null) {
@@ -261,8 +274,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
        }
 
-    });
-  
+    }
+      
+  window.customElements.define(XApp.is, XApp);
+        
   </script>
     
 </dom-module>
