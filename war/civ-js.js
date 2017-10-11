@@ -180,6 +180,22 @@ var C = (function() {
          }                   
       })     
   }
+  
+  function _sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  function _getShadow(e) {
+    var s = e.shadowRoot
+    var i = 0;
+    while (s == null && i < 5) {
+      // wait 1 sec
+      i = i + 1
+      _sleep(1000)
+      s = e.shadowRoot 
+    }
+    return s
+  }    
 
   return {
   
@@ -395,7 +411,8 @@ var C = (function() {
 
     showelem : function(id,show) {
       const x = _getxapp()
-      const e = x.shadowRoot.getElementById(id)
+//      const e = x.shadowRoot.getElementById(id)
+      const e = _getShadow(x).getElementById(id)
       C.showeleme(e,show)
     },
 
@@ -504,9 +521,14 @@ var C = (function() {
     readcivs : function() {
       window.readcivs();
     },
-
+    
     readjoingames : function() {
       window.readjoingames();
+    },
+    
+    isFireFox : function() {
+        const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        return isFirefox      
     },
 
     toS : function(o) {
@@ -606,7 +628,8 @@ var C = (function() {
     
     setShadowStyleAttribute : function(e,selval,attr,value) {
       selval = selval.toLowerCase()
-      const sha = e.shadowRoot
+//      const sha = e.shadowRoot
+      const sha = _getShadow(e)
       const st = sha.styleSheets
       const rule = st[0]
       const a = rule.cssRules

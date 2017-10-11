@@ -131,6 +131,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-icon-button src="images/Octocat.png" title="polymer"></paper-icon-button>
             </a>
             </div>
+            <div id="warning" style="font-size: 50%;" >
+              Chrome only !<p>
+              Not Firefox !
+            </div>
             <div main-title>
                Civilization               
             </div>
@@ -223,7 +227,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
        
       attached() {
-           this.loadResources(this.resolveUrl('locales.json'));
+           this.loadResources(this.resolveUrl('locales.json'));           
+           if (!C.isFireFox()) {
+               const w = this.$.warning
+               C.displayelem(w,false)
+           }
        }
       
       connectedCallback() {
@@ -277,6 +285,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
       
   window.customElements.define(XApp.is, XApp);
+  
+  if (C.isFireFox()) alert("Not supported on Firefox. Use Chrome")
         
   </script>
     

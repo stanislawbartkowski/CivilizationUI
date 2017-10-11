@@ -184,6 +184,7 @@ public class CIvilizationUI implements EntryPoint {
 		}
 
 	};
+	
 
 	// ===========================================
 
@@ -280,7 +281,7 @@ public class CIvilizationUI implements EntryPoint {
 	}
 
 	/**
-	 * Trigger buttons refreshin, panel outside map
+	 * Trigger buttons refreshing, panel outside map
 	 */
 	private static void redrawheader() {
 		setjsboard(board.getJavaScriptObject());
@@ -494,17 +495,37 @@ public class CIvilizationUI implements EntryPoint {
 			}
 		});
 	}
+	
+	public static class TWaitShadow extends Timer {
+
+
+		@Override
+		public void run() { 
+			if (getxApp() != null) {
+			  showelem(STARTMENU, true);
+			  showelem(GAMEMENU, false);
+			  setjsboard(null);
+			  Element fe = findContent(CIVMAP);
+			  fe.setAttribute("hidden", "true");
+			  showcivorgames(1);
+			  this.cancel();
+			}
+		}
+	}
+
 
 	private static void greetingMenu() {
 		trefresh.cancel();
 		civtoken = null;
 		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
-		showelem(STARTMENU, true);
-		showelem(GAMEMENU, false);
-		setjsboard(null);
-		Element fe = findContent(CIVMAP);
-		fe.setAttribute("hidden", "true");
-		showcivorgames(1);
+		new TWaitShadow().scheduleRepeating(1000);
+		
+//		showelem(STARTMENU, true);
+//		showelem(GAMEMENU, false);
+//		setjsboard(null);
+//		Element fe = findContent(CIVMAP);
+//		fe.setAttribute("hidden", "true");
+//		showcivorgames(1);
 	}
 
 	public static void leaveGame() {
@@ -594,7 +615,7 @@ public class CIvilizationUI implements EntryPoint {
 	 * Called at the beginning. Defines all GWT functions available from JS code
 	 */
 	public native void expose()/*-{
-
+		
 		$wnd.getciv = function(param) {
 			return @com.civilization.ui.client.CIvilizationUI::getCiv(*)(param);
 		}
