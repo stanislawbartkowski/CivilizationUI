@@ -1,0 +1,219 @@
+<dom-module id="civ-units">
+<template>
+
+<custom-style>
+
+<style is="custom-style" >
+
+:host {
+  display: inline-block;
+  /*box-sizing: border-box;*/
+  border : 1px solid;
+  border-radius: 5px;
+  width: 70px;
+  height: 65px;
+}
+
+:host([infantry]) {
+  background-color: #FFE4C4;
+}
+
+:host([mounted]) {
+  background-color: #A9A9A9;
+}
+
+:host([artillery]) {
+  background-color: #ADD8E6;
+}
+
+:host([aircraft]) {
+  background-color: #98FB98;
+}
+
+
+paper-badge {
+  --paper-badge : {
+    margin-bottom:-15px;
+  }
+}
+
+  .top {
+      width: 100%;
+      height: 20%;
+      border-bottom: 1px inset;
+  }
+  .left {
+      width: 20%;
+      height: 80%;
+      float:left;
+  }
+  .main {
+      float: left;
+      height: 80%;
+      width: 80%
+   }
+
+   .unitfigure {
+     display : none;
+     width:80%;
+   }
+
+   .imagelevel {
+     width:20%;
+     float:right;
+     padding-top: 2px;
+     display:none;
+   }
+
+   .unitstrength {
+     font-size:80%;
+     margin-top:-0.25em;
+     color: blue;
+   }
+
+</style>
+
+</custom-style>
+</style>
+
+<div >
+  <div class="top">
+      <span id="strengthvalue" style="width:15%; display=none; float: left; color:red">{{strengthvalue}}</span>
+      <span id="unitname" style="width:60%; font-size:80%;">{{unitname}}</span>
+      <s-svg id="imagelevel0" class="imagelevel" src="images/units/unit-level0.svg"></s-svg>
+      <s-svg id="imagelevel1" class="imagelevel" src="images/units/unit-level1.svg"></s-svg>
+      <s-svg id="imagelevel3" class="imagelevel" src="images/units/unit-star.svg"></s-svg>
+      <s-svg id="imagelevel2" class="imagelevel" src="images/units/unit-level2.svg"></s-svg>
+  </div>
+     <div class="left" id="strength">
+     <div id="level0" class="unitstrength"></div>
+     <div id="level1" class="unitstrength"></div>
+     <div id="level2" class="unitstrength"></div>
+     <div id="level3" class="unitstrength"></div>
+  </div>
+  <div class="main" >
+     <s-svg id="mounted" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-mounted.svg"></s-svg>
+     <s-svg id="artillery" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-artillery.svg"></s-svg>
+     <s-svg id="infantry" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-infantry.svg"></s-svg>
+     <s-svg id="aircraft" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-aircraft.svg"></s-svg>
+     <paper-badge hidden id="mountednumber" for="mounted" label="X">
+      </paper-badge>
+     <paper-badge hidden id="infantrynumber" for="infantry" label="X">
+     </paper-badge>
+     <paper-badge hidden id="artillerynumber" for="artillery" label="X">
+     </paper-badge>
+     <paper-badge hidden id="aircraftnumber" for="aircraft" label="X">
+     </paper-badge>
+  </div>
+</div>
+
+</template>
+
+<script>
+class CivUnits extends Polymer.GestureEventListeners(Polymer.Element) {
+
+    constructor() {
+        super();
+        Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
+    }
+
+    static get is() {
+    	return 'civ-units';
+    	}
+
+    // Declare properties for the element's public API
+    static get properties() {
+      return {
+          boxwidth: {
+              type: Number,
+              readOnly: true,
+              value: 70
+          },
+        boxheight: {
+            type: Number,
+            readOnly: true,
+            value: 70
+          },
+        data : {
+          type : Object
+        },
+        datas : {
+          type : String
+        },
+        strengthvalue : {
+          type : Number
+        },
+        unitname : {
+          type : String
+        },
+        unittypes : {
+          type : Array,
+          readOnly: true,
+          value : ["mounted","aircraft","infantry","artillery"]
+        }
+
+    }
+
+  }
+
+  static get observers() {
+    return [
+    'refreshs(datas)',
+    'refresh(data)',
+    ]
+  }
+  
+  connectedCallback() {
+	  super.connectedCallback();
+  }
+ 
+  _clearimages() {
+    for (var i=0; i<this.unittypes.length; i++)
+      C.displayelem(this.$[this.unittypes[i]],false)
+    for (var i=0; i<this.unittypes.length; i++)
+      C.showeleme(this.$[this.unittypes[i]+'number'],false)
+    C.displayelem(this.$.strengthvalue,false)
+    for (var i=0; i<=3; i++)
+      C.showeleme(this.$["imagelevel"+i],false)
+    for (var i=0; i<this.unittypes.length; i++)
+      C.removeattr(this,this.unittypes[i])
+  }
+
+  refreshs(datas) {
+    this.data = JSON.parse(datas);
+  }
+
+  _unitName(n) {
+     return C.localize(n)
+  }
+
+  refresh(data) {
+    this._clearimages()
+    const n = data.name.toLowerCase()
+    this.setAttribute(n,1)
+    if (data.strength != null)
+      for (var i=0; i<data.strength.length; i++)
+         this.$["level"+i].innerText = data.strength[i]
+    else
+    for (var i=0; i<4; i++)
+       this.$["level"+i].innerHTML = "&nbsp;"
+
+    this.unitname = this._unitName(n)
+    if (data.level != null) {
+       C.displayelem(this.$.strengthvalue,true)
+       if (data.strength != null) this.strengthvalue = data.strength[data.level]
+       C.displayelem(this.$["imagelevel"+data.level],true)
+     }
+    if (data.num != null && data.num > 0) C.displayelem(this.$[n],true)
+    if (data.num != null)
+      C.displaybadge(this.$[n+'number'],data.num)   
+  }
+
+
+}
+
+  // Register the x-custom element with the browser
+  customElements.define(CivUnits.is, CivUnits);
+</script>
+
+</dom-module>

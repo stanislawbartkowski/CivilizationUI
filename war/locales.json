@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/10/09",
+    "appversion": "Version: 2017/10/21",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -72,6 +72,10 @@
     "buyartillery" : "Purchase Artillery",
     "buyinfantry" : "Purchase Infantry",
     "buyaircraft" : "Purchase Aircraft",
-    "units" : "Units"
+    "units" : "Units",
+    "mounted" : "Mounted",
+    "artillery" :  "Artillery",
+    "aircraft" : "Aircraft",
+    "infantry" : "Infantry"
   }
 }

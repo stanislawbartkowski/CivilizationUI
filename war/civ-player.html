@@ -37,6 +37,15 @@
      border-radius: 5px;
      width: 90%;
   }
+
+  .unitbox {
+     margin-left: 5px;
+     margin-top: 2px;
+     border:1px ridge gray ; 
+     display: block; 
+     border-radius: 5px;
+     width: 90%;
+  }
     
   #startofturn  {
   }
@@ -52,7 +61,7 @@
   
   #research  {   
   }  
-   
+       
 </style>
 	
 	<div class="civname">[[civname]]</div>
@@ -79,6 +88,14 @@
   </paper-icon-item>
 
 </span>
+
+<span id="unitbox" class="unitbox" >
+  <civ-units id="infantry"></civ-units>
+  <civ-units id="artillery"></civ-units>
+  <civ-units id="mounted"></civ-units>
+  <civ-units id="aircraft"></civ-units>
+</span>
+
 
 <paper-item>
   <div>[[currentcommand]]</div>
@@ -115,6 +132,21 @@
 </span>
 
 <span id="citymanagement" class="actionbox" style="display:none">
+
+<paper-menu-button> 
+
+    <paper-icon-item slot="dropdown-trigger">
+      <iron-icon icon="menu" slot="item-icon"></iron-icon>       
+      <span>{{localize('units')}}</span>
+    </paper-icon-item>
+
+    <paper-tabs  slot="dropdown-content" class="dropdown-content">
+        <paper-item id="buyinfantry" on-click="_onClick">{{localize('buyinfantry')}}</paper-item>
+        <paper-item id="buymounted" on-click="_onClick">{{localize('buymounted')}}</paper-item>
+        <paper-item id="buyartillery" on-click="_onClick">{{localize('buyartillery')}}</paper-item>
+        <paper-item id="buyaircraft" on-click="_onClick">{{localize('buyaircraft')}}</paper-item>
+    </paper-tabs>
+</paper-menu-button>		
 		
 	<paper-icon-item id="buyarmy" on-click="_onClick"> 
 	  <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon> 
@@ -160,30 +192,17 @@
     </div>
     
     
-
-<!--     
-    <paper-icon-item id="undosendproduction" on-click="_onClick">
-     <iron-icon icon="icons:undo" slot="item-icon"></iron-icon> 
-     <span>{{localize('undosendproduction')}}</span> 
-    </paper-icon-item>
--->
-
-    <paper-menu-button>
-      <paper-icon-item slot="dropdown-trigger">
+<!--  <paper-menu-button> -->
+<!--  
+    <paper-icon-item slot="dropdown-trigger">
       <iron-icon icon="menu" slot="item-icon"></iron-icon>       
       <span>{{localize('units')}}</span>
     </paper-icon-item>
+-->
+<!--   </paper-menu-button> -->
 
-    <paper-listbox slot="dropdown-content">
-    <paper-item id="buyinfantry">{{localize('buyinfantry')}}</paper-item>
-    <paper-item id="buymounted">{{localize('buymounted')}}</paper-item>
-    <paper-item id="buyartillery">{{localize('buyartillery')}}</paper-item>
-    <paper-item id="buyaircraft">{{localize('buyaircraft')}}</paper-item>
-  </paper-listbox>
-</paper-menu-button>
-    
-    
 </span>
+     
 
 <span id="movement" class="actionbox" style="display:none">     
 	
@@ -197,6 +216,7 @@
 	<paper-icon-item id="endofmove" on-click="_onClick">
 	<iron-icon icon="pan-tool" slot="item-icon"></iron-icon> <span>{{localize('endofmove')}}</span> </paper-icon-item>
 </span>		
+
 
 <span id="research" class="actionbox" style="display:none">     
 </span>		
@@ -383,8 +403,8 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                   if (!opponent && id == "move" && this.currentcommand != "revealtile") 
                 	  this._callitemize(id)
                  }
-             }         
-           
+              C.setUnitsNumb(this,y.units.units)
+             }
         }
         
 window.customElements.define(CivPlayer.is, CivPlayer);

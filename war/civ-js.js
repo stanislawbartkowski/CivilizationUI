@@ -191,7 +191,7 @@ var C = (function() {
     while (s == null && i < 5) {
       // wait 1 sec
       i = i + 1
-      _sleep(1000)
+      _sleep(10000)
       s = e.shadowRoot 
     }
     return s
@@ -230,7 +230,8 @@ var C = (function() {
   
   getlistofpoints(co,itemize) {
      if (itemize == null) return null
-     if (co == "startmove") {
+     if (co == "startmove" || co == "buyinfantry" ||
+         co == "buyartillery" || co == "buymounted" || co == "buyaircraft" ) {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
@@ -399,7 +400,16 @@ var C = (function() {
       if (number <= 1) C.showeleme(e,false)
       else {      
         C.showeleme(e,true)
-        e.updatePosition()
+        var pa = e.offsetParent
+        var no = 0
+        if (pa == null) no = 500
+        _sleep(no).then( 
+          () => {
+            C.showeleme(e,true)
+            e.updatePosition()  
+          }
+        ) 
+          
         e.label = number
       }
     },
@@ -411,7 +421,6 @@ var C = (function() {
 
     showelem : function(id,show) {
       const x = _getxapp()
-//      const e = x.shadowRoot.getElementById(id)
       const e = _getShadow(x).getElementById(id)
       C.showeleme(e,show)
     },
@@ -642,6 +651,24 @@ var C = (function() {
            return;
         }
       }
+    },
+    
+    setCivUnits : function(e,i,units) {
+       const u = units[i]
+       const name = u.name.toLowerCase()
+       const num = u.num
+       const strength = u.militarystrength
+       const param = {}
+       param.name=name
+       param.num = num
+       param.level = strength
+       const elem = e.$[name]
+       elem.data = param
+    },
+    
+    setUnitsNumb : function(e,units) {
+      for (var i=0; i<4; i++) 
+        C.setCivUnits(e,i,units)
     },
     
     setColorForCity : function(e,city,color) {
