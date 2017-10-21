@@ -12,8 +12,6 @@
     
   <script type="text/javascript" language="javascript" src="civ-js.js"></script>
    
-  <link rel="import" href="m-draggable.html">   
-  <link rel="import" href="civ-localize.html"> 
   <link rel="import" href="x-app.html"> 
   <link rel="import" href="civ-choose.html">  
   <link rel="import" href="civ-gameline.html">  
@@ -32,8 +30,10 @@
   <link rel="import" href="figurenumber-dialog.html">
   <link rel="import" href="spendtrade-dialog.html">
   <link rel="import" href="sendproduction-dialog.html">
+  <link rel="import" href="civ-market.html">
+  <link rel="import" href="s-svg.html">
+  <link rel="import" href="showunits-dialog.html"> 
   
-   
   <style>
     body {
       margin: 0;
@@ -108,6 +108,12 @@
   </template>
 </dom-bind>  
   
+<dom-bind id="showunits-dialog">
+  <template>
+   <showunits-dialog id="dialog"></showunits-dialog>
+  </template>
+</dom-bind>  
+
   
 </head>
 <body unresolved>

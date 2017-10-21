@@ -1,8 +1,3 @@
-<link rel="import" href="bower_components/polymer/polymer.html">
-<link rel="import" href="bower_components/app-localize-behavior/app-localize-behavior.html">
-
-<script>
-
 Polymer.CivLocalize = function(superClass) {
 
 	  return class extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], superClass) {
@@ -20,10 +15,8 @@ Polymer.CivLocalize = function(superClass) {
 	    }	        
 	    
         attached() {
-	           this.loadResources(this.resolveUrl('locales.json'));
+            this.loadResources(this.resolveUrl('locales.json'));
 	    }
         
    }   
 }
-
-</script>

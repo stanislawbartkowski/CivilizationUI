@@ -64,7 +64,7 @@
        
 </style>
 	
-	<div class="civname">[[civname]]</div>
+<div class="civname">[[civname]]</div>
 
 <span class = "statusstyle actionbox">
   <paper-icon-item>
@@ -191,16 +191,6 @@
       
     </div>
     
-    
-<!--  <paper-menu-button> -->
-<!--  
-    <paper-icon-item slot="dropdown-trigger">
-      <iron-icon icon="menu" slot="item-icon"></iron-icon>       
-      <span>{{localize('units')}}</span>
-    </paper-icon-item>
--->
-<!--   </paper-menu-button> -->
-
 </span>
      
 
@@ -403,7 +393,7 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                   if (!opponent && id == "move" && this.currentcommand != "revealtile") 
                 	  this._callitemize(id)
                  }
-              C.setUnitsNumb(this,y.units.units)
+              C.setUnitsNumb(this,y.units)
              }
         }
         

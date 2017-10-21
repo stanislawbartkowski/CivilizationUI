@@ -155,6 +155,11 @@ var C = (function() {
      y.draw(null)
   }
   
+  function opendialogwithpar(id,pa) {
+     const dialog = document.getElementById(id)
+     dialog.$.dialog.openIt(pa)     	  
+  }
+  
   function _spendtradecommand(pa) {
     const dialog = document.getElementById("spendtrade-dialog")
     dialog.$.dialog.openIt(pa)     
@@ -199,6 +204,10 @@ var C = (function() {
 
   return {
   
+  showunits(units) {
+   opendialogwithpar("showunits-dialog",units)
+  },
+	  
   eqp(p1,p2) {
     return p1.row == p2.row && p1.col == p2.col
   },
@@ -496,6 +505,11 @@ var C = (function() {
       var y = _getxapp().$.youplay
       return y
     },
+
+    getmarket : function() {
+      var y = _getxapp().$.market
+      return y
+    },
     
     getyourdeck: function() {
       return C.getjsboard().board.you
@@ -507,11 +521,11 @@ var C = (function() {
     },
     
     setjsboard : function(jsboard) {
-       _getxapp()["jsboard"] = jsboard      
+       _getxapp().draw(jsboard)      
     },
     
     getjsboard : function() {
-       return _getxapp()["jsboard"]
+       return _getxapp()["data"]
     },
     
     getsquare : function(row,col) {
@@ -653,8 +667,13 @@ var C = (function() {
       }
     },
     
+    _getbyid : function(e,id) {
+      if (e.$ != null) return e.$[id]
+      return e.querySelector("#" + id)
+    },
+    
     setCivUnits : function(e,i,units) {
-       const u = units[i]
+       const u = units.units[i]
        const name = u.name.toLowerCase()
        const num = u.num
        const strength = u.militarystrength
@@ -662,8 +681,10 @@ var C = (function() {
        param.name=name
        param.num = num
        param.level = strength
-       const elem = e.$[name]
+       const elem = C._getbyid(e,name)
        elem.data = param
+       if (units.list != null && units.list.length > 0) elem.units = units
+       
     },
     
     setUnitsNumb : function(e,units) {

@@ -1,0 +1,84 @@
+<dom-module id="civ-market">
+
+<template>
+
+<style>
+
+:host {
+    text-transform: none;
+  }
+  
+  .unitname {
+    border-radius: 15px;
+    width: 90%;
+    height: 30px; 
+    text-align: center;
+    font-size: 150%;
+    padding-top: 5px;
+    background-color : YellowGreen ;
+    margin-left: 5px;
+  }
+  
+  .unitbox {
+     margin-left: 5px;
+     margin-top: 2px;
+     border:1px ridge gray ; 
+     border-radius: 5px;
+     vertical-align: top;
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;  
+   }
+   
+   .unitelem {
+     margin : 4px;
+   }
+   
+   .units {
+      display: flex; 
+      float: left;
+   }
+  
+
+  </style>
+  
+  <div class="units">
+    <div id="units" class=unitbox>
+      <div class="unitname">{{localize('units')}}</div>
+      <civ-units class="unitelem" id="infantry"></civ-units>
+      <civ-units class="unitelem" id="artillery"></civ-units>
+      <civ-units class="unitelem" id="mounted"></civ-units>
+      <civ-units class="unitelem" id="aircraft"></civ-units>
+    </div>  
+  
+    <div id="killed" class="unitbox">
+      <div class="unitname">{{localize('killedunits')}}</div>
+      <civ-units class="unitelem" id="infantry"></civ-units>
+      <civ-units class="unitelem" id="artillery"></civ-units>
+      <civ-units class="unitelem" id="mounted"></civ-units>
+      <civ-units class="unitelem" id="aircraft"></civ-units>
+    </div>
+  </div>    
+  
+</span>
+  
+  </template>
+
+<script>
+class CivMarket extends Polymer.CivData(Polymer.Element) {
+
+    static get is() { return 'civ-market'; }
+    
+    refresh(b) {
+    	if (b == null) return
+    	const units = b.board.units
+    	const killed = b.board.killedunits
+    	C.setUnitsNumb(this.$.units,units)
+        C.setUnitsNumb(this.$.killed,killed)    	
+    }
+}
+    
+customElements.define(CivMarket.is, CivMarket);
+</script>
+
+</dom-module>

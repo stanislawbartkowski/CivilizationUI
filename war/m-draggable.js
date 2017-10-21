@@ -1,8 +1,3 @@
-
-<link rel="import" href="bower_components/polymer/lib/mixins/gesture-event-listeners.html">
-
-<script>
-
 Polymer.DialDraggable = function(superClass) {
 
 	  return class extends Polymer.mixinBehaviors([Polymer.GestureEventListeners], superClass) {
@@ -55,5 +50,3 @@ Polymer.DialDraggable = function(superClass) {
 
    }
 }
-
-</script>

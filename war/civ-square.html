@@ -125,7 +125,7 @@
 
 <script>
 
-class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polymer.Element)) {
+class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
 
     constructor() {
         super();
@@ -148,13 +148,6 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
         var i = C.getitemizedcommand()
         C.confexecutedialog(this._constructcommandquestion(co),co,this.row,this.col,null)
     }
-
-  static get observers() {
-      return [
-    'refresh(jsdata)'
-    ]
-  }
-
 
     // Declare properties for the element's public API
     static get properties() {
@@ -218,10 +211,6 @@ class CivSquare extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
           value : 2
         },
 
-        jsdata : {
-             type : Object,
-             val : undefined
-         },
          figurecolor1 : {
            type: String,
            value: function() { return C.color1(); }

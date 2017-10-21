@@ -52,7 +52,7 @@ public class CIvilizationUI implements EntryPoint {
 	private final static String CIVMAP = "civ-map";
 	private final static String GAMEMENU = "gamemenu";
 	private final static String STARTMENU = "startmenu";
-	private final static String JSDATA = "jsdata";
+	private final static String JSDATA = "data";
 
 	enum T {
 		TRANINGGAME, STARTTWOPLAYERGAME, JOINTWOPLAYERGAME;
@@ -518,14 +518,7 @@ public class CIvilizationUI implements EntryPoint {
 		trefresh.cancel();
 		civtoken = null;
 		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
-		new TWaitShadow().scheduleRepeating(1000);
-		
-//		showelem(STARTMENU, true);
-//		showelem(GAMEMENU, false);
-//		setjsboard(null);
-//		Element fe = findContent(CIVMAP);
-//		fe.setAttribute("hidden", "true");
-//		showcivorgames(1);
+		new TWaitShadow().scheduleRepeating(1000);		
 	}
 
 	public static void leaveGame() {

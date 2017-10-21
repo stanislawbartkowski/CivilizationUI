@@ -44,10 +44,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
 <link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog.html">
 <link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog-icon-header.html">
+<link rel="import" href="bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+
+<script type="text/javascript" language="javascript" src="civ-localize.js"></script>
+<script type="text/javascript" language="javascript" src="civ-data.js"></script>
+<script type="text/javascript" language="javascript" src="m-draggable.js"></script>
+<script type="text/javascript" language="javascript" src="civ-dialog.js"></script>
   
-<link rel="import" href="s-svg.html">
-  
-  
+ 
 <dom-module id="x-app">
 
 <template>
@@ -121,6 +126,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding-top: 5px;
       padding-left: 5px;
     }
+
+    .market-show {
+      padding-top: 5px;
+      padding-left: 20px;
+    }
        
     </style>
 
@@ -155,7 +165,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="drawer-content">
         
         <div id="gamemenu"  hidden>
-          <civ-player id="youplay"></civ-player>       
+          <civ-player id="youplay"></civ-player>
         </div>
           
         <div id="startmenu" hidden>
@@ -182,10 +192,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            <civ-games></civ-games>
            <civ-join></civ-join>
          
-           <div class="map-show">
-             <civ-map></civ-map>      
+           <div style="display: flex; float: left;">
+             <div class="map-show">
+               <civ-map></civ-map>      
+             </div>
+           
+             <div class="market-show">
+               <civ-market style="display:none" id="market"></civ-market>
+             </div> 
            </div>
-         </div>
+           
+          </div> 
          
          <app-drawer slot="drawer" align="right">
              <div class="drawer-content">
@@ -203,31 +220,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </template>
 
   <script>
-  class XApp extends Polymer.CivLocalize(Polymer.Element) {
+  class XApp extends Polymer.CivData(Polymer.Element) {
 
       static get is() { return 'x-app'; }
                 
-      static get properties() {
-          
-    	 return { 
-         jsboard : {
-            type : Object,
-            value : undefined
-         },
-         
-         language: {
-             value: 'en'
-         }
-      }
-      }
-      
-      static get observers() {
-       return [
-      	  'draw(jsboard)'
-        ]
-      }
-
-       
       attached() {
            this.loadResources(this.resolveUrl('locales.json'));           
            if (!C.isFireFox()) {
@@ -263,15 +259,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           C.leavedialog()
        }
        
-       draw (jsboard) {
+       refresh (jsboard) {
            const b = jsboard           
            C.getgamestate().draw(b)
+           C.getmarket().draw(b)
            if (b == null) {
+        	   C.displayelem(C.getmarket(),false)
                C.getyouplay().draw(b,null,false)
         	   C.seconddrawerClose(true)
         	   C.getopponentplay().draw(b,null,true)
            }
            else {
+               C.displayelem(C.getmarket(),true)
                if (b.board.others.length > 1) {
                    C.alertdialog(this.localize('multiplayermorethen2'))
                    return

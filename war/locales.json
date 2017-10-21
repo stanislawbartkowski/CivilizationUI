@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/10/21",
+    "appversion": "Version: 2017/10/22",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -76,6 +76,7 @@
     "mounted" : "Mounted",
     "artillery" :  "Artillery",
     "aircraft" : "Aircraft",
-    "infantry" : "Infantry"
+    "infantry" : "Infantry",
+    "killedunits" : "Killed"
   }
 }
