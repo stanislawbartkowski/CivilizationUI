@@ -35,17 +35,12 @@
   </template>
 
   <script>
-      class SendProductionDialog extends Polymer.CivLocalize(Polymer.DialDraggable(Polymer.Element)) {
+      class SendProductionDialog extends Polymer.CivDialog(Polymer.DialDraggable(Polymer.Element)) {
     	  
       static get is() { return 'sendproduction-dialog'; }
       
       static get properties() {
           return {
-            pa: {
-              type: Object,
-              value: undefined
-            },
-            
             scout : {
             	type : Object
             }
@@ -54,7 +49,7 @@
       }
       
       _setScoutPoints() {
-    	  const pa = this.pa
+    	  const pa = this.data
     	  const itemize = pa.itemized
           const a = []
           for (var i=0; i<itemize.length; i++) {
@@ -73,7 +68,7 @@
     	  const scout = this.scout
           C.confirmdialog(this.localize('areyousurequestion'),e => {
               this.closeIt()
-              const pa = this.pa
+              const pa = this.data
               const c = this.scout              
               pa.param = C.constructP(c.row,c.col)              
               C.executeC("SENDPRODUCTION",pa)
@@ -95,7 +90,7 @@
       setScout(pa) {
           const sc = this.$.scout
     	  this.scout = pa
-    	  sc.jsdata = pa.square
+    	  sc.draw(pa.square)
       }
       
       openIt(pa) {    	  
@@ -103,20 +98,16 @@
           C.setShadowStyleAttribute(sq,":host","float",null)
           const sc = this.$.scout
           C.setShadowStyleAttribute(sc,":host","float",null)
-          sc.jsdata = null
-          sq.jsdata = pa.square
+          sq.draw(pa.square)
+          sc.draw(null)
           this.pa = pa
           this.scout = null
-          this.$.dialog.open();
-    	  this.$.dialog.noCancelOnOutsideClick = true
     	  C.setcurrentcommand("selectscout")
-    	  this._setScoutPoints()
+    	  super.openIt(pa)
+    	  super.noCancelOnOutsideClick()
+          this._setScoutPoints()
       }
-      
-      closeIt() {
-          this.$.dialog.close();
-        }
-     
+           
     }
 
     window.customElements.define(SendProductionDialog.is, SendProductionDialog);

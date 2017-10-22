@@ -18,9 +18,13 @@ Polymer.CivDialog = function(superClass) {
            this.data = data
            this.$.dialog.open()
        }   
+  	  
+     	noCancelOnOutsideClick() {
+     	   this.$.dialog.noCancelOnOutsideClick = true
+  	    }
        
        closeIt() {
            this.$.dialog.close();
-         }       
+       }       
    }   
 }

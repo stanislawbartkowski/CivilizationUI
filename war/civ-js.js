@@ -240,7 +240,7 @@ var C = (function() {
   getlistofpoints(co,itemize) {
      if (itemize == null) return null
      if (co == "startmove" || co == "buyinfantry" ||
-         co == "buyartillery" || co == "buymounted" || co == "buyaircraft" ) {
+         co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade") {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
@@ -256,7 +256,7 @@ var C = (function() {
         return a                 
        }
      if (co == "move")  return itemize.moves     
-     if (co == "setcity" || co == "setcapital" || co == "spendtrade" || co == "undospendtrade") return itemize
+     if (co == "setcity" || co == "setcapital") return itemize
      if (co == "revealtile") {
        var a = []
        a.push(itemize.p)
