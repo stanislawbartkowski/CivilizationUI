@@ -166,8 +166,7 @@ var C = (function() {
   }
 
   function _sendproductioncommand(pa) {
-    const dialog = document.getElementById("sendproduction-dialog")
-    dialog.$.dialog.openIt(pa)     
+     opendialogwithpar("sendproduction-dialog",pa)
   }  
   
   function _sendproductionsetscout(pa) {
@@ -240,7 +239,8 @@ var C = (function() {
   getlistofpoints(co,itemize) {
      if (itemize == null) return null
      if (co == "startmove" || co == "buyinfantry" ||
-         co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade") {
+         co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade" || 
+         co == "harvestresource" || co == "sendproduction" || co == "undosendproduction") {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
@@ -250,11 +250,6 @@ var C = (function() {
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
         return a     
      }
-     if (co == "sendproduction" || co == "undosendproduction") {
-        const a = []
-        for (var i=0; i<itemize.length; i++) a.push(itemize[i].city)
-        return a                 
-       }
      if (co == "move")  return itemize.moves     
      if (co == "setcity" || co == "setcapital") return itemize
      if (co == "revealtile") {
@@ -363,7 +358,7 @@ var C = (function() {
        if (_twotilereveal(iparam)) return
     if (co == "startmove")
        if (_multifigures(pa)) return
-    if (co == "sendproduction") {
+    if (co == "sendproduction" || co == "harvestresource") {
        _sendproductioncommand(pa)
        return
     }   
@@ -403,6 +398,10 @@ var C = (function() {
     displayelem : function(e, display) {
       if (display) e.style.display = 'block'
       else e.style.display = 'none'
+    },
+    
+    displayelemid(e,id,display) {
+      this.displayelem(C._getbyid(e,id),display)
     },
 
     displaybadge : function(e,number) {
@@ -484,6 +483,10 @@ var C = (function() {
     getcurrentcommand : function() {
         return this.getyouplay().currentcommand
       },
+      
+    iscurrentcommand : function(co) {
+        return this.getcurrentcommand() == co
+    },
       
     setcurrentcommand : function(co) {
        this.getyouplay().currentcommand = co

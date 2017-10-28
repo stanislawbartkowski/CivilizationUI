@@ -38,6 +38,19 @@
       display: flex; 
       float: left;
    }
+   
+   .resourcesbox {
+     margin-left: 5px;
+     margin-top: 2px;
+     border:1px ridge gray ; 
+     border-radius: 5px;
+     vertical-align: top;
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;
+     width : 110px;
+   }
+   
   
 
   </style>
@@ -58,7 +71,13 @@
       <civ-units class="unitelem" id="mounted"></civ-units>
       <civ-units class="unitelem" id="aircraft"></civ-units>
     </div>
-  </div>    
+  </div>
+  
+    <div class="resourcesbox">
+      <div class="unitname">{{localize('resources')}}</div>
+      <civ-resources id="resources"> </civ-resources>
+    </div>
+  
   
 </span>
   
@@ -74,7 +93,10 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
     	const units = b.board.units
     	const killed = b.board.killedunits
     	C.setUnitsNumb(this.$.units,units)
-        C.setUnitsNumb(this.$.killed,killed)    	
+        C.setUnitsNumb(this.$.killed,killed)
+        const res = this.$.resources
+        const r = b.board.resources
+        res.draw(r)
     }
 }
     

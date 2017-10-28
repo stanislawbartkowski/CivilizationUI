@@ -9,8 +9,9 @@
     </style>
     
     
-    <paper-dialog id="dialog" noCancelOnOutsideClick>
-      <h3>{{localize('youareabouttosendproduction')}}</h3>
+    <paper-dialog id="dialog">
+      <h3 id="sendproductiontitle" style="display:none">{{localize('youareabouttosendproduction')}}</h3>
+      <h3 id="harvestresourcetitle" style="display:none">{{localize('youareabouttoharvestresource')}}</h3>
       <p/>
 
       <civ-square id="square" row="-1" col ="-1"></civ-square>
@@ -23,9 +24,14 @@
             
       <div class="buttons">
 
-        <paper-button on-click="_onSend">
+        <paper-button id="sendproductionbutton" style="display:none" on-click="_onSend">
             <iron-icon src="images/tokens/production.svg"></iron-icon>  
            {{localize('sendproduction')}}
+        </paper-button>
+
+        <paper-button id="harvestresourcebutton" style="display:none" on-click="_onSend">
+            <iron-icon icon="icons:build"></iron-icon>  
+           {{localize('harvestresource')}}
         </paper-button>
                 
         <paper-button on-click="_onCancel" dialog-dismiss>{{localize('cancellabel')}}</paper-button> 
@@ -43,18 +49,30 @@
           return {
             scout : {
             	type : Object
+            },
+            names : {
+               type : Array,
+               readOnly: true,
+               value :
+                [
+                   "harvestresource",
+                   "sendproduction"
+                ]
+            },
+            harvestresource : {
+            	type : Boolean
             }
-                                   
+
           }
       }
-      
+            
       _setScoutPoints() {
     	  const pa = this.data
     	  const itemize = pa.itemized
           const a = []
           for (var i=0; i<itemize.length; i++) {
-        	  const ci = itemize[i].city
-        	  const sco = itemize[i].scout
+        	  const ci = itemize[i].p
+        	  const sco = itemize[i].param
         	  if (C.eqp(ci,pa)) a.push(sco)
           }
     	  C.setlistofpoints(a)
@@ -70,17 +88,27 @@
               this.closeIt()
               const pa = this.data
               const c = this.scout              
-              pa.param = C.constructP(c.row,c.col)              
-              C.executeC("SENDPRODUCTION",pa)
+              pa.param = C.constructP(c.row,c.col)
+              var command = "SENDPRODUCTION"
+              if (this.harvestresource) command = "HARVESTRESOURCE"
+              C.executeC(command,pa)
           })          
       }
       
+      _clearLabels() {
+          for (var i=0; i<this.names.length; i++) {
+              C.displayelemid(this,this.names[i] + "title",false)    	  
+              C.displayelemid(this,this.names[i] + "button",false)        
+          }
+      }
+      
       _clearSquare() {
+    	  this._clearLabels()
           C.clearCommand()
           const sq = this.$.square
-          sq.jsdata = null
+          sq.draw(null)
           const sc = this.$.scout
-          sc.jsdata = null    	  
+          sc.draw(null)
       }
       
       _onCancel() {
@@ -93,7 +121,11 @@
     	  sc.draw(pa.square)
       }
       
-      openIt(pa) {    	  
+      openIt(pa) {
+    	  this.harvestresource =  C.iscurrentcommand("harvestresource")
+    	  this._clearLabels()
+    	  C.displayelemid(this,C.getcurrentcommand() + "title",true)
+          C.displayelemid(this,C.getcurrentcommand() + "button",true)
           const sq = this.$.square
           C.setShadowStyleAttribute(sq,":host","float",null)
           const sc = this.$.scout

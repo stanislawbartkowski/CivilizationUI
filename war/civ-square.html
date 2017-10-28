@@ -24,6 +24,14 @@
     border-radius: 20px;
   }
 
+  :host([Village]) {
+    background-color: #ffccb3;
+  }
+
+  :host([Hut]) {
+    background-color: #ccffcc;
+  }
+
   :host([Capital]) {
     background-image: url("images/cities/capital.svg");
     background-repeat: no-repeat;
@@ -222,7 +230,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          terrains : {
            type : Array,
            readOnly: true,
-           value : ["mountain","water","forest","grassland","desert", "capital", "normal"]
+           value : ["mountain","water","forest","grassland","desert", "capital", "normal","hut","village","glowing"]
          }
     }
     }
@@ -293,6 +301,13 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
             return;
          }
          if (j.terrain == null) return
+         if (j.hv != null) {
+        	 this.setAttribute(j.hv,1)
+             if (j.hv == "Hut") C.showeleme(this.$.hut,true)
+             if (j.hv == "Village") C.showeleme(this.$.village,true)
+             return
+         }
+         // show terrain 
          this.setAttribute(j.terrain,1)
          if (j.production >= 1) C.showeleme(this.$.prod1,true)
          if (j.production >= 2) C.showeleme(this.$.prod2,true)
@@ -302,8 +317,8 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          if (j.resource == "Incense") C.showeleme(this.$.incense,true)
          if (j.resource == "Silk") C.showeleme(this.$.silk,true)
          if (j.resource == "Coin") C.showeleme(this.$.coin,true)
-         if (j.hv == "Hut") C.showeleme(this.$.hut,true)
-         if (j.hv == "Village") C.showeleme(this.$.village,true)
+//         if (j.hv == "Hut") C.showeleme(this.$.hut,true)
+ //        if (j.hv == "Village") C.showeleme(this.$.village,true)
          if (j.numberofArmies > 0) {
              if (C.civtonumb(j.civ) == 0) {
                C.displayelem(this.$.army1, true)

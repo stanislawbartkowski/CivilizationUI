@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/10/22",
+    "appversion": "Version: 2017/10/28",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -77,6 +77,10 @@
     "artillery" :  "Artillery",
     "aircraft" : "Aircraft",
     "infantry" : "Infantry",
-    "killedunits" : "Killed"
+    "killedunits" : "Killed",
+    "harvestresource" : "Harvest Resource",
+    "youareabouttoharvestresource" : "You are about to harvest resource",
+    "resources" : "Resources"
+    
   }
 }
