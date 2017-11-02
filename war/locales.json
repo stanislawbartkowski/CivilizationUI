@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/10/28",
+    "appversion": "Version: 2017/11/02",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -80,7 +80,8 @@
     "killedunits" : "Killed",
     "harvestresource" : "Harvest Resource",
     "youareabouttoharvestresource" : "You are about to harvest resource",
-    "resources" : "Resources"
+    "resources" : "Resources",
+    "explorehut" : "Explore Hut"
     
   }
 }

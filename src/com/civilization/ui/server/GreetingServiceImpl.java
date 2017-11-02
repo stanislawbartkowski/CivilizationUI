@@ -7,11 +7,11 @@ import javax.naming.NamingException;
 import com.civilization.ui.client.GreetingService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import civilization.I.II;
+import civilization.RR;
 /**
  * The server-side implementation of the RPC service.
  */
-import civilization.II;
-import civilization.RR;
 
 /**
  * The server-side implementation of the RPC service.

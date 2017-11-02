@@ -166,7 +166,7 @@
 
 <paper-menu-button> 
 
-    <paper-icon-item slot="dropdown-trigger">
+    <paper-icon-item id="unitmenu" slot="dropdown-trigger">
       <iron-icon icon="menu" slot="item-icon"></iron-icon>       
       <span>{{localize('units')}}</span>
     </paper-icon-item>
@@ -226,14 +226,28 @@
 <span id="movement" class="actionbox" style="display:none">     
 	
 	<paper-icon-item id="startmove" on-click="_onClick">
-	<iron-icon icon="fingerprint" slot="item-icon"></iron-icon> <span>{{localize('startmove')}}</span> </paper-icon-item>
+	<iron-icon icon="fingerprint" slot="item-icon"></iron-icon> <span>{{localize('startmove')}}</span> 
+	</paper-icon-item>
+	
 	<paper-icon-item id="move" on-click="_onClick"> <iron-icon
 		icon="rowing" slot="item-icon"></iron-icon> <span>{{localize('continuemove')}}</span>
 	</paper-icon-item>
+	
 	<paper-icon-item id="revealtile" on-click="_onClick">
-	<iron-icon icon="lock-open" slot="item-icon"></iron-icon> <span>{{localize('revealtile')}}</span> </paper-icon-item>
+	<iron-icon icon="lock-open" slot="item-icon"></iron-icon> <span>{{localize('revealtile')}}</span> 
+	</paper-icon-item>
+	
+	<paper-icon-item id="explorehut" on-click="_onClick"> 
+      <iron-icon src="images/huts/hut.svg" slot="item-icon"></iron-icon> 
+      <span>{{localize('explorehut')}}</span>
+    </paper-icon-item>
+	
+	
 	<paper-icon-item id="endofmove" on-click="_onClick">
-	<iron-icon icon="pan-tool" slot="item-icon"></iron-icon> <span>{{localize('endofmove')}}</span> </paper-icon-item>
+	   <iron-icon icon="pan-tool" slot="item-icon"></iron-icon> 
+	   <span>{{localize('endofmove')}}</span> 
+	 </paper-icon-item>
+	 	
 </span>		
 
 <span id="research" class="actionbox" style="display:none">     
@@ -305,6 +319,17 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                          "research"
                     ]
                 },
+                
+               unitsmenu : {
+                   type : Array,
+                   readOnly: true,
+                   value : [                   
+                            "buymounted",
+                            "buyartillery",
+                            "buyinfantry",
+                            "buyaircraft"
+                  ]            	   
+               },
                  
                buttons : {
             	   type : Array,
@@ -329,8 +354,9 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                             "buyartillery",
                             "buyinfantry",
                             "buyaircraft",
-                            "harvestresource"
-                  ],
+                            "harvestresource",
+                            "explorehut"
+                  ]
              }
 	   }
     }
@@ -380,17 +406,17 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
              this.itemizedcommand = null;
              this.listofpoints = null;
              this.currentcommand = null;        
-             const respanel = this.$.resourcespanel
-             respanel.draw(null)
          }
          
          clearCommand() {
         	 this.clear()
          }
-                  
+                           
          draw(b, y, opponent) {
         	   if (b == null) {
         		   this.clear()
+                   const respanel = this.$.resourcespanel
+                   respanel.draw(null)
         		   return;
         	   }
         	   this.opponent = opponent
@@ -416,6 +442,7 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                   const bu = this.shadowRoot.getElementById(id);
                   C.disableleme(bu,true)
                }
+              var disableu = true
               for (var i=0; i<y.commands.length; i++) {
                   const command = y.commands[i]
                   const id = command.command.toLowerCase()
@@ -423,11 +450,18 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                   C.disableleme(bu,false)
                   if (!opponent && id == "move" && this.currentcommand != "revealtile") 
                 	  this._callitemize(id)
-                 }
+                 // check units menu
+                 for (var j=0; j< this.unitsmenu.length; j++)
+                	 if (this.unitsmenu[j] == id) disableu = false                 
+              }
+              const u = this.$.unitmenu
+              C.disableleme(u,disableu)
               C.setUnitsNumb(this,y.units)
               const respanel = this.$.resourcespanel
               const r = y.resources
               respanel.draw(r)
+              const h = y.hutvillages
+              respanel.draw1(h)
 
              }
         }

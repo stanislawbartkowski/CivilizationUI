@@ -154,19 +154,14 @@ var C = (function() {
      const y = C.getyouplay()
      y.draw(null)
   }
-  
-  function opendialogwithpar(id,pa) {
-     const dialog = document.getElementById(id)
-     dialog.$.dialog.openIt(pa)     	  
-  }
-  
+    
   function _spendtradecommand(pa) {
     const dialog = document.getElementById("spendtrade-dialog")
     dialog.$.dialog.openIt(pa)     
   }
 
   function _sendproductioncommand(pa) {
-     opendialogwithpar("sendproduction-dialog",pa)
+     C.opendialogwithpar("sendproduction-dialog",pa)
   }  
   
   function _sendproductionsetscout(pa) {
@@ -203,8 +198,13 @@ var C = (function() {
 
   return {
   
+  opendialogwithpar(id,pa) {
+	 const dialog = document.getElementById(id)
+	 dialog.$.dialog.openIt(pa)     	  
+  },
+	  
   showunits(units) {
-   opendialogwithpar("showunits-dialog",units)
+     C.opendialogwithpar("showunits-dialog",units)
   },
 	  
   eqp(p1,p2) {
@@ -255,6 +255,11 @@ var C = (function() {
      if (co == "revealtile") {
        var a = []
        a.push(itemize.p)
+       return a     
+     }
+     if (co == "explorehut") {
+       var a = []
+       for (var i=0; i<itemize.explore.length; i++) a.push(itemize.explore[i])
        return a     
      }
      return null     
@@ -395,13 +400,16 @@ var C = (function() {
       else e["hidden"] = true
     },
 
-    displayelem : function(e, display) {
-      if (display) e.style.display = 'block'
+    displayelem : function(e, display,inblock) {
+      if (display) {
+        if (inblock) e.style.display = 'inline-block'
+        else e.style.display = 'block'
+        }
       else e.style.display = 'none'
     },
     
-    displayelemid(e,id,display) {
-      this.displayelem(C._getbyid(e,id),display)
+    displayelemid(e,id,display,inblock) {
+      this.displayelem(C._getbyid(e,id),display,inblock)
     },
 
     displaybadge : function(e,number) {

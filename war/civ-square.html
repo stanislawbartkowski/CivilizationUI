@@ -283,6 +283,13 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
 	   if (hightlight) this.setAttribute("glowing",1) 
 	   else C.removeattr(this,"glowing")
    }
+   
+   _clearhv() {
+       C.showeleme(this.$.village,false)
+       C.showeleme(this.$.hut,false)
+       C.removeattr(this,"hut")	   
+       C.removeattr(this,"village")       
+   }
 
    refresh(jsdata) {
 
@@ -307,6 +314,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
              if (j.hv == "Village") C.showeleme(this.$.village,true)
              return
          }
+         this._clearhv()
          // show terrain 
          this.setAttribute(j.terrain,1)
          if (j.production >= 1) C.showeleme(this.$.prod1,true)

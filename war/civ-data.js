@@ -13,8 +13,10 @@ Polymer.CivData = function(superClass) {
               },
               datas: {
             	  type : String
+              },
+              data1: {
+                type : Object  
               }
-	        
 	        }
 	    }	        
 	    
@@ -22,6 +24,7 @@ Polymer.CivData = function(superClass) {
 	        return [
 	        'refreshs(datas)',
 	        'refresh(data)',
+            'refresh1(data1)'
 	        ]
 	      }
     
@@ -31,6 +34,10 @@ Polymer.CivData = function(superClass) {
       
        draw(data) {
     	   this.data = data
+       }
+       
+       draw1(data) {
+           this.data1 = data
        }
    }   
 }

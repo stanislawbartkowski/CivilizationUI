@@ -1,0 +1,34 @@
+<dom-module id="show-hvdialog">
+    <template>
+
+    <paper-dialog id="dialog">
+
+      <civ-resources id="resources"></civ-resources>  
+    
+     </paper-dialog>
+    
+  </template>
+
+  <script>
+   class ShowHV extends  Polymer.CivDialog(Polymer.Element) {
+          
+      static get is() { return 'show-hvdialog'; }
+            
+      openIt(data) {
+    	 if (data == null || data.list == null) return
+         const r = this.$.resources
+         const a = []
+    	 for (var i=0; i<data.list.length; i++) {
+    		 var c = {}
+    		 c.resource = data.list[i].resource
+    		 c.num = 1
+    		 a.push(c)
+    	 }
+         r.draw(a)
+         super.openIt(data)
+      }   
+      
+   } 
+   window.customElements.define(ShowHV.is, ShowHV);
+  </script>
+</dom-module>
