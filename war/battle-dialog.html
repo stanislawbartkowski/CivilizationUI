@@ -1,0 +1,59 @@
+ <dom-module id="battle-dialog">
+    <template>
+  
+    <style>   
+       :host {
+        display: block;
+      }
+            
+    </style>
+    
+    
+    <paper-dialog id="dialog" modal>
+      <h1>Battle</h1>
+      <p/>
+      
+      <civ-battleside id="sideopponent"></civ-battleside>
+      <p/>
+      <civ-battleside id="sideyou"></civ-battleside>
+
+            
+      <div class="buttons">
+                
+         <paper-button on-click="_onCancel" dialog-dismiss>{{localize('cancellabel')}}</paper-button> 
+      </div>
+      
+    </paper-dialog>
+  </template>
+
+  <script>
+      class BattleDialog extends Polymer.CivDialog(Polymer.Element) {
+    	  
+      static get is() { return 'battle-dialog'; }
+                  
+      openIt(pa) {
+    	  const you = this.$.sideyou
+    	  const opp = this.$.sideopponent
+    	  const battle = pa.board.battle
+    	  const a = battle.attacker
+          const d = battle.defender
+    	  if (a.you) {
+    		  you.open(a,true)
+    		  opp.open(d,false)
+    	  }
+    	  else {
+    		  you.open(d,true)
+    		  opp.open(a,false)
+    	  }
+          super.openIt(pa)
+      }
+      
+      refresh(data) {
+    	  
+      }
+           
+    }
+
+    window.customElements.define(BattleDialog.is, BattleDialog);
+  </script>
+</dom-module>

@@ -168,6 +168,10 @@ var C = (function() {
     const dialog = document.getElementById("sendproduction-dialog")
     dialog.$.dialog.setScout(pa)     
   }  
+  
+  function _attackconfirmation(pa) {
+    C.opendialogwithpar("attackconf-dialog",pa)
+  }
 
   function _undosendproductioncommand(question,pa) {
     C.confirmdialog(question,e => {
@@ -195,7 +199,7 @@ var C = (function() {
     }
     return s
   }    
-
+  
   return {
   
   opendialogwithpar(id,pa) {
@@ -262,6 +266,11 @@ var C = (function() {
        for (var i=0; i<itemize.explore.length; i++) a.push(itemize.explore[i])
        return a     
      }
+     if (co == "attack") {
+         var a = []
+         for (var i=0; i<itemize.attack.length; i++) a.push(itemize.attack[i])
+         return a     
+       }
      return null     
   },
 
@@ -378,6 +387,10 @@ var C = (function() {
     if (co == "selectscout") {
       _sendproductionsetscout(pa)
       return
+    }
+    if (co == "attack") {
+    	_attackconfirmation(pa)
+    	return
     }
     const dialogDemo = C.getconfirmdialog()
 	dialogDemo.openDialog = function(e) {
@@ -705,6 +718,25 @@ var C = (function() {
     
     setColorForCity : function(e,city,color) {
        C.setShadowStyleAttribute(e,city,"backgroundColor",color)
+    },
+    
+    battleDialog : function(b) {
+    	if (b == null) return
+        const d = document.getElementById("battle-dialog").$.dialog
+    	if (b.board.battle == null) {
+    		if (d.opened()) d.closeIt()
+    	}
+        if (b.board.battle != null) {
+        	if (!d.opened()) {
+        		d.openIt(b)
+                _sleep(1000).then( 
+                        () => {
+                        	d.refreshdata(b)
+                        }
+                      )
+        	} else d.refresh(b)
+
+        }
     }
         
   }  // return

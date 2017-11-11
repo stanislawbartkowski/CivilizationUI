@@ -247,6 +247,11 @@
 	   <iron-icon icon="pan-tool" slot="item-icon"></iron-icon> 
 	   <span>{{localize('endofmove')}}</span> 
 	 </paper-icon-item>
+
+    <paper-icon-item id="attack" on-click="_onClick">
+       <iron-icon src="images/icons/attack.svg" slot="item-icon"></iron-icon> 
+       <span>{{localize('attack')}}</span> 
+     </paper-icon-item>
 	 	
 </span>		
 
@@ -355,7 +360,8 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                             "buyinfantry",
                             "buyaircraft",
                             "harvestresource",
-                            "explorehut"
+                            "explorehut",
+                            "attack"
                   ]
              }
 	   }
@@ -448,7 +454,7 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                   const id = command.command.toLowerCase()
                   const bu = this.shadowRoot.getElementById(id);
                   C.disableleme(bu,false)
-                  if (!opponent && id == "move" && this.currentcommand != "revealtile") 
+                  if (!opponent && id == "move" && this.currentcommand != "revealtile" && this.currentcommand != "explorehut") 
                 	  this._callitemize(id)
                  // check units menu
                  for (var j=0; j< this.unitsmenu.length; j++)

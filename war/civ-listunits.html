@@ -1,0 +1,64 @@
+ <dom-module id="civ-listunits">
+    <template>
+  
+      <custom-style>
+      <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    </custom-style>
+  
+    <style>   
+       :host {
+        display: block;
+      }
+      .unit {
+         margin : 10px
+      }
+            
+    </style>
+    
+    
+    
+    <div class="layout horizontal">
+       <template id="map" is="dom-repeat" items="{{units}}">
+              <civ-units class="unit" data="{{item}}"></civ-units>
+        </template>        
+    </div>    
+        
+  </template>
+
+  <script>
+      class CivListUnits extends Polymer.CivData(Polymer.Element) {
+    	  
+      static get is() { return 'civ-listunits'; }
+      
+      static get properties() {
+          return {
+              units: {
+                  type: Array
+              }
+          }
+      }
+      
+      _findLevel(pa,name) {
+    	  const units = pa.units
+    	  for (var i=0; i<4; i++) 
+    		  if (units[i].name == name) return units[i].militarystrength
+    	  return null
+      } 
+                              
+      refresh(pa) {
+    	  const l = pa.list
+    	  this.units = []
+    	  for (var i=0; i<l.length; i++) {
+    		  const elem = {}
+    		  elem.name = l[i].name
+    		  elem.strength = l[i].strength
+    		  elem.level = this._findLevel(pa,elem.name) 
+    		  this.units.push(elem)
+    	  }
+      }
+           
+    }
+
+    window.customElements.define(CivListUnits.is, CivListUnits);
+  </script>
+</dom-module>

@@ -1,0 +1,54 @@
+<dom-module id="civ-frontunit">
+<template>
+
+<custom-style>
+
+<style is="custom-style" >
+
+:host {
+  display: inline-block;
+  /*box-sizing: border-box;*/
+  border : 1px solid;
+  border-radius: 5px;
+  width: 70px;
+  height: 65px;
+}
+
+   
+</style>
+
+</custom-style>
+
+</template>
+
+<script>
+class CivFrontUnit extends Polymer.CivLocalize(Polymer.Element) {
+	
+    static get is() {
+    	return 'civ-frontunit';
+    	}
+    
+    // Declare properties for the element's public API
+    static get properties() {
+      return {
+          colno: {
+              type: Number,
+              readOnly: true
+          },
+          row: {
+              type: Number
+          }    
+        }
+      }
+    
+
+    refresh(data) {
+    }
+
+}
+
+  // Register the x-custom element with the browser
+  customElements.define(CivFrontUnit.is, CivFrontUnit);
+</script>
+
+</dom-module>

@@ -12,7 +12,14 @@ Polymer.CivDialog = function(superClass) {
 	        	type : Object  
               }
 	        }
-	    }	        
+	    }	  
+	    
+	    static get observers() {
+	        return [
+	        'refresh(data)'
+	        ]
+	      }
+
 	        
        openIt(data) {
            this.data = data
@@ -24,7 +31,17 @@ Polymer.CivDialog = function(superClass) {
   	    }
        
        closeIt() {
-           this.$.dialog.close();
-       }       
+           this.$.dialog.close()
+       }    
+       
+       opened() {
+    	   return this.$.dialog.opened
+       }
+       
+       refresh(data) {}
+       
+       refreshdata(data) {
+    	   this.data = data
+       }
    }   
 }

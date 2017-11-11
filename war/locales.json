@@ -81,7 +81,8 @@
     "harvestresource" : "Harvest Resource",
     "youareabouttoharvestresource" : "You are about to harvest resource",
     "resources" : "Resources",
-    "explorehut" : "Explore Hut"
-    
+    "explorehut" : "Explore Hut",
+    "attack" : "Attack",
+    "doyouwanttoattack" : "Do you want to attack this "
   }
 }

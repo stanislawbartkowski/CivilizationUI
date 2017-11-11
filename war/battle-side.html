@@ -1,0 +1,111 @@
+<dom-module id="civ-battleside">
+<template>
+
+<custom-style>
+
+<style is="custom-style" >
+
+:host {
+  display: inline-block;
+}
+
+.frontunits {
+   margin : 10px
+}
+   
+</style>
+
+</custom-style>
+
+<div>
+   <div id="opponent" style="display:none">
+     <civ-listunits id="oppo_killed"></civ-listunits>
+     <p/>
+     <civ-listunits id="oppo_waiting"></civ-listunits>
+     <p/>
+   </div>
+   
+   <template is="dom-repeat" items="{{front}}">
+      <civ-frontunit class="frontunits" num="{{index}}"></civ-frontunit>
+   </template>
+
+   <div id="you" style="display:none">    
+     <p/>
+     <civ-listunits id="you_waiting"></civ-listunits>
+     <p/>
+     <civ-listunits id="you_killed"></civ-listunits>
+   </div>  
+   
+</div>
+
+</template>
+
+<script>
+class CivBattleSide extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
+	
+    constructor() {
+        super();
+        Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
+    }
+
+    static get is() {
+    	return 'civ-battleside';
+    	}
+
+    // Declare properties for the element's public API
+    static get properties() {
+      return {
+    	  you : {
+    		  type : Boolean
+    	  },
+    	  front : {
+    		  type :Array
+    	  }      
+      }
+     }
+    
+    _getelems() {
+    	const d = {}
+    	if (this.you) {
+    		d.w = this.$.you_waiting
+    		d.k = this.$.you_killed
+    	} else {
+            d.w = this.$.oppo_waiting
+            d.k = this.$.oppo_killed  		
+    	}
+    	return d
+    }
+    
+    
+    _displayd() {
+        C.displayelemid(this,"you",false)
+        C.displayelemid(this,"opponent",false)
+        if (this.you) C.displayelemid(this,"you",true)
+        else C.displayelemid(this,"opponent",true)
+    }
+    
+
+    open(data,you) {
+    	this.you = you
+    	this.front = data.front
+    	this.data = data
+    	this._displayd()
+    	const d = this._getelems()
+    	const ki = {}
+    	ki.list = data.killedunits
+    	d.k.draw(ki)
+    	if (data.waiting.units != null) d.w.draw(data.waiting)
+//    	else w.draw(data.waiting.list)
+    }
+    
+    refresh(data) {
+    	
+    }
+
+}
+
+  // Register the x-custom element with the browser
+  customElements.define(CivBattleSide.is, CivBattleSide);
+</script>
+
+</dom-module>
