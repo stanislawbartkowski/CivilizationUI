@@ -1,0 +1,64 @@
+<dom-module id="battle-desc">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left : 10px;
+        border: 1px solid;
+        padding : 5px;
+        width: 500px;
+      }
+      .name {
+        font-size: 150%;
+      }
+      .combat {
+        font-size: 140%;
+        padding-left : 10%;
+      }
+    </style>
+    <div>
+      <span class="name">{{name}}</span>
+      <span class="combat">{{localize('combatbonus')}} : <span style="background-color:Beige">{{data.combatbonus}}</span></span>
+
+      <span style="float: right; padding-right:10%">
+        <paper-toggle-button on-checked-changed="change" id="iron">{{localize('useiron')}}
+          <span id="points" style="display:none; background-color:#ffcccc">{{localize('increaseattack')}}</span>
+        </paper-toggle-button>
+      </span>
+    </div>
+  </template>
+
+  <script>
+
+  class BattleDesc extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)) {
+        static get is() {return 'battle-desc'}
+        static get properties() {
+          return {
+            name : {
+              type : String
+            }
+          }
+         }
+
+        enableinfo(enable) {
+          C.displayelemid(this,"points",enable,true)
+        }
+
+        change() {
+          const iron = this.$.iron
+          this.enableinfo(iron.checked)
+        }
+
+        refresh(data) {
+          this.enableinfo(false)
+          this.name = "Hut"
+          const iron = this.$.iron
+          iron.checked = false
+          iron.disabled = (! data.canuseiron || data.ironused != -1)
+        }
+    }
+    customElements.define(BattleDesc.is, BattleDesc);
+  </script>
+</dom-module>

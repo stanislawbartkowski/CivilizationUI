@@ -83,6 +83,9 @@
     "resources" : "Resources",
     "explorehut" : "Explore Hut",
     "attack" : "Attack",
-    "doyouwanttoattack" : "Do you want to attack this "
+    "doyouwanttoattack" : "Do you want to attack this ",
+    "combatbonus" : "Combat bonus",
+    "useiron" : "Use iron",
+    "increaseattack" : "Attack +3"
   }
 }

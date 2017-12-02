@@ -69,7 +69,7 @@ var C = (function() {
     pa.param = r.orientation
     return pa;
   }
-  
+
   function verifypoints(pa) {
       const list = C.currentlistofpoints()
       const i = findpoint(pa,list)
@@ -114,7 +114,7 @@ var C = (function() {
   function showhideclosebuttuon(show) {
      C.showelem("close-button",show)
   };
-  
+
   function _getxapp() {
        var e = document.getElementsByTagName("x-app")
        return e[0]
@@ -133,14 +133,14 @@ var C = (function() {
 	}
 	dialogDemo.openDialog()
   };
-  
+
   function _twotilereveal(iparam) {
     if (iparam.list.tiles.length <= 1) return false;
     const dialog = document.getElementById("reveal2-dialog")
     dialog.$.dialog.openIt(iparam)
     return true;
   }
-  
+
   function _multifigures(iparam) {
     const no = iparam.param.numberofArmies + iparam.param.numberofScouts
     if (no <= 1) return false
@@ -148,27 +148,27 @@ var C = (function() {
     dialog.$.dialog.openIt(iparam)
     return true;
   }
-  
-  
+
+
   function _clearMap() {
      const y = C.getyouplay()
      y.draw(null)
   }
-    
+
   function _spendtradecommand(pa) {
     const dialog = document.getElementById("spendtrade-dialog")
-    dialog.$.dialog.openIt(pa)     
+    dialog.$.dialog.openIt(pa)
   }
 
   function _sendproductioncommand(pa) {
      C.opendialogwithpar("sendproduction-dialog",pa)
-  }  
-  
+  }
+
   function _sendproductionsetscout(pa) {
     const dialog = document.getElementById("sendproduction-dialog")
-    dialog.$.dialog.setScout(pa)     
-  }  
-  
+    dialog.$.dialog.setScout(pa)
+  }
+
   function _attackconfirmation(pa) {
     C.opendialogwithpar("attackconf-dialog",pa)
   }
@@ -176,18 +176,18 @@ var C = (function() {
   function _undosendproductioncommand(question,pa) {
     C.confirmdialog(question,e => {
       const ite = pa.itemized
-      for (var i=0; i< ite.length; i++) 
+      for (var i=0; i< ite.length; i++)
          if (C.eqp(ite[i].city,pa)) {
            pa.param = ite[i].scout
            C.executeC("UNDOSENDPRODUCTION",pa)
-         }                   
-      })     
+         }
+      })
   }
-  
+
   function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  
+
   function _getShadow(e) {
     var s = e.shadowRoot
     var i = 0;
@@ -195,26 +195,26 @@ var C = (function() {
       // wait 1 sec
       i = i + 1
       _sleep(10000)
-      s = e.shadowRoot 
+      s = e.shadowRoot
     }
     return s
-  }    
-  
+  }
+
   return {
-  
+
   opendialogwithpar(id,pa) {
 	 const dialog = document.getElementById(id)
-	 dialog.$.dialog.openIt(pa)     	  
+	 dialog.$.dialog.openIt(pa)
   },
-	  
+
   showunits(units) {
      C.opendialogwithpar("showunits-dialog",units)
   },
-	  
+
   eqp(p1,p2) {
     return p1.row == p2.row && p1.col == p2.col
   },
-    
+
   getcommanddecr(co) {
      var key = co
      switch(co) {
@@ -224,26 +224,26 @@ var C = (function() {
         case "buyscout" : { key = "purchasescout"; break; }
         case "buyarmy" : { key = "purchasearmy"; break; }
         case "move" : { key = "continuemove"; break; }
-     }      
-     return C.localize(key)  
+     }
+     return C.localize(key)
   },
-  
+
   getphasedescr(phase) {
     return C.localize(phase.toLowerCase() + "label")
   },
-  
+
   setlistofpoints(a) {
      C.getyouplay().setListOfPoints(a)
   },
-  
+
   currentlistofpoints() {
     return C.getyouplay().listofpoints
   },
-  
+
   getlistofpoints(co,itemize) {
      if (itemize == null) return null
      if (co == "startmove" || co == "buyinfantry" ||
-         co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade" || 
+         co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade" ||
          co == "harvestresource" || co == "sendproduction" || co == "undosendproduction") {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
@@ -252,26 +252,26 @@ var C = (function() {
      if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
-        return a     
+        return a
      }
-     if (co == "move")  return itemize.moves     
+     if (co == "move")  return itemize.moves
      if (co == "setcity" || co == "setcapital") return itemize
      if (co == "revealtile") {
        var a = []
        a.push(itemize.p)
-       return a     
+       return a
      }
      if (co == "explorehut") {
        var a = []
        for (var i=0; i<itemize.explore.length; i++) a.push(itemize.explore[i])
-       return a     
+       return a
      }
      if (co == "attack") {
          var a = []
          for (var i=0; i<itemize.attack.length; i++) a.push(itemize.attack[i])
-         return a     
+         return a
        }
-     return null     
+     return null
   },
 
   getconfirmdialog : function() {
@@ -292,9 +292,9 @@ var C = (function() {
   startgamedialog : function(civ) {
     this.confirmdialog(C.localize("doyouwantstartnegamequestion","civ",civ),e => window.chooseciv(civ))
   },
-  
+
   confirmdialog: function(message,fun) {
-    const dialogDemo = this.getconfirmdialog() 
+    const dialogDemo = this.getconfirmdialog()
     dialogDemo.$.dialog.title = C.localize('confirmdialogtitle')
     dialogDemo.openDialog = function(e) {
         this.$.dialog.open()
@@ -302,20 +302,20 @@ var C = (function() {
     dialogDemo.confirm = fun
     dialogDemo.dismiss = e => {}
     dialogDemo.message = message
-    dialogDemo.openDialog()    
+    dialogDemo.openDialog()
   },
 
   alertdialog: function(message) {
-    const dialogalert = document.getElementById("dialog-alert") 
+    const dialogalert = document.getElementById("dialog-alert")
     dialogalert.openDialog = function(e) {
         this.$.dialog.open()
     }
     dialogalert.confirm = e => {}
     dialogalert.message = message
-    dialogalert.openDialog()    
+    dialogalert.openDialog()
   },
-  
-  
+
+
   resumedialog : function(index) {
     const li = JSON.parse(C.getlistofgames())
     const e = li[index]
@@ -329,7 +329,7 @@ var C = (function() {
     this.confirmdialog(C.localize('doyouwanttoresumequestion','civ',civ),e => C.resumegame(gameid,civ))
   },
 
-  leavedialog : function() {    
+  leavedialog : function() {
     this.confirmdialog(C.localize('leavegamequestion'),e => C.leavegame())
   },
 
@@ -350,15 +350,15 @@ var C = (function() {
 	}
 	dialogDemo.openDialog()
   },
-  
+
   executeC : function(co,pa) {
     if (typeof pa.param == 'string') window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
     else
     if (typeof pa.param == "number") window.executecommandN(co.toUpperCase(),pa.row,pa.col,pa.param)
-    else 
-    window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)  
+    else
+    window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
   },
-  
+
   confexecutedialog : function (question,co,row,col,param) {
     var iparam = {}
     iparam.square = null
@@ -368,22 +368,22 @@ var C = (function() {
     iparam.param = param
     var pa = verifycommand(co,iparam)
     if (pa == null) return
-    if (co == "revealtile") 
+    if (co == "revealtile")
        if (_twotilereveal(iparam)) return
     if (co == "startmove")
        if (_multifigures(pa)) return
     if (co == "sendproduction" || co == "harvestresource") {
        _sendproductioncommand(pa)
        return
-    }   
+    }
     if (co == "undosendproduction") {
        _undosendproductioncommand(question,pa)
        return
-    }   
+    }
     if (co == "spendtrade") {
        _spendtradecommand(pa)
        return
-    } 
+    }
     if (co == "selectscout") {
       _sendproductionsetscout(pa)
       return
@@ -420,25 +420,25 @@ var C = (function() {
         }
       else e.style.display = 'none'
     },
-    
+
     displayelemid(e,id,display,inblock) {
       this.displayelem(C._getbyid(e,id),display,inblock)
     },
 
     displaybadge : function(e,number) {
       if (number <= 1) C.showeleme(e,false)
-      else {      
+      else {
         C.showeleme(e,true)
         var pa = e.offsetParent
         var no = 0
         if (pa == null) no = 500
-        _sleep(no).then( 
+        _sleep(no).then(
           () => {
             C.showeleme(e,true)
-            e.updatePosition()  
+            e.updatePosition()
           }
-        ) 
-          
+        )
+
         e.label = number
       }
     },
@@ -486,12 +486,12 @@ var C = (function() {
       var gamese = findbytag("civ-games")
       return gamese.listofgames
     } ,
-    
+
     getgamestate : function() {
       const b = findbytag("civ-gamestate")
       return b
     },
-    
+
     localize : function(...args) {
       return _getxapp().localize(...args)
     },
@@ -504,19 +504,19 @@ var C = (function() {
     getcurrentcommand : function() {
         return this.getyouplay().currentcommand
       },
-      
+
     iscurrentcommand : function(co) {
         return this.getcurrentcommand() == co
     },
-      
+
     setcurrentcommand : function(co) {
        this.getyouplay().currentcommand = co
-    },  
-    
+    },
+
     getitemizedcommand : function() {
          return this.getyouplay().itemizedcommand
       },
-      
+
     issendproductionscout : function() {
       return C.getcurrentcommand() == "selectscout"
     },
@@ -524,7 +524,7 @@ var C = (function() {
     setyouplayparam : function(attr,value) {
        this.getyouplay()[attr] = value
     },
-    
+
     getyouplay : function() {
       var y = _getxapp().$.youplay
       return y
@@ -534,7 +534,7 @@ var C = (function() {
       var y = _getxapp().$.market
       return y
     },
-    
+
     getyourdeck: function() {
       return C.getjsboard().board.you
     },
@@ -543,15 +543,15 @@ var C = (function() {
       var y = _getxapp().$.opponentplay
       return y
     },
-    
+
     setjsboard : function(jsboard) {
-       _getxapp().draw(jsboard)      
+       _getxapp().draw(jsboard)
     },
-    
+
     getjsboard : function() {
        return _getxapp()["data"]
     },
-    
+
     getsquare : function(row,col) {
         var res = window.getsquare(window.fixrow(row),window.fixcol(col))
         return res
@@ -568,14 +568,14 @@ var C = (function() {
     readcivs : function() {
       window.readcivs();
     },
-    
+
     readjoingames : function() {
       window.readjoingames();
     },
-    
+
     isFireFox : function() {
         const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-        return isFirefox      
+        return isFirefox
     },
 
     toS : function(o) {
@@ -610,36 +610,36 @@ var C = (function() {
     joingame : function(gameid,civ) {
       window.joingame(gameid,civ)
     },
-    
+
     highlightGame : function(a,highlight) {
       window.highlightMap(a,highlight)
     },
-    
+
     highlightSquare : function(e,hightlight) {
        e.highlight(hightlight)
-    }, 
-    
+    },
+
     clearCommand : function() {
       const y = C.getyouplay()
       y.clearCommand()
     },
 
     emptyS : function(s) { return s == null || s == "" },
-    
+
     constructP : function(row,col) {
       return {"row" : row, "col" : col }
     },
-    
+
     color1 : function() { return "Aqua" },
     color2 : function() { return "Red" },
-    
+
     colorback1 : function() { return "Aqua" },
     colorback2 : function() { return "Red" },
-    
+
     civtonumb : function(civ) {
       return window.civtonumb(civ)
     },
-    
+
     colorForCiv : function(civ) {
       if (C.civtonumb(civ) == 0) return this.color1()
       return this.color2()
@@ -664,7 +664,7 @@ var C = (function() {
       if (p == null) return null
       return p.nodeValue
     },
-    
+
     seconddrawerClose : function(close) {
       const x = _getxapp()
       const e = x.$.internalDrawer
@@ -672,7 +672,7 @@ var C = (function() {
       const d = x.$.opponentplay
       C.showeleme(d,!close)
     },
-    
+
     setShadowStyleAttribute : function(e,selval,attr,value) {
       selval = selval.toLowerCase()
 //      const sha = e.shadowRoot
@@ -690,12 +690,16 @@ var C = (function() {
         }
       }
     },
-    
+
     _getbyid : function(e,id) {
       if (e.$ != null) return e.$[id]
       return e.querySelector("#" + id)
     },
-    
+
+    getdomelem : function(e,id) {
+      return e.$$("#"+id)
+    },
+
     setCivUnits : function(e,i,units) {
        const u = units.units[i]
        const name = u.name.toLowerCase()
@@ -708,18 +712,27 @@ var C = (function() {
        const elem = C._getbyid(e,name)
        elem.data = param
        if (units.list != null && units.list.length > 0) elem.units = units
-       
+
     },
-    
+
+
+    findUnitLevel(units,name) {
+      if (units == null) return null
+      for (var i=0; i<4; i++)
+        if (units[i].name == name) return units[i].militarystrength
+      return null
+    },
+
+
     setUnitsNumb : function(e,units) {
-      for (var i=0; i<4; i++) 
+      for (var i=0; i<4; i++)
         C.setCivUnits(e,i,units)
     },
-    
+
     setColorForCity : function(e,city,color) {
        C.setShadowStyleAttribute(e,city,"backgroundColor",color)
     },
-    
+
     battleDialog : function(b) {
     	if (b == null) return
         const d = document.getElementById("battle-dialog").$.dialog
@@ -729,7 +742,7 @@ var C = (function() {
         if (b.board.battle != null) {
         	if (!d.opened()) {
         		d.openIt(b)
-                _sleep(1000).then( 
+                _sleep(1000).then(
                         () => {
                         	d.refreshdata(b)
                         }
@@ -738,7 +751,7 @@ var C = (function() {
 
         }
     }
-        
+
   }  // return
  } // function
 

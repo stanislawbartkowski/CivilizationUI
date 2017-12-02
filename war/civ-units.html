@@ -8,10 +8,11 @@
 :host {
   display: inline-block;
   /*box-sizing: border-box;*/
-  border : 1px solid;
+  /* margin: 1px solid; */
   border-radius: 5px;
-  width: 70px;
-  height: 65px;
+  width: 77px;
+  height: 70px;
+  vertical-align: top;
 }
 
 :host([infantry]) {
@@ -39,12 +40,13 @@ paper-badge {
 
   .top {
       width: 100%;
-      height: 20%;
+      height: 25%;
       border-bottom: 1px inset;
   }
+
   .left {
       width: 20%;
-      height: 80%;
+      height: 75%;
       float:left;
   }
   .main {
@@ -56,42 +58,47 @@ paper-badge {
    .unitfigure {
      display : none;
      width:80%;
+     float:left;
    }
 
    .imagelevel {
      width:20%;
-     float:right;
+     top : 0px;
+/*     float:right; */
      padding-top: 2px;
      display:none;
    }
 
-   .unitstrength {
-     font-size:80%;
+   .strenghtup {
      margin-top:-0.75em;
+   }
+
+   .unitstrength {
+     font-size:70%;
+/*     margin-top:-0.05em; */
      color: blue;
    }
-   
+
 </style>
 
 </custom-style>
-</style>
 
-<div >
+<div style="height:100%; width:100%" draggable="true" ondragstart="CivUnitsDraggable.ondragStart(event)">
   <div class="top">
-      <span id="strengthvalue" style="width:15%; display=none; float: left; color:red">{{strengthvalue}}</span>
-      <span id="unitname" style="width:60%; font-size:80%;">{{unitname}}</span>
-      <s-svg id="imagelevel0" class="imagelevel" src="images/units/unit-level0.svg"></s-svg>
+      <span id="strengthvalue" style="width:10%; display=none; color:red">{{strengthvalue}}</span>
+      <span id="unitname" style="width:60%; font-size:80%" >{{unitname}}</span>
+      <s-svg id="imagelevel0" class="imagelevel" style="width:10px"src="images/units/unit-level0.svg"></s-svg>
       <s-svg id="imagelevel1" class="imagelevel" src="images/units/unit-level1.svg"></s-svg>
       <s-svg id="imagelevel3" class="imagelevel" src="images/units/unit-star.svg"></s-svg>
       <s-svg id="imagelevel2" class="imagelevel" src="images/units/unit-level2.svg"></s-svg>
   </div>
-     <div class="left" id="strength">
+  <div class="left" id="strength">
      <div id="level0" class="unitstrength"></div>
      <div id="level1" class="unitstrength"></div>
      <div id="level2" class="unitstrength"></div>
      <div id="level3" class="unitstrength"></div>
   </div>
-  <div class="main" >
+  <div class="main">
      <s-svg id="mounted" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-mounted.svg"></s-svg>
      <s-svg id="artillery" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-artillery.svg"></s-svg>
      <s-svg id="infantry" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-infantry.svg"></s-svg>
@@ -110,8 +117,9 @@ paper-badge {
 </template>
 
 <script>
+
 class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
-	
+
     constructor() {
         super();
         Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
@@ -120,6 +128,7 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
     static get is() {
     	return 'civ-units';
     	}
+
 
     // Declare properties for the element's public API
     static get properties() {
@@ -147,18 +156,69 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
         },
         units : {
         	type : Object
+        },
+        draggable: {
+          type : Boolean
+        },
+        num: {
+            type: Number
+        },
+        you : {
+          type : Boolean
+        },
+        hobject : {
+          type : Object
         }
     }
 
   }
-    
+
+  isDraggable() {
+    return this.draggable && this.num != null
+  }
+
+  getTarget(e) {
+    const u = Polymer.Gestures.deepTargetFind(e.detail.x, e.detail.y)
+    if (u == null) return null
+    if (u.tagName.toUpperCase() != "CIV-FRONTUNIT") return null
+    if (u.you != this.you) return null
+    if (!u.isEmptySlot) return null
+    return u
+  }
+
+/*
+  handleTrack(e) {
+    console.log(e.detail.state)
+    switch(e.detail.state) {
+      case 'start':
+        this.hobject = null
+        break;
+      case 'track':
+        if (!this.isDraggable()) return;
+        const uu = this.getTarget(e)
+        if (uu == null) return
+        uu.highlight(true)
+        break;
+      case 'end':
+        if (!this.isDraggable()) return;
+        this.dragstarted = false
+        const diffx = e.detail.x - this.startx
+        const diffy = e.detail.y - this.starty
+        var aaa =  document.elementFromPoint(e.detail.x, e.detail.y);
+        var bbb = Polymer.Gestures.deepTargetFind(e.detail.x, e.detail.y);
+        const u = this.getTarget(e)
+        break;
+    }
+  }
+*/
+
   handleClick() {
 	  if (this.units == null) return
 	  C.showunits(this.units)
   }
-  
+
   _clearimages() {
-	this.listofunits = null  
+  	this.listofunits = null
     for (var i=0; i<this.unittypes.length; i++)
       C.displayelem(this.$[this.unittypes[i]],false)
     for (var i=0; i<this.unittypes.length; i++)
@@ -175,6 +235,7 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
   }
 
   refresh(data) {
+    if (this.isDraggable()) this.setAttribute("draggable","true")
     this._clearimages()
     const n = data.name.toLowerCase()
     this.setAttribute(n,1)
@@ -187,14 +248,14 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
 
     this.unitname = this._unitName(n)
     if (data.level != null) {
-       C.displayelem(this.$.strengthvalue,true)
+       C.displayelem(this.$.strengthvalue,true,true)
        if (data.strength != null) this.strengthvalue = data.strength[data.level]
-       C.displayelem(this.$["imagelevel"+data.level],true)
+       C.displayelem(this.$["imagelevel"+data.level],true,true)
      }
     if (data.num != null && data.num > 0) C.displayelem(this.$[n],true)
-    if (data.strength != null) C.displayelem(this.$[n],true)
+    if (data.strength != null) C.displayelem(this.$[n],true,true)
     if (data.num != null)
-      C.displaybadge(this.$[n+'number'],data.num)   
+      C.displaybadge(this.$[n+'number'],data.num)
   }
 
 }
