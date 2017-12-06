@@ -22,9 +22,9 @@
      <p/>
    </div>
 
-   <s-svg src="images/icons/attack.svg" style="height:60px; width:60px"></s-svg>
+   <s-svg id="attack" src="images/icons/attack.svg" style="height:60px; width:60px"></s-svg>
    <template is="dom-repeat" items="{{front}}">
-      <civ-frontunit id="front_{{index}}" data="{{item}}" num="{{index}}" you="{{you}}"></civ-frontunit>
+      <civ-frontunit id="front_{{index}}" data="{{item}}" num="{{index}}" you="{{you}}" turn="{{turn}}"></civ-frontunit>
    </template>
 
    <div id="you" style="display:none">
@@ -56,8 +56,11 @@ class CivBattleSide extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)
     		  type : Boolean
     	  },
     	  front : {
-    		  type :Array
-    	  }
+    		  type : Array
+    	  },
+        turn : {
+          type : Boolean
+        }
       }
      }
 
@@ -93,14 +96,18 @@ class CivBattleSide extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)
 
 
     open(data,you) {
-    	this.you = you
+      this.you = you
+      this.turn = data.turn
+      const atta = this.$.attack
+      if (data.turn) atta.changecolor("red")
+      else atta.changecolor("black")
     	this.front = []
       for (var i=0; i<data.front.length; i++) {
          var f = data.front[i]
          if (f != null) f.unit.level = C.findUnitLevel(data.waiting.units,f.unit.name)
          this.front.push(f)
        }
-    	this._displayd()
+     	this._displayd()
     	const d = this._getelems()
     	const ki = {}
     	ki.list = data.killedunits

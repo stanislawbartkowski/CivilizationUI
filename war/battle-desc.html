@@ -53,7 +53,8 @@
 
         refresh(data) {
           this.enableinfo(false)
-          this.name = "Hut"
+          this.name = data.civ
+          if (data.isvillage) this.name = "Village"
           const iron = this.$.iron
           iron.checked = false
           iron.disabled = (! data.canuseiron || data.ironused != -1)

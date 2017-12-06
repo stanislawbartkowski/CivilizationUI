@@ -23,7 +23,8 @@ const CivUnitsDraggable = {
    ondragEnter : function(ev) {
      if (this.startu == null) return
      const u = this.findf(ev)
-     ev.preventDefault();
+     ev.preventDefault()
+     if (!u.turn) return
      if (u != null) u.setAttribute("highlight",1)
    },
 
@@ -38,6 +39,7 @@ const CivUnitsDraggable = {
      this.switchoffallfront(event)
      if (this.startu == null) return
      const u = this.findf(ev)
+     if (!u.turn) return
      if (this.eqb(u.you)) {
        const c = {}
        c.startnum = this.startu.num
