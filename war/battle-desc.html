@@ -22,7 +22,7 @@
       <span class="name">{{name}}</span>
       <span class="combat">{{localize('combatbonus')}} : <span style="background-color:Beige">{{data.combatbonus}}</span></span>
 
-      <span style="float: right; padding-right:10%">
+      <span id="useiron" style="float: right; padding-right:10%; display:none" >
         <paper-toggle-button on-checked-changed="change" id="iron">{{localize('useiron')}}
           <span id="points" style="display:none; background-color:#ffcccc">{{localize('increaseattack')}}</span>
         </paper-toggle-button>
@@ -53,11 +53,11 @@
 
         refresh(data) {
           this.enableinfo(false)
-          this.name = data.civ
-          if (data.isvillage) this.name = "Village"
+          this.name = C.getSideName(data)
           const iron = this.$.iron
           iron.checked = false
           iron.disabled = (! data.canuseiron || data.ironused != -1)
+          C.displayelemid(this,"useiron",!iron.disabled,true)
         }
     }
     customElements.define(BattleDesc.is, BattleDesc);

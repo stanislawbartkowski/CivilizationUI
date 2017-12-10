@@ -55,10 +55,10 @@ Polymer({
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
           var responseText = xhr.responseText;
-          if (this.fill != null && this.file != "")
+          if (this.fill != null && this.fill != "")
             responseText = responseText.replace(/fill=\"[\s\S]*?\"/ig,'fill=\"'+this.fill +'\"');
           if (this.style != null && this.style.cssText != null && this.style.cssText != "")
-            responseText = responseText.replace(/style=\"[\s\S]*?\"/ig,'style=\"'+this.style.cssText +'\"');
+            responseText = responseText.replace(/style=\"[\s\S]*?\"/i,'style=\"'+this.style.cssText +'\"');
           var svg = new DOMParser().parseFromString(responseText, 'application/xml').documentElement;
           // Remove previous SVG.
           if (Polymer.dom(this.root).firstChild) {

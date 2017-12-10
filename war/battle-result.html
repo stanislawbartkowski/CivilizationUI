@@ -1,0 +1,92 @@
+ <dom-module id="battle-result">
+    <template>
+
+    <style>
+       :host {
+        display: block;
+      }
+      
+      .name {
+         font-size : 200%;
+         text-align : center;
+         padding-left : 20px;         
+      }
+
+    </style>
+
+
+    <paper-dialog id="dialog" modal>
+    
+         <div>
+         <s-svg src="images/icons/sun.svg" style="height:60px; width:60px;"></s-svg> <span class="name">{{winnername}}</span>
+         </div>
+         
+         <div>
+         <s-svg src="images/icons/killed.svg" style="height:60px; width:60px"></s-svg> <span class="name">{{losername}}</span>
+         </div>
+         <p/>
+         <div>
+           {{youresult}}
+         </div>
+       
+        <div class="buttons"> 
+          <paper-button on-click="_onCancel" dialog-dismiss>{{localize('endofbattle')}}</paper-button>
+       </div> 
+
+    </paper-dialog>
+  </template>
+
+  <script>
+      class BattleResult extends Polymer.CivDialog(Polymer.DialDraggable(Polymer.Element)) {
+
+      static get is() { return 'battle-result'; }
+      
+      static get properties() {
+          return {
+            winnername: {
+              type: String
+            },
+            
+            losername : {
+                type : String
+            },
+            youresult : {
+            	type : String
+            }
+                       
+          }
+      }
+      
+      _onCancel() {
+    	  const pa={}
+    	  pa.row = -1
+    	  pa.col = -1
+          C.executeC("ENDBATTLE",pa)
+      }
+
+      openIt(data) {
+          super.openIt(data)
+          const battle = data.board.battle
+          const a = battle.attacker
+          const d = battle.defender
+          var lname=""
+          if (battle.attackerwinner) {
+            this.winnername = C.getSideName(a)
+            this.losername = C.getSideName(d)
+            if (a.you) lname = "youwin"
+            else lname = "youlose"
+          }
+          else {
+              this.winnername = C.getSideName(d)
+              this.losername = C.getSideName(a)
+              if (d.you && !a.you) lname = "youwin"
+              else lname = "youlose"              
+          }
+          this.youresult = C.localize(lname)
+      }
+      
+    }
+
+    window.customElements.define(BattleResult.is, BattleResult);
+  </script>
+</dom-module>

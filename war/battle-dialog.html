@@ -10,18 +10,13 @@
 
 
     <paper-dialog id="dialog" modal>
-      <h1>Battle</h1>
+      <h1>{{localize('battle')}}</h1>
       <p/>
 
       <civ-battleside id="sideopponent"></civ-battleside>
       <p/>
       <civ-battleside id="sideyou"></civ-battleside>
 
-
-      <div class="buttons">
-
-         <paper-button on-click="_onCancel" dialog-dismiss>{{localize('cancellabel')}}</paper-button>
-      </div>
 
     </paper-dialog>
   </template>
@@ -32,31 +27,50 @@
       static get is() { return 'battle-dialog'; }
 
       battlemove(e) {
-
+    	  const from = e.startnum
+    	  const to = e.destnum
+    	  const pa = {}
+    	  pa.row = from
+    	  pa.col = to
+    	  C.executeC("PLAYUNIT",pa)
+      }
+      
+      _ret(pa) {
+    	  const par={}
+          par.you = this.$.sideyou
+          par.opp = this.$.sideopponent
+          const battle = pa.board.battle
+          par.a = battle.attacker
+          par.d = battle.defender
+          return par
       }
 
-      openIt(pa) {
-    	  const you = this.$.sideyou
-    	  const opp = this.$.sideopponent
-    	  const battle = pa.board.battle
-    	  const a = battle.attacker
-        const d = battle.defender
-    	  if (a.you) {
-    		  you.open(a,true)
-    		  opp.open(d,false)
+      openIt(data) {
+    	  const par = this._ret(data)
+    	  if (par.a.you) {
+    		  par.you.open(par.a,true)
+    		  par.opp.open(par.d,false)
     	  }
     	  else {
-    		  you.open(d,true)
-    		  opp.open(a,false)
+    		  par.you.open(par.d,true)
+    		  par.opp.open(par.a,false)
     	  }
-        super.openIt(pa)
-        CivUnitsDraggable.registerCallBack(this.battlemove)
+          super.openIt(data)
+          CivUnitsDraggable.registerCallBack(this.battlemove)
       }
 
       refresh(data) {
-
+        const par = this._ret(data)
+        if (par.a.you) {
+            par.you.refresh(par.a)
+            par.opp.refresh(par.d)
+        }
+        else {
+            par.you.refresh(par.d)
+            par.opp.refresh(par.a)
+        }
       }
-
+      
     }
 
     window.customElements.define(BattleDialog.is, BattleDialog);

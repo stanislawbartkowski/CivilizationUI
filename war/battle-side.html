@@ -69,7 +69,7 @@ class CivBattleSide extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)
     	if (this.you) {
     		d.w = this.$.you_waiting
     		d.k = this.$.you_killed
-        d.de = this.$.you_desc
+            d.de = this.$.you_desc
     	} else {
             d.w = this.$.oppo_waiting
             d.k = this.$.oppo_killed
@@ -93,31 +93,35 @@ class CivBattleSide extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)
           un.removeAttribute("highlight")
       }
     }
+    
+    _draw(data) {
+        this.turn = data.turn
+        const atta = this.$.attack
+        if (data.turn) atta.changecolor("red")
+        else atta.changecolor("black")    	
+        this.front = []
+        for (var i=0; i<data.front.length; i++) {
+           var f = data.front[i]
+           if (f != null) f.unit.level = C.findUnitLevel(data.waiting.units,f.unit.name)
+           this.front.push(f)
+        }
+        this._displayd()
+        const d = this._getelems()
+        const ki = {}
+        ki.list = data.killedunits
+        d.k.draw(ki)
+        d.w.draw(data.waiting)
+        d.de.draw(data)
+    }
 
 
     open(data,you) {
       this.you = you
-      this.turn = data.turn
-      const atta = this.$.attack
-      if (data.turn) atta.changecolor("red")
-      else atta.changecolor("black")
-    	this.front = []
-      for (var i=0; i<data.front.length; i++) {
-         var f = data.front[i]
-         if (f != null) f.unit.level = C.findUnitLevel(data.waiting.units,f.unit.name)
-         this.front.push(f)
-       }
-     	this._displayd()
-    	const d = this._getelems()
-    	const ki = {}
-    	ki.list = data.killedunits
-    	d.k.draw(ki)
-    	d.w.draw(data.waiting)
-      d.de.draw(data)
+      this._draw(data)
     }
 
     refresh(data) {
-
+      this._draw(data)
     }
 
 }

@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/11/02",
+    "appversion": "Version: 2017/12/10",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -86,6 +86,11 @@
     "doyouwanttoattack" : "Do you want to attack this ",
     "combatbonus" : "Combat bonus",
     "useiron" : "Use iron",
-    "increaseattack" : "Attack +3"
+    "increaseattack" : "Attack +3",
+    "battle" : "Battle",
+    "endofbattle" : "End of battle",
+    "youwin" : "YOU WIN !!!",
+    "youlose" : "YOU LOSE !!!"
+    
   }
 }

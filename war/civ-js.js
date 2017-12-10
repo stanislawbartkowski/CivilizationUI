@@ -288,6 +288,10 @@ var C = (function() {
 	dialogDemo.message = "Do you want to join game as " + civ + " ?"
 	dialogDemo.openDialog()
   },
+  
+  endofbattledialog : function(data) {
+    if (data.board.battle.endofbattle) this.opendialogwithpar("battle-result",data)
+  },
 
   startgamedialog : function(civ) {
     this.confirmdialog(C.localize("doyouwantstartnegamequestion","civ",civ),e => window.chooseciv(civ))
@@ -748,9 +752,15 @@ var C = (function() {
                         }
                       )
         	} else d.refresh(b)
-
+        	
+            C.endofbattledialog(b)            
         }
-    }
+    },
+    
+    getSideName(data) {
+       if (data.isvillage) return C.localize('villagelabel')
+       else return data.civ
+    } 
 
   }  // return
  } // function
