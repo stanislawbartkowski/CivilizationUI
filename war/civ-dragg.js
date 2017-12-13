@@ -2,6 +2,7 @@ const CivUnitsDraggable = {
 
    startu : null,
    callback : null,
+   isironon : null,
 
    registerCallBack(c) {
      this.callback = c
@@ -9,7 +10,9 @@ const CivUnitsDraggable = {
 
    ondragStart: function(e) {
      const u = this.lookforel(e,"CIV-UNITS")
+     const b = this.lookforel(e,"CIV-BATTLESIDE")
      this.startu = null
+     this.isironon = b.isironon()
      if (u == null) return
      if (u != null && u.you != null) this.startu = u
    }, // drag
@@ -24,8 +27,10 @@ const CivUnitsDraggable = {
      if (this.startu == null) return
      const u = this.findf(ev)
      ev.preventDefault()
-     if (!u.turn) return
-     if (u != null) u.setAttribute("highlight",1)
+     if (u != null) {
+        if (!u.turn) return
+        u.setAttribute("highlight",1)
+      }
    },
 
    eqb : function(y) {
@@ -45,6 +50,7 @@ const CivUnitsDraggable = {
        c.startnum = this.startu.num
        c.destnum = u.num
        c.you = u.you
+       c.isironon = this.isironon
        if (this.callback != null) this.callback(c)
      }
      this.startu = null

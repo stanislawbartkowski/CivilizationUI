@@ -58,7 +58,7 @@ paper-badge {
    }
 
    .unitfigure {
-     display : none;
+/*     display : none; */
      width:80%;
      float:left;
    }
@@ -100,11 +100,17 @@ paper-badge {
      <div id="level2" class="unitstrength"></div>
      <div id="level3" class="unitstrength"></div>
   </div>
-  <div class="main">
-     <s-svg id="mounted" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-mounted.svg"></s-svg>
-     <s-svg id="artillery" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-artillery.svg"></s-svg>
-     <s-svg id="infantry" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-infantry.svg"></s-svg>
-     <s-svg id="aircraft" class="unitfigure" fill="DarkSlateGray" src="images/units/unit-aircraft.svg"></s-svg>
+  <div class="main" >
+<!--   
+     <s-svg id="mounted" class="unitfigure" style="display:none" fill="DarkSlateGray" src="images/units/unit-mounted.svg"></s-svg>
+     <s-svg id="artillery" class="unitfigure" style="display:none"  fill="DarkSlateGray" src="images/units/unit-artillery.svg"></s-svg>
+     <s-svg id="infantry" class="unitfigure" style="display:none" fill="DarkSlateGray" src="images/units/unit-infantry.svg"></s-svg>
+     <s-svg id="aircraft" class="unitfigure" style="display:none" fill="DarkSlateGray" src="images/units/unit-aircraft.svg"></s-svg>
+-->     
+     <img id="mounted" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-mounted.svg"></img>
+     <img id="artillery" class="unitfigure" hidden  fill="DarkSlateGray" src="images/units/unit-artillery.svg"></img>
+     <img id="infantry" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-infantry.svg"></img>
+     <img id="aircraft" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-aircraft.svg"></img>
      <paper-badge hidden id="mountednumber" for="mounted" label="X">
       </paper-badge>
      <paper-badge hidden id="infantrynumber" for="infantry" label="X">
@@ -188,41 +194,24 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
     return u
   }
 
-/*
-  handleTrack(e) {
-    console.log(e.detail.state)
-    switch(e.detail.state) {
-      case 'start':
-        this.hobject = null
-        break;
-      case 'track':
-        if (!this.isDraggable()) return;
-        const uu = this.getTarget(e)
-        if (uu == null) return
-        uu.highlight(true)
-        break;
-      case 'end':
-        if (!this.isDraggable()) return;
-        this.dragstarted = false
-        const diffx = e.detail.x - this.startx
-        const diffy = e.detail.y - this.starty
-        var aaa =  document.elementFromPoint(e.detail.x, e.detail.y);
-        var bbb = Polymer.Gestures.deepTargetFind(e.detail.x, e.detail.y);
-        const u = this.getTarget(e)
-        break;
-    }
-  }
-*/
-
   handleClick() {
 	  if (this.units == null) return
 	  C.showunits(this.units)
   }
+  
+  _displaysvg(n,display) {
+//      C.displayelem(this.$[n],display)
+//      C.showelem(this.$[n],display)
+      const u = this.$[n]
+      C.showeleme(u,display)
+//      u.display(display)	  
+      
+  }
 
   _clearimages() {
   	this.listofunits = null
-    for (var i=0; i<this.unittypes.length; i++)
-      C.displayelem(this.$[this.unittypes[i]],false)
+    for (var i=0; i<this.unittypes.length; i++) 
+      this._displaysvg(this.unittypes[i],false)
     for (var i=0; i<this.unittypes.length; i++)
       C.showeleme(this.$[this.unittypes[i]+'number'],false)
     C.displayelem(this.$.strengthvalue,false)
@@ -237,7 +226,7 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
   }
 
   refresh(data) {
-    if (this.isDraggable()) this.setAttribute("draggable","true")
+//    if (this.isDraggable()) this.setAttribute("draggable","true")
     this._clearimages()
     const n = data.name.toLowerCase()
     this.setAttribute(n,1)
@@ -254,8 +243,8 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
        if (data.strength != null) this.strengthvalue = data.strength[data.level]
        C.displayelem(this.$["imagelevel"+data.level],true,true)
      }
-    if (data.num != null && data.num > 0) C.displayelem(this.$[n],true)
-    if (data.strength != null) C.displayelem(this.$[n],true,true)
+    if (data.num != null && data.num > 0) this._displaysvg(n,true)
+    if (data.strength != null) this._displaysvg(n,true)
     if (data.num != null)
       C.displaybadge(this.$[n+'number'],data.num)
   }

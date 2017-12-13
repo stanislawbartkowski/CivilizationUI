@@ -188,7 +188,9 @@ var C = (function() {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  function _getShadow(e) {
+  return {
+
+  getShadow(e) {
     var s = e.shadowRoot
     var i = 0;
     while (s == null && i < 5) {
@@ -198,9 +200,7 @@ var C = (function() {
       s = e.shadowRoot
     }
     return s
-  }
-
-  return {
+  },
 
   opendialogwithpar(id,pa) {
 	 const dialog = document.getElementById(id)
@@ -454,7 +454,7 @@ var C = (function() {
 
     showelem : function(id,show) {
       const x = _getxapp()
-      const e = _getShadow(x).getElementById(id)
+      const e = this.getShadow(x).getElementById(id)
       C.showeleme(e,show)
     },
 
@@ -680,7 +680,7 @@ var C = (function() {
     setShadowStyleAttribute : function(e,selval,attr,value) {
       selval = selval.toLowerCase()
 //      const sha = e.shadowRoot
-      const sha = _getShadow(e)
+      const sha = this.getShadow(e)
       const st = sha.styleSheets
       const rule = st[0]
       const a = rule.cssRules
@@ -716,6 +716,7 @@ var C = (function() {
        const elem = C._getbyid(e,name)
        elem.data = param
        if (units.list != null && units.list.length > 0) elem.units = units
+       else elem.units = null
 
     },
 

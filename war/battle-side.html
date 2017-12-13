@@ -69,7 +69,7 @@ class CivBattleSide extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)
     	if (this.you) {
     		d.w = this.$.you_waiting
     		d.k = this.$.you_killed
-            d.de = this.$.you_desc
+        d.de = this.$.you_desc
     	} else {
             d.w = this.$.oppo_waiting
             d.k = this.$.oppo_killed
@@ -93,12 +93,17 @@ class CivBattleSide extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)
           un.removeAttribute("highlight")
       }
     }
-    
+
+    isironon() {
+      const p = this._getelems()
+      return p.de.isironon()
+    }
+
     _draw(data) {
         this.turn = data.turn
         const atta = this.$.attack
         if (data.turn) atta.changecolor("red")
-        else atta.changecolor("black")    	
+        else atta.changecolor("black")
         this.front = []
         for (var i=0; i<data.front.length; i++) {
            var f = data.front[i]
