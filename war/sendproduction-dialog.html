@@ -84,13 +84,13 @@
     		  return
     	  }
     	  const scout = this.scout
-          C.confirmdialog(this.localize('areyousurequestion'),e => {
+          var command = "SENDPRODUCTION"
+          if (this.harvestresource) command = "HARVESTRESOURCE"
+          C.executewithconffun(this.localize('areyousurequestion'),command,e => {
               this.closeIt()
               const pa = this.data
               const c = this.scout              
               pa.param = C.constructP(c.row,c.col)
-              var command = "SENDPRODUCTION"
-              if (this.harvestresource) command = "HARVESTRESOURCE"
               C.executeC(command,pa)
           })          
       }
@@ -132,7 +132,6 @@
           C.setShadowStyleAttribute(sc,":host","float",null)
           sq.draw(pa.square)
           sc.draw(null)
-          this.pa = pa
           this.scout = null
     	  C.setcurrentcommand("selectscout")
     	  super.openIt(pa)

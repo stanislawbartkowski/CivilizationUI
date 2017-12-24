@@ -67,7 +67,7 @@
   </template>
 
   <script>
-    class JoinDialog extends Polymer.CivLocalize(Polymer.Element) {
+    class JoinDialog extends Polymer.CivDialog(Polymer.Element) {
       static get is() { return 'join-dialog'; }
       static get properties() {
         return {
@@ -86,6 +86,11 @@
           lines : {
         	  type : Array,
               value : []
+          },
+          // true : if waiting for opponent
+          showwaiting : {
+        	  type : Boolean,
+        	  value : false
           }
         };
       }
@@ -108,41 +113,33 @@
       }
       
       _showwaiting(show) {
+    	  this. showwaiting = show
     	  var e = this.$.waiting
     	  C.showeleme(e,show)    	  
       }
       
       _onCancel() {
-    	  C.unregistertoken()
+    	  // unregister if activated
+    	  if (this.showwaiting) C.unregistertoken()
     	  C.closejoindialog()
       }
       
       openIt() {
     	  this._showwaiting(false)
     	  this._disablecivs(false)
-          this.$.dialog.open();
+          super.openIt()
         }
-      
-      closeIt() {
-          this.$.dialog.close();
-        }
-
-      
+            
       _onClickCiv(p) {
     	  const civo = p.target.id
-   		  const dialogDemo = C.getconfirmdialog()
-    	  dialogDemo.openDialog = function(e) {
-    		 this.$.dialog.open()
-          }
-    	  dialogDemo.confirm = e => {
+    	  const message = this.localize('doyouwanttostartquestion','civname',this.civname,'civopposite',civo)
+    	  C.confirmdialog(message, e => {
         	  this._disablecivs(true)
         	  this._showwaiting(true)
         	  if (this.gameid > 0) C.resumetwoplayersgame(this.gameid,this.civname)
         	  else C.registertwoplayersgame(this.civname,civo)
     	  }
-    	  dialogDemo.dismiss = e => {}
-		  dialogDemo.message = this.localize('doyouwanttostartquestion','civname',this.civname,'civopposite',civo)
-    	  dialogDemo.openDialog()
+        )
       }
 
     }

@@ -60,7 +60,7 @@
               C.alertdialog(this.localize('productionfromtradeshouldbe',"max",this.maxproduction))
               return
           }
-          C.confirmdialog(this.localize('areyousurequestion'),e => {
+          C.executewithconffun(this.localize('areyousurequestion'),"SPENDTRADE",e => {
               this.closeIt()
               const pa = this.pa
               pa.param = prod

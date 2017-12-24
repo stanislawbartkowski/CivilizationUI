@@ -51,6 +51,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public String getCivData(int what, String param) {
 		int w = -1;
 		setRedis();
+		System.out.println("getCivData" + what);
 		switch (what) {
 		case LISTOFCIV:
 			w = II.LISTOFCIV();
@@ -94,6 +95,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	@Override
 	public String resumeGame(int gameid, String civ) {
+		System.out.println("Resume game: " + civ);
 		String token = II.resumeGame(gameid, civ);
 		return token;
 	}
@@ -105,6 +107,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	@Override
 	public String joinGame(int gameid, String civ) {
+		System.out.println("Join game: " + civ + " " + gameid);
 		return II.joinGame(gameid, civ);
 	}
 	

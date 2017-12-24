@@ -184,7 +184,6 @@ public class CIvilizationUI implements EntryPoint {
 		}
 
 	};
-	
 
 	// ===========================================
 
@@ -495,30 +494,28 @@ public class CIvilizationUI implements EntryPoint {
 			}
 		});
 	}
-	
+
 	public static class TWaitShadow extends Timer {
 
-
 		@Override
-		public void run() { 
+		public void run() {
 			if (getxApp() != null) {
-			  showelem(STARTMENU, true);
-			  showelem(GAMEMENU, false);
-			  setjsboard(null);
-			  Element fe = findContent(CIVMAP);
-			  fe.setAttribute("hidden", "true");
-			  showcivorgames(1);
-			  this.cancel();
+				showelem(STARTMENU, true);
+				showelem(GAMEMENU, false);
+				setjsboard(null);
+				Element fe = findContent(CIVMAP);
+				fe.setAttribute("hidden", "true");
+				showcivorgames(1);
+				this.cancel();
 			}
 		}
 	}
-
 
 	private static void greetingMenu() {
 		trefresh.cancel();
 		civtoken = null;
 		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
-		new TWaitShadow().scheduleRepeating(1000);		
+		new TWaitShadow().scheduleRepeating(1000);
 	}
 
 	public static void leaveGame() {
@@ -527,8 +524,6 @@ public class CIvilizationUI implements EntryPoint {
 	}
 
 	public static void unregisterToken() {
-		if (civtoken == null)
-			return;
 		call(GreetingService.UNREGISTERTOKEN, civtoken, p -> {
 			civtoken = null;
 			if (twait != null) {
@@ -573,10 +568,14 @@ public class CIvilizationUI implements EntryPoint {
 		});
 	}
 
-	public static void resumeTwoPlayersGame(int gameid, String cov) {
-		greetingService.resumeGame(gameid, cov, new AsyncBack() {
+	public static void resumeTwoPlayersGame(int gameid, String civ) {
+		greetingService.resumeGame(gameid, civ, new AsyncBack() {
 			@Override
 			public void onSuccess(String s) {
+				// 2017/12/22
+				// set it now to allow unregister in case of cancel
+				// civtoken is set again by TWait when other player joins
+				civtoken = s;
 				twait = new TWait(s);
 				twait.scheduleRepeating(500);
 			}
@@ -608,7 +607,7 @@ public class CIvilizationUI implements EntryPoint {
 	 * Called at the beginning. Defines all GWT functions available from JS code
 	 */
 	public native void expose()/*-{
-		
+
 		$wnd.getciv = function(param) {
 			return @com.civilization.ui.client.CIvilizationUI::getCiv(*)(param);
 		}

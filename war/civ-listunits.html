@@ -4,6 +4,14 @@
        <template id="map" is="dom-repeat" items="{{units}}">
            <civ-units class="unit" data="{{item}}" draggable="{{draggable}}" num="{{index}}" you="{{you}}"></civ-units>
         </template>
+        
+    <div id="units" style="display:none">
+      <civ-units class="unitelem" id="infantry"></civ-units>
+      <civ-units class="unitelem" id="artillery"></civ-units>
+      <civ-units class="unitelem" id="mounted"></civ-units>
+      <civ-units class="unitelem" id="aircraft"></civ-units>
+    </div>  
+
 
   </template>
 
@@ -30,16 +38,35 @@
         return C.findUnitLevel(pa.units,name)
       }
 
+      _islist(pa) {
+    	 return (pa.list != null) 
+      }
+      
+      _showunits(show) {
+    	  C.displayelemid(this,"units",show)
+      }
+      
+      _drawlist(pa) {
+    	  this._showunits(false)
+          const l = pa.list
+          this.units = []
+          for (var i=0; i<l.length; i++) {
+              const elem = {}
+              elem.name = l[i].name
+              elem.strength = l[i].strength
+              elem.level = this._findLevel(pa,elem.name)
+              this.units.push(elem)
+          }
+      }
+      
+      _drawunits(pa) {
+          this._showunits(true)    	  
+          C.setUnitsNumb(this.$.units,pa)
+      }
+      
       refresh(pa) {
-    	  const l = pa.list
-    	  this.units = []
-    	  for (var i=0; i<l.length; i++) {
-    		  const elem = {}
-    		  elem.name = l[i].name
-    		  elem.strength = l[i].strength
-    		  elem.level = this._findLevel(pa,elem.name)
-    		  this.units.push(elem)
-    	  }
+    	  if (this._islist(pa)) this._drawlist(pa)
+    	  else this._drawunits(pa)
       }
 
     }

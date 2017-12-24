@@ -1,5 +1,13 @@
 var C = (function() {
 
+  function confirmaction(co) {
+    const c = co.toLowerCase()
+    if (c == "endofphase") return true
+//    if (c == "startmove") return true
+//    if (c == "revealtile") return true
+    return false
+  };
+
   function verifysetfigures(co,iparam,pa) {
 
      var list = iparam.list
@@ -85,7 +93,7 @@ var C = (function() {
      pa.param = iparam.param
      pa.square = iparam.square
      pa.itemized = itemized
-     if (itemized == null) return pa
+     if (itemized == null || co == "endofphase") return pa
      iparam.list = itemized
      if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") return verifysetfigures(co,iparam,pa)
      if (co == "startmove") return verifystartmove(co,iparam,pa)
@@ -124,7 +132,7 @@ var C = (function() {
 	const dialogDemo = document.getElementById("join-dialog")
 	dialogDemo.openDialog = function() {
 	    this.$.dialog.civname = e.civ[0]
-	    this.$.dialog.header = "Resume two players game"
+	    this.$.dialog.header = C.localize("resumetwoplayersgame")
 	    this.$.dialog.gameid = e.gameid
 	    lines = []
 	    lines.push(e.civ[1])
@@ -275,7 +283,9 @@ var C = (function() {
   },
 
   getconfirmdialog : function() {
-    return document.getElementById("dialog-question")
+    const d = document.getElementById("dialog-question")
+    d.$.dialog.title = C.localize('confirmdialogtitle')
+    return d
   },
 
   joingamedialog : function(gameid,civ) {
@@ -285,7 +295,7 @@ var C = (function() {
 	}
 	dialogDemo.confirm = e => C.joingame(gameid,civ)
 	dialogDemo.dismiss = e => {}
-	dialogDemo.message = "Do you want to join game as " + civ + " ?"
+	dialogDemo.message = C.localize("doyouwanttojoin","civ",civ)
 	dialogDemo.openDialog()
   },
   
@@ -299,7 +309,6 @@ var C = (function() {
 
   confirmdialog: function(message,fun) {
     const dialogDemo = this.getconfirmdialog()
-    dialogDemo.$.dialog.title = C.localize('confirmdialogtitle')
     dialogDemo.openDialog = function(e) {
         this.$.dialog.open()
     }
@@ -356,11 +365,31 @@ var C = (function() {
   },
 
   executeC : function(co,pa) {
+    if (pa == null) {
+      pa = {}
+      pa.row = -1
+      pa.col = -1
+      pa.param = null      
+    }
     if (typeof pa.param == 'string') window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
     else
     if (typeof pa.param == "number") window.executecommandN(co.toUpperCase(),pa.row,pa.col,pa.param)
     else
     window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
+  },
+   
+  executewithconffun : function(question,co,fun) {
+    if (question == null) question = C.localize("executecommandquestion","command",co)
+    if (!confirmaction(co)) fun()
+    else this.confirmdialog(question,fun)
+  },
+
+  executewithconf : function(question,co,pa,mdial) {
+    C.executewithconffun(question,co,e => {
+         if (mdial != null) mdial.closeIt()
+         C.executeC(co,pa)
+       }              
+     )
   },
 
   confexecutedialog : function (question,co,row,col,param) {
@@ -396,14 +425,8 @@ var C = (function() {
     	_attackconfirmation(pa)
     	return
     }
-    const dialogDemo = C.getconfirmdialog()
-	dialogDemo.openDialog = function(e) {
-		   this.$.dialog.open()
-    }
-    dialogDemo.confirm = e => C.executeC(co,pa)
-	dialogDemo.dismiss = e => {}
-	dialogDemo.message = question
-	dialogDemo.openDialog()
+    
+    this.executewithconf(question,co,pa)
   },
 
 //  dialog-command-alert
@@ -714,7 +737,7 @@ var C = (function() {
        param.num = num
        param.level = strength
        const elem = C._getbyid(e,name)
-       elem.data = param
+       elem.draw(param)
        if (units.list != null && units.list.length > 0) elem.units = units
        else elem.units = null
 

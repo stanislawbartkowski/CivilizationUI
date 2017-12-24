@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/12/13",
+    "appversion": "Version: 2017/12/24",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -41,7 +41,7 @@
     "citymanagementlabel" : "City Management",
     "movementlabel" : "Movement",
     "researchlabel" : "Research",
-    "doyouwantendquestion" : "Do you want to end {phase} now ?",
+    "doyouwantendquestion" : "Do you want to end {phase} now ? You can still execute: {actions}",
     "doyouwantfinishmovequestion" : "Do you want finish the current move ?",
     "doyouwantstartnegamequestion" : "Do you want to start new game as {civ} ?",
     "revealtwotiles" : "You are about to reveal one of two tiles",
@@ -90,7 +90,10 @@
     "battle" : "Battle",
     "endofbattle" : "End of battle",
     "youwin" : "YOU WIN !!!",
-    "youlose" : "YOU LOSE !!!"
+    "youlose" : "YOU LOSE !!!",
+    "resumetwoplayersgame" : "Resume two players game",
+    "doyouwanttojoin" : "Do you want to join game as {civ} ?",
+    "endofphase" : "End Of Phase"
     
   }
 }

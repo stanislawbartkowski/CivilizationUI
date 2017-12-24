@@ -24,7 +24,8 @@
     "paper-badge ": "PolymerElements/paper-badge",
     "app-localize-behavior" : "PolymerElements/app-localize-behavior",
     "web-animations-js": "web-animations/web-animations-js#2",
-   "paper-alert-dialog" : "Collaborne/paper-alert-dialog"
+    "paper-alert-dialog" : "Collaborne/paper-alert-dialog",
+    "deep-diff" : "diff/deep-diff"
   },
   "variants": {
     "1.x": {

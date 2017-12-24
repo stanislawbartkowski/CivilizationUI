@@ -30,7 +30,7 @@
          </div>
        
         <div class="buttons"> 
-          <paper-button on-click="_onCancel" dialog-dismiss>{{localize('endofbattle')}}</paper-button>
+          <paper-button id="close" on-click="_onCancel" dialog-dismiss>{{localize('endofbattle')}}</paper-button>
        </div> 
 
     </paper-dialog>
@@ -63,6 +63,11 @@
     	  pa.col = -1
           C.executeC("ENDBATTLE",pa)
       }
+      
+      _disableclose(disable) {
+    	  const c = this.$.close
+    	  C.disableleme(c,disable)
+      }
 
       openIt(data) {
           super.openIt(data)
@@ -83,6 +88,9 @@
               else lname = "youlose"              
           }
           this.youresult = C.localize(lname)
+          this._disableclose(true)
+          if (battle.bothsides || (battle.attackerwinner && a.you) || (!battle.attackerwinner && d.you))
+             this._disableclose(false)
       }
       
     }

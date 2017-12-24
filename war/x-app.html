@@ -41,11 +41,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
+
   
 <link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog.html">
 <link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog-icon-header.html">
 <link rel="import" href="bower_components/app-localize-behavior/app-localize-behavior.html">
 <link rel="import" href="bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+
+<script type="text/javascript" language="javascript" src="bower_components/deep-diff/index.js"></script>
+
 
 <script type="text/javascript" language="javascript" src="civ-localize.js"></script>
 <script type="text/javascript" language="javascript" src="civ-data.js"></script>
@@ -207,7 +211,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          
          <app-drawer slot="drawer" align="right">
              <div class="drawer-content">
-               <civ-player id="opponentplay" hidden></civ-player>       
+               <civ-player id="opponentplay" hidden opponent></civ-player>       
             </div>         
          </app-drawer>
          
@@ -260,15 +264,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           C.leavedialog()
        }
        
-       refresh (jsboard) {
+       refresh (jsboard,oldboard) {
            const b = jsboard           
            C.getgamestate().draw(b)
            C.getmarket().draw(b)
            if (b == null) {
         	   C.displayelem(C.getmarket(),false)
-               C.getyouplay().draw(b,null,false)
+               C.getyouplay().draw(b)
         	   C.seconddrawerClose(true)
-        	   C.getopponentplay().draw(b,null,true)
+        	   C.getopponentplay().draw(b)
            }
            else {
                C.displayelem(C.getmarket(),true)
@@ -276,10 +280,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    C.alertdialog(this.localize('multiplayermorethen2'))
                    return
                }
-               C.getyouplay().draw(b,b.board.you,false)
+               C.getyouplay().draw(b)
                if (b.board.others.length == 1) {
             	   C.seconddrawerClose(false)
-                   C.getopponentplay().draw(b,b.board.others[0],true)            	   
+                   C.getopponentplay().draw(b)            	   
                }
             }
            C.battleDialog(b)
@@ -288,7 +292,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
       
   window.customElements.define(XApp.is, XApp);
-  
+    
   if (C.isFireFox()) alert("Not supported on Firefox. Use Chrome")
         
   </script>

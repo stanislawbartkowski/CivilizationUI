@@ -133,7 +133,7 @@
  </paper-item>
 
  <paper-icon-item id="endofphase" on-click="_onClick">
-  <iron-icon icon="done" slot="item-icon"></iron-icon> <span>EndOfPhase</span>
+  <iron-icon icon="done" slot="item-icon"></iron-icon> <span>{{localize('endofphase')}}</span>
  </paper-icon-item>
 
 <span id="startofturn" class="actionbox">
@@ -261,7 +261,7 @@
 
 <script>
       
-class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polymer.Element)) {
+class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
       
 	static get is() { return 'civ-player' }
 
@@ -311,7 +311,11 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                 opponent : {
                 	type : Boolean
                 },
-                
+
+                y : {
+                    type : Object
+                },
+
                 actionpanels : {
                 	type : Array,
                     readOnly: true,
@@ -382,6 +386,45 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
        this.currentcommand = id
        window.itemizecommand(id.toUpperCase())    	
     }
+    
+    _actionname(id) {
+        var name = C.localize(id)
+        if (name == null || name == "") {
+        	if (id == "buyarmy") name = C.localize("purchasearmy")
+        	else
+        	if (id == "buyscout") name = C.localize("purchasescout")
+        	else
+        		name = id
+        }
+        return name
+    }
+        
+    _endofphase() {
+        this.currentcommand = null
+        const g = C.getjsboard().board.game
+        const phase = g.phase
+    	const y = this.y
+    	// do not ask if no more commands
+    	if (y.commands.length == 1) {
+    	    const pa = {}
+    	    pa.row = -1
+    	    pa.col = -1
+    	    pa.param = phase      
+    		C.executeC("endofphase",pa)
+    		return
+    	}
+    	var actions = null
+        for (var i=0; i<y.commands.length; i++) {
+            const command = y.commands[i]
+            const id = command.command.toLowerCase()
+            if (id == "endofphase") continue
+            var name = this._actionname(id)
+            if (actions == null) actions = name
+            else actions = actions + ", " + name
+        }            
+        const labelphase = C.getphasedescr(phase)
+        C.confexecutedialog(this.localize("doyouwantendquestion","phase",labelphase,"actions",actions),"endofphase",-1,-1,phase)
+    }
         
     _onClick(source) {
     	     if (this.opponent) return
@@ -391,12 +434,8 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
     	     }    	     
              var id = source.currentTarget.id
              if (id == "endofphase") {
-                this.currentcommand = null
-                const g= C.getjsboard().board.game
-                const phase = g.phase
-                const labelphase = C.getphasedescr(phase)
-                C.confexecutedialog(this.localize("doyouwantendquestion","phase",labelphase),id,-1,-1,phase)
-                return
+                 this._endofphase()
+            	 return
              }
             if (id == "endofmove") {
                this.currentcommand = null
@@ -418,14 +457,17 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
         	 this.clear()
          }
                            
-         draw(b, y, opponent) {
+         refresh(b,oldb) {
         	   if (b == null) {
         		   this.clear()
                    const respanel = this.$.resourcespanel
                    respanel.draw(null)
         		   return;
         	   }
-        	   this.opponent = opponent
+        	   var y
+        	   if (this.opponent) y = b.board.others[0]
+        	   else y = b.board.you
+        	   this.y = y
                C.setColorForCity(this,"civname",C.backcolorForCiv(y.civ))
                this.civname=y.civ
                this.numberoftrade = "Trade: " + y.trade
@@ -454,7 +496,10 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
                   const id = command.command.toLowerCase()
                   const bu = this.shadowRoot.getElementById(id);
                   C.disableleme(bu,false)
-                  if (!opponent && id == "move" && this.currentcommand != "revealtile" && this.currentcommand != "explorehut") 
+                  if (!this.opponent && id == "move" 
+                		  && this.currentcommand != "revealtile" 
+                		  && this.currentcommand != "explorehut" 
+                		  && this.currentcommand != "attack") 
                 	  this._callitemize(id)
                  // check units menu
                  for (var j=0; j< this.unitsmenu.length; j++)
@@ -468,7 +513,6 @@ class CivPlayer extends Polymer.CivLocalize(Polymer.GestureEventListeners(Polyme
               respanel.draw(r)
               const h = y.hutvillages
               respanel.draw1(h)
-
              }
         }
         
