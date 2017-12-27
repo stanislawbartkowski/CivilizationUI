@@ -159,12 +159,6 @@ var C = (function() {
 
 
   function _clearMap() {
-//     const y = C.getyouplay()
-//     y.draw(null)
-//     const o =  _getxapp().$.opponentplay
-//     o.draw(null)
-//     const m = C.getmarket()
-//     m.draw(null)
      const o =  _getxapp()
      o.draw(null)          
   }

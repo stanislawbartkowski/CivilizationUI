@@ -179,7 +179,8 @@ public class CIvilizationUI implements EntryPoint {
 			if (refreshMap()) {
 				cancel();
 				if (gamet.ismulti())
-					trefresh.scheduleRepeating(500);
+//					trefresh.scheduleRepeating(500);
+  				    trefresh.scheduleRepeating(1000);
 			}
 		}
 
@@ -193,6 +194,7 @@ public class CIvilizationUI implements EntryPoint {
 	private static void rereadMap() {
 		call(GreetingService.GETBOARD, civtoken, js -> {
 			// change to JSON object
+			consoleLog("rereadMap");
 			JSONValue j = JSONParser.parseStrict(js);
 			board = j.isObject();
 			// refresh map
@@ -420,6 +422,10 @@ public class CIvilizationUI implements EntryPoint {
 		execute(s, row, col, pa);
 	}
 
+	public static native void consoleLog(String message) /*-{
+      console.log( "UI:" + message );
+    }-*/;
+	
 	public static native void commandfailure(String message)/*-{
 		$wnd.C.dialogexecutefailure(message);
 	}-*/;
@@ -519,6 +525,7 @@ public class CIvilizationUI implements EntryPoint {
 	}
 	
 	public static void stopRefresh() {
+		consoleLog("stop Refresh");
 		trefresh.cancel();		
 	}
 
