@@ -226,6 +226,7 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
   refresh(data) {
 //    if (this.isDraggable()) this.setAttribute("draggable","true")
     this._clearimages()
+    if (data == null) return
     const n = data.name.toLowerCase()
     this.setAttribute(n,1)
     if (data.strength != null)

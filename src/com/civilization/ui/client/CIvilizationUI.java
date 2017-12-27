@@ -517,8 +517,13 @@ public class CIvilizationUI implements EntryPoint {
 		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
 		new TWaitShadow().scheduleRepeating(1000);
 	}
+	
+	public static void stopRefresh() {
+		trefresh.cancel();		
+	}
 
 	public static void leaveGame() {
+		trefresh.cancel();
 		clearMap();
 		call(GreetingService.UNREGISTERTOKEN, civtoken, p -> greetingMenu());
 	}
@@ -655,6 +660,9 @@ public class CIvilizationUI implements EntryPoint {
 		}
 		$wnd.leavegame = function() {
 			@com.civilization.ui.client.CIvilizationUI::leaveGame(*)()
+		}
+		$wnd.stoprefresh = function() {
+			@com.civilization.ui.client.CIvilizationUI::stopRefresh(*)()
 		}
 		$wnd.readjoingames = function() {
 			@com.civilization.ui.client.CIvilizationUI::readJoinGames(*)()

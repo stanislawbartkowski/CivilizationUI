@@ -159,8 +159,14 @@ var C = (function() {
 
 
   function _clearMap() {
-     const y = C.getyouplay()
-     y.draw(null)
+//     const y = C.getyouplay()
+//     y.draw(null)
+//     const o =  _getxapp().$.opponentplay
+//     o.draw(null)
+//     const m = C.getmarket()
+//     m.draw(null)
+     const o =  _getxapp()
+     o.draw(null)          
   }
 
   function _spendtradecommand(pa) {
@@ -626,6 +632,7 @@ var C = (function() {
     },
 
     leavegame : function() {
+      window.stoprefresh()    
       _clearMap()
       window.leavegame()
     },
@@ -738,7 +745,10 @@ var C = (function() {
        else elem.units = null
 
     },
-
+    
+    unittypes() {
+     return ["mounted","aircraft","infantry","artillery"]
+    },
 
     findUnitLevel(units,name) {
       if (units == null) return null

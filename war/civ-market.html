@@ -88,13 +88,27 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
 
     static get is() { return 'civ-market'; }
     
+    _clearunits(e) {
+    	const na = C.unittypes()
+    	for (var i=0; i<na.length; i++) {
+  	       const u =  na[i]
+   	       const elem = C._getbyid(e,u)
+   	       elem.draw(null) 
+	     }     		
+    }
+    
     refresh(b) {
-    	if (b == null) return
+        const res = this.$.resources
+    	if (b == null) {
+    		res.draw(null)
+    		this._clearunits(this.$.units)
+            this._clearunits(this.$.killed)
+    		return
+    	}
     	const units = b.board.units
     	const killed = b.board.killedunits
     	C.setUnitsNumb(this.$.units,units)
         C.setUnitsNumb(this.$.killed,killed)
-        const res = this.$.resources
         const r = b.board.resources
         res.draw(r)
     }
