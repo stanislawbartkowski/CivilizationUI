@@ -2,7 +2,7 @@ var C = (function() {
 
   function confirmaction(co) {
     const c = co.toLowerCase()
-    if (c == "endofphase") return true
+//    if (c == "endofphase") return true
 //    if (c == "startmove") return true
 //    if (c == "revealtile") return true
     return false
@@ -299,10 +299,6 @@ var C = (function() {
 	dialogDemo.openDialog()
   },
   
-  endofbattledialog : function(data) {
-    if (data.board.battle.endofbattle) this.opendialogwithpar("battle-result",data)
-  },
-
   startgamedialog : function(civ) {
     this.confirmdialog(C.localize("doyouwantstartnegamequestion","civ",civ),e => window.chooseciv(civ))
   },
@@ -760,26 +756,37 @@ var C = (function() {
     setColorForCity : function(e,city,color) {
        C.setShadowStyleAttribute(e,city,"backgroundColor",color)
     },
-
-    battleDialog : function(b) {
-    	if (b == null) return
-        const d = document.getElementById("battle-dialog").$.dialog
-    	if (b.board.battle == null) {
-    		if (d.opened()) d.closeIt()
-    	}
-        if (b.board.battle != null) {
-        	if (!d.opened()) {
-        		d.openIt(b)
+    
+   _dialogopen : function(dname,open,data) {
+        const d = document.getElementById(dname).$.dialog
+        if (!open) {
+            if (d.opened()) d.closeIt()
+        }
+        else 
+            if (!d.opened()) {
+                d.openIt(data)
                 _sleep(1000).then(
                         () => {
-                        	d.refreshdata(b)
+                            d.draw(data)
                         }
                       )
-        	} else d.refresh(b)
-        	
-            C.endofbattledialog(b)            
-        }
-    },
+            } else d.draw(data)      
+   },
+    
+   endofbattledialog : function(b) {
+     const open = (b.board.battle != null) && b.board.battle.endofbattle
+     this._dialogopen("battle-result",open,b)
+   
+//    if (data.board.battle.endofbattle) this.opendialogwithpar("battle-result",data)
+   },
+    
+   battleDialog : function(b) {
+     if (b == null) return
+     const open = (b.board.battle != null)
+     if (open) C.setcurrentcommand(null)
+     this._dialogopen("battle-dialog",open,b)
+     C.endofbattledialog(b)
+   },
     
     getSideName(data) {
        if (data.isvillage) return C.localize('villagelabel')

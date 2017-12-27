@@ -1,0 +1,82 @@
+<dom-module id="battle-loot"> <template>
+
+<style>
+:host {
+	 display: block;
+	 margin-left: 5px;
+     margin-top: 2px;
+     border:1px ridge gray ; 
+     border-radius: 5px;
+}
+</style>
+
+
+   <civ-resources id="resources">
+   </civ-resources>
+
+</template> 
+
+  <script>
+  class BattleLoot extends Polymer.CivDialog(Polymer.Element) {
+
+     static get is() { return 'battle-loot'; }
+     
+     static get properties() {
+         return {
+             objectclick : {
+                 type : Object,
+                 value : null
+             }
+         }
+     }
+
+     
+     _onlist(n,names) {
+         for (var j=0; j<names.length; j++) 
+             if (n == names[j]) return true
+         return false
+     }
+     
+     _toname(n) {
+         for (var j=0; j<this.data.length; j++) 
+             if (n == this.data[j].toLowerCase()) return this.data[j]
+         return null
+     }
+     
+     clickres(id) {
+    	 if (this.objectclick == null) return
+    	 const n = this._toname(id)
+    	 this.objectclick.clickres(n)
+
+     }
+     
+     refresh(data) {
+    	 const r = this.$.resources
+    	 r.objectclick = this
+    	 const names = r.names
+    	 const hv = r.names1
+         const rlist = []
+    	 const hvmap = {}
+    	 for (var i = 0; i<data.length; i++) {
+    		 const n = data[i].toLowerCase()
+    		 const nu = data[i]
+    		 if (this._onlist(n,names)) {
+    	         const e = {}
+    	         e.resource = n
+    	         e.num = 1 
+    	         rlist.push(e)
+    		 }
+    		 if (this._onlist(n,hv))
+    			 // uppercase
+    			 hvmap[nu] = 1
+    	 } // for
+    	 r.draw(rlist)
+    	 r.draw1(hvmap)
+     }
+   }
+  
+  window.customElements.define(BattleLoot.is, BattleLoot);
+
+</script>
+
+</dom-module>

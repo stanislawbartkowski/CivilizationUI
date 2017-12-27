@@ -60,7 +60,7 @@ paper-badge {
    .unitfigure {
 /*     display : none; */
      width:80%;
-     float:left;
+/*     float:left; */
    }
 
    .imagelevel {
@@ -87,8 +87,10 @@ paper-badge {
 
 <div style="height:100%; width:100%" draggable="true" ondragstart="CivUnitsDraggable.ondragStart(event)">
   <div class="top">
+ 
       <span id="strengthvalue" style="width:10%; display=none; color:red">{{strengthvalue}}</span>
-      <span id="unitname" style="width:60%; font-size:80%" >{{unitname}}</span>
+      <span id="unitname" style="width:60%; font-size:80%" >{{unitname}}</span> 
+            
       <s-svg id="imagelevel0" class="imagelevel" style="width:10px"src="images/units/unit-level0.svg"></s-svg>
       <s-svg id="imagelevel1" class="imagelevel" src="images/units/unit-level1.svg"></s-svg>
       <s-svg id="imagelevel3" class="imagelevel" src="images/units/unit-star.svg"></s-svg>
@@ -200,12 +202,8 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
   }
   
   _displaysvg(n,display) {
-//      C.displayelem(this.$[n],display)
-//      C.showelem(this.$[n],display)
       const u = this.$[n]
       C.showeleme(u,display)
-//      u.display(display)	  
-      
   }
 
   _clearimages() {

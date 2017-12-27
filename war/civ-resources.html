@@ -28,39 +28,45 @@
     
 
    
-   <span id="spansilk" class="resbox" style="display:none"  title="{{localize('silklabel')}}">
+   <span id="spansilk" class="resbox" style="display:none"  title="{{localize('silklabel')}}" on-click="click">
      <s-svg id="silk" src="images/resource/silk.svg" ></s-svg>
      <paper-badge hidden id="silknumber" for="silk" label="X">
       </paper-badge>
     </span>      
 
-   <span id="spaniron"   title="{{localize('ironlabel')}}" class="resbox" style="display:none">
+   <span id="spaniron"   title="{{localize('ironlabel')}}" class="resbox" style="display:none" on-click="click">
      <s-svg id="iron" src="images/resource/iron.svg"></s-svg>
      <paper-badge hidden id="ironnumber" for="iron" label="X">
       </paper-badge>
     </span>      
 
-   <span id="spanwheat" class="resbox" title="{{localize('wheatlabel')}}" style="display:none">
+   <span id="spanwheat" class="resbox" title="{{localize('wheatlabel')}}" style="display:none" on-click="click">
      <s-svg id="wheat" src="images/resource/wheat.svg"></s-svg>
      <paper-badge hidden id="wheatnumber" for="wheat" label="X">
       </paper-badge>
     </span>      
 
-   <span id="spanincense" class="resbox" style="display:none" title="{{localize('incenselabel')}}">
+   <span id="spanincense" class="resbox" style="display:none" title="{{localize('incenselabel')}}" on-click="click">
      <s-svg id="incense" src="images/resource/incense.svg"></s-svg>
      <paper-badge hidden id="incensenumber" for="incense" label="X">
       </paper-badge>
     </span>      
 
-   <span id="spanhut" class="resbox" style="display:none" on-click="click">
+   <span id="spanhut" class="resbox" style="display:none" on-click="click" title="{{localize('hutlabel')}}">
      <s-svg id="hut" src="images/huts/hut.svg"></s-svg>
      <paper-badge hidden id="hutnumber" for="hut" label="X">
       </paper-badge>
     </span>      
 
-   <span id="spanvillage" class="resbox" style="display:none" on-click="click">
+   <span id="spanvillage" class="resbox" style="display:none" on-click="click" title="{{localize('villagelabel')}}">
      <s-svg id="village" src="images/huts/village.svg"></s-svg>
      <paper-badge hidden id="villagenumber" for="village" label="X">
+      </paper-badge>
+    </span>      
+
+   <span id="spantrade" class="resbox" style="display:none" on-click="click" title="{{localize('tradelabel')}}" >
+     <s-svg id="trade" src="images/tokens/trade.svg"></s-svg>
+     <paper-badge hidden id="tradenumber" for="trade" label="X">
       </paper-badge>
     </span>      
 
@@ -75,16 +81,6 @@
      <paper-badge hidden id="uraniumnumber" for="uranium" label="X">
       </paper-badge>
     </span>      
-
-<!-- 
-    <template id="map" is="dom-repeat" items="{{resources}}">
-       <span class="resbox">
-         <s-svg id="{{item.name}}" src="images/resource/{{item.name}}.svg" ></s-svg>
-         <paper-badge id="{{item.name}}number" for="{{item.name}}" label="{{item.num}}">
-         </paper-badge>
-       </span>
-    </template>        
--->    
     
   </template>
 
@@ -103,7 +99,11 @@
                names1 : {
                   readOnly : true,
                   type :Array,
-                  value : ["hut","village"]
+                  value : ["hut","village","trade"]
+               },
+               objectclick : {
+            	   type : Object,
+            	   value : null
                }
           }
       }
@@ -118,7 +118,12 @@
          for (var i=0; i<this.names1.length; i++) this._remove(this.names1[i])        
       }
             
-      click() {
+      click(e) {
+    	  if (this.objectclick != null) {
+    		  const id = e.srcElement.id
+    		  this.objectclick.clickres(id)
+    		  return
+    	  }
     	  C.opendialogwithpar("showhv-dialog",this.data1)
       }
       
@@ -140,6 +145,7 @@
     	  if (r == null) return
     	  this._displayhv(r,"Hut")
           this._displayhv(r,"Village")    	  
+          this._displayhv(r,"trade")        
       }
        
       refresh(r) {
@@ -148,15 +154,11 @@
     		  return
     	  }
           for (var i=0; i<this.names.length; i++) {
-        	  var f = -1;
+        	  var num = 0
         	  const n = this.names[i]
         	  for (var j=0; j < r.length; j++) 
-        		  if (n ==  r[j].resource.toLowerCase()) {
-        			  f = j;
-        			  break;
-        		  }
-        	  var num = 0
-        	  if (f != -1) num = r[f].num
+        		  if (n ==  r[j].resource.toLowerCase()) 
+        			  num = num + r[j].num
         	  this._display(n,num)
           }
       }

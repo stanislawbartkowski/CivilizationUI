@@ -93,7 +93,7 @@
     "youlose" : "YOU LOSE !!!",
     "resumetwoplayersgame" : "Resume two players game",
     "doyouwanttojoin" : "Do you want to join game as {civ} ?",
-    "endofphase" : "End Of Phase"
-    
+    "endofphase" : "End Of Phase",
+    "takeloot" : "Take winner's loot, you deserve it !" 
   }
 }

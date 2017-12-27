@@ -1,16 +1,18 @@
  <dom-module id="civ-listunits">
-    <template>
+ 
+  
+<template>
 
-       <template id="map" is="dom-repeat" items="{{units}}">
+   <template id="map" is="dom-repeat" items="{{units}}">
            <civ-units class="unit" data="{{item}}" draggable="{{draggable}}" num="{{index}}" you="{{you}}"></civ-units>
-        </template>
-        
-    <div id="units" style="display:none">
+    </template>
+     
+    <span id="units" style="display:none">
       <civ-units class="unitelem" id="infantry"></civ-units>
       <civ-units class="unitelem" id="artillery"></civ-units>
       <civ-units class="unitelem" id="mounted"></civ-units>
       <civ-units class="unitelem" id="aircraft"></civ-units>
-    </div>  
+    </span>  
 
 
   </template>
@@ -43,7 +45,7 @@
       }
       
       _showunits(show) {
-    	  C.displayelemid(this,"units",show)
+    	  C.displayelemid(this,"units",show,true)
       }
       
       _drawlist(pa) {

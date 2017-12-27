@@ -41,13 +41,14 @@ Polymer.CivData = function(superClass) {
 	   }
 	   
 	   drawset(newdata,olddata) {
+	       if (this.refresh == null) return
            if (!this._different(newdata,olddata)) return
            this.refresh(newdata)           
 	   }
 
        draw1set(newdata,olddata) {
            if (!this._different(newdata,olddata)) return
-           this.refresh1(newdata)           
+           this.refresh1(newdata)             
        }
       
        draw(data) {

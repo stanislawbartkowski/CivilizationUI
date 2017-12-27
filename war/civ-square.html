@@ -299,6 +299,8 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
            }
          const j = jsdata
          if (j.city != null) {
+         	this._removearmy()
+         	this._removescout()
             this._removeterrain()
             C.displayelem(this.$.attcity,true)
             C.setColorForCity(this,j.city,C.colorForCiv(j.civ))

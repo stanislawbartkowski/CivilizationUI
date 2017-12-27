@@ -11,6 +11,11 @@
          text-align : center;
          padding-left : 20px;         
       }
+      
+      .chooseloot {
+         margin-left : 10px;
+         margin-right : 100px;
+      }
 
     </style>
 
@@ -28,9 +33,18 @@
          <div>
            {{youresult}}
          </div>
+         
+         <battle-loot id="battlelot">
+         </battle-loot>
+         
+         <div id="winnerlootmessage">
+          {{localize("takeloot")}}
+         </div>
        
         <div class="buttons"> 
-          <paper-button id="close" on-click="_onCancel" dialog-dismiss>{{localize('endofbattle')}}</paper-button>
+         <battle-loot class = "chooseloot" id="chooselot">
+         </battle-loot>
+          <paper-button id="close" on-click="_onCancel">{{localize('endofbattle')}}</paper-button>
        </div> 
 
     </paper-dialog>
@@ -52,15 +66,64 @@
             },
             youresult : {
             	type : String
+            },
+            loot : {
+            	type : String,
+            	value : null
             }
                        
           }
       }
       
+      clickres(id) {
+          this._messageloot(false)
+    	  this.loot = id
+          const chooselot = this.$.chooselot
+          C.displayelem(chooselot,true)
+          const rlist = [id]
+          chooselot.draw(rlist)
+      }
+      
+      _isloot() {
+          const battle = this.data.board.battle
+          return (battle.winnerloot != null && battle.winnerloot.length > 0)
+      }
+            
+      _drawloot() {
+          const battle = this.data.board.battle
+          const loot = this.$.battlelot
+    	  if (this._isloot()) {
+    	      loot.objectclick = this
+              C.displayelem(loot,true)
+              loot.draw(battle.winnerloot)
+    	  }
+    	  
+      }
+      
+      _messageloot(display) {
+    	  const m = this.$.winnerlootmessage
+    	  C.displayelem(m,display)
+      }
+      
+      _removeloot() {
+          this._messageloot(false)
+          const loot = this.$.battlelot
+          const chooselot = this.$.chooselot 
+          C.displayelem(loot,false)
+          C.displayelem(chooselot,false)
+          this.loot = null
+      }
+      
       _onCancel() {
+    	  if (this._isloot() && this.loot == null) {
+    		  this._messageloot(true)
+    		  return
+    	  }
+    	  this.closeIt()
     	  const pa={}
     	  pa.row = -1
     	  pa.col = -1
+    	  pa.param = this.loot
           C.executeC("ENDBATTLE",pa)
       }
       
@@ -68,9 +131,9 @@
     	  const c = this.$.close
     	  C.disableleme(c,disable)
       }
-
-      openIt(data) {
-          super.openIt(data)
+      
+      refresh(data) {
+          this._removeloot()
           const battle = data.board.battle
           const a = battle.attacker
           const d = battle.defender
@@ -89,8 +152,10 @@
           }
           this.youresult = C.localize(lname)
           this._disableclose(true)
-          if (battle.bothsides || (battle.attackerwinner && a.you) || (!battle.attackerwinner && d.you))
-             this._disableclose(false)
+          if (battle.bothsides || (battle.attackerwinner && a.you) || (!battle.attackerwinner && d.you)) {
+             this._disableclose(false)    
+             this._drawloot()
+          }
       }
       
     }
