@@ -10,6 +10,14 @@ At this stage, it is only the beginning. A few basic features are implemented an
 Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/. It is a free quota and please wait a moment until container/dyno is activated.
 
 ## History
+### 2017/12/27 : new version deployed
+
+* Explore the hust
+* Take over the village
+* Fight between two players
+* Improvements
+
+https://hoteljavaopensource.blogspot.com/2017/12/next-version-of-civilization-board-game.html
 
 ### 2017/10/28: new version deployed
 
