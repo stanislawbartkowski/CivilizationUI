@@ -11,6 +11,14 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 
 ## History
 
+### 2017/10/28: new version deployed
+
+* spending trade to buy production
+* player can buy units
+* scout can send production to city
+
+http://hoteljavaopensource.blogspot.com/2017/10/next-version-of-civilization-board-game.html
+
 ### 2017/09/27 : new version deployed
 * new interface,  more user friendly
 * two players game, opponent player desk visible
