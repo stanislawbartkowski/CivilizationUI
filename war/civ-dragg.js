@@ -15,6 +15,7 @@ const CivUnitsDraggable = {
      this.isironon = b.isironon()
      if (u == null) return
      if (u != null && u.you != null) this.startu = u
+     e.dataTransfer.effectAllowed = 'move';
    }, // drag
 
    findf : function(ev) {
@@ -22,7 +23,7 @@ const CivUnitsDraggable = {
      if (u != null && u.you != null && u.data == null) return u
      return null
    },
-
+   
    ondragEnter : function(ev) {
      if (this.startu == null) return
      const u = this.findf(ev)

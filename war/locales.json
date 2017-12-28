@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2017/12/28",
+    "appversion": "Version: 2017/12/29",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -35,6 +35,8 @@
     "incenselabel" : "Incense",
     "hutlabel" : "Hut",
     "villagelabel" : "Village",
+    "uraniumlabel" : "Uranium",
+    "spylabel" : "Spy",
     "executecommandquestion" : "Do you want {command} here ?",
     "startofturnlabel" : "Start Of Turn",
     "tradelabel" : "Trade",

@@ -380,6 +380,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     _itemized(newValue,oldValue) {
     	const a = C.getlistofpoints(this.currentcommand,newValue);
     	this.setListOfPoints(a)
+    	if (a != null) C.checkAutomateButton()
     }
                  
     _callitemize(id) {
@@ -406,11 +407,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     	const y = this.y
     	// do not ask if no more commands
     	if (y.commands.length == 1) {
-    	    const pa = {}
-    	    pa.row = -1
-    	    pa.col = -1
-    	    pa.param = phase      
-    		C.executeC("endofphase",pa)
+    		C.executeEndOfPhase()
     		return
     	}
     	var actions = null
@@ -514,6 +511,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
               respanel.draw(r)
               const h = y.hutvillages
               respanel.draw1(h)
+              C.automateCommand(y.commands)
              }
         }
         

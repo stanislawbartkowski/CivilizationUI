@@ -780,8 +780,6 @@ var C = (function() {
    endofbattledialog : function(b) {
      const open = (b.board.battle != null) && b.board.battle.endofbattle
      this._dialogopen("battle-result",open,b)
-   
-//    if (data.board.battle.endofbattle) this.opendialogwithpar("battle-result",data)
    },
     
    battleDialog : function(b) {
@@ -795,7 +793,70 @@ var C = (function() {
     getSideName(data) {
        if (data.isvillage) return C.localize('villagelabel')
        else return data.civ
-    } 
+    },
+    
+    executeEndOfPhase() {
+        const g = C.getjsboard().board.game
+        const phase = g.phase
+        const pa = {}
+        pa.row = -1
+        pa.col = -1
+        pa.param = phase      
+        C.executeC("endofphase",pa)
+    },
+         
+    // automatecommand
+    _checkEndOfMove(commands) {
+       if (commands.length == 1 && commands[0].command.toLowerCase() == "endofmove") {
+          C.executeC(commands[0].command)
+          return true
+       }
+       return false         
+    },
+            
+    _checkEndOfPhase(commands) {
+       if (commands.length == 1 && commands[0].command.toLowerCase() == "endofphase") {
+          C.executeEndOfPhase()
+          return true
+       }
+       return false         
+    },
+    
+    automateCommand(commands) {
+      if (C._checkEndOfMove(commands)) return
+      C._checkEndOfPhase(commands)
+      return
+    },
+    
+    _checkrevealCommand(co) {
+       const iparam = {}
+       iparam.list = C.getitemizedcommand()
+       if (_twotilereveal(iparam)) return
+       const list = C.getitemizedcommand()
+       const r = list.tiles[0]
+       const pa = {}
+       pa.row = r.p.row
+       pa.col = r.p.col
+       pa.param = r.orientation
+       C.executeC(co,pa)        
+    },
+    
+    _checkexplorehutCommand(co) {
+       const list = C.getitemizedcommand()
+       if (list.explore.length != 1) return
+       const pa = {}
+       pa.row = list.explore[0].row
+       pa.col = list.explore[0].col
+       C.executeC(co,pa)               
+    },
+    
+    checkAutomateButton() {
+       const command = C.getcurrentcommand()
+       const itemized = C.getitemizedcommand()
+       if (command == "revealtile") C._checkrevealCommand(command)
+       if (command == "explorehut") C._checkexplorehutCommand(command)        
+    }
+    
 
   }  // return
  } // function
