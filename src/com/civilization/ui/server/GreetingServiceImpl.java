@@ -75,7 +75,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			w = II.REGISTEROWNERTWOGAME();
 			break;
 		}
-		return II.getData(w, param);
+		return II.getData(w, param,null);
 	}
 
 	@Override

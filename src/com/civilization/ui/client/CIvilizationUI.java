@@ -194,6 +194,10 @@ public class CIvilizationUI implements EntryPoint {
 	private static void rereadMap() {
 		call(GreetingService.GETBOARD, civtoken, js -> {
 			// change to JSON object
+			if (js.equals("")) {
+				consoleLog("reRead empty, do nothing");
+				return;
+			}
 			consoleLog("rereadMap");
 			JSONValue j = JSONParser.parseStrict(js);
 			board = j.isObject();
