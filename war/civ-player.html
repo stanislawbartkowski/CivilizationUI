@@ -455,11 +455,11 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          }
          
          _youactive() {
+        	 if (this.opponent) return false
         	 const y = this.y
              const g = this.data.board.game
              return y.civ == g.active
          }
-
                            
          refresh(b) {
         	   if (b == null) {
@@ -519,8 +519,15 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
               respanel.draw(r)
               const h = y.hutvillages
               respanel.draw1(h)
-              if (this._youactive()) C.automateCommand(y.commands)
-             }
+              if (this._youactive()) {
+            	  var s = null
+            	  for (var i=0; i<y.commands.length; i++)
+            		  if (s == null) s = y.commands[i].command
+            		  else s = s + "," + y.commands[i].command
+                  C.log("player:"+ g.active + " " + g.phase + " " + s)                  
+            	  C.automateCommand(y.commands)
+              }              
+           }
         }
         
 window.customElements.define(CivPlayer.is, CivPlayer);

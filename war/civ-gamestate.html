@@ -14,7 +14,7 @@
   </template>
 
   <script>
-    class CivGameState extends Polymer.CivLocalize(Polymer.Element) {
+    class CivGameState extends Polymer.CivData(Polymer.Element) {
     	
       static get is() { return 'civ-gamestate'; }
               
@@ -53,7 +53,7 @@
     	  return C.getphasedescr(this.phase)
       }
       
-      draw(b) {
+      refresh(b) {
           if (b == null) {
               this.turnno = null
               this.activecivname = null
