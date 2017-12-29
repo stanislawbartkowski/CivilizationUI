@@ -10,6 +10,17 @@ At this stage, it is only the beginning. A few basic features are implemented an
 Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/. It is a free quota and please wait a moment until container/dyno is activated.
 
 ## History
+### 2017/12/29 : new version deployed
+* "Start of turn" passed from one player to another : https://github.com/stanislawbartkowski/CivilizationUI/issues/15
+* "Research" phase can be conducted in parallel :  https://github.com/stanislawbartkowski/CivilizationUI/issues/14
+* Cannot build a capital on home tile of another player: https://github.com/stanislawbartkowski/CivilizationUI/issues/13
+* "Start of turn" players can build cities in turn, not at the same time : https://github.com/stanislawbartkowski/CivilizationUI/issues/10
+* Trade cannot exceed 27 treshold : https://github.com/stanislawbartkowski/CivilizationUI/issues/6
+* "End of move" when speed level hit : https://github.com/stanislawbartkowski/CivilizationUI/issues/5
+* Reveal the hidden tile without clicking the figure : https://github.com/stanislawbartkowski/CivilizationUI/issues/4
+* Automatic "end of phase" when no more actions available : https://github.com/stanislawbartkowski/CivilizationUI/issues/3
+* Two players game on Heroku is running more smoothly : https://github.com/stanislawbartkowski/CivilizationUI/issues/12
+
 ### 2017/12/27 : new version deployed
 
 * Explore the hust
