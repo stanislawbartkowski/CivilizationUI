@@ -399,7 +399,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
         }
         return name
     }
-        
+            
     _endofphase() {
         this.currentcommand = null
         const g = C.getjsboard().board.game
@@ -453,8 +453,15 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          clearCommand() {
         	 this.clear()
          }
+         
+         _youactive() {
+        	 const y = this.y
+             const g = this.data.board.game
+             return y.civ == g.active
+         }
+
                            
-         refresh(b,oldb) {
+         refresh(b) {
         	   if (b == null) {
         		   this.clear()
                    const respanel = this.$.resourcespanel
@@ -494,8 +501,9 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                   const id = command.command.toLowerCase()
                   const bu = this.shadowRoot.getElementById(id);
                   C.disableleme(bu,false)
-                  if (!this.opponent && id == "move" 
-                		  && this.currentcommand != "revealtile" 
+                  if (this._youactive())
+                    if (!this.opponent && id == "move" 
+                	  	  && this.currentcommand != "revealtile" 
                 		  && this.currentcommand != "explorehut" 
                 		  && this.currentcommand != "attack") 
                 	  this._callitemize(id)
@@ -511,7 +519,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
               respanel.draw(r)
               const h = y.hutvillages
               respanel.draw1(h)
-              C.automateCommand(y.commands)
+              if (this._youactive()) C.automateCommand(y.commands)
              }
         }
         

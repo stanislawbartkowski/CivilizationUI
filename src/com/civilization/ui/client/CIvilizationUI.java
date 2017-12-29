@@ -427,7 +427,7 @@ public class CIvilizationUI implements EntryPoint {
 	}
 
 	public static native void consoleLog(String message) /*-{
-      console.log( "UI:" + message );
+      $wnd.C.log( "UI:" + message );
     }-*/;
 	
 	public static native void commandfailure(String message)/*-{

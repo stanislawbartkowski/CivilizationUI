@@ -527,7 +527,7 @@ var C = (function() {
     getcurrentcommand : function() {
         return this.getyouplay().currentcommand
       },
-
+      
     iscurrentcommand : function(co) {
         return this.getcurrentcommand() == co
     },
@@ -795,19 +795,31 @@ var C = (function() {
        else return data.civ
     },
     
-    executeEndOfPhase() {
+    _logautomatemove(command,pa) {
+       var s = "Automated " + command
+       if (pa != null) {
+          if (pa.row != -1) s = s +  " row=" + pa.row + " col=" + pa.col
+          if (pa.param != null) s = s + " " + pa.param
+       }        
+       const civ = C.getyourdeck().civ
+       C.log(civ + " " + s)
+    },
+    
+    executeEndOfPhase(automate) {
         const g = C.getjsboard().board.game
         const phase = g.phase
         const pa = {}
         pa.row = -1
         pa.col = -1
         pa.param = phase      
+        if (automate) C._logautomatemove("endofphase",pa)
         C.executeC("endofphase",pa)
     },
-         
+    
     // automatecommand
     _checkEndOfMove(commands) {
        if (commands.length == 1 && commands[0].command.toLowerCase() == "endofmove") {
+          C._logautomatemove(commands[0].command,null)             
           C.executeC(commands[0].command)
           return true
        }
@@ -816,7 +828,7 @@ var C = (function() {
             
     _checkEndOfPhase(commands) {
        if (commands.length == 1 && commands[0].command.toLowerCase() == "endofphase") {
-          C.executeEndOfPhase()
+          C.executeEndOfPhase(true)
           return true
        }
        return false         
@@ -838,6 +850,7 @@ var C = (function() {
        pa.row = r.p.row
        pa.col = r.p.col
        pa.param = r.orientation
+       C._logautomatemove(co,pa)
        C.executeC(co,pa)        
     },
     
@@ -847,6 +860,7 @@ var C = (function() {
        const pa = {}
        pa.row = list.explore[0].row
        pa.col = list.explore[0].col
+       C._logautomatemove(co,pa)
        C.executeC(co,pa)               
     },
     
