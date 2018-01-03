@@ -784,7 +784,7 @@ public class CIvilizationUI implements EntryPoint {
 	 */
 	private static void setListOfCiv(String listofciv) {
 		Element fe = findcivContent();
-		fe.setAttribute("listofciv", listofciv);
+		fe.setAttribute("datas", listofciv);
 	}
 
 	private static void setListOfGames(String listofgames) {

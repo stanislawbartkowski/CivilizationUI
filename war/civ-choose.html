@@ -7,9 +7,20 @@
     :host {
       display: inline-block;
       text-transform: none;
+      width: 350px;
     }
     paper-button {
       text-transform: none;
+}
+
+   iron-icon {
+     --iron-icon-width:20px;
+     --iron-icon-height:20px;
+   }
+
+
+.desc {
+  background-color: #f3f3f7;
 }
   </style>
   
@@ -22,17 +33,29 @@
          margin: 24px;
          border-radius: 5px; background-color: #fff; color: #757575;">
     
-      <span style="display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #555; text-align: center;">{{letter()}}</span>
+      <span style="vertical-align: top; display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #555; text-align: center;">{{letter()}}</span>
              
-      <span style="padding-left:10px;">{{civname}}</span> 
+      <div style="display:inline-block">             
+        <span style="padding-left:10px;">{{civname()}}</span> 
+        <p/> 
+        <iron-icon src="images/cities/research.svg" slot="item-icon"></iron-icon> <span style="padding-left:10px;">{{civ.tech}}</span> 
+        <p/> 
+        <iron-icon src="images/cities/gover.svg" slot="item-icon"></iron-icon> <span style="padding-left:10px;">{{civ.gover}}</span>
+      </div> 
       
-      <paper-menu-button>
+      
+      <paper-menu-button style="vertical-align: top;">
          <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
          <paper-listbox slot="dropdown-content">
             <paper-item on-click="twoplayersClick">{{localize('twoplayersgamelabel')}}</paper-item>
             <paper-item on-click="handleClick">{{localize('traininggamelabel')}}</paper-item>
         </paper-listbox>
       </paper-menu-button>
+      
+      <div class="desc">
+        {{civ.desc}}
+      </div>
+      
       
     </div>
   </template>
@@ -42,26 +65,30 @@ class CivChoose extends Polymer.CivLocalize(Polymer.Element) {
 
     static get is() { return 'civ-choose'; }
     
-    handleClick() {
-      C.startgamedialog(this.civname)
-    }
-    
-    twoplayersClick() {
-      C.joindialog(this.civname)
-    }
-
     // Declare properties for the element's public API
     static get properties() {
       return {
-        civname: {
-          type: String,
-          value: undefined
+        civ: {
+          type: Object
         }
       }
     }
+
+    
+    civname() {
+    	return this.civ.civ
+    }
+    
+    handleClick() {
+      C.startgamedialog(this.civname())
+    }
+    
+    twoplayersClick() {
+      C.joindialog(this.civname())
+    }
     
     letter() {
-      return this.civname[0]	
+      return this.civname()[0]	
     }
 
 

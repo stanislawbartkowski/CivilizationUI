@@ -1,32 +1,26 @@
 <dom-module id="civ-content">
 
+<template>
+
+   <template id="list" is="dom-repeat" items="{{civs}}">
+        <civ-choose civ="{{item}}"></civ-choose>
+   </template>
+   
+</template>
+
+
   <script>
-    Polymer({
-      is: 'civ-content',
-      properties: {
-        listofciv: {
-        	type : String,
-        	value : undefined
+    class CivContent extends Polymer.CivData(Polymer.Element) {
+    	
+        static get is() { return 'civ-content'; }
+        
+        refresh(data) {
+        	if (data == null) this.civs = []
+        	else this.civs = data
         }
-      },
-      observers: [
-        '_render(listofciv)'
-      ],
-      ready: function() {
-        this.style.display = 'block';
-      },
-      _render: function(listofciv) {
-  		this.innerHTML = "";
-    	if (C.emptyS(listofciv)) return
-        var a = JSON.parse(listofciv)
-        var html = '';
-        for (var i = 0; i < a.length; i++) {
-          html +=
-            "<civ-choose civname=\"" + a[i]  + "\"></civ-choose>"
-          this.innerHTML = html;
-        }
-      }
-    });
+      };
+    
+window.customElements.define(CivContent.is, CivContent);    
   </script>
 
 </dom-module>

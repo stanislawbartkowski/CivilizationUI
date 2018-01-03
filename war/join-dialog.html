@@ -50,7 +50,7 @@
       <p>
       <template id="civs" is="dom-repeat" filter="notUsed" items="{{lines}}">
       
-       <paper-button id="{{item}}" raised class="green" on-click="_onClickCiv">{{item}}</paper-button>
+       <paper-button id="{{item.civ}}" raised class="green" on-click="_onClickCiv">{{item.civ}}</paper-button>
                        
       </template>
       </p>
@@ -106,7 +106,7 @@
       _disablecivs(disable) {
     	  var d = this.$.dialog
           for (var i = 0; i < this.lines.length; i++) {
-       	     var ge=d.querySelector("#" + this.lines[i])
+       	     var ge=d.querySelector("#" + this.lines[i].civ)
        	     if (ge != null) C.disableleme(ge,disable)
           }
        	     

@@ -1,0 +1,135 @@
+<dom-module id="civ-tech">
+<template>
+
+<custom-style>
+
+<style is="custom-style" >
+
+:host {
+    display: inline-block;
+    border : 1px solid;
+    border-radius: 5px;
+    width: 115px;
+    height: 45px;
+    vertical-align: top;
+    padding : 5px;
+
+  }
+
+:host([disa]) {
+  background-color : #afa7a7
+}
+
+.name {
+  display:inline-block;
+  width:80%;
+  height:50%
+}
+
+.gover {
+  /* border : 1px solid; */
+  background-color: #ecd6ba;
+  vertical-align: bottom;
+  padding : 2px;
+}
+
+.not {
+  height:15px;
+  display:none;
+  vertical-align: top;
+}
+
+</style>
+
+</custom-style>
+
+<div>
+  <div class="name">{{name}}</div>
+  <img id="notimplemented" src="images/icons/thumbdown.svg" class="not"></img>
+  <div class="gover" id="gover">{{gover}}</div>
+</div>
+
+</template>
+
+<script>
+class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
+
+    constructor() {
+       super();
+       Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
+    }
+
+    static get is() {
+    	return 'civ-tech';
+    	}
+
+      static get properties() {
+        return {
+            name: {
+              type: String
+            },
+            level : {
+              type : Number
+            },
+            gover : {
+              type : String
+            }
+          }
+        }
+
+    handleClick() {
+      if (this.data.disa) return
+      if (this.data.clickTech != null) this.data.clickTech(this.data)
+    }
+
+    _name() {
+      const n = this.data
+      if (n.tech != null) return n.tech.name
+      return n.name
+    }
+
+    _level() {
+      const n = this.data
+      return n.level
+    }
+
+    _gover() {
+      const n = this.data
+      if (n.tech != null) return n.tech.gover
+      return n.gover
+    }
+
+    _ni() {
+      const n = this.data
+      var ni = null
+      if (n.tech != null) ni = n.tech.ni
+      else ni = n.ni
+      if (ni == null) return false
+      return ni
+//      return false
+    }
+
+    refresh(data) {
+      this.name = C.localize(this._name())
+      if (this.name == null || this.name == "") this.name = "*" + this._name()
+      const l = this._level()
+      var LL = ""
+      if (l == 1) LL = "I"
+      if (l == 2) LL = "II"
+      if (l == 3) LL = "III"
+      if (l == 4) LL = "IIII"
+      this.level = LL
+      C.displayelemid(this,"notimplemented",this._ni(),true)
+      C.displayelemid(this,"gover",false,true)
+      this.gover = this._gover()
+      if (this.gover != null) C.displayelemid(this,"gover",true,true)
+      if (data.disa) C.setattr(this,"disa",1)
+      else C.removeattr(this,"disa")
+    }
+}
+
+customElements.define(CivTech.is, CivTech);
+
+</script>
+
+</dom-module>

@@ -1,18 +1,18 @@
  <dom-module id="civ-listunits">
- 
-  
+
+
 <template>
 
    <template id="map" is="dom-repeat" items="{{units}}">
            <civ-units class="unit" data="{{item}}" draggable="{{draggable}}" num="{{index}}" you="{{you}}"></civ-units>
     </template>
-     
+
     <span id="units" style="display:none">
       <civ-units class="unitelem" id="infantry"></civ-units>
       <civ-units class="unitelem" id="artillery"></civ-units>
       <civ-units class="unitelem" id="mounted"></civ-units>
       <civ-units class="unitelem" id="aircraft"></civ-units>
-    </span>  
+    </span>
 
 
   </template>
@@ -41,13 +41,13 @@
       }
 
       _islist(pa) {
-    	 return (pa.list != null) 
+    	 return (pa.list != null)
       }
-      
+
       _showunits(show) {
     	  C.displayelemid(this,"units",show,true)
       }
-      
+
       _drawlist(pa) {
     	  this._showunits(false)
           const l = pa.list
@@ -60,12 +60,12 @@
               this.units.push(elem)
           }
       }
-      
+
       _drawunits(pa) {
-          this._showunits(true)    	  
+          this._showunits(true)
           C.setUnitsNumb(this.$.units,pa)
       }
-      
+
       refresh(pa) {
     	  if (this._islist(pa)) this._drawlist(pa)
     	  else this._drawunits(pa)

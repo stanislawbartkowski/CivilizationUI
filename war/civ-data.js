@@ -29,7 +29,8 @@ Polymer.CivData = function(superClass) {
 	      }
     
       refreshs(datas) {
-	      this.data = JSON.parse(datas);
+          if (datas == "") this.data = null
+	      else this.data = JSON.parse(datas);
 	   }
 	   
 	   _different(thisdata,data) {

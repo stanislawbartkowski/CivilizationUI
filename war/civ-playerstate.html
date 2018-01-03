@@ -1,0 +1,132 @@
+<dom-module id="civ-playerstate">
+<template>
+
+<custom-style>
+
+<style is="custom-style" >
+
+  paper-icon-item {
+     --paper-item-min-height : 0;
+     --paper-item : {
+/*       padding-top: 5px; */
+       padding-right: 8px;
+       padding-bottom: 1px;
+       padding-left: 8px;
+       font-size : 90%;
+/*       height : 15px; */       
+       }
+   }
+   
+   iron-icon {
+     --iron-icon-width:20px;
+     --iron-icon-height:20px;
+   }
+
+  .actionbox {
+     margin-left: 5px;
+     margin-top: 2px;
+     border:1px ridge gray ; 
+     display: block; 
+     border-radius: 5px;
+     width: 90%;
+  }
+  
+  .statusstyle {
+  }
+  
+  .goverspan {
+    position: relative;
+    margin: 0;
+    @apply --layout-horizontal;
+  }
+  
+
+</style>
+
+</custom-style>
+
+<span class = "statusstyle actionbox">
+  <paper-icon-item>
+    <iron-icon src="images/tokens/trade.svg" slot="item-icon"></iron-icon>
+    [[numberoftrade]]
+  </paper-icon-item>
+    
+  <paper-icon-item>
+    <iron-icon src="images/cities/city.svg" slot="item-icon"></iron-icon>
+    [[citieslimit]]
+  </paper-icon-item>
+
+  <paper-icon-item>
+    <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon>
+    [[armieslimit]]
+  </paper-icon-item>
+
+  <paper-icon-item>
+    <iron-icon src="images/figures/scout.svg" slot="item-icon"></iron-icon>
+    [[scoutslimit]]
+  </paper-icon-item>
+  
+  <span class="goverspan">
+  <paper-icon-item>
+    <iron-icon src="images/cities/gover.svg" slot="item-icon"></iron-icon>
+    [[government]]
+  </paper-icon-item>
+  <paper-icon-item style="display:inline-block" on-click="_showresearch">
+     <iron-icon src="images/cities/research.svg"></iron-icon>
+     {{localize('researchlabel')}}
+  </paper-icon-item>
+  </span>
+
+</span>
+
+</template>
+
+<script>
+class CivPlayerState extends Polymer.CivData(Polymer.Element) {
+
+
+    static get is() {
+        return 'civ-playerstate';
+        }
+    
+    static get properties() {
+        
+        return {
+                               
+               numberoftrade : {
+                    type : String,
+                    value : undefined
+                },
+                citieslimit : {
+                    type : String,
+                    value : undefined
+                },
+                armieslimit : {
+                    type : String,
+                    value : undefined
+                },
+                scoutslimit : {
+                    type : String,
+                    value : undefined
+                }
+        }
+    }
+    
+    _showresearch() {
+   	   C.showresearch(this.data)    	
+    }
+
+    refresh(y) {
+        this.numberoftrade = "Trade: " + y.trade
+        this.citieslimit = "Cities left: " + y.citylimit
+        this.armieslimit = "Armies left: " + y.armieslimit
+        this.scoutslimit = "Scouts left: " + y.scoutslimit
+        this.government = y.gover
+    }
+}
+
+customElements.define(CivPlayerState.is, CivPlayerState);
+
+</script>
+
+</dom-module>

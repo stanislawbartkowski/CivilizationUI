@@ -25,10 +25,7 @@
     background-color : white;
     margin-left: 5px;
   }
-  
-  .statusstyle {
-  }
-  
+    
   paper-icon-item {
      --paper-item-min-height : 0;
      --paper-item : {
@@ -95,28 +92,7 @@
 	
 <div class="civname">[[civname]]</div>
 
-<span class = "statusstyle actionbox">
-  <paper-icon-item>
-    <iron-icon src="images/tokens/trade.svg" slot="item-icon"></iron-icon>
-    [[numberoftrade]]
-  </paper-icon-item>
-	
-  <paper-icon-item>
-    <iron-icon src="images/cities/city.svg" slot="item-icon"></iron-icon>
-    [[citieslimit]]
-  </paper-icon-item>
-
-  <paper-icon-item>
-    <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon>
-    [[armieslimit]]
-  </paper-icon-item>
-
-  <paper-icon-item>
-    <iron-icon src="images/figures/scout.svg" slot="item-icon"></iron-icon>
-    [[scoutslimit]]
-  </paper-icon-item>
-
-</span>
+<civ-playerstate id="playerstate"></civ-playerstate>
 
 <span id="unitbox" class="unitbox" >
   <civ-units id="infantry"></civ-units>
@@ -256,6 +232,10 @@
 </span>		
 
 <span id="research" class="actionbox" style="display:none">     
+    <paper-icon-item id="research" on-click="_onClick">
+      <iron-icon src="images/cities/research.svg" slot="item-icon"></iron-icon> 
+       <span>{{localize('researchlabel')}}</span> 
+     </paper-icon-item>
 </span>		
 </template> 
 
@@ -273,23 +253,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                   type: String,
                    value: undefined
                },
-               numberoftrade : {
-                    type : String,
-                    value : undefined
-                },
-                citieslimit : {
-                    type : String,
-                    value : undefined
-                },
-                armieslimit : {
-                    type : String,
-                    value : undefined
-                },
-                scoutslimit : {
-                    type : String,
-                    value : undefined
-                },
-                currentcommand : {
+               currentcommand : {
                     type : String,
                     value : undefined
                 },
@@ -439,7 +403,10 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                C.confexecutedialog(this.localize("doyouwantfinishmovequestion"),id,-1,-1,null)
                return
             }
-            
+            if (id == "research") {
+            	C.researchdialog(this.y)
+            	return
+            }            
            this._callitemize(id) 
          }
     
@@ -475,10 +442,9 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
         	   this.y = y
                C.setColorForCity(this,"civname",C.backcolorForCiv(y.civ))
                this.civname=y.civ
-               this.numberoftrade = "Trade: " + y.trade
-               this.citieslimit = "Cities left: " + y.citylimit
-               this.armieslimit = "Armies left: " + y.armieslimit
-               this.scoutslimit = "Scouts left: " + y.scoutslimit
+               // player status
+               const yp = this.$.playerstate
+               yp.draw(y)
                
                const g = b.board.game
                const pha = g.phase.toLowerCase()

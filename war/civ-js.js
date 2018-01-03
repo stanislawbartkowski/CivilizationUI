@@ -135,7 +135,9 @@ var C = (function() {
 	    this.$.dialog.header = C.localize("resumetwoplayersgame")
 	    this.$.dialog.gameid = e.gameid
 	    lines = []
-	    lines.push(e.civ[1])
+	    const c = {}
+	    c.civ = e.civ[1]
+	    lines.push(c)
 	    this.$.dialog.lines = lines
 		this.$.dialog.openIt()
 	}
@@ -352,9 +354,8 @@ var C = (function() {
 	dialogDemo.openDialog = function(e) {
 	    this.$.dialog.civname = civ
 	    this.$.dialog.gameid = -1
-	    this.$.dialog.header = "Creating two players game"
-	    var c = JSON.parse(C.getlistofcivs())
-	    this.$.dialog.lines = c
+	    this.$.dialog.header = C.localize("creatingtwoplayergames")
+	    this.$.dialog.lines = C.getlistofcivs()
 		this.$.dialog.openIt()
 	}
 	dialogDemo.openDialog()
@@ -493,7 +494,7 @@ var C = (function() {
       var gamese = findbytag("civ-games")
       var civse = findbytag("civ-content")
       var civjoin = findbytag("civ-join")
-      if (what == 0 || what == 2 || what == 3) C.setattr(civse,"listofciv","")
+      if (what == 0 || what == 2 || what == 3) C.setattr(civse,"datas","")
       if (what == 0 || what == 1 || what == 3) C.setattr(gamese,"listofgames","")
       if (what == 0 || what == 1 || what == 2) C.setattr(civjoin,"listofjoins","")
       if (what == 0) showhideclosebuttuon(true)
@@ -501,18 +502,31 @@ var C = (function() {
     } ,
 
     getlistofcivs : function() {
-      var civse = findbytag("civ-content")
-      return civse.listofciv
+      const civse = findbytag("civ-content")
+      return civse.civs
     } ,
 
     getlistofgames : function() {
-      var gamese = findbytag("civ-games")
+      const gamese = findbytag("civ-games")
       return gamese.listofgames
     } ,
-
+    
     getgamestate : function() {
       const b = findbytag("civ-gamestate")
       return b
+    },
+    
+    showresearch(p) {        
+        C.opendialogwithpar("showtech-dialog",p.tech)
+    },
+    
+    researchdialog(y) {
+        const p = {}
+        const b = C.getjsboard()
+        p.tech = b.board.tech
+        p.playertech = y.tech
+        p.playerlevel = y.tradelevel
+        C.opendialogwithpar("tech-dialog",p)       
     },
 
     localize : function(...args) {

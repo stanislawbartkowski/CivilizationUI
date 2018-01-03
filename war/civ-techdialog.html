@@ -1,0 +1,104 @@
+<dom-module id="civ-techdialog">
+   <template>
+
+  <style>
+    .techbuttons {
+      border-top : 1px solid #c1b8b8;
+      position: relative;
+      padding: 8px 8px 8px 24px;
+      margin: 0;
+
+      color: var(--paper-dialog-button-color, var(--primary-color));
+
+      @apply --layout-horizontal;
+    }
+  </style>
+
+   <paper-dialog id="dialog" modal>
+
+     <civ-leveltech id="tech"></civ-leveltech>
+     <civ-leveltech id="currenttech" ident="true"></civ-leveltech>
+
+     <span class="techbuttons">
+
+    <span id="choosemessage" style="width:80px">
+        {{localize('choosetechnology')}}
+    </span>
+     <span id="research" style="display:none">
+       <civ-tlevel id="level"></civ-tlevel>
+       <civ-tech id="techresearch"> </civ-tech>
+    </span>
+
+    <span style="width:20px">
+      &nbsp;
+    </span>
+
+       <paper-button on-click="_onResearch">
+           <iron-icon icon="fingerprint"></iron-icon>
+          {{localize('youresearch')}}
+       </paper-button>
+
+       <paper-button dialog-dismiss>{{localize('cancellabel')}}</paper-button>
+
+     </span>
+
+   </paper-dialog>
+ </template>
+
+ <script>
+     class CivTechDialog extends Polymer.CivDialog(Polymer.Element) {
+
+     static get is() { return 'civ-techdialog'; }
+
+     static get properties() {
+       return {
+           tech: {
+               type: Object,
+               value: null
+           }
+         }
+       }
+
+    _onResearch() {
+      if (this.tech == null) return
+      const p = {}
+      p.row = -1
+      p.col = -1
+      p.param = this.tech.name
+      C.executewithconf(null,"RESEARCH",p,this)
+    }
+
+    clickTech(d) {
+      C.displayelemid(this,"choosemessage",false)
+      C.displayelemid(this,"research",true,true)
+      this.tech = d
+      const t = this.$.level
+      t.draw(d.level)
+      const tr = this.$.techresearch
+      tr.draw(d)
+    }
+
+
+     refresh(data) {
+       const tech = data.tech
+       const mtech = data.playertech
+       const disa = []
+       for (var i =0; i<mtech.length; i++)
+         disa.push(mtech[i].tech.name)
+       const playerlevel = data.playerlevel
+       const dtech = this.$.tech
+       dtech.clickTech = (d => this.clickTech(d))
+       const dcurrenttech = this.$.currenttech
+       dtech.disa = disa
+       dtech.playerlevel = playerlevel
+       dtech.draw(tech)
+       dcurrenttech.draw(mtech)
+       C.displayelemid(this,"research",false)
+       C.displayelemid(this,"choosemessage",true)
+     }
+
+   }
+
+   window.customElements.define(CivTechDialog.is, CivTechDialog);
+ </script>
+</dom-module>

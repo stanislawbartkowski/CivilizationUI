@@ -1,0 +1,30 @@
+<dom-module id="civ-showtechdialog">
+   <template>
+
+   <paper-dialog id="dialog" modal>
+
+     <civ-leveltech id="currenttech" ident="true"></civ-leveltech>
+
+     <div class="buttons">
+       <paper-button dialog-dismiss>{{localize('cancellabel')}}</paper-button>
+     </div>
+
+   </paper-dialog>
+ </template>
+
+ <script>
+     class CivShowTechDialog extends Polymer.CivDialog(Polymer.Element) {
+
+     static get is() { return 'civ-showtechdialog'; }
+
+     refresh(data) {
+       const mtech = data
+       const dcurrenttech = this.$.currenttech
+       dcurrenttech.draw(mtech)
+     }
+
+   }
+
+   window.customElements.define(CivShowTechDialog.is, CivShowTechDialog);
+ </script>
+</dom-module>

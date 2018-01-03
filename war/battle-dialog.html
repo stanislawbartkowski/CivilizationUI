@@ -17,7 +17,6 @@
       <p/>
       <civ-battleside id="sideyou"></civ-battleside>
 
-
     </paper-dialog>
   </template>
 
@@ -35,7 +34,7 @@
     	  if (e.isironon) C.executeC("PLAYUNITIRON",pa)
     	  else C.executeC("PLAYUNIT",pa)
       }
-      
+
       _ret(pa) {
     	  const par={}
           par.you = this.$.sideyou
@@ -71,7 +70,7 @@
             par.opp.refresh(par.a)
         }
       }
-      
+
     }
 
     window.customElements.define(BattleDialog.is, BattleDialog);
