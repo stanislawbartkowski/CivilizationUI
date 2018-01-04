@@ -231,7 +231,7 @@
 	 	
 </span>		
 
-<span id="research" class="actionbox" style="display:none">     
+<span id="researchmenu" class="actionbox" style="display:none">     
     <paper-icon-item id="research" on-click="_onClick">
       <iron-icon src="images/cities/research.svg" slot="item-icon"></iron-icon> 
        <span>{{localize('researchlabel')}}</span> 
@@ -289,7 +289,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                          "trade",
                          "citymanagement",
                          "movement",        
-                         "research"
+                         "researchmenu"
                     ]
                 },
                 
@@ -329,7 +329,8 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "buyaircraft",
                             "harvestresource",
                             "explorehut",
-                            "attack"
+                            "attack",
+                            "research"
                   ]
              }
 	   }
@@ -451,7 +452,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                for (var i=0; i < this.actionpanels.length; i++) {
                    const id = this.actionpanels[i]
                    const pa = this.shadowRoot.getElementById(id);
-                   if (id == pha) C.displayelem(pa,true)
+                   if (id == pha || ((id=="researchmenu" && pha=="research"))) C.displayelem(pa,true)
                    else C.displayelem(pa,false)
                 }
 
