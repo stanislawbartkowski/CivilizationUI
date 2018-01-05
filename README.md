@@ -10,6 +10,12 @@ At this stage, it is only the beginning. A few basic features are implemented an
 Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/. It is a free quota and please wait a moment until container/dyno is activated.
 
 ## History
+## 2018/01/05 : new version deployed
+* Greeting windows more descriptive
+* Building up technology tree
+
+https://hoteljavaopensource.blogspot.com/2018/01/civilization-board-game-next-version.html
+
 ### 2017/12/29 : new version deployed
 * "Start of turn" passed from one player to another : https://github.com/stanislawbartkowski/CivilizationUI/issues/15
 * "Research" phase can be conducted in parallel :  https://github.com/stanislawbartkowski/CivilizationUI/issues/14
