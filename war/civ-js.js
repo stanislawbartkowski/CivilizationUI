@@ -491,6 +491,7 @@ var C = (function() {
     //      = 3 show joins
     //      = 0 switch off all
     showcivorgames : function(what) {
+      C.seconddrawerClose(true)
       var gamese = findbytag("civ-games")
       var civse = findbytag("civ-content")
       var civjoin = findbytag("civ-join")
@@ -707,6 +708,7 @@ var C = (function() {
       const x = _getxapp()
       const e = x.$.internalDrawer
       e.forceNarrow = close
+      // TODO: probably not necessary, forceNarrow do the job
       const d = x.$.opponentplay
       C.showeleme(d,!close)
     },
