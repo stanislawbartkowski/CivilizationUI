@@ -11,7 +11,7 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 
 ## History
 ## 2018/01/05 : new version deployed
-* Greeting windows more descriptive
+* Greeting window more descriptive
 * Building up technology tree
 
 https://hoteljavaopensource.blogspot.com/2018/01/civilization-board-game-next-version.html
