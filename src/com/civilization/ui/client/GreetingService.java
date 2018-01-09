@@ -21,7 +21,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
 	
-	int LISTOFCIV = 0;
+	int LISTOFRES = 0;
 	int REGISTEROWNER = 1;
 	int GETBOARD = 2;
 	int GETGAMES = 3;

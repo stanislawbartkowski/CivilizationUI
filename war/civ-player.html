@@ -17,7 +17,7 @@
 
   .civname {
     border-radius: 15px;
-    width: 90%;
+    width: 80%;
     height: 30px; 
     text-align: center;
     font-size: 150%;
@@ -90,7 +90,10 @@
        
 </style>
 	
+<!-- 
 <div class="civname">[[civname]]</div>
+-->
+<paper-item class="civname" on-click="_onCiv">[[civname]]</paper-item>
 
 <civ-playerstate id="playerstate"></civ-playerstate>
 
@@ -334,6 +337,11 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                   ]
              }
 	   }
+    }
+    
+    _onCiv() {
+    	const c = this.civname
+    	C.showcivinfo(c)
     }
     
     setListOfPoints(a) {

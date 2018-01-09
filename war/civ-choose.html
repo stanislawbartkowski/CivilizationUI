@@ -33,18 +33,18 @@
          margin: 24px;
          border-radius: 5px; background-color: #fff; color: #757575;">
     
-      <span style="vertical-align: top; display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #555; text-align: center;">{{letter()}}</span>
+      <span style="vertical-align: top; display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #555; text-align: center;">{{letter}}</span>
              
       <div style="display:inline-block">             
-        <span style="padding-left:10px;">{{civname()}}</span> 
+        <span style="padding-left:10px;">{{data.civ}}</span> 
         <p/> 
-        <iron-icon src="images/cities/research.svg" slot="item-icon"></iron-icon> <span style="padding-left:10px;">{{civ.tech}}</span> 
+        <iron-icon src="images/cities/research.svg" slot="item-icon"></iron-icon> <span style="padding-left:10px;">{{data.tech}}</span> 
         <p/> 
-        <iron-icon src="images/cities/gover.svg" slot="item-icon"></iron-icon> <span style="padding-left:10px;">{{civ.gover}}</span>
+        <iron-icon src="images/cities/gover.svg" slot="item-icon"></iron-icon> <span style="padding-left:10px;">{{data.gover}}</span>
       </div> 
       
       
-      <paper-menu-button style="vertical-align: top;">
+      <paper-menu-button id="buttons" style="vertical-align: top;">
          <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
          <paper-listbox slot="dropdown-content">
             <paper-item on-click="twoplayersClick">{{localize('twoplayersgamelabel')}}</paper-item>
@@ -53,7 +53,7 @@
       </paper-menu-button>
       
       <div class="desc">
-        {{civ.desc}}
+        {{data.desc}}
       </div>
       
       
@@ -61,22 +61,24 @@
   </template>
 
 <script>
-class CivChoose extends Polymer.CivLocalize(Polymer.Element) {
+class CivChoose extends Polymer.CivData(Polymer.Element) {
 
     static get is() { return 'civ-choose'; }
     
-    // Declare properties for the element's public API
     static get properties() {
-      return {
-        civ: {
-          type: Object
+        return {
+            letter: {
+                type: String
+              },
+            info : {
+            	type : Boolean
+            }
         }
-      }
     }
 
-    
     civname() {
-    	return this.civ.civ
+    	if (this.data == null) return ""
+    	return this.data.civ
     }
     
     handleClick() {
@@ -86,11 +88,12 @@ class CivChoose extends Polymer.CivLocalize(Polymer.Element) {
     twoplayersClick() {
       C.joindialog(this.civname())
     }
-    
-    letter() {
-      return this.civname()[0]	
+        
+    refresh(data) {    	
+    	this.letter = this.civname()[0]
+        const b = this.$.buttons        
+        C.displayelem(b,!this.info,true)    		
     }
-
 
   }
 

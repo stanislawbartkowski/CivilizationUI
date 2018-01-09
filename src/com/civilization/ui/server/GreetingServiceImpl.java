@@ -53,8 +53,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		setRedis();
 		System.out.println("getCivData " + what);
 		switch (what) {
-		case LISTOFCIV:
-			w = II.LISTOFCIV();
+		case LISTOFRES:
+			w = II.LISTOFRES();
 			break;
 		case REGISTEROWNER:
 			w = II.REGISTEROWNER();

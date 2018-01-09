@@ -179,8 +179,8 @@ public class CIvilizationUI implements EntryPoint {
 			if (refreshMap()) {
 				cancel();
 				if (gamet.ismulti())
-//					trefresh.scheduleRepeating(500);
-  				    trefresh.scheduleRepeating(1000);
+					// trefresh.scheduleRepeating(500);
+					trefresh.scheduleRepeating(1000);
 			}
 		}
 
@@ -427,9 +427,9 @@ public class CIvilizationUI implements EntryPoint {
 	}
 
 	public static native void consoleLog(String message) /*-{
-      $wnd.C.log( "UI:" + message );
-    }-*/;
-	
+		$wnd.C.log("UI:" + message);
+	}-*/;
+
 	public static native void commandfailure(String message)/*-{
 		$wnd.C.dialogexecutefailure(message);
 	}-*/;
@@ -452,6 +452,11 @@ public class CIvilizationUI implements EntryPoint {
 
 	public static native void setjsboard(JavaScriptObject board) /*-{
 		$wnd.C.setjsboard(board);
+	}-*/;
+
+	public static native void setresources(JavaScriptObject rese) /*-{
+		$wnd.C.setresources(rese);
+
 	}-*/;
 
 	public static native void highlightSquare(JavaScriptObject o, boolean highlight) /*-{
@@ -524,13 +529,13 @@ public class CIvilizationUI implements EntryPoint {
 	private static void greetingMenu() {
 		trefresh.cancel();
 		civtoken = null;
-		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
+		call(GreetingService.LISTOFRES, null, s -> setListOfCiv(s));
 		new TWaitShadow().scheduleRepeating(1000);
 	}
-	
+
 	public static void stopRefresh() {
 		consoleLog("stop Refresh");
-		trefresh.cancel();		
+		trefresh.cancel();
 	}
 
 	public static void leaveGame() {
@@ -735,7 +740,7 @@ public class CIvilizationUI implements EntryPoint {
 	}
 
 	public static void readCivs() {
-		call(GreetingService.LISTOFCIV, null, s -> setListOfCiv(s));
+		call(GreetingService.LISTOFRES, null, s -> setListOfCiv(s));
 
 	}
 
@@ -784,6 +789,8 @@ public class CIvilizationUI implements EntryPoint {
 	 */
 	private static void setListOfCiv(String listofciv) {
 		Element fe = findcivContent();
+		JSONValue j = JSONParser.parseStrict(listofciv);
+		setresources(j.isObject().getJavaScriptObject());
 		fe.setAttribute("datas", listofciv);
 	}
 

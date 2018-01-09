@@ -228,6 +228,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   class XApp extends Polymer.CivData(Polymer.Element) {
 
       static get is() { return 'x-app'; }
+      
+      static get properties() {
+          return {
+            resou: {
+              type: Object
+            }
+          }
+        }
                 
       attached() {
            this.loadResources(this.resolveUrl('locales.json'));           

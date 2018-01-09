@@ -3,7 +3,7 @@
 <template>
 
    <template id="list" is="dom-repeat" items="{{civs}}">
-        <civ-choose civ="{{item}}"></civ-choose>
+        <civ-choose data="{{item}}"></civ-choose>
    </template>
    
 </template>
@@ -16,7 +16,7 @@
         
         refresh(data) {
         	if (data == null) this.civs = []
-        	else this.civs = data
+        	else this.civs = data.civ
         }
       };
     

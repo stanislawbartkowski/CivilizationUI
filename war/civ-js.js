@@ -501,7 +501,7 @@ var C = (function() {
       if (what == 0) showhideclosebuttuon(true)
       else showhideclosebuttuon(false)
     } ,
-
+    
     getlistofcivs : function() {
       const civse = findbytag("civ-content")
       return civse.civs
@@ -519,6 +519,10 @@ var C = (function() {
     
     showresearch(p) {        
         C.opendialogwithpar("showtech-dialog",p.tech)
+    },
+    
+    showcivinfo(civ) {
+       C.opendialogwithpar("showciv-info",civ);
     },
     
     researchdialog(y) {
@@ -584,6 +588,23 @@ var C = (function() {
 
     setjsboard : function(jsboard) {
        _getxapp().draw(jsboard)
+    },
+    
+    setresources : function(rese) {
+      const x = _getxapp()
+      x.resou = rese
+    },
+    
+    _getresources() {
+      return _getxapp().resou
+    },
+    
+    getlistoftech() {
+      return C._getresources().tech
+    },
+
+    getlistofcivs() {
+      return C._getresources().civ
     },
 
     getjsboard : function() {

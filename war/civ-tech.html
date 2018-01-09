@@ -71,9 +71,6 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
             level : {
               type : Number
             },
-            gover : {
-              type : String
-            }
           }
         }
 
@@ -83,42 +80,39 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
     }
 
     _name() {
-      const n = this.data
-      if (n.tech != null) return n.tech.name
+      const n = this.tech
       return n.name
     }
 
-    _level() {
-      const n = this.data
-      return n.level
-    }
-
     _gover() {
-      const n = this.data
-      if (n.tech != null) return n.tech.gover
+      const n = this.tech
       return n.gover
     }
 
     _ni() {
-      const n = this.data
-      var ni = null
-      if (n.tech != null) ni = n.tech.ni
-      else ni = n.ni
-      if (ni == null) return false
-      return ni
-//      return false
+      const n = this.tech
+      return n.ni
+    }
+    
+    _setuptech() {
+    	const d = this.data
+    	if (d.name != null) {
+    		this.tech = this.data
+    		return
+    	}
+    	// look for tech
+    	const tech = C.getlistoftech()
+    	for (var i=0; i<tech.length; i++)
+    		if (tech[i].name == this.data.tech) {
+    			this.tech = tech[i]
+    			return
+    		}
     }
 
     refresh(data) {
+      this._setuptech()
       this.name = C.localize(this._name())
       if (this.name == null || this.name == "") this.name = "*" + this._name()
-      const l = this._level()
-      var LL = ""
-      if (l == 1) LL = "I"
-      if (l == 2) LL = "II"
-      if (l == 3) LL = "III"
-      if (l == 4) LL = "IIII"
-      this.level = LL
       C.displayelemid(this,"notimplemented",this._ni(),true)
       C.displayelemid(this,"gover",false,true)
       this.gover = this._gover()
@@ -126,6 +120,7 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
       if (data.disa) C.setattr(this,"disa",1)
       else C.removeattr(this,"disa")
     }
+    
 }
 
 customElements.define(CivTech.is, CivTech);
