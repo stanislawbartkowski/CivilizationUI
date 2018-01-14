@@ -63,6 +63,78 @@
     background-color: lightblue;
   }
 
+  :host([Harbor]) {
+    background-image: url("images/buildings/harbor.svg");
+    background-color: lightblue;
+    background-size: 65% 65%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Shipyard]) {
+    background-image: url("images/buildings/shipyard.svg");
+    background-color: lightblue;
+    background-size: 65% 65%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([TradingPost]) {
+    background-image: url("images/buildings/tradingpost.svg");
+    background-color: LightGoldenRodYellow;
+    background-size: 65% 65%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Market]) {
+    background-image: url("images/buildings/market.svg");
+    background-color: #ccffcc;
+    background-size: 65% 65%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Bank]) {
+    background-image: url("images/buildings/bank.svg");
+    background-color: #ccffcc;
+    background-size: 60% 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Barracks]) {
+    background-image: url("images/buildings/barracks.svg");
+    background-color: #efdddd;
+    background-size: 60% 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Academy]) {
+    background-image: url("images/buildings/academy.svg");
+    background-color: #efdddd;
+    background-size: 60% 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Temple]) {
+    background-image: url("images/buildings/temple.svg");
+    background-color: #dfeaf1;
+    background-size: 65% 65%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Cathedral]) {
+    background-image: url("images/buildings/cathedral.svg");
+    background-color: #dfeaf1;
+    background-size: 60% 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+  }
   :host([Mountain]) {
     background-image: url("images/terrain/mountain.svg");
     background-color: DarkOliveGreen;
@@ -81,14 +153,23 @@
  </style>
 
    <div style="width : {{boxwidth}}px; height : {{boxheight}}px; ">
-     <img id="trade" hidden src="images/tokens/trade.svg"      style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="prod1" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="prod2" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="trade1" hidden src="images/tokens/trade.svg"      style="z-index:1; position:absolute; left:0; bottom:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="trade2" hidden src="images/tokens/trade.svg"      style="z-index:1; position:absolute; left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="prod1" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute;  left:0; bottom:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="prod2" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute;  left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="prod3" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute;  left:0; bottom:{{tokenheight2}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="culture1" hidden src="images/tokens/culture.svg"    title="{{localize('culturelabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="culture2" hidden src="images/tokens/culture.svg"    title="{{localize('culturelabel')}}"  style="z-index:1; position:absolute; bottom:{{tokenheight}}px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="culture3" hidden src="images/tokens/culture.svg"    title="{{localize('culturelabel')}}"  style="z-index:1; position:absolute; bottom:0px; left:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="battle2" hidden src="images/icons/battle2.svg"    title="{{localize('battlelabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{battlewidth}}px; height:{{battleheight}}px;"/>
+     <img id="battle4" hidden src="images/icons/battle4.svg"    title="{{localize('battlelabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{battlewidth}}px; height:{{battleheight}}px;"/>
+     <img id="star" hidden src="images/icons/star.svg"    title="{{localize('limitedlabel')}}"  style="z-index:1; position:absolute; up:0px; right:0; width:{{battlewidth}}px; height:{{battleheight}}px;"/>
      <img id="iron" hidden src="images/resource/iron.svg"    title="{{localize('ironlabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="wheat" hidden src="images/resource/wheat.svg"  title="{{localize('wheatlabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="incense" hidden src="images/resource/incense.svg" title="{{localize('incenselabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="silk" hidden src="images/resource/silk.svg"  title="{{localize('silklabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-     <img id="coin" hidden src="images/resource/coin.svg"  title="{{localize('silkcoin')}}" style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="coin" hidden src="images/resource/coin.svg"  title="{{localize('coinlabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="coinup" hidden src="images/resource/coin.svg"  title="{{localize('coinlabel')}}" style="z-index:1; position:absolute; up:0px; left:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="hut" hidden src="images/huts/hut.svg" title="{{localize('hutlabel')}}"   style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
      <img id="village" hidden src="images/huts/village.svg" title="{{localize('villagelabel')}}" style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
 
@@ -146,9 +227,9 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
         }
 
     _constructcommandquestion(command) {
-        return this.localize("executecommandquestion","command",C.getcommanddecr(command))        
+        return this.localize("executecommandquestion","command",C.getcommanddecr(command))
       }
-          
+
     handleClick() {
         var res = C.getsquare(this.row,this.col)
         if (res.terrain == null) return
@@ -199,6 +280,10 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
             type: Number,
             value: function() { return (this.boxwidth - this.hutwidth)/2 }
             },
+        tokenheight2 : {
+          type: Number,
+          value: function() { return (this.tokenheight * 2)}
+        },
         armytop : {
           type : Number,
           readOnly: true,
@@ -219,6 +304,16 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
           readOnly: true,
           value : 2
         },
+        battlewidth  : {
+            type: Number,
+            readOnly: true,
+            value: 17
+        },
+        battleheight  : {
+            type: Number,
+            readOnly: true,
+            value: 17
+          },
 
          figurecolor1 : {
            type: String,
@@ -231,7 +326,8 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          terrains : {
            type : Array,
            readOnly: true,
-           value : ["mountain","water","forest","grassland","desert", "capital", "normal","hut","village","glowing"]
+           value : ["mountain","water","forest","grassland","desert", "capital", "normal","hut","village","glowing","harbor", "tradingpost","shipyard","market","bank","barracks",
+                    "temple","cathedral"  ]
          }
     }
     }
@@ -261,9 +357,18 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
    _removeterrain() {
        for (var i=0; i<this.terrains.length; i++)
            C.removeattr(this,this.terrains[i])
-       C.showeleme(this.$.trade,false)
+       C.showeleme(this.$.trade1,false)
+       C.showeleme(this.$.trade2,false)
+       C.showeleme(this.$.culture1,false)
+       C.showeleme(this.$.culture2,false)
+       C.showeleme(this.$.culture3,false)
        C.showeleme(this.$.prod1,false)
        C.showeleme(this.$.prod2,false)
+       C.showeleme(this.$.prod3,false)
+       C.showeleme(this.$.battle2,false)
+       C.showeleme(this.$.battle4,false)
+       C.showeleme(this.$.star,false)
+       C.showeleme(this.$.coinup,false)
        C.showeleme(this.$.iron,false)
        C.showeleme(this.$.wheat,false)
        C.showeleme(this.$.incense,false)
@@ -273,23 +378,69 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
        C.showeleme(this.$.village,false)
    }
 
-   _clearsquare() {        
+   _clearsquare() {
         C.displayelem(this.$.attcity,false)
         this._removearmy()
         this._removescout()
         this._removeterrain()
     }
-   
+
    highlight(hightlight) {
-	   if (hightlight) this.setAttribute("glowing",1) 
+	   if (hightlight) this.setAttribute("glowing",1)
 	   else C.removeattr(this,"glowing")
    }
-   
+
    _clearhv() {
        C.showeleme(this.$.village,false)
        C.showeleme(this.$.hut,false)
-       C.removeattr(this,"hut")	   
-       C.removeattr(this,"village")       
+       C.removeattr(this,"hut")
+       C.removeattr(this,"village")
+   }
+
+   _findbuilding(b) {
+     const bt = C.getlistofbuildings()
+     for (var i=0; i<bt.length; i++)
+       if (bt[i].name == b) return bt[i]
+    C.internalerroralert("Cannot find building definition " + b)
+   }
+
+   _displaybuilding(b) {
+     const bd = this._findbuilding(b)
+     this.setAttribute(b,1)
+     const production = bd.tokens.Production
+     const trade = bd.tokens.Trade
+     const culture = bd.tokens.Culture
+     const battle = bd.tokens.Battle
+     if (trade == 1) {
+       C.showeleme(this.$.trade1,true)
+       if (production >= 1) C.showeleme(this.$.prod2,true)
+       if (production >= 2) C.showeleme(this.$.prod3,true)
+     }
+     if (trade == 2) {
+       C.showeleme(this.$.trade1,true)
+       C.showeleme(this.$.trade2,true)
+       if (production >= 1) C.showeleme(this.$.prod3,true)
+     }
+     if (culture >= 1) C.showeleme(this.$.culture1,true)
+     if (culture >= 2) C.showeleme(this.$.culture2,true)
+     if (culture >= 3) C.showeleme(this.$.culture3,true)
+     if (battle == 2) C.showeleme(this.$.battle2,true)
+     if (battle == 4) C.showeleme(this.$.battle4,true)
+     if (bd.star) C.showeleme(this.$.star,true)
+     if (bd.tokens.Coin >=1) C.showeleme(this.$.coinup,true)
+   }
+
+   _displayterrain(j) {
+     if (j.production >= 1) C.showeleme(this.$.prod1,true)
+     this.setAttribute(j.terrain,1)
+     if (j.production >= 2) C.showeleme(this.$.prod2,true)
+     if (j.trade >= 1) C.showeleme(this.$.trade1,true)
+
+     if (j.resource == "Iron") C.showeleme(this.$.iron,true)
+     if (j.resource == "Wheat") C.showeleme(this.$.wheat,true)
+     if (j.resource == "Incense") C.showeleme(this.$.incense,true)
+     if (j.resource == "Silk") C.showeleme(this.$.silk,true)
+     if (j.resource == "Coin") C.showeleme(this.$.coin,true)
    }
 
    refresh(jsdata) {
@@ -318,16 +469,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
              return
          }
          this._clearhv()
-         // show terrain 
-         this.setAttribute(j.terrain,1)
-         if (j.production >= 1) C.showeleme(this.$.prod1,true)
-         if (j.production >= 2) C.showeleme(this.$.prod2,true)
-         if (j.trade >= 1) C.showeleme(this.$.trade,true)
-         if (j.resource == "Iron") C.showeleme(this.$.iron,true)
-         if (j.resource == "Wheat") C.showeleme(this.$.wheat,true)
-         if (j.resource == "Incense") C.showeleme(this.$.incense,true)
-         if (j.resource == "Silk") C.showeleme(this.$.silk,true)
-         if (j.resource == "Coin") C.showeleme(this.$.coin,true)
+         // show terrain
          if (j.numberofArmies > 0) {
              if (C.civtonumb(j.civ) == 0) {
                C.displayelem(this.$.army1, true)
@@ -339,6 +481,9 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
              }
          }
          else this._removearmy()
+
+         if (j.building != null) this._displaybuilding(j.building)
+         else this._displayterrain(j)
 
          if (j.numberofScouts > 0) {
              if (C.civtonumb(j.civ) == 0) {

@@ -142,6 +142,10 @@
     "Flight" : "Flight",
     "MessMedia" : "Mass Media",
     "Plastics" : "Plastics",
-    "ReplaceableParts" : "Replacement Parts"
+    "ReplaceableParts" : "Replacement Parts",
+
+    "culturelabel" : "Culture",
+    "battlelabel" : "Battle",
+    "limitedlabel" : "Limited"
   }
 }

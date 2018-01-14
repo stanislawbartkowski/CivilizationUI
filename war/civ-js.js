@@ -162,7 +162,7 @@ var C = (function() {
 
   function _clearMap() {
      const o =  _getxapp()
-     o.draw(null)          
+     o.draw(null)
   }
 
   function _spendtradecommand(pa) {
@@ -300,7 +300,7 @@ var C = (function() {
 	dialogDemo.message = C.localize("doyouwanttojoin","civ",civ)
 	dialogDemo.openDialog()
   },
-  
+
   startgamedialog : function(civ) {
     this.confirmdialog(C.localize("doyouwantstartnegamequestion","civ",civ),e => window.chooseciv(civ))
   },
@@ -326,6 +326,9 @@ var C = (function() {
     dialogalert.openDialog()
   },
 
+  internalerroralert(message) {
+    alert("Internal error " + message)
+  },
 
   resumedialog : function(index) {
     const li = JSON.parse(C.getlistofgames())
@@ -366,7 +369,7 @@ var C = (function() {
       pa = {}
       pa.row = -1
       pa.col = -1
-      pa.param = null      
+      pa.param = null
     }
     if (typeof pa.param == 'string') window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
     else
@@ -374,7 +377,7 @@ var C = (function() {
     else
     window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
   },
-   
+
   executewithconffun : function(question,co,fun) {
     if (question == null) question = C.localize("executecommandquestion","command",co)
     if (!confirmaction(co)) fun()
@@ -385,7 +388,7 @@ var C = (function() {
     C.executewithconffun(question,co,e => {
          if (mdial != null) mdial.closeIt()
          C.executeC(co,pa)
-       }              
+       }
      )
   },
 
@@ -422,7 +425,7 @@ var C = (function() {
     	_attackconfirmation(pa)
     	return
     }
-    
+
     this.executewithconf(question,co,pa)
   },
 
@@ -501,7 +504,7 @@ var C = (function() {
       if (what == 0) showhideclosebuttuon(true)
       else showhideclosebuttuon(false)
     } ,
-    
+
     getlistofcivs : function() {
       const civse = findbytag("civ-content")
       return civse.civs
@@ -511,27 +514,27 @@ var C = (function() {
       const gamese = findbytag("civ-games")
       return gamese.listofgames
     } ,
-    
+
     getgamestate : function() {
       const b = findbytag("civ-gamestate")
       return b
     },
-    
-    showresearch(p) {        
+
+    showresearch(p) {
         C.opendialogwithpar("showtech-dialog",p.tech)
     },
-    
+
     showcivinfo(civ) {
        C.opendialogwithpar("showciv-info",civ);
     },
-    
+
     researchdialog(y) {
         const p = {}
         const b = C.getjsboard()
         p.tech = b.board.tech
         p.playertech = y.tech
         p.playerlevel = y.tradelevel
-        C.opendialogwithpar("tech-dialog",p)       
+        C.opendialogwithpar("tech-dialog",p)
     },
 
     localize : function(...args) {
@@ -546,7 +549,7 @@ var C = (function() {
     getcurrentcommand : function() {
         return this.getyouplay().currentcommand
       },
-      
+
     iscurrentcommand : function(co) {
         return this.getcurrentcommand() == co
     },
@@ -589,22 +592,26 @@ var C = (function() {
     setjsboard : function(jsboard) {
        _getxapp().draw(jsboard)
     },
-    
+
     setresources : function(rese) {
       const x = _getxapp()
       x.resou = rese
     },
-    
+
     _getresources() {
       return _getxapp().resou
     },
-    
+
     getlistoftech() {
       return C._getresources().tech
     },
 
     getlistofcivs() {
       return C._getresources().civ
+    },
+
+    getlistofbuildings() {
+      return C._getresources().buildings
     },
 
     getjsboard : function() {
@@ -662,7 +669,7 @@ var C = (function() {
     },
 
     leavegame : function() {
-      window.stoprefresh()    
+      window.stoprefresh()
       _clearMap()
       window.leavegame()
     },
@@ -776,7 +783,7 @@ var C = (function() {
        else elem.units = null
 
     },
-    
+
     unittypes() {
      return ["mounted","aircraft","infantry","artillery"]
     },
@@ -797,13 +804,13 @@ var C = (function() {
     setColorForCity : function(e,city,color) {
        C.setShadowStyleAttribute(e,city,"backgroundColor",color)
     },
-    
+
    _dialogopen : function(dname,open,data) {
         const d = document.getElementById(dname).$.dialog
         if (!open) {
             if (d.opened()) d.closeIt()
         }
-        else 
+        else
             if (!d.opened()) {
                 d.openIt(data)
                 _sleep(1000).then(
@@ -811,14 +818,14 @@ var C = (function() {
                             d.draw(data)
                         }
                       )
-            } else d.draw(data)      
+            } else d.draw(data)
    },
-    
+
    endofbattledialog : function(b) {
      const open = (b.board.battle != null) && b.board.battle.endofbattle
      this._dialogopen("battle-result",open,b)
    },
-    
+
    battleDialog : function(b) {
      if (b == null) return
      const open = (b.board.battle != null)
@@ -826,57 +833,57 @@ var C = (function() {
      this._dialogopen("battle-dialog",open,b)
      C.endofbattledialog(b)
    },
-    
+
     getSideName(data) {
        if (data.isvillage) return C.localize('villagelabel')
        else return data.civ
     },
-    
+
     _logautomatemove(command,pa) {
        var s = "Automated " + command
        if (pa != null) {
           if (pa.row != -1) s = s +  " row=" + pa.row + " col=" + pa.col
           if (pa.param != null) s = s + " " + pa.param
-       }        
+       }
        const civ = C.getyourdeck().civ
        C.log(civ + " " + s)
     },
-    
+
     executeEndOfPhase(automate) {
         const g = C.getjsboard().board.game
         const phase = g.phase
         const pa = {}
         pa.row = -1
         pa.col = -1
-        pa.param = phase      
+        pa.param = phase
         if (automate) C._logautomatemove("endofphase",pa)
         C.executeC("endofphase",pa)
     },
-    
+
     // automatecommand
     _checkEndOfMove(commands) {
        if (commands.length == 1 && commands[0].command.toLowerCase() == "endofmove") {
-          C._logautomatemove(commands[0].command,null)             
+          C._logautomatemove(commands[0].command,null)
           C.executeC(commands[0].command)
           return true
        }
-       return false         
+       return false
     },
-            
+
     _checkEndOfPhase(commands) {
        if (commands.length == 1 && commands[0].command.toLowerCase() == "endofphase") {
           C.executeEndOfPhase(true)
           return true
        }
-       return false         
+       return false
     },
-    
+
     automateCommand(commands) {
       if (C._checkEndOfMove(commands)) return
       C._checkEndOfPhase(commands)
       return
     },
-    
+
     _checkrevealCommand(co) {
        const iparam = {}
        iparam.list = C.getitemizedcommand()
@@ -888,9 +895,9 @@ var C = (function() {
        pa.col = r.p.col
        pa.param = r.orientation
        C._logautomatemove(co,pa)
-       C.executeC(co,pa)        
+       C.executeC(co,pa)
     },
-    
+
     _checkexplorehutCommand(co) {
        const list = C.getitemizedcommand()
        if (list.explore.length != 1) return
@@ -898,16 +905,16 @@ var C = (function() {
        pa.row = list.explore[0].row
        pa.col = list.explore[0].col
        C._logautomatemove(co,pa)
-       C.executeC(co,pa)               
+       C.executeC(co,pa)
     },
-    
+
     checkAutomateButton() {
        const command = C.getcurrentcommand()
        const itemized = C.getitemizedcommand()
        if (command == "revealtile") C._checkrevealCommand(command)
-       if (command == "explorehut") C._checkexplorehutCommand(command)        
+       if (command == "explorehut") C._checkexplorehutCommand(command)
     }
-    
+
 
   }  // return
  } // function
