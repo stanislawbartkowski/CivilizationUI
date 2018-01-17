@@ -913,8 +913,14 @@ var C = (function() {
        const itemized = C.getitemizedcommand()
        if (command == "revealtile") C._checkrevealCommand(command)
        if (command == "explorehut") C._checkexplorehutCommand(command)
-    }
+    },
 
+    findBuilding(b) {
+      const bt = C.getlistofbuildings()
+      for (var i=0; i<bt.length; i++)
+        if (bt[i].name == b) return bt[i]
+     C.internalerroralert("Cannot find building definition " + b)
+   }
 
   }  // return
  } // function

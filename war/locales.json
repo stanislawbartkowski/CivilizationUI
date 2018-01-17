@@ -144,8 +144,27 @@
     "Plastics" : "Plastics",
     "ReplaceableParts" : "Replacement Parts",
 
+    "Harbor" : "Harbor",
+    "Shipyard" : "Shipyard",
+    "TradingPost" : "Trading Post",
+    "Market" : "Market",
+    "Bank" : "Bank",
+    "Barracks" : "Barracks",
+    "Academy" : "Academy",
+    "Temple" : "Temple",
+    "Cathedral" : "Cathedral",
+    "Granary" : "Granary",
+    "Aqueduct" : "Aqueduct",
+    "Library" : "Library",
+    "University" : "University",
+    "Workshop" : "Workshop",
+    "IronMine" : "Iron Mine",
+
     "culturelabel" : "Culture",
     "battlelabel" : "Battle",
-    "limitedlabel" : "Limited"
+    "limitedlabel" : "Limited",
+    "cost" : "Cost",
+    "numberofbuildings" : "Numb:{num}",
+    "soldout" : "Sold out"
   }
 }

@@ -77,7 +77,8 @@
       <div class="unitname">{{localize('resources')}}</div>
       <civ-resources id="resources"> </civ-resources>
     </div>
-  
+    
+    <civ-buildings id="bld"></civ-buildings>
   
 </span>
   
@@ -111,6 +112,8 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
         C.setUnitsNumb(this.$.killed,killed)
         const r = b.board.resources
         res.draw(r)
+        const bld = this.$.bld
+        bld.draw(b.board.buildings)
     }
 }
     

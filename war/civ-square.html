@@ -133,6 +133,54 @@
     background-size: 60% 60%;
     background-repeat: no-repeat;
     background-position: center;
+  }
+
+  :host([Granary]) {
+    background-image: url("images/buildings/granary.svg");
+    background-color: #68d44e;
+    background-size: 75% 75%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Aqueduct]) {
+    background-image: url("images/buildings/aqueduct.svg");
+    background-color: #68d44e;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Library]) {
+    background-image: url("images/buildings/library.svg");
+    background-color: #b5eaec;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([University]) {
+    background-image: url("images/buildings/university.svg");
+    background-color: #b5eaec;
+    background-size: 85% 85%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Workshop]) {
+    background-image: url("images/buildings/workshop.svg");
+    background-color: #d0c8c8;
+    background-size: 85% 85%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  :host([Ironmine]) {
+    background-image: url("images/buildings/ironmine.svg");
+    background-color: #d0c8c8;
+    background-size: 85% 85%;
+    background-repeat: no-repeat;
+    background-position: center;
 
   }
   :host([Mountain]) {
@@ -158,6 +206,7 @@
      <img id="prod1" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute;  left:0; bottom:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="prod2" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute;  left:0; bottom:{{tokenheight}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="prod3" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute;  left:0; bottom:{{tokenheight2}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="prod4" hidden src="images/tokens/production.svg" style="z-index:1; position:absolute;  left:0; bottom:{{tokenheight3}}px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="culture1" hidden src="images/tokens/culture.svg"    title="{{localize('culturelabel')}}"  style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="culture2" hidden src="images/tokens/culture.svg"    title="{{localize('culturelabel')}}"  style="z-index:1; position:absolute; bottom:{{tokenheight}}px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="culture3" hidden src="images/tokens/culture.svg"    title="{{localize('culturelabel')}}"  style="z-index:1; position:absolute; bottom:0px; left:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
@@ -284,6 +333,10 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
           type: Number,
           value: function() { return (this.tokenheight * 2)}
         },
+        tokenheight3 : {
+          type: Number,
+          value: function() { return (this.tokenheight * 3 - 3)}
+        },
         armytop : {
           type : Number,
           readOnly: true,
@@ -397,15 +450,8 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
        C.removeattr(this,"village")
    }
 
-   _findbuilding(b) {
-     const bt = C.getlistofbuildings()
-     for (var i=0; i<bt.length; i++)
-       if (bt[i].name == b) return bt[i]
-    C.internalerroralert("Cannot find building definition " + b)
-   }
-
    _displaybuilding(b) {
-     const bd = this._findbuilding(b)
+     const bd = C.findBuilding(b)
      this.setAttribute(b,1)
      const production = bd.tokens.Production
      const trade = bd.tokens.Trade
@@ -420,6 +466,13 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
        C.showeleme(this.$.trade1,true)
        C.showeleme(this.$.trade2,true)
        if (production >= 1) C.showeleme(this.$.prod3,true)
+       if (production >= 2) C.showeleme(this.$.prod4,true)
+     }
+     if ((trade == null || trade == 0) && production > 0) {
+       if (production >= 1) C.showeleme(this.$.prod1,true)
+       if (production >= 2) C.showeleme(this.$.prod2,true)
+       if (production >= 3) C.showeleme(this.$.prod3,true)
+       if (production >= 4) C.showeleme(this.$.prod4,true)
      }
      if (culture >= 1) C.showeleme(this.$.culture1,true)
      if (culture >= 2) C.showeleme(this.$.culture2,true)

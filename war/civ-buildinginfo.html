@@ -1,0 +1,76 @@
+
+<dom-module id="civ-buildinginfo">
+<template>
+
+<custom-style>
+
+<style is="custom-style" >
+
+:host {
+    display: inline-block;
+    width: 60px;
+/*    height: 100px; */
+    vertical-align: top;
+  }
+
+.header {
+  background-color : #f1e8e8
+}
+
+.name {
+  font-size : 70%
+}
+
+.cost {
+
+}
+
+:host([disa]) {
+  background-color : #afa7a7
+}
+
+
+</style>
+
+</custom-style>
+
+<div>
+  <div class="header name">{{localize(b.name)}}</div>
+  <div class="header cost">{{localize('cost')}}&nbsp;:&nbsp;{{b.cost}}</div>
+  <civ-square id="sq"></civ-square>
+</div>
+
+</template>
+
+<script>
+class CivBuldingInfo extends Polymer.CivData(Polymer.Element) {
+
+    static get is() {
+    	return 'civ-buildinginfo';
+    	}
+
+    static get properties() {
+        return {
+            b: {
+              type : Object
+            }
+          }
+        }
+
+    refresh(data) {
+      const s = {}
+      s.terrain = ""
+      s.building = data
+      this.b = C.findBuilding(data)
+//      this.name = this.localize(data)
+      const sq = this.$.sq
+      sq.draw(s)
+    }
+
+}
+
+customElements.define(CivBuldingInfo.is, CivBuldingInfo);
+
+</script>
+
+</dom-module>
