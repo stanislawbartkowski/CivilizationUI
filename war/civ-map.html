@@ -58,12 +58,8 @@
         	   this.rows = []
         	   this.cols = []
         	   if (rownumb == -1 || colnumb == -1) return
-        	   for(var i = 0; i < rownumb; i++) {
-        		    this.rows.push({});
-        		}
-        	   for(var i = 0; i < colnumb; i++) {
-       		    this.cols.push({});
-       		}        	   
+        	   for(var i = 0; i < rownumb; i++) this.rows.push({});
+        	   for(var i = 0; i < colnumb; i++) this.cols.push({});
            }	        
         }
 	);

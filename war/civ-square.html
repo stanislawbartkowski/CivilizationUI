@@ -9,12 +9,10 @@
 
   :host {
     display: inline-block;
-    /* border: ridge; */
     border: 0px none;
     border-color: DarkGray;
     background-size: 100% 100%;
     position : relative;
-/*    float:left; */
   }
 
   :host([Glowing]) {
@@ -281,6 +279,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
 
     handleClick() {
         var res = C.getsquare(this.row,this.col)
+        if (res == null) return
         if (res.terrain == null) return
         var co = C.getcurrentcommand()
         if (C.emptyS(co)) return
@@ -379,8 +378,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          terrains : {
            type : Array,
            readOnly: true,
-           value : ["mountain","water","forest","grassland","desert", "capital", "normal","hut","village","glowing","harbor", "tradingpost","shipyard","market","bank","barracks",
-                    "temple","cathedral"  ]
+           value : ["mountain","water","forest","grassland","desert", "capital", "normal","hut","village","glowing"]
          }
     }
     }
@@ -410,6 +408,8 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
    _removeterrain() {
        for (var i=0; i<this.terrains.length; i++)
            C.removeattr(this,this.terrains[i])
+       const b = C.listofallbuildings()
+       for (var i=0; i<b.length; i++) C.removeattr(this,b[i])
        C.showeleme(this.$.trade1,false)
        C.showeleme(this.$.trade2,false)
        C.showeleme(this.$.culture1,false)
@@ -503,10 +503,10 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
              return
            }
          const j = jsdata
+         this._removeterrain()
          if (j.city != null) {
          	this._removearmy()
          	this._removescout()
-            this._removeterrain()
             C.displayelem(this.$.attcity,true)
             C.setColorForCity(this,j.city,C.colorForCiv(j.civ))
             this.setAttribute(j.city,1);

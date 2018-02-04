@@ -178,6 +178,11 @@ var C = (function() {
     const dialog = document.getElementById("sendproduction-dialog")
     dialog.$.dialog.setScout(pa)
   }
+  
+  function _setbuildingpoint(pa) {
+    const dialog = document.getElementById("buy-building")
+    dialog.$.dialog.setBuildingPoint(pa)
+  }
 
   function _attackconfirmation(pa) {
     C.opendialogwithpar("attackconf-dialog",pa)
@@ -196,6 +201,10 @@ var C = (function() {
 
   function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function _buybuilding(iparam) {
+       C.opendialogwithpar("buy-building",iparam)
   }
 
   return {
@@ -262,6 +271,11 @@ var C = (function() {
      if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
+        return a
+     }
+     if (co == "buybuilding") {
+        const a = []
+        for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
      }
      if (co == "move")  return itemize.moves
@@ -401,6 +415,10 @@ var C = (function() {
     iparam.param = param
     var pa = verifycommand(co,iparam)
     if (pa == null) return
+    if (co == "buybuilding") {
+       _buybuilding(iparam)
+       return
+    }
     if (co == "revealtile")
        if (_twotilereveal(iparam)) return
     if (co == "startmove")
@@ -419,6 +437,10 @@ var C = (function() {
     }
     if (co == "selectscout") {
       _sendproductionsetscout(pa)
+      return
+    }
+    if (co == "selectbuildingpoint") {
+      _setbuildingpoint(pa)
       return
     }
     if (co == "attack") {
@@ -619,6 +641,7 @@ var C = (function() {
     },
 
     getsquare : function(row,col) {
+        if (row == null || col == null) return null
         var res = window.getsquare(window.fixrow(row),window.fixcol(col))
         return res
     },
@@ -918,8 +941,15 @@ var C = (function() {
     findBuilding(b) {
       const bt = C.getlistofbuildings()
       for (var i=0; i<bt.length; i++)
-        if (bt[i].name == b) return bt[i]
+        if (bt[i].name.toLowerCase() == b.toLowerCase()) return bt[i]
      C.internalerroralert("Cannot find building definition " + b)
+   },
+
+   listofallbuildings() {
+     const a = []
+     const bt = C.getlistofbuildings()
+     for (var i=0; i<bt.length; i++) a.push(bt[i].name.toLowerCase())
+     return a
    }
 
   }  // return

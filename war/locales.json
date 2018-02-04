@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/01/09",
+    "appversion": "Version: 2018/01/20",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -165,6 +165,10 @@
     "limitedlabel" : "Limited",
     "cost" : "Cost",
     "numberofbuildings" : "Numb:{num}",
-    "soldout" : "Sold out"
+    "soldout" : "Sold out",
+    "buybuilding" : "Buy Building",
+    "buildingstobuy" : "Buldings to buy",
+    "build" : "Build",
+    "replace" : "Replace"
   }
 }

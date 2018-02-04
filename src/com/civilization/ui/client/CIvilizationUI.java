@@ -188,7 +188,7 @@ public class CIvilizationUI implements EntryPoint {
 
 	// ===========================================
 
-	/**
+	/** 
 	 * Read Map again from server
 	 */
 	private static void rereadMap() {

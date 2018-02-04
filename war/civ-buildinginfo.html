@@ -9,7 +9,6 @@
 :host {
     display: inline-block;
     width: 60px;
-/*    height: 100px; */
     vertical-align: top;
   }
 
@@ -22,13 +21,11 @@
 }
 
 .cost {
-
 }
 
 :host([disa]) {
   background-color : #afa7a7
 }
-
 
 </style>
 
@@ -43,16 +40,30 @@
 </template>
 
 <script>
-class CivBuldingInfo extends Polymer.CivData(Polymer.Element) {
+class CivBuldingInfo extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
 
-    static get is() {
+  constructor() {
+      super();
+      Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
+  }
+
+  handleClick() { 
+    const na = this.b.name
+    if (this.fun != null) this.fun(na)
+  }
+
+  static get is() {
     	return 'civ-buildinginfo';
-    	}
+  }
 
-    static get properties() {
+  static get properties() {
         return {
             b: {
               type : Object
+            },
+            click : {
+              type : Object,
+              value : null
             }
           }
         }
@@ -62,7 +73,6 @@ class CivBuldingInfo extends Polymer.CivData(Polymer.Element) {
       s.terrain = ""
       s.building = data
       this.b = C.findBuilding(data)
-//      this.name = this.localize(data)
       const sq = this.$.sq
       sq.draw(s)
     }

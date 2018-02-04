@@ -172,6 +172,11 @@
       <iron-icon icon="icons:build" slot="item-icon"></iron-icon> 
       <span>{{localize('harvestresource')}}</span>
     </paper-icon-item>
+
+    <paper-icon-item id="buybuilding" on-click="_onClick"> 
+      <iron-icon src="images/icons/buybuilding.svg" slot="item-icon"></iron-icon> 
+      <span>{{localize('buybuilding')}}</span>
+    </paper-icon-item>
     
     <div class="undobuttons">
             
@@ -333,7 +338,8 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "harvestresource",
                             "explorehut",
                             "attack",
-                            "research"
+                            "research",
+                            "buybuilding"
                   ]
              }
 	   }
