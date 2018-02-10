@@ -3,7 +3,7 @@
   
     <style>   
        :host {
-        display: block;
+        display: inline-block;
       }
             
     </style>
@@ -15,8 +15,10 @@
       
       <div>{{localize('specifyamountofproduction')}}</div>
       
-      <div>{{localize('tradetospend')}}[[tradetospend]]</div>
+      <div>{{localize('tradetospend')}}{{tradetospend}}</div>
+      <div>{{localize('reduceratio')}}[[reduceratio]]</div>
       
+     
       <figurenumber-widget id="numbproduction"></figurenumber-widget>
                         
       <div class="buttons">
@@ -33,17 +35,16 @@
   </template>
 
   <script>
-      class SpendTradeDialog extends Polymer.CivLocalize(Polymer.DialDraggable(Polymer.Element)) {
+      class SpendTradeDialog extends Polymer.CivDialog(Polymer.DialDraggable(Polymer.Element)) {
       static get is() { return 'spendtrade-dialog'; }
       
       static get properties() {
-          return {
-            pa: {
-              type: Object,
-              value: undefined
+          return {           
+            tradetospend : {
+            	type : Number
             },
             
-            tradetospend : {
+            reduceratio : {
             	type : Number
             },
             
@@ -60,9 +61,10 @@
               C.alertdialog(this.localize('productionfromtradeshouldbe',"max",this.maxproduction))
               return
           }
+          
           C.executewithconffun(this.localize('areyousurequestion'),"SPENDTRADE",e => {
               this.closeIt()
-              const pa = this.pa
+              const pa = this.data
               pa.param = prod
               C.executeC("SPENDTRADE",pa)
           })          
@@ -77,18 +79,15 @@
                   
       openIt(pa) {
     	  const y = C.getyourdeck()
-          this.pa = pa
-          this.$.dialog.open();
+          super.openIt(pa)
           const e = this.$.numbproduction
+          this.reduceratio = y.tradeforprod
           this.maxproduction = Math.floor(y.trade/y.tradeforprod)
           e.numberChanged = (newValue,oldValue) => this._numberChanged(newValue,oldValue)
+          this._numberChanged(1,0)
           e.draw('amountofproduction',1,this.maxproduction)
       }
-      
-      closeIt() {
-          this.$.dialog.close();
-        }
-     
+           
     }
 
     window.customElements.define(SpendTradeDialog.is, SpendTradeDialog);

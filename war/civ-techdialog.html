@@ -38,7 +38,7 @@
           {{localize('youresearch')}}
        </paper-button>
 
-       <paper-button dialog-dismiss>{{localize('cancellabel')}}</paper-button>
+       <paper-button on-click="_clear" dialog-dismiss>{{localize('cancellabel')}}</paper-button>
 
      </span>
 
@@ -58,6 +58,11 @@
            }
          }
        }
+     
+    _clear() {
+    	this.tech = null
+        C.displayelemid(this,"research",false)
+    } 
 
     _onResearch() {
       if (this.tech == null) return
@@ -66,6 +71,7 @@
       p.col = -1
       p.param = this.tech.name
       C.executewithconf(null,"RESEARCH",p,this)
+      this._clear()
     }
 
     clickTech(d) {
@@ -80,21 +86,29 @@
 
 
      refresh(data) {
+       this._clear()
        const tech = C.getlistoftech()
        const mtech = data.playertech
        const disa = []
        for (var i =0; i<mtech.length; i++)
-         disa.push(mtech[i].tech.name)
+         disa.push(mtech[i].tech)
        const playerlevel = data.playerlevel
        const dtech = this.$.tech
        dtech.clickTech = (d => this.clickTech(d))
        const dcurrenttech = this.$.currenttech
-       dtech.disa = disa
-       dtech.playerlevel = playerlevel
        dtech.draw(tech)
        dcurrenttech.draw(mtech)
-       C.displayelemid(this,"research",false)
        C.displayelemid(this,"choosemessage",true)
+       // wait some time to expand dom repeat
+       C.sleep(500).then(
+          () => {
+        	  const s = {}
+        	  s.playerlevel = playerlevel
+        	  s.disa = disa
+        	  dtech.draw1(s)
+          }
+       )
+
      }
 
    }

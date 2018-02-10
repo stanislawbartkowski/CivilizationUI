@@ -177,6 +177,11 @@
       <iron-icon src="images/icons/buybuilding.svg" slot="item-icon"></iron-icon> 
       <span>{{localize('buybuilding')}}</span>
     </paper-icon-item>
+
+    <paper-icon-item id="buywonder" on-click="_onClick"> 
+      <iron-icon src="images/icons/buywonder.svg" slot="item-icon"></iron-icon> 
+      <span>{{localize('buywonder')}}</span>
+    </paper-icon-item>
     
     <div class="undobuttons">
             
@@ -339,7 +344,8 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "explorehut",
                             "attack",
                             "research",
-                            "buybuilding"
+                            "buybuilding",
+                            "buywonder"
                   ]
              }
 	   }
@@ -409,6 +415,10 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     	    	 return
     	     }    	     
              var id = source.currentTarget.id
+             if (id == "buywonder") {
+            	 C.alertdialog("Sorry, not implemented yet")
+            	 return            	 
+             }
              if (id == "endofphase") {
                  this._endofphase()
             	 return

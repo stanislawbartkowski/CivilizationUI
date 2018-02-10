@@ -106,6 +106,12 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
       return n.ni
     }
     
+    _level() {
+        const n = this.tech
+        return n.level
+    	
+    }
+    
     _setuptech() {
     	const d = this.data
     	if (d.name != null) {
@@ -120,6 +126,11 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
     			return
     		}
     }
+    
+    _disa(d) {
+        if (this.data.disa) C.setattr(this,"disa",1)
+        else C.removeattr(this,"disa")    	
+    }
 
     refresh(data) {
       this._setuptech()
@@ -132,8 +143,18 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
       this.building = C.localize(this._building())
       if (this.gover != null) C.displayelemid(this,"gover",true)
       if (this.building != null) C.displayelemid(this,"building",true)
-      if (data.disa) C.setattr(this,"disa",1)
-      else C.removeattr(this,"disa")
+      this._disa()
+    }
+    
+    refresh1(pa) {
+      const disa = pa.disa
+      const level = pa.playerlevel
+//      if (this.data.disa) return
+      const n = this._name()
+      this.data.disa = false
+      if (level < this._level()) this.data.disa = true 
+      else this.data.disa = C.onList(disa,n)
+      this._disa()
     }
     
 }

@@ -21,10 +21,6 @@
              level : {
                type : Number
              },
-             disa : {
-               type : Array,
-               value : []
-             },
              playerlevel : {
                type : Number,
                value : null
@@ -36,26 +32,17 @@
          }
      }
 
-     _disa(c) {
-       if (this.playerlevel == null) return false
-       if (this.playerlevel < c.level) return true
-       for (var i=0; i<this.disa.length; i++)
-         if (this.disa[i] == c.name) return true
-       return false
-     }
-
      refresh(pa) {
        this.techs = []
        if (pa == null) return
        const leve = this.level
        for (var i=0; i<pa.length; i++) {
          const c = pa[i]
-         c.disa = this._disa(c)
          if (this.clickTech != null) c.clickTech = (d => this.clickTech(d))
          if (pa[i].level == leve) this.techs.push(c)
        }
      }
-
+     
    }
 
    window.customElements.define(CivListTech.is, CivListTech);

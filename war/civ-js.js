@@ -199,25 +199,18 @@ var C = (function() {
       })
   }
 
-  function _sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   function _buybuilding(iparam) {
        C.opendialogwithpar("buy-building",iparam)
   }
 
   return {
 
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  },
+
   getShadow(e) {
     var s = e.shadowRoot
-    var i = 0;
-    while (s == null && i < 5) {
-      // wait 1 sec
-      i = i + 1
-      _sleep(10000)
-      s = e.shadowRoot
-    }
     return s
   },
 
@@ -481,7 +474,7 @@ var C = (function() {
         var pa = e.offsetParent
         var no = 0
         if (pa == null) no = 500
-        _sleep(no).then(
+        this.sleep(no).then(
           () => {
             C.showeleme(e,true)
             e.updatePosition()
@@ -640,10 +633,18 @@ var C = (function() {
        return _getxapp()["data"]
     },
 
+    // get square adjusting coordinates
+    // coordinates form current map layout
+    // adjust to absolute
     getsquare : function(row,col) {
         if (row == null || col == null) return null
-        var res = window.getsquare(window.fixrow(row),window.fixcol(col))
-        return res
+        return window.getsquare(window.fixrow(row),window.fixcol(col))
+    },
+    
+    // get square directly without adjusting coordinates
+    wgetsquare : function(row,col) {
+        if (row == null || col == null) return null
+        return window.getsquare(row,col)
     },
 
     log : function(s) {
@@ -836,7 +837,7 @@ var C = (function() {
         else
             if (!d.opened()) {
                 d.openIt(data)
-                _sleep(1000).then(
+                this.sleep(1000).then(
                         () => {
                             d.draw(data)
                         }
@@ -950,6 +951,12 @@ var C = (function() {
      const bt = C.getlistofbuildings()
      for (var i=0; i<bt.length; i++) a.push(bt[i].name.toLowerCase())
      return a
+   },
+   
+   onList(list,name) {
+     for (var i=0; i<list.length; i++) 
+       if (list[i] == name) return true
+     return false  
    }
 
   }  // return
