@@ -9,6 +9,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import civilization.I.II;
 import civilization.RR;
+
 /**
  * The server-side implementation of the RPC service.
  */
@@ -75,14 +76,19 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			w = II.REGISTEROWNERTWOGAME();
 			break;
 		}
-		return II.getData(w, param,null);
+		return II.getData(w, param, null);
 	}
 
 	@Override
 	public String executeCommand(String token, String action, int row, int col, String jsparam) {
 		setRedis();
 		System.out.println(action + " row: " + row + " col:" + col + " " + jsparam);
-		String res = II.executeCommand(token, action, row, col, jsparam);
+		String res = null;
+		// static synchronize
+		// all are blocked
+		synchronized (GreetingServiceImpl.class) {
+			res = II.executeCommand(token, action, row, col, jsparam);
+		}
 		System.out.println("res=" + res);
 		return res;
 	}
@@ -110,6 +116,5 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		System.out.println("Join game: " + civ + " " + gameid);
 		return II.joinGame(gameid, civ);
 	}
-	
 
 }
