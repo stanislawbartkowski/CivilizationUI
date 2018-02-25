@@ -14,13 +14,13 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 ## 2018/02/25 : new version deployed
 https://hoteljavaopensource.blogspot.com/2018/02/civilization-board-game-next-version.html
 
-New featues
+New features
 
 * Buildings.
 
 Fixes
 * Resources are displayed sometimes wrongly: https://github.com/stanislawbartkowski/CivilizationUI/issues/7
-
+* Technology tree improved.
 
 ## 2018/01/05 : new version deployed
 * Greeting window more descriptive
