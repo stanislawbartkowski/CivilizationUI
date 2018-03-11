@@ -56,10 +56,19 @@
      width : 270px;
    }
    
-  
-
+   .wondersbox {
+     vertical-align: top;
+     margin-left: 5px;
+     margin-top: 2px;
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;
+     width : 470px;
+   }
+   
   </style>
   
+  <div>
   <div class="units">
     <div id="units" class=unitbox>
       <div class="unitname">{{localize('units')}}</div>
@@ -76,14 +85,23 @@
       <civ-units class="unitelem" id="mounted"></civ-units>
       <civ-units class="unitelem" id="aircraft"></civ-units>
     </div>
-  </div>
-  
+   </div>
+
+    <civ-buildings class="buildings" id="bld"></civ-buildings>
+        
     <div class="resourcesbox">
       <div class="unitname">{{localize('resources')}}</div>
       <civ-resources id="resources"> </civ-resources>
     </div>
-    
-    <civ-buildings class="buildings" id="bld"></civ-buildings>
+  
+  </div>
+   
+    <div class="wondersbox">
+      <div class="unitname">{{localize('wonders')}}</div>      
+      <civ-dispwonders id="wonders"></civ-dispwonders>
+    </div>
+      
+        
   
 </span>
   
@@ -119,6 +137,8 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
         res.draw(r)
         const bld = this.$.bld
         bld.draw(b.board.buildings)
+        const wo = this.$.wonders
+        wo.draw(b.board.wonders)
     }
 }
     

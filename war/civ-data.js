@@ -18,6 +18,9 @@ Polymer.CivData = function(superClass) {
               data1: {
                 type : Object,  
                 observer: 'draw1set'  
+              },
+              fun : {
+                type : Object
               }
 	        }
 	    }	        

@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/02/25",
+    "appversion": "Version: 2018/03/11",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -100,6 +100,10 @@
     "creatingtwoplayergames" : "Creating two players game",
     "youresearch" : "You research",
     "choosetechnology" : "Choose your technology",
+    "bonus" : "Bonus",
+    "wonders" : "Wonders",
+    "wonderstobuy" : "Wonders to buy",
+    "nowonders" : "No wonders yet",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",
@@ -171,6 +175,34 @@
     "build" : "Build",
     "replace" : "Replace",
     "reduceratio" : "Exchange ratio : ",
-    "buywonder" : "Buy Wonder"
+    "buywonder" : "Buy Wonder",
+
+    "ChichenItza" : "Chichen Itza",
+    "StatueofZeus" : "Statue Of Zeus",
+    "Stonehenge" : "Stonehenge",
+    "TheColossus" : "Colossus",
+    "TheGreatLighthouse" : "Great Lighthouse",
+    "TheGreatWall" : "Great Wall",
+    "TheHangingGardens" : "Hanging Gardens",
+    "TheOracle" : "Oracle",
+    "ThePyramids" : "Pyramids",
+    "AngkorWat" : "Angkor Wat",
+    "BrandenburgGate" : "Brandenburg Gate",
+    "HimejiSamuraiCastle" : "Himeji Samurai Castle",
+    "LeonardosWorkshop" : "Leonardos Workshop",
+    "MachuPichu" : "Machu Pichu",
+    "NotreDame" : "Notre Dame",
+    "PorcelainTower" : "Porcelain Tower",
+    "TajMahal" : "TajMahal",
+    "TheLouvre" : "Louvre",
+    "BigBen" : "Big Ben",
+    "CristoRedentor" : "Cristo Redentor",
+    "PanamaCanal" : "Panama Canal",
+    "StatueofLiberty" : "Statue Of Liberty",
+    "SydneyOperaHouse" : "Sydney Opera House",
+    "TheInternet" : "Internet",
+    "TheKremlin" : "Kremlin",
+    "ThePentagon" : "Pentagon",
+    "UnitedNations" : "United Nations"
   }
 }

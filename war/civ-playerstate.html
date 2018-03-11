@@ -66,14 +66,20 @@
     [[scoutslimit]]
   </paper-icon-item>
   
-  <span class="goverspan">
   <paper-icon-item>
     <iron-icon src="images/cities/gover.svg" slot="item-icon"></iron-icon>
     [[government]]
   </paper-icon-item>
+  
+  <span class="goverspan">
   <paper-icon-item style="display:inline-block" on-click="_showresearch">
      <iron-icon src="images/cities/research.svg"></iron-icon>
      {{localize('researchlabel')}}
+  </paper-icon-item>
+  
+  <paper-icon-item style="display:inline-block" on-click="_showwonders">
+     <iron-icon src="images/icons/buywonder.svg"></iron-icon>     
+     {{localize('wonders')}}     
   </paper-icon-item>
   </span>
 
@@ -114,6 +120,10 @@ class CivPlayerState extends Polymer.CivData(Polymer.Element) {
     
     _showresearch() {
    	   C.showresearch(this.data)    	
+    }
+    
+    _showwonders() {
+        C.showwonders(this.data)            	
     }
 
     refresh(y) {

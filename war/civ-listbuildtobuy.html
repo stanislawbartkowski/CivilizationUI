@@ -46,9 +46,6 @@
          return {
              builds : {
                  type: Array
-             },
-             fun : {
-               type : Object
              }
          }
      }
@@ -58,11 +55,12 @@
        for (var i=0; i<b.length; i++)
          C.displayelemid(this,b[i],false)
        for (var i=0; i<pa.length; i++) {
-         const p = this.$[pa[i]]
+    	 const bi = pa[i].toLowerCase()
+         const p = this.$[bi]
          if (this.fun != null)
             p.fun = e => this.fun(e)
          C.displayelem(p,true,true)
-         p.draw(pa[i])
+         p.draw(bi)
        }
      }
 

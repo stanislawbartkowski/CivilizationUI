@@ -196,6 +196,30 @@
     background-color: LightGoldenRodYellow;
   }
 
+  :host([WonderAncient]) {
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 85% 85%;
+    background-color: #ffffcc;
+    background-image: url("images/wonders/ancient.svg");
+  }
+
+  :host([WonderMedieval]) {
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 85% 85%;
+    background-color: #ffffcc;
+    background-image: url("images/wonders/medieval.svg");
+  }
+
+  :host([WonderModern]) {
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 85% 85%;
+    background-color: #ffffcc;
+    background-image: url("images/wonders/modern.svg");
+  }
+
  </style>
 
    <div style="width : {{boxwidth}}px; height : {{boxheight}}px; ">
@@ -255,6 +279,11 @@
      <paper-badge hidden id="scout2number" for="scout2" label="5">
       </paper-badge>
 
+    <span id="wonder" style="display:none; font-size:180%; left:10px; position:absolute; bottom:0px" >
+      {{wondercc}}
+    </span>
+
+
    </div>
 
 
@@ -290,6 +319,10 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     // Declare properties for the element's public API
     static get properties() {
       return {
+          wondercc : {
+            type : String,
+            value : "WW"
+          },
           boxwidth: {
               type: Number,
               readOnly: true,
@@ -378,7 +411,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          terrains : {
            type : Array,
            readOnly: true,
-           value : ["mountain","water","forest","grassland","desert", "capital", "normal","hut","village","glowing"]
+           value : ["mountain","water","forest","grassland","desert", "capital", "normal","hut","village","glowing","wonderancient","wondermedieval","wondermodern"]
          }
     }
     }
@@ -429,6 +462,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
        C.showeleme(this.$.coin,false)
        C.showeleme(this.$.hut,false)
        C.showeleme(this.$.village,false)
+       C.displayelem(this.$.wonder,false)
    }
 
    _clearsquare() {
@@ -496,6 +530,14 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
      if (j.resource == "Coin") C.showeleme(this.$.coin,true)
    }
 
+   _displaywonder(wond) {
+     const w = C.findWonder(wond)
+     this.setAttribute("wonder" + w.age,1)
+     const wo = this.$.wonder
+     this.wondercc = w.t
+     C.displayelem(wo,true)
+   }
+
    refresh(jsdata) {
 
          if (jsdata == null) {
@@ -505,18 +547,18 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          const j = jsdata
          this._removeterrain()
          if (j.city != null) {
-         	this._removearmy()
-         	this._removescout()
-            C.displayelem(this.$.attcity,true)
-            C.setColorForCity(this,j.city,C.colorForCiv(j.civ))
-            this.setAttribute(j.city,1);
-            C.displaybadge(this.$.prodcitynumber,j.production)
-            C.displaybadge(this.$.defencecitynumber,"+"+j.defence)
-            return;
+         	 this._removearmy()
+         	 this._removescout()
+           C.displayelem(this.$.attcity,true)
+           C.setColorForCity(this,j.city,C.colorForCiv(j.civ))
+           this.setAttribute(j.city,1);
+           C.displaybadge(this.$.prodcitynumber,j.production)
+           C.displaybadge(this.$.defencecitynumber,"+"+j.defence)
+           return
          }
          if (j.terrain == null) return
          if (j.hv != null) {
-        	 this.setAttribute(j.hv,1)
+           	 this.setAttribute(j.hv,1)
              if (j.hv == "Hut") C.showeleme(this.$.hut,true)
              if (j.hv == "Village") C.showeleme(this.$.village,true)
              return
@@ -536,6 +578,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          else this._removearmy()
 
          if (j.building != null) this._displaybuilding(j.building)
+         else if (j.wonder != null) this._displaywonder(j.wonder)
          else this._displayterrain(j)
 
          if (j.numberofScouts > 0) {

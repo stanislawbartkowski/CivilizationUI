@@ -15,14 +15,20 @@
     
        <paper-dialog id="dialog">
        
-         <div>
+              
+         <div id="dbuilding" style="display:none">
            <div>{{localize('buildingstobuy')}}</div>
-           <civ-listbuildbuy id="listbuy"></civ-listbuildbuy>
-           
-          </div>
+           <civ-listbuildbuy id="listbuy"></civ-listbuildbuy>          
+         </div>
+         
+         <div id="dwonder" style="display:none">
+           <div>{{localize('wonderstobuy')}}</div>
+           <civ-listwondersbuy id="listwonders"></civ-listwondersbuy>          
+         </div>         
            
           <div style="display:inline-block; position:relative; width:250px"> 
             <civ-buildinginfo id="building"></civ-buildinginfo>
+            <civ-square id="wonder"></civ-square>
             
             <div style="display:inline-block">
               <civ-buildingbuttons replace id="replace" style="position:absolute; top:0px"></civ-buildingbuttons>
@@ -53,14 +59,21 @@
                 },
                 p : {
                 	type : Object
+                },
+                wonder : {
+                	type : Boolean
                 }
              }
+        }
+        
+        _iswonder() {
+        	return this.wonder
         }
         
         _extractbuildings(b) {
         	const buildings = []
         	for (var i=0; i<b.length; i++) {
-        		const bname = b[i].building.toLowerCase()
+                var bname = this.getb(b,i)
         		var i1;
         		// remove duplicates
         		for (i1=0;i1<buildings.length;i1++)
@@ -79,10 +92,23 @@
         	param.p = {}
         	param.p.row = this.p.row
         	param.p.col = this.p.col
-        	param.building = this.building
-        	pa.param = param
-        	C.executewithconf(null,"BUYBUILDING",pa)
+        	if (this._iswonder()) {
+                param.wonder = this.building
+                pa.param = param
+        		C.executewithconf(null,"BUYWONDER",pa)
+        	}
+        	else {
+                param.building = this.building
+                pa.param = param
+        		C.executewithconf(null,"BUYBUILDING",pa)
+        	}
         	super.closeIt()
+        }
+        
+        getb(b,i) {
+            var na = b[i].building
+            if (this._iswonder()) na = b[i].wonder
+            return na        	
         }
         
         setBuildingPoint(p) {
@@ -93,8 +119,10 @@
             const rr = this.$.replace
             const bb = this.$.build
             var pp = null
-            for (var i=0; i<b.length; i++)
-                if (b[i].building == e && C.eqp(p,b[i].p)) pp = b[i]
+            for (var i=0; i<b.length; i++) {
+                var na = this.getb(b,i)
+                if (na == e && C.eqp(p,b[i].p)) pp = b[i]                
+            }
         	const pa = {}
         	pa.p = p.square
         	pa.pp = pp
@@ -105,8 +133,10 @@
         clickbuilding(e) {
         	const b = this.b
         	const li = []
-        	for (var i=0; i<b.length; i++)
-        		if (b[i].building == e) li.push(b[i].p)
+        	for (var i=0; i<b.length; i++) {
+                var na = this.getb(b,i)
+        		if (na == e) li.push(b[i].p)
+        	}
         	C.setlistofpoints(li)	
             this.building = e
             this._drawbuilding()
@@ -116,11 +146,23 @@
         _drawbuilding() {
         	const e = this.building 
         	const b = this.$.building
-        	if (e == null) C.displayelem(b,false)
-        	else {
-        		C.displayelem(b,true,true)
-        		b.draw(e)
+        	const w = this.$.wonder
+        	if (e == null) {
+        		C.displayelem(b,false)
+        		C.displayelem(w,false)
         	}
+        	else 
+        		if (this._iswonder()) {
+        			C.displayelem(w,true,true)
+        			const data = {}
+        			data.terrain = ""
+        			data.wonder = e
+        			w.draw(data)
+        		}
+        		else {
+        		  C.displayelem(b,true,true)
+        		  b.draw(e)
+        		}        	
         }
         
         _clearbuttons() {
@@ -129,19 +171,32 @@
             rr.click = e => this.buy()
             bb.click = e => this.buy()
             rr.draw(null)
-            bb.draw(null)                    	
+            bb.draw(null)
         }
         
         openIt(data) {
-        	this._clearbuttons()
+        	this.wonder = data.co == "buywonder"
+            const dw = this.$.dwonder
+            const db = this.$.dbuilding
+            C.displayelem(dw,false)
+            C.displayelem(db,false)
+            this._clearbuttons()
             this.b = null
             this.building = null
             for (var i=0; i<data.list.length; i++)
                 if (C.eqp(data,data.list[i].p)) this.b = data.list[i].list
             const buildings = this._extractbuildings(this.b)
-            const bu = this.$.listbuy
-            bu.fun = e => this.clickbuilding(e)
-            bu.draw(buildings)
+            if (this._iswonder()) {
+            	C.displayelem(this.$.dwonder,true)
+            	const wo = this.$.listwonders
+                wo.fun = e => this.clickbuilding(e)
+                wo.draw(buildings)            	
+            } else {
+              C.displayelem(this.$.dbuilding,true)
+              const bu = this.$.listbuy
+              bu.fun = e => this.clickbuilding(e)
+              bu.draw(buildings)
+            }
             super.noCancelOnOutsideClick()
             this._drawbuilding()
             C.setcurrentcommand("selectbuildingpoint")

@@ -178,7 +178,7 @@ var C = (function() {
     const dialog = document.getElementById("sendproduction-dialog")
     dialog.$.dialog.setScout(pa)
   }
-  
+
   function _setbuildingpoint(pa) {
     const dialog = document.getElementById("buy-building")
     dialog.$.dialog.setBuildingPoint(pa)
@@ -266,7 +266,7 @@ var C = (function() {
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
         return a
      }
-     if (co == "buybuilding") {
+     if (co == "buybuilding" || co == "buywonder") {
         const a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
@@ -406,9 +406,10 @@ var C = (function() {
     iparam.row = window.fixrow(row)
     iparam.col = window.fixcol(col)
     iparam.param = param
+    iparam.co = co
     var pa = verifycommand(co,iparam)
     if (pa == null) return
-    if (co == "buybuilding") {
+    if (co == "buybuilding" || co == "buywonder") {
        _buybuilding(iparam)
        return
     }
@@ -539,6 +540,10 @@ var C = (function() {
         C.opendialogwithpar("showtech-dialog",p.tech)
     },
 
+    showwonders(p) {
+        C.opendialogwithpar("showwonders-dialog",p.wonders)
+    },
+
     showcivinfo(civ) {
        C.opendialogwithpar("showciv-info",civ);
     },
@@ -629,6 +634,10 @@ var C = (function() {
       return C._getresources().buildings
     },
 
+    getlistofwonders() {
+      return C._getresources().wonders
+    },
+
     getjsboard : function() {
        return _getxapp()["data"]
     },
@@ -640,7 +649,7 @@ var C = (function() {
         if (row == null || col == null) return null
         return window.getsquare(window.fixrow(row),window.fixcol(col))
     },
-    
+
     // get square directly without adjusting coordinates
     wgetsquare : function(row,col) {
         if (row == null || col == null) return null
@@ -939,11 +948,18 @@ var C = (function() {
        if (command == "explorehut") C._checkexplorehutCommand(command)
     },
 
+    _findName(l,n,error) {
+      for (var i=0; i<l.length; i++)
+        if (l[i].name.toLowerCase() == n.toLowerCase()) return l[i]
+        C.internalerroralert("Cannot find "+ error + " definition " + n)
+    },
+
     findBuilding(b) {
       const bt = C.getlistofbuildings()
-      for (var i=0; i<bt.length; i++)
-        if (bt[i].name.toLowerCase() == b.toLowerCase()) return bt[i]
-     C.internalerroralert("Cannot find building definition " + b)
+//      for (var i=0; i<bt.length; i++)
+//        if (bt[i].name.toLowerCase() == b.toLowerCase()) return bt[i]
+//     C.internalerroralert("Cannot find building definition " + b)
+      return C._findName(bt,b,"building")
    },
 
    listofallbuildings() {
@@ -952,11 +968,17 @@ var C = (function() {
      for (var i=0; i<bt.length; i++) a.push(bt[i].name.toLowerCase())
      return a
    },
-   
+
+   findWonder(w) {
+     const wl = C.getlistofwonders()
+     return C._findName(wl,w,"wonder")
+
+   },
+
    onList(list,name) {
-     for (var i=0; i<list.length; i++) 
+     for (var i=0; i<list.length; i++)
        if (list[i] == name) return true
-     return false  
+     return false
    }
 
   }  // return

@@ -1,0 +1,37 @@
+<dom-module id="civ-showwondersdialog">
+ <template>
+
+   <paper-dialog id="dialog">
+
+     <civ-dispwonders style="display:none" id="wonders"></civ-dispwonders>
+     
+     <div id="empty" style="display:none">
+       {{localize('nowonders')}}
+     </div>     
+
+   </paper-dialog>
+ </template>
+
+ <script>
+     class CivWondersDialog extends Polymer.CivDialog(Polymer.Element) {
+
+     static get is() { return 'civ-showwondersdialog'; }
+
+     refresh(data) {
+    	 const w = this.$.wonders
+    	 const e = this.$.empty
+    	 if (data.length == 0) {
+    		 C.displayelem(w,false)
+    		 C.displayelem(e,true)
+    	 } else {
+           C.displayelem(e,false)
+           C.displayelem(w,true,true)
+    	   w.draw(data)
+    	 }
+     }
+
+   }
+
+   window.customElements.define(CivWondersDialog.is, CivWondersDialog);
+ </script>
+</dom-module>
