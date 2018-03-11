@@ -10,6 +10,18 @@ At this stage, it is only the beginning. A few basic features are implemented an
 Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/. It is a free quota and please wait a moment until container/dyno is activated.
 
 ## History
+
+## 2018/02/25 : new version deployed
+https://hoteljavaopensource.blogspot.com/2018/02/civilization-board-game-next-version.html
+
+New features
+
+* Buildings.
+
+Fixes
+* Resources are displayed sometimes wrongly: https://github.com/stanislawbartkowski/CivilizationUI/issues/7
+* Technology tree improved.
+
 ## 2018/01/05 : new version deployed
 * Greeting window more descriptive
 * Building up technology tree
