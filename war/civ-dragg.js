@@ -58,6 +58,10 @@ const CivUnitsDraggable = {
    },
 
    lookforel : function(e,tagname) {
+     if (e == null) {
+        C.log("lookforel " + tagname + " e undefined")
+        return null 
+     }
      const pa = e.path
      for (var i=0; i<pa.length;  i++) {
        const u = pa[i]
