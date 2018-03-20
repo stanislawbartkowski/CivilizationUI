@@ -53,6 +53,15 @@
         margin: 1em 0;
         padding: 0;
      }
+     
+     .not {
+       position:absolute;
+       bottom : 5px;
+       right : 5px;
+       height:15px;
+       display:none;
+     }
+     
 
     </style>
     
@@ -68,6 +77,7 @@
         <civ-square class="sq" id="sq" ></civ-square>
       </div>
       <div class="header desc">{{w.desc}}</div>
+      <img id="notimplemented" src="images/icons/thumbdown.svg" class="not" title="{{localize('notimplemented')}}"></img>
     </div>
   </template>
 
@@ -99,6 +109,8 @@
             this.discount = this.w.discount.cost
             this.tech = C.localize(this.w.discount.tech)
           }
+          const ni = this.$.notimplemented
+          C.displayelem(ni,this.w.ni,true)
           s.draw(j)
         }
     }
