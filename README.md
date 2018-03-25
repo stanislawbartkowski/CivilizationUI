@@ -11,6 +11,12 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 
 ## History
 
+## 2018/03/21: new version deployed
+https://hoteljavaopensource.blogspot.de/2018/03/civilization-board-game-next-version.html
+
+New feature
+* Wonder of The World
+
 ## 2018/02/25 : new version deployed
 https://hoteljavaopensource.blogspot.com/2018/02/civilization-board-game-next-version.html
 
