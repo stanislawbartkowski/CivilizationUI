@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/03/11",
+    "appversion": "Version: 2018/03/25",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -105,6 +105,9 @@
     "wonderstobuy" : "Wonders to buy",
     "nowonders" : "No wonders yet",
     "notimplemented" : "Sorry, not implemented yet",
+    "choosedifferent" : "Choose as an opponent different civilization than yours",
+    "opponent" : "Opponent",
+    "created" : " Created: ",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

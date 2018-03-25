@@ -1,0 +1,40 @@
+<dom-module id="civ-listres">
+
+<template>
+
+  <style>
+       .horizontal {
+         @apply(--layout-horizontal);
+       }
+  </style>
+
+<div class="horizontal">
+  <template id="map" is="dom-repeat" items="{{res}}">
+    <civ-dispres data="{{item}}"></civ-dispres>
+ </template>
+<div>
+
+ </template>
+
+ <script>
+     class CivListRes extends Polymer.CivData(Polymer.Element) {
+
+     static get is() { return 'civ-listres'; }
+
+     static get properties() {
+         return {
+             res : {
+                 type: Array
+             }
+         }
+     }
+
+     refresh(pa) {
+       this.res = pa
+     }
+
+   }
+
+   window.customElements.define(CivListRes.is, CivListRes);
+ </script>
+</dom-module>

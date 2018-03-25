@@ -53,11 +53,11 @@ class CivJoinGame extends Polymer.Element {
     content() {
         var li = JSON.parse(C.getlistofjoingames())
         var e = li[this.index]
-        var s = "Opponent"
-        if (e.players.length > 1) s += "s"
+        var s = C.localize("opponent")
+//        if (e.players.length > 1) s += "s"
         s += " " 
         for (var i = 0; i<e.players.length; i++) s += e.players[i] + " "
-        s += " Created: " + C.datetos(e.createtime)
+        s += C.localize("created") + C.datetos(e.createtime)
         return s
     }
     

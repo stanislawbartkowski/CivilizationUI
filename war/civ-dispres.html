@@ -1,0 +1,64 @@
+<dom-module id="civ-dispres">
+   <template>
+
+<style>
+     .vertical {
+       @apply(--layout-vertical);
+     }
+     .empty {
+       height : 54px;
+     }
+</style>
+
+  <div class="vertical">
+     <div id="hvx" class="empty" style="display:None"></div>
+     <civ-resources id="hv" style="display:None"> </civ-resources>
+     <civ-resources id="res"> </civ-resources>
+  </div>
+
+ </template>
+
+ <script>
+     class CivDispRes extends Polymer.CivData(Polymer.Element) {
+
+     static get is() { return 'civ-dispres'; }
+
+     static get properties() {
+       return {
+           tech: {
+               type: Object,
+               value: null
+           }
+         }
+       }
+
+/*
+  hv : Hut or Village or findUnitLevel
+  res : Resource
+
+*/
+     refresh(data) {
+       const hv = this.$.hv
+       const hvx = this.$.hvx
+       const res = this.$.res
+       if (data.hv != null) {
+         const r = []
+         r[data.hv] = 1
+         hv.draw1(r)
+         C.displayelem(hvx,false)
+         C.displayelem(hv,true,true)
+       }
+       else {
+         C.displayelem(hv,false)
+         C.displayelem(hvx,true,true)
+       }
+       const r = {}
+       r.resource = data.resource
+       r.num = 1
+       res.draw([r])
+   }
+ }
+
+   window.customElements.define(CivDispRes.is, CivDispRes);
+ </script>
+</dom-module>

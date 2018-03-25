@@ -1,31 +1,12 @@
  <dom-module id="join-dialog">
   <template>
   
-    <style>   
-       :host {
+   <style is="custom-style" include="civ-paper-button-styles" >
+   
+     :host {
         display: block;
-      }
-      
-  paper-button {
-    font-family: 'Roboto', 'Noto', sans-serif;
-    font-weight: normal;
-    font-size: 14px;
-    -webkit-font-smoothing: antialiased; 
-    margin : 10px;
-    border-radius: 5px;
-  }
-  
-  paper-button.green {
-    background-color: var(--paper-green-500);
-    color: white;
-  }
-  paper-button.green[active] {
-    background-color: var(--paper-red-500);
-  }
-  paper-button.disabled {
-    color: white;
-  }
-      
+      }    
+            
     </style>
     
     
@@ -48,7 +29,7 @@
       <p/><p/>
       
       <p>
-      <template id="civs" is="dom-repeat" filter="notUsed" items="{{lines}}">
+      <template id="civs" is="dom-repeat" items="{{lines}}">
       
        <paper-button id="{{item.civ}}" raised class="green" on-click="_onClickCiv">{{item.civ}}</paper-button>
                        
@@ -98,11 +79,7 @@
       ready() {
         super.ready();
       }
-      
-      notUsed(item) {
-    	  return item != this.civname
-      }
-      
+            
       _disablecivs(disable) {
     	  var d = this.$.dialog
           for (var i = 0; i < this.lines.length; i++) {
@@ -132,6 +109,10 @@
             
       _onClickCiv(p) {
     	  const civo = p.target.id
+    	  if (civo ==  this.civname) {
+    		  C.alertdialog(C.localize("choosedifferent"))
+    		  return
+    	  }
     	  const message = this.localize('doyouwanttostartquestion','civname',this.civname,'civopposite',civo)
     	  C.confirmdialog(message, e => {
         	  this._disablecivs(true)

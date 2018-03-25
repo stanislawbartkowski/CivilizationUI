@@ -39,6 +39,12 @@
   width: 93%;
 }
 
+.text {
+  position:absolute;
+  bottom : 0px;
+  right: 2px;
+}
+
 .not {
   height:15px;
   display:none;
@@ -54,6 +60,10 @@
   <img id="notimplemented" src="images/icons/thumbdown.svg" class="not" title="{{localize('notimplemented')}}"></img>
   <div class="gover" id="gover">{{gover}}</div>
   <div class="building" id="building">{{building}}</div>
+<!--
+  <iron-icon class="text" icon="editor:text-fields" on-click="addMore"></iron-icon>
+-->
+   <civ-helptext id="helptext" class="text"></civ-helptext>
 </div>
 
 </template>
@@ -95,45 +105,42 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
       const n = this.tech
       return n.gover
     }
-    
+
     _building() {
         const n = this.tech
-        return n.building    	
+        return n.building
     }
 
     _ni() {
       const n = this.tech
       return n.ni
     }
-    
+
     _level() {
         const n = this.tech
         return n.level
-    	
+
     }
-    
+
     _setuptech() {
     	const d = this.data
     	if (d.name != null) {
-    		this.tech = this.data
+    		this.tech = d
     		return
     	}
     	// look for tech
-    	const tech = C.getlistoftech()
-    	for (var i=0; i<tech.length; i++)
-    		if (tech[i].name == this.data.tech) {
-    			this.tech = tech[i]
-    			return
-    		}
+      this.tech = C.findTech(this.data.tech)
     }
-    
+
     _disa(d) {
         if (this.data.disa) C.setattr(this,"disa",1)
-        else C.removeattr(this,"disa")    	
+        else C.removeattr(this,"disa")
     }
 
     refresh(data) {
       this._setuptech()
+      const h = this.$.helptext
+      h.setHelpText(this.tech.desc)
       this.name = C.localize(this._name())
       if (this.name == null || this.name == "") this.name = "*" + this._name()
       C.displayelemid(this,"notimplemented",this._ni(),true)
@@ -145,18 +152,18 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
       if (this.building != null) C.displayelemid(this,"building",true)
       this._disa()
     }
-    
+
     refresh1(pa) {
       const disa = pa.disa
       const level = pa.playerlevel
 //      if (this.data.disa) return
       const n = this._name()
       this.data.disa = false
-      if (level < this._level()) this.data.disa = true 
+      if (level < this._level()) this.data.disa = true
       else this.data.disa = C.onList(disa,n)
       this._disa()
     }
-    
+
 }
 
 customElements.define(CivTech.is, CivTech);

@@ -501,6 +501,10 @@ var C = (function() {
        e.setAttribute(attr,value)
     } ,
 
+    settitle : function(e,title) {
+      C.setattr(e,"title",title)
+    },
+
     removeattr : function (e,attr) {
        e.removeAttribute(attr)
     },
@@ -956,9 +960,6 @@ var C = (function() {
 
     findBuilding(b) {
       const bt = C.getlistofbuildings()
-//      for (var i=0; i<bt.length; i++)
-//        if (bt[i].name.toLowerCase() == b.toLowerCase()) return bt[i]
-//     C.internalerroralert("Cannot find building definition " + b)
       return C._findName(bt,b,"building")
    },
 
@@ -972,13 +973,30 @@ var C = (function() {
    findWonder(w) {
      const wl = C.getlistofwonders()
      return C._findName(wl,w,"wonder")
+   },
 
+   findTech(t) {
+     const te = C.getlistoftech()
+     return C._findName(te,t,"technology")
    },
 
    onList(list,name) {
      for (var i=0; i<list.length; i++)
        if (list[i] == name) return true
      return false
+   },
+   
+   convertResourcesToList(data,data1) {
+      const da = []
+      for (var j=0; j<data1.list.length; j++)
+        da.push(data1.list[j])
+      for (var i=0; i<data.length; i++) 
+         if (data[i].num > 0) {
+            const h = {}
+            h.resource = data[i].resource
+            da.push(h)
+         }
+      return da
    }
 
   }  // return
