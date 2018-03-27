@@ -108,6 +108,8 @@
     "choosedifferent" : "Choose as an opponent different civilization than yours",
     "opponent" : "Opponent",
     "created" : " Created: ",
+    "economystatus" : "Economy: {coins}",
+    "combatbonus" : "Combat bonus: {combatbonus}",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

@@ -50,6 +50,16 @@
     <iron-icon src="images/tokens/trade.svg" slot="item-icon"></iron-icon>
     [[numberoftrade]]
   </paper-icon-item>
+
+  <paper-icon-item>
+    <iron-icon src="images/resource/coin.svg" slot="item-icon"></iron-icon>
+    [[economy]]
+  </paper-icon-item>
+
+  <paper-icon-item>
+    <iron-icon src="images/icons/attack.svg" slot="item-icon"></iron-icon>
+    [[combatbonus]]
+  </paper-icon-item>
     
   <paper-icon-item>
     <iron-icon src="images/cities/city.svg" slot="item-icon"></iron-icon>
@@ -103,6 +113,16 @@ class CivPlayerState extends Polymer.CivData(Polymer.Element) {
                     type : String,
                     value : undefined
                 },
+                economy :
+                { 
+                	type : String,
+                	value : undefined
+                },
+                combatbonus :
+                { 
+                    type : String,
+                    value : undefined
+                },
                 citieslimit : {
                     type : String,
                     value : undefined
@@ -114,7 +134,7 @@ class CivPlayerState extends Polymer.CivData(Polymer.Element) {
                 scoutslimit : {
                     type : String,
                     value : undefined
-                }
+                },
         }
     }
     
@@ -127,10 +147,12 @@ class CivPlayerState extends Polymer.CivData(Polymer.Element) {
     }
 
     refresh(y) {
-        this.numberoftrade = "Trade: " + y.trade
+        this.numberoftrahttp://www.onet.pl/de = "Trade: " + y.trade
         this.citieslimit = "Cities left: " + y.citylimit
         this.armieslimit = "Armies left: " + y.armieslimit
         this.scoutslimit = "Scouts left: " + y.scoutslimit
+        this.economy = C.localize("economystatus","coins" ,""+y.coins)
+        this.combatbonus = C.localize("combatbonus","combatbonus",""+y.combatbonus)
         this.government = y.gover
     }
 }
