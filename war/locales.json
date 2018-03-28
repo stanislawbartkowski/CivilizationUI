@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/03/25",
+    "appversion": "Version: 2018/03/29",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -105,11 +105,13 @@
     "wonderstobuy" : "Wonders to buy",
     "nowonders" : "No wonders yet",
     "notimplemented" : "Sorry, not implemented yet",
+    "implemented" : "Hurrah, implemented already",    
     "choosedifferent" : "Choose as an opponent different civilization than yours",
     "opponent" : "Opponent",
     "created" : " Created: ",
     "economystatus" : "Economy: {coins}",
-    "combatbonus" : "Combat bonus: {combatbonus}",
+    "technologyaction" : "Use Technology",
+    "choosetechnology" : "Choose technology you want to use",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

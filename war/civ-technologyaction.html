@@ -1,0 +1,46 @@
+<dom-module id="civ-technologyaction">
+  <template>
+    
+       <paper-dialog id="dialog">
+       <h2>{{localize('choosetechnology')}}</h2>
+       
+       <civ-leveltech id="leveltech"></civ-leveltech>      
+         
+       <div class="buttons">
+         <paper-button dialog-dismiss>{{localize('cancellabel')}}</paper-button>
+       </div>
+         
+       </paper-dialog>
+  </template>
+
+  <script>
+
+  class CivTechnologyAction extends Polymer.CivDialog(Polymer.Element) {
+      
+        static get is() {return 'civ-technologyaction'}
+        
+        clickTech(d) {
+        	
+        }
+             
+        openIt(data) {
+        	const ta = C.getTechActionTable()
+        	const techs = []
+            for (var i=0; i<data.commands.length; i++) {
+                const command = data.commands[i]
+                const id = command.command.toLowerCase()
+                const te = C.getActionTechnology(id)
+                if (te == null) continue
+                const tech = C.findTech(te.tech)
+                techs.push(tech)
+            }
+        	const tlevel = this.$.leveltech
+        	tlevel.clickTech = (d => this.clickTech(d))
+        	tlevel.draw(techs)
+            super.openIt(data)          
+        }
+        
+    }
+    customElements.define(CivTechnologyAction.is, CivTechnologyAction);
+  </script>
+</dom-module>

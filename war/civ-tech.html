@@ -47,7 +47,6 @@
 
 .not {
   height:15px;
-  display:none;
   vertical-align: top;
 }
 
@@ -57,12 +56,10 @@
 
 <div>
   <div class="name">{{name}}</div>
-  <img id="notimplemented" src="images/icons/thumbdown.svg" class="not" title="{{localize('notimplemented')}}"></img>
+<!-- <img id="notimplemented" src="images/icons/thumbdown.svg" class="not" title="{{localize('notimplemented')}}"></img> -->
+  <civ-implemented id="notimplemented" class="not"></civ-implemented>
   <div class="gover" id="gover">{{gover}}</div>
   <div class="building" id="building">{{building}}</div>
-<!--
-  <iron-icon class="text" icon="editor:text-fields" on-click="addMore"></iron-icon>
--->
    <civ-helptext id="helptext" class="text"></civ-helptext>
 </div>
 
@@ -143,7 +140,9 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
       h.setHelpText(this.tech.desc)
       this.name = C.localize(this._name())
       if (this.name == null || this.name == "") this.name = "*" + this._name()
-      C.displayelemid(this,"notimplemented",this._ni(),true)
+//      C.displayelemid(this,"notimplemented",this._ni(),true)
+      const ni = this.$.notimplemented
+      ni.draw(this._ni())
       C.displayelemid(this,"gover",false,true)
       C.displayelemid(this,"building",false,true)
       this.gover = this._gover()
@@ -156,7 +155,6 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
     refresh1(pa) {
       const disa = pa.disa
       const level = pa.playerlevel
-//      if (this.data.disa) return
       const n = this._name()
       this.data.disa = false
       if (level < this._level()) this.data.disa = true

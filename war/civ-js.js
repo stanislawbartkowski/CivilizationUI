@@ -549,9 +549,13 @@ var C = (function() {
     },
 
     showcivinfo(civ) {
-       C.opendialogwithpar("showciv-info",civ);
+       C.opendialogwithpar("showciv-info",civ)
     },
 
+    technologyaction(y) {
+       C.opendialogwithpar("civ-technologyaction",y)
+    },
+    
     researchdialog(y) {
         const p = {}
         const b = C.getjsboard()
@@ -997,6 +1001,21 @@ var C = (function() {
             da.push(h)
          }
       return da
+   },
+   
+   getTechActionTable() {
+     const tab = [
+       { "name" : "potteryaction", "tech" : "Pottery" },
+       { "name" : "philosophyaction", "tech" : "Philosophy" }       
+     ]
+     return tab     
+   },
+   
+   getActionTechnology(action) {
+     const tab = this.getTechActionTable()
+     for (var i=0; i<tab.length; i++)
+        if (tab[i].name == action) return tab[i]
+     return null   
    }
 
   }  // return

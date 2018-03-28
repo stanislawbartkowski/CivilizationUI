@@ -147,12 +147,12 @@ class CivPlayerState extends Polymer.CivData(Polymer.Element) {
     }
 
     refresh(y) {
-        this.numberoftrahttp://www.onet.pl/de = "Trade: " + y.trade
+        this.numberoftrade = "Trade: " + y.trade
         this.citieslimit = "Cities left: " + y.citylimit
         this.armieslimit = "Armies left: " + y.armieslimit
         this.scoutslimit = "Scouts left: " + y.scoutslimit
         this.economy = C.localize("economystatus","coins" ,""+y.coins)
-        this.combatbonus = C.localize("combatbonus","combatbonus",""+y.combatbonus)
+        this.combatbonus = C.localize("combatbonus") + ": " + y.combatbonus
         this.government = y.gover
     }
 }

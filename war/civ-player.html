@@ -182,6 +182,11 @@
       <iron-icon src="images/icons/buywonder.svg" slot="item-icon"></iron-icon> 
       <span>{{localize('buywonder')}}</span>
     </paper-icon-item>
+
+    <paper-icon-item id="technologyaction" on-click="_onClick"> 
+      <iron-icon src="images/cities/research.svg" slot="item-icon"></iron-icon> 
+      <span>{{localize('technologyaction')}}</span>
+    </paper-icon-item>
     
     <div class="undobuttons">
             
@@ -345,7 +350,8 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "attack",
                             "research",
                             "buybuilding",
-                            "buywonder"
+                            "buywonder",
+                            "technologyaction"
                   ]
              }
 	   }
@@ -428,6 +434,10 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
             	C.researchdialog(this.y)
             	return
             }            
+            if (id == "technologyaction") {
+            	C.technologyaction(this.y)
+            	return
+            }
            this._callitemize(id) 
          }
     
@@ -485,7 +495,8 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
               var disableu = true
               for (var i=0; i<y.commands.length; i++) {
                   const command = y.commands[i]
-                  const id = command.command.toLowerCase()
+                  var id = command.command.toLowerCase()
+                  if (C.getActionTechnology(id) != null) id = "technologyaction"
                   const bu = this.shadowRoot.getElementById(id);
                   C.disableleme(bu,false)
                   if (this._youactive())

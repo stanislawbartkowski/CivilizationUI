@@ -3,7 +3,6 @@
 
     <paper-dialog id="dialog">
 
-<!--       <civ-resources id="resources"></civ-resources> -->
         <civ-listres id="resources"></civ-listres>  
     
      </paper-dialog>
@@ -16,17 +15,6 @@
       static get is() { return 'show-hvdialog'; }
             
       openIt(data) {
-//    	 if (data == null || data.list == null) return
-//         const r = this.$.resources
-//         const a = []
-//    	 for (var i=0; i<data.list.length; i++) {
-//    		 var c = {}
-//    		 c.resource = data.list[i].resource
-//    		 c.num = 1
-//    		 a.push(c)
-//    	 }
-//         r.draw(a)
-//         super.openIt(data)
          if (data == null) return
          const r = this.$.resources
          r.draw(data)
