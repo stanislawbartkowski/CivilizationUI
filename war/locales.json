@@ -111,7 +111,11 @@
     "created" : " Created: ",
     "economystatus" : "Economy: {coins}",
     "technologyaction" : "Use Technology",
-    "choosetechnology" : "Choose technology you want to use",
+    "choosetechnologytouse" : "Choose technology you want to use",
+    "chooseresourcetospend" : "Choose {num} resources to spend",
+    "resourcepickedalready" : "Resource clicked already, choose another one",
+    "resourcetreshlodreached" : "You have already picked {num} resource, click Spend button",
+    "spendresourcebutton" : "Spend Resources",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

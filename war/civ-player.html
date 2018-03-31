@@ -458,6 +458,22 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
              const g = this.data.board.game
              return y.civ == g.active
          }
+         
+         displaylistres() {
+             const y = this.y
+             const listda = C.convertResourcesToList(y.resources,y.hutvillages)
+             C.opendialogwithpar("showhv-dialog",listda)
+         }
+         
+         _displayres() {
+        	 const y = this.y
+             const respanel = this.$.resourcespanel
+             respanel.fun = e => this.displaylistres()
+             const r = y.resources
+             respanel.draw(r)
+             const h = y.hutvillages
+             respanel.draw1(h)
+         }
                            
          refresh(b) {
         	   if (b == null) {
@@ -512,11 +528,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
               const u = this.$.unitmenu
               C.disableleme(u,disableu)
               C.setUnitsNumb(this,y.units)
-              const respanel = this.$.resourcespanel
-              const r = y.resources
-              respanel.draw(r)
-              const h = y.hutvillages
-              respanel.draw1(h)
+              this._displayres()
               if (this._youactive()) {
             	  var s = null
             	  for (var i=0; i<y.commands.length; i++)

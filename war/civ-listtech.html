@@ -20,27 +20,42 @@
              },
              level : {
                type : Number
-             },
-             playerlevel : {
-               type : Number,
-               value : null
-             },
-             clickTech : {
-               type : Object,
-               value : null
              }
          }
      }
 
-     refresh(pa) {
-       this.techs = []
-       if (pa == null) return
+     // parameter:
+     // data.playertech
+     // data.disa (can be null), list of technologies disabled
+
+     refresh(data) {
+       this.techs = []       
+       if (data == null || data.playertech == null) return
        const leve = this.level
+       const pa = data.playertech
        for (var i=0; i<pa.length; i++) {
-         const c = pa[i]
-         if (this.clickTech != null) c.clickTech = (d => this.clickTech(d))
-         if (pa[i].level == leve) this.techs.push(c)
+    	 // make a copy
+         if (pa[i].level != leve) continue
+    	 const c = {}
+    	 c.tech = pa[i].tech
+    	 c.ni = pa[i].ni
+    	 c.level = pa[i].level
+         c.disa = false
+         c.coins = pa[i].coins
+         if (data.disa != null) c.disa = C.onList(data.disa,c.tech)
+         this.techs.push(c)
        }
+     }
+     
+     afterdraw(data) {
+    	if (this.fun == null) return
+    	const s = C.getShadow(this)
+        for (var i=0; i < s.childNodes.length; i++) {
+          const cc = s.childNodes[i]
+          if (cc.nodeName == "CIV-TECH") {
+             cc.fun = d => this.fun(d)
+          }
+       } // for    	
      }
      
    }

@@ -8,9 +8,9 @@
        }
   </style>
 
-<div class="horizontal">
-  <template id="map" is="dom-repeat" items="{{res}}">
-    <civ-dispres data="{{item}}"></civ-dispres>
+<div id="map" class="horizontal">
+  <template is="dom-repeat" items="{{res}}">
+    <civ-dispres id="i{{index}}" data="{{item}}"></civ-dispres>
  </template>
 <div>
 
@@ -28,9 +28,31 @@
              }
          }
      }
+     
+     getRes() {
+    	 if (this.res == null) return []
+    	 return this.res
+     }
 
      refresh(pa) {
+       if (pa == null) {
+    	   this.res = []
+    	   return
+       }
        this.res = pa
+     }
+     
+     afterdraw(pa) {
+    	 if (this.fun == null || pa == null) return
+    	 const s = this.$.map
+         for (var i=0; i < s.childNodes.length; i++) {
+           const cc = s.childNodes[i]
+           if (cc.nodeName == "CIV-DISPRES") {
+        	 const id = cc.id  
+             cc.fun = d => 
+        	    this.fun(d,id)
+           }
+         } // for
      }
 
    }

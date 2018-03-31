@@ -19,7 +19,12 @@
  </template>
 
  <script>
-     class CivDispRes extends Polymer.CivData(Polymer.Element) {
+     class CivDispRes extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
+    	 
+     constructor() {
+         super();
+         Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
+     }
 
      static get is() { return 'civ-dispres'; }
 
@@ -37,6 +42,13 @@
   res : Resource
 
 */
+
+
+     handleClick() {
+	   if (this.fun == null) return
+	   this.fun(this.data)	  
+     }
+ 
      refresh(data) {
        const hv = this.$.hv
        const hvx = this.$.hvx

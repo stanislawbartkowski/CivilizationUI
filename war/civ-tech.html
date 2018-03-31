@@ -50,16 +50,27 @@
   vertical-align: top;
 }
 
+.coins {
+  position:absolute;
+  bottom : 2px;
+  right : 35px;
+  height:15px;
+}
+
 </style>
 
 </custom-style>
 
 <div>
-  <div class="name">{{name}}</div>
-<!-- <img id="notimplemented" src="images/icons/thumbdown.svg" class="not" title="{{localize('notimplemented')}}"></img> -->
-  <civ-implemented id="notimplemented" class="not"></civ-implemented>
-  <div class="gover" id="gover">{{gover}}</div>
-  <div class="building" id="building">{{building}}</div>
+   <div class="name">{{name}}</div>
+   <civ-implemented id="notimplemented" class="not"></civ-implemented>
+   <div class="gover" id="gover">{{gover}}</div>
+   <div class="building" id="building">{{building}}</div>
+   
+   <img id="coins" hidden class="coins" src="images/resource/coin.svg"  title="{{localize('coinlabel')}}"/>
+   <paper-badge hidden id="coinsnumber" for="coins" label="99">
+   </paper-badge>
+      
    <civ-helptext id="helptext" class="text"></civ-helptext>
 </div>
 
@@ -85,12 +96,15 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
             level : {
               type : Number
             },
+            tech : {
+            	type : Object
+            }
           }
         }
 
     handleClick() {
       if (this.data.disa) return
-      if (this.data.clickTech != null) this.data.clickTech(this.data)
+      if (this.fun != null) this.fun(this.data)
     }
 
     _name() {
@@ -114,24 +128,28 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
     }
 
     _level() {
-        const n = this.tech
-        return n.level
-
+        return this.tech.n.level
     }
 
     _setuptech() {
-    	const d = this.data
-    	if (d.name != null) {
-    		this.tech = d
-    		return
-    	}
-    	// look for tech
       this.tech = C.findTech(this.data.tech)
     }
 
-    _disa(d) {
+    _disa() {
         if (this.data.disa) C.setattr(this,"disa",1)
         else C.removeattr(this,"disa")
+    }
+    
+    _coins() {
+    	const coins = this.$.coins
+    	const coinsnumber = this.$.coinsnumber
+    	if (this.data.coins == null || this.data.coins == 0) {    		
+    		C.showeleme(coins,false)
+    		C.showeleme(coinsnumber,false)
+    		return
+    	}
+    	C.showeleme(coins,true)
+        C.displaybadge(coinsnumber,this.data.coins)
     }
 
     refresh(data) {
@@ -140,7 +158,6 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
       h.setHelpText(this.tech.desc)
       this.name = C.localize(this._name())
       if (this.name == null || this.name == "") this.name = "*" + this._name()
-//      C.displayelemid(this,"notimplemented",this._ni(),true)
       const ni = this.$.notimplemented
       ni.draw(this._ni())
       C.displayelemid(this,"gover",false,true)
@@ -150,18 +167,8 @@ class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Elem
       if (this.gover != null) C.displayelemid(this,"gover",true)
       if (this.building != null) C.displayelemid(this,"building",true)
       this._disa()
+      this._coins()
     }
-
-    refresh1(pa) {
-      const disa = pa.disa
-      const level = pa.playerlevel
-      const n = this._name()
-      this.data.disa = false
-      if (level < this._level()) this.data.disa = true
-      else this.data.disa = C.onList(disa,n)
-      this._disa()
-    }
-
 }
 
 customElements.define(CivTech.is, CivTech);

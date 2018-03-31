@@ -100,10 +100,6 @@
                   readOnly : true,
                   type :Array,
                   value : ["hut","village","trade"]
-               },
-               objectclick : {
-            	   type : Object,
-            	   value : null
                }
           }
       }
@@ -119,14 +115,11 @@
       }
 
       click(e) {
-    	  if (this.objectclick != null) {
+    	  if (this.fun != null) {
     		  const id = e.srcElement.id
-    		  this.objectclick.clickres(id)
+    		  this.fun(id)
     		  return
     	  }
-    	  // convertResourcesToList
-    	  const listda = C.convertResourcesToList(this.data,this.data1)
-    	  C.opendialogwithpar("showhv-dialog",listda)
       }
 
       _display(n,num) {
@@ -148,8 +141,8 @@
     	  const r = this.data1
     	  if (r == null) return
     	  this._displayhv(r,"Hut")
-        this._displayhv(r,"Village")
-        this._displayhv(r,"trade")
+          this._displayhv(r,"Village")
+          this._displayhv(r,"trade")
       }
 
       // ignore parameter

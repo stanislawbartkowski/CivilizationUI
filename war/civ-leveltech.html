@@ -50,44 +50,24 @@
              ident: {
                  type: Boolean,
                  value : false
-             },
-             playerlevel : {
-               type : Number,
-               value : null
-             },
-             clickTech : {
-               type : Object,
-               value : null
              }
          }
      }
 
+     // parameter:
+     // data.playertech
+     // data.disa (can be null), list of technologies disabled
      refresh(pa) {
        for (var i=1; i< 5; i++) {
          const li = this.$["list"+i]
          if (i > 1) C.displayelemid(this,"ident"+i,this.ident,true)
-         li.playerlevel = this.playerlevel
-         if (this.clickTech != null)
-           li.clickTech = (d => this.clickTech(d))
+         if (this.fun != null) li.fun = d => this.fun(d)
          li.draw(pa)
          const le1 = this.$["level" + i]
          le1.draw(i)
        }
      }
      
-     refresh1(pa) {
-         for (var k=1; k< 5; k++) {
-             const le = this.$["list"+k]
-       	     const s = C.getShadow(le)
-    	     for (var i=0; i < s.childNodes.length; i++) {
-    		   const cc = s.childNodes[i]
-    		   if (cc.nodeName == "CIV-TECH") {
-    			 cc.draw1(pa)
-    		   }
-    	     } // for
-         } //for
-     } 
-
    }
 
    window.customElements.define(CivLevelTech.is, CivLevelTech);

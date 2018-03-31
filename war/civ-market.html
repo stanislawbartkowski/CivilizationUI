@@ -121,6 +121,12 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
 	     }     		
     }
     
+    _displayres() {
+        const b = this.data
+        const listda = C.convertResourcesToList(b.board.resources,b.board.hutvillagesused)
+        C.opendialogwithpar("showhv-dialog",listda)
+    }
+    
     refresh(b) {
         const res = this.$.resources
     	if (b == null) {
@@ -135,6 +141,9 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
         C.setUnitsNumb(this.$.killed,killed)
         const r = b.board.resources
         res.draw(r)
+        const h = b.board.hutvillagesused
+        res.draw1(h)
+        res.fun = e => this._displayres()
         const bld = this.$.bld
         bld.draw(b.board.buildings)
         const wo = this.$.wonders

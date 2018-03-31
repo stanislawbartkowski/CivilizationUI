@@ -3,7 +3,11 @@
 
    <paper-dialog id="dialog" modal>
 
-     <civ-leveltech id="currenttech" ident="true"></civ-leveltech>
+     <paper-dialog-scrollable>
+
+        <civ-leveltech id="currenttech" ident="true"></civ-leveltech>
+        
+      </paper-dialog-scrollable>
 
      <div class="buttons">
        <paper-button dialog-dismiss>{{localize('cancellabel')}}</paper-button>
@@ -17,10 +21,12 @@
 
      static get is() { return 'civ-showtechdialog'; }
 
+     // parameter: playertech
      refresh(data) {
-       const mtech = data
+       const pa = {}
+       pa.playertech = data
        const dcurrenttech = this.$.currenttech
-       dcurrenttech.draw(mtech)
+       this.$.currenttech.draw(pa)
      }
 
    }

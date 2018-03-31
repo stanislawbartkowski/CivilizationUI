@@ -178,6 +178,11 @@ var C = (function() {
     const dialog = document.getElementById("sendproduction-dialog")
     dialog.$.dialog.setScout(pa)
   }
+  
+  function _setcitytotechnology(pa) {
+    const dialog = document.getElementById("civ-technologyaction")
+    dialog.$.dialog.setCity(pa)
+  }
 
   function _setbuildingpoint(pa) {
     const dialog = document.getElementById("buy-building")
@@ -273,6 +278,7 @@ var C = (function() {
      }
      if (co == "move")  return itemize.moves
      if (co == "setcity" || co == "setcapital") return itemize
+     if (co == "philosophyaction" || co == "potteryaction") return itemize
      if (co == "revealtile") {
        var a = []
        a.push(itemize.p)
@@ -378,11 +384,9 @@ var C = (function() {
       pa.col = -1
       pa.param = null
     }
-    if (typeof pa.param == 'string') window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
-    else
-    if (typeof pa.param == "number") window.executecommandN(co.toUpperCase(),pa.row,pa.col,pa.param)
-    else
-    window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param)
+    var stype = typeof pa.param
+    if(pa.param != null && pa.param.constructor == Array) stype = "array"
+    window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param,stype)
   },
 
   executewithconffun : function(question,co,fun) {
@@ -417,6 +421,11 @@ var C = (function() {
        if (_twotilereveal(iparam)) return
     if (co == "startmove")
        if (_multifigures(pa)) return
+    if (co == "philosophyaction" || co == "potteryaction") {
+      _setcitytotechnology(iparam)
+      return
+    }
+       
     if (co == "sendproduction" || co == "harvestresource") {
        _sendproductioncommand(pa)
        return
@@ -557,12 +566,7 @@ var C = (function() {
     },
     
     researchdialog(y) {
-        const p = {}
-        const b = C.getjsboard()
-        p.tech = b.board.tech
-        p.playertech = y.tech
-        p.playerlevel = y.tradelevel
-        C.opendialogwithpar("tech-dialog",p)
+        C.opendialogwithpar("tech-dialog",y)
     },
 
     localize : function(...args) {
@@ -599,12 +603,12 @@ var C = (function() {
     },
 
     getyouplay : function() {
-      var y = _getxapp().$.youplay
+      const y = _getxapp().$.youplay
       return y
     },
 
     getmarket : function() {
-      var y = _getxapp().$.market
+      const y = _getxapp().$.market
       return y
     },
 
@@ -1016,8 +1020,24 @@ var C = (function() {
      for (var i=0; i<tab.length; i++)
         if (tab[i].name == action) return tab[i]
      return null   
-   }
-
+   },
+   
+   getTechnologyAction(tech) {
+     const tab = this.getTechActionTable()
+     for (var i=0; i<tab.length; i++)
+        if (tab[i].tech == tech) return tab[i]
+     return null   
+   },
+   
+   toTech(t) { 
+      const nt = {}
+      nt.coins = 0
+      nt.initial = false
+      nt.level = t.level
+      nt.tech = t.name
+      return nt
+   } 
+      
   }  // return
  } // function
 

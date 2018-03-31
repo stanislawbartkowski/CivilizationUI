@@ -56,15 +56,17 @@ Polymer.CivData = function(superClass) {
        }
       
        draw(data) {
-//           if (!this._different(this.data,data)) return
     	   this.data = data
-//    	   this.refresh(data)
+    	   if (this.afterdraw != null) 
+             C.sleep(500).then(
+                () => {
+                   this.afterdraw(data)
+                   }
+             )    	   
        }
        
        draw1(data) {
-//           if (!this._different(this.data1,data)) return
            this.data1 = data
-//           this.refresh1(data)
        }
    }   
 }

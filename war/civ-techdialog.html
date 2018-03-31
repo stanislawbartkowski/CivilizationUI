@@ -16,22 +16,28 @@
 
    <paper-dialog id="dialog" modal>
 
-     <civ-leveltech id="tech"></civ-leveltech>
-     <civ-leveltech id="currenttech" ident="true"></civ-leveltech>
+     <paper-dialog-scrollable>
 
-     <span class="techbuttons">
+        <civ-leveltech id="tech"></civ-leveltech>
+        <civ-leveltech id="currenttech" ident="true"></civ-leveltech>
 
-    <span id="choosemessage" style="width:80px">
-        {{localize('choosetechnology')}}
-    </span>
-     <span id="research" style="display:none">
-       <civ-tlevel id="level"></civ-tlevel>
-       <civ-tech id="techresearch"> </civ-tech>
-    </span>
+      </paper-dialog-scrollable>    
 
-    <span style="width:20px">
-      &nbsp;
-    </span>
+        <span class="techbuttons">
+
+        <span id="choosemessage" style="width:80px">
+           {{localize('choosetechnology')}}
+        </span>
+        
+        <span id="research" style="display:none">
+          <civ-tlevel id="level"></civ-tlevel>
+          <civ-tech id="techresearch"> </civ-tech>
+        </span>
+
+        <span style="width:20px">
+          &nbsp;
+        </span>
+        
 
        <paper-button on-click="_onResearch">
            <iron-icon icon="fingerprint"></iron-icon>
@@ -69,7 +75,7 @@
       const p = {}
       p.row = -1
       p.col = -1
-      p.param = this.tech.name
+      p.param = this.tech.tech
       C.executewithconf(null,"RESEARCH",p,this)
       this._clear()
     }
@@ -84,31 +90,38 @@
       tr.draw(d)
     }
 
+    _preparetechnology(y) {
+        const p = {}
+        p.disa = []
+        p.playertech = []
+        const tt = y.tech
+        for (var i=0; i<tt.length; i++)         	
+          p.disa.push(tt[i].tech)
+        
+        const tech = C.getlistoftech()
+        for (var i=0; i<tech.length; i++) {
+           const t = tech[i]
+           const nt = C.toTech(t)
+           p.playertech.push(nt)
+           if (nt.level > y.tradelevel) p.disa.push(nt.tech)
+        }
+        const dtech = this.$.tech
+        dtech.fun = (d => this.clickTech(d))
+        dtech.draw(p)        
+    }
+    
+    _prepareplayer(y) {
+    	const p = {}
+    	p.playertech = y.tech
+        const dcurrenttech = this.$.currenttech
+        dcurrenttech.draw(p)    	
+    }
 
-     refresh(data) {
+     refresh(y) {
        this._clear()
-       const tech = C.getlistoftech()
-       const mtech = data.playertech
-       const disa = []
-       for (var i =0; i<mtech.length; i++)
-         disa.push(mtech[i].tech)
-       const playerlevel = data.playerlevel
-       const dtech = this.$.tech
-       dtech.clickTech = (d => this.clickTech(d))
-       const dcurrenttech = this.$.currenttech
-       dtech.draw(tech)
-       dcurrenttech.draw(mtech)
+       this._preparetechnology(y)
+       this._prepareplayer(y)
        C.displayelemid(this,"choosemessage",true)
-       // wait some time to expand dom repeat
-       C.sleep(500).then(
-          () => {
-        	  const s = {}
-        	  s.playerlevel = playerlevel
-        	  s.disa = disa
-        	  dtech.draw1(s)
-          }
-       )
-
      }
 
    }
