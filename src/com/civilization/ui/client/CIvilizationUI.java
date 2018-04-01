@@ -418,6 +418,8 @@ public class CIvilizationUI implements EntryPoint {
 	 *            parameter as JSON object
 	 */
 	public static void executeCommand(String s, int row, int col, JavaScriptObject param, String tofparam) {
+		String logmess = s + " tofparam:" + tofparam + "!";
+		consoleLog(logmess);
 		String pa = jsParamtoS(param, tofparam);
 		execute(s, row, col, pa);
 	}
