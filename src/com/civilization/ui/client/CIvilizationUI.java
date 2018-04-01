@@ -391,10 +391,16 @@ public class CIvilizationUI implements EntryPoint {
 	private static String jsParamtoS(Object param, String tofparam) {
 		if (param == null)
 			return null;
-		if (tofparam.equals("string"))
+		String ss = param.toString();
+		consoleLog(ss + "  !" + tofparam + "!");
+		
+		if (tofparam.equals("string")) {
+			consoleLog("string");
 			return "\"" + (String) param + "\"";
+		}
 		if (tofparam.equals("number"))
 			return ((Double) param).toString();
+		consoleLog("object");
 		JavaScriptObject oo = (JavaScriptObject) param;
 		if (tofparam.equals("object")) {
 			JSONObject o = new JSONObject(oo);
