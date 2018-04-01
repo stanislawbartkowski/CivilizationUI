@@ -386,7 +386,11 @@ var C = (function() {
     }
     var stype = typeof pa.param
     if(pa.param != null && pa.param.constructor == Array) stype = "array"
-    window.executecommand(co.toUpperCase(),pa.row,pa.col,pa.param,stype)
+    if (pa.param == null) window.executecommandNull(co.toUpperCase(),pa.row,pa.col)
+    else if (stype == "string") window.executecommandS(co.toUpperCase(),pa.row,pa.col,pa.param)
+    else if (stype == "number") window.executecommandN(co.toUpperCase(),pa.row,pa.col,pa.param)
+    else if (stype == "object") window.executecommandO(co.toUpperCase(),pa.row,pa.col,pa.param)
+    else window.executecommandA(co.toUpperCase(),pa.row,pa.col,pa.param)
   },
 
   executewithconffun : function(question,co,fun) {

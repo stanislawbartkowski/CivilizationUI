@@ -381,37 +381,6 @@ public class CIvilizationUI implements EntryPoint {
 	}
 
 	/**
-	 * Convert JSON object to string, recognized the string
-	 * 
-	 * @param param
-	 *            JSON object
-	 * @return string
-	 */
-
-	private static String jsParamtoS(Object param, String tofparam) {
-		if (param == null)
-			return null;
-		String ss = param.toString();
-		consoleLog(ss + "  !" + tofparam + "!");
-		
-		if (tofparam.equals("string")) {
-			consoleLog("string");
-			return "\"" + (String) param + "\"";
-		}
-		if (tofparam.equals("number"))
-			return ((Double) param).toString();
-		consoleLog("object");
-		JavaScriptObject oo = (JavaScriptObject) param;
-		if (tofparam.equals("object")) {
-			JSONObject o = new JSONObject(oo);
-			return o.isObject().toString();
-		}
-		// array
-		JSONArray a = new JSONArray(oo);
-		return a.isArray().toString();
-	}
-
-	/**
 	 * Wrapper around command execution, reflects command format
 	 * 
 	 * @param s
@@ -423,24 +392,31 @@ public class CIvilizationUI implements EntryPoint {
 	 * @param param
 	 *            parameter as JSON object
 	 */
-	public static void executeCommand(String s, int row, int col, JavaScriptObject param, String tofparam) {
-		String logmess = s + " tofparam:" + tofparam + "!";
-		consoleLog(logmess);
-		String pa = jsParamtoS(param, tofparam);
-		execute(s, row, col, pa);
+	public static void executeCommandA(String s, int row, int col, JavaScriptObject param, String tofparam) {
+		JavaScriptObject oo = (JavaScriptObject) param;
+		JSONArray a = new JSONArray(oo);
+		execute(s, row, col, a.isArray().toString());
 	}
 
-	// public static void executeCommandS(String s, int row, int col, String param)
-	// {
-	// String pa = jsParamtoS(param);
-	// execute(s, row, col, pa);
-	// }
+	public static void executeCommandO(String s, int row, int col, JavaScriptObject param, String tofparam) {
+		JavaScriptObject oo = (JavaScriptObject) param;
+		JSONObject o = new JSONObject(oo);
+		execute(s, row, col, o.isObject().toString());
+	}
 
-	// public static void executeCommandN(String s, int row, int col, Double param)
-	// {
-	// String pa = jsParamtoS(param);
-	// execute(s, row, col, pa);
-	/// }
+	public static void executeCommandS(String s, int row, int col, String param) {
+		String p = "\"" + param + "\"";
+		execute(s, row, col, p);
+	}
+
+	public static void executeCommandN(String s, int row, int col, Double param) {
+		String p = param.toString();
+		execute(s, row, col, p);
+	}
+
+	public static void executeCommandNull(String s, int row, int col) {
+		execute(s, row, col, null);
+	}
 
 	public static native void consoleLog(String message) /*-{
 		$wnd.C.log("UI:" + message);
@@ -654,15 +630,22 @@ public class CIvilizationUI implements EntryPoint {
 		$wnd.getsquare = function(param1, param2) {
 			return @com.civilization.ui.client.CIvilizationUI::getSquare(*)(param1,param2);
 		}
-		$wnd.executecommand = function(param1, param2, param3, param4, param5) {
-			@com.civilization.ui.client.CIvilizationUI::executeCommand(*)(param1,param2,param3,param4,param5);
+		$wnd.executecommandA = function(param1, param2, param3, param4) {
+			@com.civilization.ui.client.CIvilizationUI::executeCommandA(*)(param1,param2,param3,param4);
 		}
-		//		$wnd.executecommandS = function(param1, param2, param3, param4) {
-		//			@com.civilization.ui.client.CIvilizationUI::executeCommandS(*)(param1,param2,param3,param4);
-		//		}
-		//		$wnd.executecommandN = function(param1, param2, param3, param4) {
-		//			@com.civilization.ui.client.CIvilizationUI::executeCommandN(*)(param1,param2,param3,param4);
-		//		}
+
+		$wnd.executecommandS = function(param1, param2, param3, param4) {
+			@com.civilization.ui.client.CIvilizationUI::executeCommandS(*)(param1,param2,param3,param4);
+		}
+		$wnd.executecommandN = function(param1, param2, param3, param4) {
+			@com.civilization.ui.client.CIvilizationUI::executeCommandN(*)(param1,param2,param3,param4);
+		}
+		$wnd.executecommandO = function(param1, param2, param3, param4) {
+			@com.civilization.ui.client.CIvilizationUI::executeCommandO(*)(param1,param2,param3,param4);
+		}
+		$wnd.executecommandNull = function(param1, param2, param3) {
+			@com.civilization.ui.client.CIvilizationUI::executeCommandNull(*)(param1,param2,param3);
+		}
 		$wnd.itemizecommand = function(param1) {
 			@com.civilization.ui.client.CIvilizationUI::itemizecommand(*)(param1);
 		}
