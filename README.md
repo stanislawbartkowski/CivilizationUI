@@ -14,6 +14,9 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 ## 2018/04/05: new version deployed
 http://hoteljavaopensource.blogspot.de/2018/04/introduction-i-deployed-new-version-of.html
 
+Fixed:
+https://github.com/stanislawbartkowski/CivilizationUI/issues/8
+
 New feaures
 * Gain coin by using Pottery technology
 * Economic progress
