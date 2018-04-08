@@ -220,6 +220,11 @@
     background-image: url("images/wonders/modern.svg");
   }
 
+  .culturebadge {
+    --paper-badge-width: 17px;
+    --paper-badge-height: 17px;
+  }
+
  </style>
 
    <div style="width : {{boxwidth}}px; height : {{boxheight}}px; ">
@@ -240,18 +245,24 @@
      <img id="incense" hidden src="images/resource/incense.svg" title="{{localize('incenselabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="silk" hidden src="images/resource/silk.svg"  title="{{localize('silklabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="coin" hidden src="images/resource/coin.svg"  title="{{localize('coinlabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+     <img id="culture" hidden src="images/tokens/culture.svg"  title="{{localize('culturelabel')}}" style="z-index:1; position:absolute; bottom:0px; right:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="coinup" hidden src="images/resource/coin.svg"  title="{{localize('coinlabel')}}" style="z-index:1; position:absolute; up:0px; left:0px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
      <img id="hut" hidden src="images/huts/hut.svg" title="{{localize('hutlabel')}}"   style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
      <img id="village" hidden src="images/huts/village.svg" title="{{localize('villagelabel')}}" style="z-index:0; position:absolute; left:{{hutleft}}px; bottom:{{hutbottom}}px; width:{{hutwidth}}px; height:{{hutheight}}px;"/>
 
      <span id="attcity" style="display:none">
        <img id="prodcity" src="images/tokens/production.svg" style="z-index:1; position:absolute; bottom:0px; left:0; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-       <paper-badge id="prodcitynumber" for="prodcity" label="0">
+       <paper-badge id="prodcitynumber" for="prodcity" label="0" title="{{localize('productionlabel')}}">
        </paper-badge>
 
        <img id="defencecity" src="images/cities/shield.svg" style="z-index:1; position:absolute; bottom:0px; right:13px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
-       <paper-badge id="defencecitynumber" for="defencecity" label="0">
+       <paper-badge id="defencecitynumber" for="defencecity" label="0" title="{{localize('defencelabel')}}">
        </paper-badge>
+
+       <img id="culturecity" src="images/tokens/culture.svg" style="z-index:1; position:absolute; left:0px; top:7px; width:{{tokenwidth}}px; height:{{tokenheight}}px;"/>
+       <paper-badge id="culturecitynumber" for="culturecity" label="0" class="culturebadge" title="{{localize('culturelabel')}}">
+       </paper-badge>
+
     </span>
 
 
@@ -463,6 +474,7 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
        C.showeleme(this.$.hut,false)
        C.showeleme(this.$.village,false)
        C.displayelem(this.$.wonder,false)
+       C.showeleme(this.$.culture,false)
    }
 
    _clearsquare() {
@@ -528,6 +540,8 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
      if (j.resource == "Incense") C.showeleme(this.$.incense,true)
      if (j.resource == "Silk") C.showeleme(this.$.silk,true)
      if (j.resource == "Coin") C.showeleme(this.$.coin,true)
+     if (j.resource == "Culture")
+    	 C.showeleme(this.$.culture,true)
    }
 
    _displaywonder(wond) {
@@ -547,13 +561,14 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          const j = jsdata
          this._removeterrain()
          if (j.city != null) {
-         	 this._removearmy()
-         	 this._removescout()
+           this._removearmy()
+           this._removescout()
            C.displayelem(this.$.attcity,true)
            C.setColorForCity(this,j.city,C.colorForCiv(j.civ))
            this.setAttribute(j.city,1);
            C.displaybadge(this.$.prodcitynumber,j.production)
            C.displaybadge(this.$.defencecitynumber,"+"+j.defence)
+           C.displaybadge(this.$.culturecitynumber,j.culture)
            return
          }
          if (j.terrain == null) return

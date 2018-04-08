@@ -178,7 +178,7 @@ var C = (function() {
     const dialog = document.getElementById("sendproduction-dialog")
     dialog.$.dialog.setScout(pa)
   }
-  
+
   function _setcitytotechnology(pa) {
     const dialog = document.getElementById("civ-technologyaction")
     dialog.$.dialog.setCity(pa)
@@ -429,7 +429,7 @@ var C = (function() {
       _setcitytotechnology(iparam)
       return
     }
-       
+
     if (co == "sendproduction" || co == "harvestresource") {
        _sendproductioncommand(pa)
        return
@@ -568,7 +568,7 @@ var C = (function() {
     technologyaction(y) {
        C.opendialogwithpar("civ-technologyaction",y)
     },
-    
+
     researchdialog(y) {
         C.opendialogwithpar("tech-dialog",y)
     },
@@ -753,7 +753,9 @@ var C = (function() {
     colorback2 : function() { return "Red" },
 
     civtonumb : function(civ) {
-      return window.civtonumb(civ)
+//      return window.civtonumb(civ)
+      // TODO: for test
+      return 0
     },
 
     colorForCiv : function(civ) {
@@ -997,12 +999,12 @@ var C = (function() {
        if (list[i] == name) return true
      return false
    },
-   
+
    convertResourcesToList(data,data1) {
       const da = []
       for (var j=0; j<data1.list.length; j++)
         da.push(data1.list[j])
-      for (var i=0; i<data.length; i++) 
+      for (var i=0; i<data.length; i++)
          if (data[i].num > 0) {
             const h = {}
             h.resource = data[i].resource
@@ -1010,38 +1012,38 @@ var C = (function() {
          }
       return da
    },
-   
+
    getTechActionTable() {
      const tab = [
        { "name" : "potteryaction", "tech" : "Pottery" },
-       { "name" : "philosophyaction", "tech" : "Philosophy" }       
+       { "name" : "philosophyaction", "tech" : "Philosophy" }
      ]
-     return tab     
+     return tab
    },
-   
+
    getActionTechnology(action) {
      const tab = this.getTechActionTable()
      for (var i=0; i<tab.length; i++)
         if (tab[i].name == action) return tab[i]
-     return null   
+     return null
    },
-   
+
    getTechnologyAction(tech) {
      const tab = this.getTechActionTable()
      for (var i=0; i<tab.length; i++)
         if (tab[i].tech == tech) return tab[i]
-     return null   
+     return null
    },
-   
-   toTech(t) { 
+
+   toTech(t) {
       const nt = {}
       nt.coins = 0
       nt.initial = false
       nt.level = t.level
       nt.tech = t.name
       return nt
-   } 
-      
+   }
+
   }  // return
  } // function
 

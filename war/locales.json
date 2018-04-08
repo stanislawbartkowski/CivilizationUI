@@ -116,6 +116,8 @@
     "resourcepickedalready" : "Resource clicked already, choose another one",
     "resourcetreshlodreached" : "You have already picked {num} resource, click Spend button",
     "spendresourcebutton" : "Spend Resources",
+    "productionlabel" : "Production",
+    "defencelabel" : "Defence",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",
