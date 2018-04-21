@@ -82,6 +82,12 @@
       </paper-badge>
     </span>
 
+   <span id="spanculture" class="resbox" style="display:none" on-click="click" title="{{localize('culturelabel')}}">
+     <s-svg id="culture" src="images/tokens/culture.svg"></s-svg>
+     <paper-badge hidden id="culturenumber" for="culture" label="X">
+      </paper-badge>
+    </span>
+
   </template>
 
   <script>
@@ -94,7 +100,7 @@
                names : {
             	   readOnly : true,
             	   type :Array,
-            	   value : ["silk","iron","wheat","incense","spy","uranium"]
+            	   value : ["silk","iron","wheat","incense","spy","uranium","culture"]
                },
                names1 : {
                   readOnly : true,

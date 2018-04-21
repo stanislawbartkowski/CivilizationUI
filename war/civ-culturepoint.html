@@ -1,0 +1,67 @@
+<dom-module id="civ-culturepoint">
+<template>
+
+<style is="custom-style" >
+
+:host {
+    display: inline-block;
+  }
+
+.culture {
+  display : none;
+  width : 25px;
+}
+
+</style>
+
+  <img id="level1" src="images/culturetrack/one.svg" title="{{titlestring}}" class="culture"/>
+  <img id="level2" src="images/culturetrack/two.svg" title="{{titlestring}}" class="culture" />
+  <img id="level3" src="images/culturetrack/three.svg" title="{{titlestring}}" class="culture"/>
+  <img id="greatperson" src="images/icons/greatperson.svg" title="{{titlestring}}" class="culture"/>
+
+</template>
+
+<script>
+
+class CivCulturePoint extends Polymer.CivData(Polymer.Element) {
+    static get is() {
+    	return 'civ-culturepoint';
+    	}
+
+      static get properties() {
+          return {
+              culturep : {
+                  type: Object
+              },
+              names : {
+                type : Array,
+                readOnly: true,
+                value : ["level1","level2","level3","greatperson"]
+              },
+              titlestring : {
+                type : String
+              }
+
+          }
+      }
+
+
+    refresh(data) {
+      const c = C.findCulturePoint(data)
+      this.culturep = c
+      if (c.culture.cost.trade == 0) this.titlestring = C.localize('culturecostnotrade','culture',""+c.culture.cost.culture)
+      else this.titlestring = C.localize('culturecost','culture',c.culture.cost.culture,"trade",c.culture.cost.trade)
+      if (c.greatperson) this.titlestring = C.localize("greatperson") + ", " + this.titlestring
+      for (var i=0; i<this.names.length; i++)
+        C.displayelemid(this,this.names[i],false)
+      if (!c.greatperson) C.displayelemid(this,this.names[c.level],true,true)
+      else C.displayelemid(this,this.names[this.names.length-1],true,true)
+    }
+
+}
+
+customElements.define(CivCulturePoint.is, CivCulturePoint);
+
+</script>
+
+</dom-module>

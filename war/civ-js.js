@@ -179,9 +179,18 @@ var C = (function() {
     dialog.$.dialog.setScout(pa)
   }
 
+  function _senddevoutscout(pa) {
+    const dialog = document.getElementById("civ-devoutcitytoculture")
+    dialog.$.dialog.setScout(pa)
+  }
+
   function _setcitytotechnology(pa) {
     const dialog = document.getElementById("civ-technologyaction")
     dialog.$.dialog.setCity(pa)
+  }
+
+  function _devoutcityforculture(pa) {
+     C.opendialogwithpar("civ-devoutcitytoculture",pa)
   }
 
   function _setbuildingpoint(pa) {
@@ -271,7 +280,7 @@ var C = (function() {
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
         return a
      }
-     if (co == "buybuilding" || co == "buywonder") {
+     if (co == "buybuilding" || co == "buywonder" || co == "devouttoculture") {
         const a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
@@ -376,6 +385,10 @@ var C = (function() {
 	}
 	dialogDemo.openDialog()
   },
+  
+  getCivShort(civ) {
+    return civ[0] + civ[1]
+  },  
 
   executeC : function(co,pa) {
     if (pa == null) {
@@ -429,6 +442,10 @@ var C = (function() {
       _setcitytotechnology(iparam)
       return
     }
+    if (co == "devouttoculture") {
+      _devoutcityforculture(iparam)
+      return
+    }
 
     if (co == "sendproduction" || co == "harvestresource") {
        _sendproductioncommand(pa)
@@ -444,6 +461,10 @@ var C = (function() {
     }
     if (co == "selectscout") {
       _sendproductionsetscout(pa)
+      return
+    }
+    if (co == "selectscoutdevout") {
+      _senddevoutscout(pa)
       return
     }
     if (co == "selectbuildingpoint") {
@@ -471,6 +492,11 @@ var C = (function() {
 
     displayelem : function(e, display,inblock) {
       if (display) {
+        const stype = typeof inblock
+        if (stype == "string") {
+          e.style.display = inblock
+          return
+        }
         if (inblock) e.style.display = 'inline-block'
         else e.style.display = 'block'
         }
@@ -654,6 +680,10 @@ var C = (function() {
       return C._getresources().wonders
     },
 
+    getculturetrack() {
+      return C._getresources().culturetrack
+    },
+
     getjsboard : function() {
        return _getxapp()["data"]
     },
@@ -753,9 +783,9 @@ var C = (function() {
     colorback2 : function() { return "Red" },
 
     civtonumb : function(civ) {
-//      return window.civtonumb(civ)
+      return window.civtonumb(civ)
       // TODO: for test
-      return 0
+//      return 0
     },
 
     colorForCiv : function(civ) {
@@ -790,6 +820,10 @@ var C = (function() {
       // TODO: probably not necessary, forceNarrow do the job
       const d = x.$.opponentplay
       C.showeleme(d,!close)
+    },
+
+    setStyleAttribute(e,attr,value) {
+      e.style[attr] = value
     },
 
     setShadowStyleAttribute : function(e,selval,attr,value) {
@@ -1042,8 +1076,35 @@ var C = (function() {
       nt.level = t.level
       nt.tech = t.name
       return nt
-   }
+   },
 
+   findCulturePoint(no) {
+     const c = C.getculturetrack()
+     var s = {}
+     for (var i=0; i<c.length; i++) {
+       if (no <= c[i].last) {
+         s.culture = c[i]
+         s.greatperson = false
+         s.level = i
+         break
+       }
+     }
+     if (no <= 0 || s == null) {
+       C.internalerroralert("Cannot find number on culture track"+ no)
+       return null
+     }
+     for (var g=0; g<s.culture.greatperson.length; g++)
+        if (s.culture.greatperson[g] == no) {
+          s.greatperson = true
+          break
+        }
+    return s
+  },
+
+   getMaxCultureProgress() {
+     const c = C.getculturetrack()
+     return c[c.length-1].last
+   }
   }  // return
  } // function
 

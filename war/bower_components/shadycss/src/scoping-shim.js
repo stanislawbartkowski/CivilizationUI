@@ -59,14 +59,7 @@ export default class ScopingShim {
     return StyleUtil.toCssText(ast);
   }
   _gatherStyles(template) {
-    let styles = template.content.querySelectorAll('style');
-    let cssText = [];
-    for (let i = 0; i < styles.length; i++) {
-      let s = styles[i];
-      cssText.push(s.textContent);
-      s.parentNode.removeChild(s);
-    }
-    return cssText.join('').trim();
+    return StyleUtil.gatherStyleText(template.content);
   }
   _getCssBuild(template) {
     let style = template.content.querySelector('style');
@@ -113,7 +106,7 @@ export default class ScopingShim {
 
     let ownPropertyNames = [];
     if (!nativeCssVariables) {
-      ownPropertyNames = StyleProperties.decorateStyles(template['_styleAst'], info);
+      ownPropertyNames = StyleProperties.decorateStyles(template['_styleAst']);
     }
     if (!ownPropertyNames.length || nativeCssVariables) {
       let root = nativeShadow ? template.content : null;
@@ -392,7 +385,7 @@ export default class ScopingShim {
     if (nativeCssVariables) {
       style.textContent = StyleUtil.toCssText(ast);
     } else {
-      this._documentOwnerStyleInfo.styleRules.rules.push(ast);
+      this._documentOwnerStyleInfo.styleRules['rules'].push(ast);
     }
   }
   _revalidateApplyShim(style) {

@@ -66,9 +66,15 @@
      width : 470px;
    }
    
+   .culture {
+     width : 20px;
+   }
+   
   </style>
   
-  <div>
+<div style="display:flex; float : left">"
+
+  <div>  
   <div class="units">
     <div id="units" class=unitbox>
       <div class="unitname">{{localize('units')}}</div>
@@ -85,23 +91,27 @@
       <civ-units class="unitelem" id="mounted"></civ-units>
       <civ-units class="unitelem" id="aircraft"></civ-units>
     </div>
-   </div>
-
-    <civ-buildings class="buildings" id="bld"></civ-buildings>
         
+   </div>
+       
+    <civ-buildings class="buildings" id="bld"></civ-buildings>
+  
     <div class="resourcesbox">
       <div class="unitname">{{localize('resources')}}</div>
       <civ-resources id="resources"> </civ-resources>
     </div>
-  
-  </div>
-   
+           
     <div class="wondersbox">
       <div class="unitname">{{localize('wonders')}}</div>      
       <civ-dispwonders id="wonders"></civ-dispwonders>
     </div>
-      
-        
+
+  </div>
+
+   <civ-cultureplayers id="culture" class="culture"></civ-cultureplayers>
+  
+  </div>
+                 
   
 </span>
   
@@ -127,6 +137,13 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
         C.opendialogwithpar("showhv-dialog",listda)
     }
     
+    _createcul(p) {
+    	const c = {}
+    	c.civ = p.civ
+    	c.culture = p.cultureprogress
+    	return c
+    }
+    
     refresh(b) {
         const res = this.$.resources
     	if (b == null) {
@@ -148,6 +165,13 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
         bld.draw(b.board.buildings)
         const wo = this.$.wonders
         wo.draw(b.board.wonders)
+        
+        const cul = this.$.culture
+        const plcul = []
+        plcul.push(this._createcul(b.board.you))
+        if (b.board.others.length == 1) plcul.push(this._createcul(b.board.others[0]))
+        cul.draw(plcul)
+        
     }
 }
     

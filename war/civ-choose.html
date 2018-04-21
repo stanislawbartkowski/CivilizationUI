@@ -91,7 +91,8 @@ class CivChoose extends Polymer.CivData(Polymer.Element) {
     }
         
     refresh(data) {    	
-    	this.letter = this.civname()[0]
+//    	this.letter = this.civname()[0]
+        this.letter = C.getCivShort(this.civname())
         const b = this.$.buttons        
         C.displayelem(b,!this.info,true)    		
     }
