@@ -93,7 +93,7 @@
           const battle = this.data.board.battle
           const loot = this.$.battlelot
     	  if (this._isloot()) {
-    	      loot.objectclick = this
+    	      loot.fun = n => this.clickres(n)
               C.displayelem(loot,true)
               loot.draw(battle.winnerloot)
     	  }

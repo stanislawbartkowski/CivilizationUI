@@ -19,8 +19,7 @@
       <div>{{localize('specifythesuqretoharvest')}}</div>
       
       </p>
-      <div><civ-square id="scout" row="-1" col ="-1"></civ-square></div>
-            
+      <civ-selectsquare id="scout"></civ-selectsquare>            
             
       <div class="buttons">
 
@@ -47,9 +46,6 @@
       
       static get properties() {
           return {
-            scout : {
-            	type : Object
-            },
             names : {
                type : Array,
                readOnly: true,
@@ -79,18 +75,17 @@
       }
       
       _onSend() {
-    	  if (this.scout == null) {
+    	  const scout = this.$.scout.getPoint()
+    	  if (scout == null) {
     		  C.alertdialog(C.localize('specifythesuqretoharvest') + " !")
     		  return
     	  }
-    	  const scout = this.scout
           var command = "SENDPRODUCTION"
           if (this.harvestresource) command = "HARVESTRESOURCE"
           C.executewithconffun(this.localize('areyousurequestion'),command,e => {
               this.closeIt()
               const pa = this.data
-              const c = this.scout              
-              pa.param = C.constructP(c.row,c.col)
+              pa.param = C.constructP(scout.row,scout.col)
               C.executeC(command,pa)
           })          
       }
@@ -116,9 +111,7 @@
       }
       
       setScout(pa) {
-          const sc = this.$.scout
-    	  this.scout = pa
-    	  sc.draw(pa.square)
+    	  this.$.scout.draw(pa)
       }
       
       openIt(pa) {
@@ -129,7 +122,7 @@
           const sq = this.$.square
           C.setShadowStyleAttribute(sq,":host","float",null)
           const sc = this.$.scout
-          C.setShadowStyleAttribute(sc,":host","float",null)
+//          C.setShadowStyleAttribute(sc,":host","float",null)
           sq.draw(pa.square)
           sc.draw(null)
           this.scout = null

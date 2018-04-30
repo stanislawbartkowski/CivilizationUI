@@ -33,28 +33,23 @@
     	 if (this.res == null) return []
     	 return this.res
      }
+     
+     funmap(cc,pa) {
+        const id = cc.id  
+        cc.fun = d => this.fun(d,id)
+    	 
+     }
 
      refresh(pa) {
-       if (pa == null) {
-    	   this.res = []
-    	   return
-       }
-       this.res = pa
+       this.res = []
+       this.elemmap = null
+       if (pa == null) return
+       for (var i=0; i<pa.length; i++)
+    	   this.res.push(pa[i])
+       if (this.fun == null) return
+       this.elemmap = "civ-dispres"    	   
      }
      
-     afterdraw(pa) {
-    	 if (this.fun == null || pa == null) return
-    	 const s = this.$.map
-         for (var i=0; i < s.childNodes.length; i++) {
-           const cc = s.childNodes[i]
-           if (cc.nodeName == "CIV-DISPRES") {
-        	 const id = cc.id  
-             cc.fun = d => 
-        	    this.fun(d,id)
-           }
-         } // for
-     }
-
    }
 
    window.customElements.define(CivListRes.is, CivListRes);

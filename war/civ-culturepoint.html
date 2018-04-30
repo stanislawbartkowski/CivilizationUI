@@ -49,8 +49,7 @@ class CivCulturePoint extends Polymer.CivData(Polymer.Element) {
     refresh(data) {
       const c = C.findCulturePoint(data)
       this.culturep = c
-      if (c.culture.cost.trade == 0) this.titlestring = C.localize('culturecostnotrade','culture',""+c.culture.cost.culture)
-      else this.titlestring = C.localize('culturecost','culture',c.culture.cost.culture,"trade",c.culture.cost.trade)
+      this.titlestring = C.advanceculturecost(c.culture.cost)
       if (c.greatperson) this.titlestring = C.localize("greatperson") + ", " + this.titlestring
       for (var i=0; i<this.names.length; i++)
         C.displayelemid(this,this.names[i],false)

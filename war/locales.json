@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/04/01",
+    "appversion": "Version: 2018/05/01",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -130,6 +130,8 @@
     "culturestart" : "Start",
     "cultureend" : "Culture victory",
     "victoryle" : "V",
+    "advanceculture" : "Advance Culture",
+    "youareabouttoadvanceculture" : "You are about to advance culture",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

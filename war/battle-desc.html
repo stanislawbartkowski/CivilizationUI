@@ -27,6 +27,9 @@
           <span id="points" style="display:none; background-color:#ffcccc">{{localize('increaseattack')}}</span>
         </paper-toggle-button>
       </span>
+      <span id="ironused" style="float: right; padding-right:10%; display:none" >
+          <iron-icon src="images/resource/iron.svg"></iron-icon>        
+      </span>
     </div>
   </template>
 
@@ -55,14 +58,16 @@
           const iron = this.$.iron
           this.enableinfo(iron.checked)
         }
+        
 
         refresh(data) {
           this.enableinfo(false)
           this.name = C.getSideName(data)
-          const iron = this.$.iron
-          iron.checked = false
+          const iron = this.$.iron          
+          iron.checked = false          
           iron.disabled = (! data.canuseiron || data.ironused != -1)
           C.displayelemid(this,"useiron",!iron.disabled,true)
+          C.displayelemid(this,"ironused",data.ironused != -1,true)
         }
     }
     customElements.define(BattleDesc.is, BattleDesc);

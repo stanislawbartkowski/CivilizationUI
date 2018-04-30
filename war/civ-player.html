@@ -101,7 +101,7 @@
 <span id="unitbox" class="unitbox" >
   <civ-units id="infantry"></civ-units>
   <civ-units id="artillery"></civ-units>
-  <civ-units id="mounted"></civ-units>
+  <civ-units id="mounted"></civ-units>f
   <civ-units id="aircraft"></civ-units>
 </span>
 
@@ -193,6 +193,11 @@
     <paper-icon-item id="technologyaction" on-click="_onClick"> 
       <iron-icon src="images/cities/research.svg" slot="item-icon"></iron-icon> 
       <span>{{localize('technologyaction')}}</span>
+    </paper-icon-item>
+
+    <paper-icon-item id="advanceculture" on-click="_onClick"> 
+      <iron-icon src="images/tokens/culture.svg" slot="item-icon"></iron-icon> 
+      <span>{{localize('advanceculture')}}</span>
     </paper-icon-item>
     
     <div class="undobuttons">
@@ -359,7 +364,8 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "buybuilding",
                             "buywonder",
                             "technologyaction",
-                            "devouttoculture"
+                            "devouttoculture",
+                            "advanceculture"
                   ]
              }
 	   }
@@ -384,7 +390,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                  
     _callitemize(id) {
        this.currentcommand = id
-       window.itemizecommand(id.toUpperCase())    	
+       window.itemizecommand(id.toUpperCase())	
     }
     
     _actionname(id) {
@@ -477,10 +483,10 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
         	 const y = this.y
              const respanel = this.$.resourcespanel
              respanel.fun = e => this.displaylistres()
-             const r = y.resources
-             respanel.draw(r)
-             const h = y.hutvillages
-             respanel.draw1(h)
+//             const r = y.resources
+             respanel.draw(C.concatHV(y.resources,y.hutvillages))
+//             const h = y.hutvillages
+//             respanel.draw1(h)
          }
                            
          refresh(b) {

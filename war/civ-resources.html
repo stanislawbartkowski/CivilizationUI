@@ -100,12 +100,7 @@
                names : {
             	   readOnly : true,
             	   type :Array,
-            	   value : ["silk","iron","wheat","incense","spy","uranium","culture"]
-               },
-               names1 : {
-                  readOnly : true,
-                  type :Array,
-                  value : ["hut","village","trade"]
+            	   value : ["silk","iron","wheat","incense","spy","uranium","culture","hut","village","trade"]
                }
           }
       }
@@ -117,7 +112,6 @@
 
       _clear() {
          for (var i=0; i<this.names.length; i++) this._remove(this.names[i])
-         for (var i=0; i<this.names1.length; i++) this._remove(this.names1[i])
       }
 
       click(e) {
@@ -136,37 +130,21 @@
           }
       }
 
-      _displayhv(r,n) {
-    	  var num = 0
-    	  if (r[n] != null) num = r[n]
-  		  this._display(n.toLowerCase(),num)
-      }
-
-      // ignore parameter
-      refresh1() {
-    	  const r = this.data1
-    	  if (r == null) return
-    	  this._displayhv(r,"Hut")
-          this._displayhv(r,"Village")
-          this._displayhv(r,"trade")
-      }
-
-      // ignore parameter
-      refresh() {
-    	  const r = this.data
-    	  if (r == null) {
-    		  this._clear()
-    		  return
-    	  }
+      // r : array of resources
+      // [{ "resource" : name, "num" : number},....]
+      refresh(r) {
+    	if (r == null) {
+    	  this._clear()
+    	  return
+    	}
         for (var i=0; i<this.names.length; i++) {
-        	  var num = 0
-        	  const n = this.names[i]
-        	  for (var j=0; j < r.length; j++)
-        		  if (n ==  r[j].resource.toLowerCase())
-        			  num = num + r[j].num
-        	  this._display(n,num)
+          var num = 0
+          const n = this.names[i]
+          for (var j=0; j < r.length; j++)
+        	  if (n ==  r[j].resource.toLowerCase())
+        		  num = num + r[j].num
+          this._display(n,num)
         }
-        this.refresh1()
       }
 
    }

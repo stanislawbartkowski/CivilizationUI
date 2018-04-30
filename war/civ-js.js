@@ -206,8 +206,8 @@ var C = (function() {
     C.confirmdialog(question,e => {
       const ite = pa.itemized
       for (var i=0; i< ite.length; i++)
-         if (C.eqp(ite[i].city,pa)) {
-           pa.param = ite[i].scout
+         if (C.eqp(ite[i].p,pa)) {
+           pa.param = ite[i].param
            C.executeC("UNDOSENDPRODUCTION",pa)
          }
       })
@@ -268,6 +268,12 @@ var C = (function() {
 
   getlistofpoints(co,itemize) {
      if (itemize == null) return null
+     // TODO: do not like it
+     if (co == "advanceculture") {
+        C.advanceculture(this.y)
+        return null
+     }
+   
      if (co == "startmove" || co == "buyinfantry" ||
          co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade" ||
          co == "harvestresource" || co == "sendproduction" || co == "undosendproduction") {
@@ -598,7 +604,11 @@ var C = (function() {
     researchdialog(y) {
         C.opendialogwithpar("tech-dialog",y)
     },
-
+    
+    advanceculture(y) {
+        C.opendialogwithpar("civ-advanceculture",y)
+    },
+    
     localize : function(...args) {
       return _getxapp().localize(...args)
     },
@@ -1017,7 +1027,12 @@ var C = (function() {
      for (var i=0; i<bt.length; i++) a.push(bt[i].name.toLowerCase())
      return a
    },
-
+   
+   advanceculturecost(cost) {
+      if (cost.trade == 0) return C.localize('culturecostnotrade','culture',""+cost.culture)
+      return  C.localize('culturecost','culture',cost.culture,"trade",cost.trade)
+   },
+   
    findWonder(w) {
      const wl = C.getlistofwonders()
      return C._findName(wl,w,"wonder")
@@ -1104,7 +1119,31 @@ var C = (function() {
    getMaxCultureProgress() {
      const c = C.getculturetrack()
      return c[c.length-1].last
-   }
+   },
+   
+   copyTable(r) {
+      const a = []
+      for (var i=0; i<r.length; i++) a.push(r[i])
+      return a
+   },
+   
+   // HV
+   
+   _addhv(a,h,hv) {
+        if (h[hv] == null) return
+        const r = {}
+        r.resource = hv
+        r.num = h[hv]
+        a.push(r)
+    },
+    
+    concatHV(r,h) {
+       const a = C.copyTable(r)
+       this._addhv(a,h,"Hut")
+       this._addhv(a,h,"Village")
+       return a
+    }
+   
   }  // return
  } // function
 

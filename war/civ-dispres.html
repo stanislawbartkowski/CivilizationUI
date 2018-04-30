@@ -43,10 +43,18 @@
 
 */
 
-
      handleClick() {
 	   if (this.fun == null) return
 	   this.fun(this.data)	  
+     }
+     
+     _createres(res) {
+    	 const a = []
+    	 const r = {}
+    	 r.resource = res
+    	 r.num = 1
+    	 a.push(r)
+    	 return a
      }
  
      refresh(data) {
@@ -54,9 +62,7 @@
        const hvx = this.$.hvx
        const res = this.$.res
        if (data.hv != null) {
-         const r = []
-         r[data.hv] = 1
-         hv.draw1(r)
+         hv.draw(this._createres(data.hv))
          C.displayelem(hvx,false)
          C.displayelem(hv,true,true)
        }
@@ -64,10 +70,7 @@
          C.displayelem(hv,false)
          C.displayelem(hvx,true,true)
        }
-       const r = {}
-       r.resource = data.resource
-       r.num = 1
-       res.draw([r])
+       res.draw(this._createres(data.resource))
    }
  }
 

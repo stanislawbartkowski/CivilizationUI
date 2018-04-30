@@ -1,0 +1,28 @@
+<dom-module id="civ-selectsquare">
+
+<template>
+
+      <civ-square id="square" row="-1" col ="-1"></civ-square>
+   
+</template>
+
+
+  <script>
+    class CivSelectSquare extends Polymer.CivData(Polymer.Element) {
+        
+        static get is() { return 'civ-selectsquare'; }
+        
+        getPoint() {
+        	return this.data
+        }
+        
+        refresh(data) {
+        	if (data == null) this.$.square.draw(null)
+        	else this.$.square.draw(data.square)
+        }
+      };
+    
+window.customElements.define(CivSelectSquare.is, CivSelectSquare);    
+  </script>
+
+</dom-module>

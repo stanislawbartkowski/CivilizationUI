@@ -55,24 +55,24 @@ Polymer.CivData = function(superClass) {
            this.refresh1(newdata)
        }
 
-			 _drawmap(data) {
-					if (this.funmap == null || this.elemmap == null) return
-					C.sleep(500).then(
-					 () => {
-						const s = this.$.map
- 				    for (var i=0; i < s.childNodes.length; i++) {
-						  const cc = s.childNodes[i]
-						  if (cc.nodeName == this.elemmap.toUpperCase()) {
-								 this.funmap(cc,data)
-							 }
-						 } // for
-					  }
-					 )
-			 }
+	 _drawmap(data) {
+		if (this.funmap == null || this.elemmap == null) return
+		C.sleep(500).then(
+		 () => {
+			const s = this.$.map
+		    for (var i=0; i < s.childNodes.length; i++) {
+			  const cc = s.childNodes[i]
+			  if (cc.nodeName == this.elemmap.toUpperCase()) {
+				 this.funmap(cc,data)
+		      }
+            } // for
+		 }
+		)
+     }
 
-       draw(data) {
+     draw(data) {
     	   this.data = data
-				 this._drawmap(data)
+	       this._drawmap(data)
     	   if (this.afterdraw != null)
              C.sleep(500).then(
                 () => {

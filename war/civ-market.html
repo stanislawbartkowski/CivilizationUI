@@ -143,7 +143,7 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
     	c.culture = p.cultureprogress
     	return c
     }
-    
+          
     refresh(b) {
         const res = this.$.resources
     	if (b == null) {
@@ -156,10 +156,8 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
     	const killed = b.board.killedunits
     	C.setUnitsNumb(this.$.units,units)
         C.setUnitsNumb(this.$.killed,killed)
-        const r = b.board.resources
+        const r = C.concatHV(b.board.resources,b.board.hutvillagesused)        
         res.draw(r)
-        const h = b.board.hutvillagesused
-        res.draw1(h)
         res.fun = e => this._displayres()
         const bld = this.$.bld
         bld.draw(b.board.buildings)
