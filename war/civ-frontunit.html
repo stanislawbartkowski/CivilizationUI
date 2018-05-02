@@ -36,18 +36,6 @@
    <div id="blank" style="display:none; min-height: 80px;">
      &nbsp;
    </div>   
-<!--    
-   <svg width="50" height="50" id="blank"
-        ondrop="CivUnitsDraggable.ondragDrop(event)"
-        ondragleave="CivUnitsDraggable.switchoffallfront(event)"
-        ondragenter="CivUnitsDraggable.ondragEnter(event)"
-        ondragexit="CivUnitsDraggable.switchoffallfront(event)"
-        ondragover="event.preventDefault();"      
-        style = "height:100%; width:100%"
-   >
-     <rect width="50" height="50" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-   </svg>
--->   
    <div id="front" style="display:none">
        <div style="background-color:AliceBlue">
            <span style="color:red">{{data.attachstrength}}</span>
@@ -108,7 +96,6 @@ class CivFrontUnit extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element))
       }
       C.displayelemid(this,"front",true)
       C.displayelemid(this,"blank",false)
-//      C.displayelem(f,true)
       C.displayelemid(this,"wound",(data.wounds != 0),true)
       const u = this.$.unit
       u.draw(data.unit)

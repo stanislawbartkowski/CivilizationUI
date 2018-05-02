@@ -15,7 +15,9 @@ Polymer.CivLocalize = function(superClass) {
 	    }	        
 	    
         attached() {
-            this.loadResources(this.resolveUrl('locales.json'));
+            const locales = C.getBaseURL() + "/locales.json"
+//            this.loadResources(this.resolveUrl('/CIvilizationUI/locales.json'));
+            this.loadResources(locales)
 	    }
         
    }   

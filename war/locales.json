@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/05/01",
+    "appversion": "Version: 2018/05/03",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -119,7 +119,7 @@
     "productionlabel" : "Production",
     "defencelabel" : "Defence",
     "devouttoculture" : "Devout To Culture",
-    "youareabouttodevoutcitytoculture" : "You are about to devote city to culture",
+    "youareabouttodevoutcitytoculture" : "You are about to devoute city to culture",
     "cityculture" : "City culture :",
     "noscoutsforculture" : "No scouts to send culture",
     "selectscoutsonmap" : "Select {num} scouts on the map",
@@ -132,6 +132,12 @@
     "victoryle" : "V",
     "advanceculture" : "Advance Culture",
     "youareabouttoadvanceculture" : "You are about to advance culture",
+    "travelspeed" : "Travel speed",
+    "stacklimit" : "Stack limit",
+    "citiesleft" : "Cities left",
+    "armiesleft" : "Armies left",
+    "scoutsleft" : "Scouts left", 
+    "handsize" : "Hand",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",
@@ -144,6 +150,7 @@
     "Philosophy" : "Philosophy",
     "Pottery" :"Pottery",
     "Writing" : "Writing",
+    "Navy" : "Navy",
 
     "CivilService" : "Civil Service",
     "Chivalry" : "Chivalry",
@@ -175,6 +182,7 @@
     "MessMedia" : "Mass Media",
     "Plastics" : "Plastics",
     "ReplaceableParts" : "Replacement Parts",
+    "Combustion" : "Combustion",
 
     "Harbor" : "Harbor",
     "Shipyard" : "Shipyard",

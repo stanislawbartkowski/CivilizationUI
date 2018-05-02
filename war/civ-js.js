@@ -280,20 +280,22 @@ var C = (function() {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
+     }     
+     if (co == "buybuilding" || co == "buywonder" || co == "devouttoculture")  {
+        const a = []
+        for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
+        return a
      }
+     
      if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") {
         var a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].param)
         return a
      }
-     if (co == "buybuilding" || co == "buywonder" || co == "devouttoculture") {
-        const a = []
-        for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
-        return a
-     }
      if (co == "move")  return itemize.moves
-     if (co == "setcity" || co == "setcapital") return itemize
-     if (co == "philosophyaction" || co == "potteryaction") return itemize
+     
+     if (co == "setcity" || co == "setcapital" || (C.getActionTechnology(co) != null)) return itemize
+          
      if (co == "revealtile") {
        var a = []
        a.push(itemize.p)
@@ -444,10 +446,12 @@ var C = (function() {
        if (_twotilereveal(iparam)) return
     if (co == "startmove")
        if (_multifigures(pa)) return
-    if (co == "philosophyaction" || co == "potteryaction") {
+    
+    if (C.getActionTechnology(co) != null) {       
       _setcitytotechnology(iparam)
       return
     }
+    
     if (co == "devouttoculture") {
       _devoutcityforculture(iparam)
       return
@@ -1049,23 +1053,29 @@ var C = (function() {
      return false
    },
 
-   convertResourcesToList(data,data1) {
+   convertResourcesToList(data,data1,resource) {
       const da = []
       for (var j=0; j<data1.list.length; j++)
         da.push(data1.list[j])
       for (var i=0; i<data.length; i++)
-         if (data[i].num > 0) {
+         if (data[i].num > 0 && data[i].resource != "Culture") {
             const h = {}
             h.resource = data[i].resource
             da.push(h)
          }
-      return da
+      // filter resources
+      if (resource == null) return da
+      const a = []
+      for (var i=0; i<da.length; i++)
+        if (da[i].resource == resource) a.push(da[i])
+      return a     
    },
 
    getTechActionTable() {
      const tab = [
        { "name" : "potteryaction", "tech" : "Pottery" },
-       { "name" : "philosophyaction", "tech" : "Philosophy" }
+       { "name" : "currencyaction", "tech" : "Currency" }
+//       { "name" : "philosophyaction", "tech" : "Philosophy" }
      ]
      return tab
    },
@@ -1142,6 +1152,12 @@ var C = (function() {
        this._addhv(a,h,"Hut")
        this._addhv(a,h,"Village")
        return a
+    },
+    
+    getBaseURL() {
+      const base = location.pathname
+      const s = base.split("/")
+      return "/" + s[1]
     }
    
   }  // return
