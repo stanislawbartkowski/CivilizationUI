@@ -1157,6 +1157,8 @@ var C = (function() {
     getBaseURL() {
       const base = location.pathname
       const s = base.split("/")
+      // no base URL
+      if (s.length == 1) return ""
       return "/" + s[1]
     }
    
