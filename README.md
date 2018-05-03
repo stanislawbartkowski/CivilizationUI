@@ -12,7 +12,7 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 ## History
 
 ## 2018/05/03: new version deployed
-https://www.blogger.com/blogger.g?blogID=2399759103741849897#editor/target=post;postID=179066120878792220;onPublishedMenu=allposts;onClosedMenu=allposts;postNum=0;src=postname
+https://hoteljavaopensource.blogspot.com/2018/05/civilization-board-game-next-version.html
 
 Features implemented:
 * Culture track
