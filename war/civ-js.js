@@ -1157,6 +1157,7 @@ var C = (function() {
     getBaseURL() {
       const base = location.pathname
       const s = base.split("/")
+      // fix to work on Heroku
       if (s[1] == "") return ""
       // no base URL
       return "/" + s[1]

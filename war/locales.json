@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/05/03",
+    "appversion": "Version: 2018/05/04",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -118,8 +118,8 @@
     "spendresourcebutton" : "Spend Resources",
     "productionlabel" : "Production",
     "defencelabel" : "Defence",
-    "devouttoculture" : "Devout To Culture",
-    "youareabouttodevoutcitytoculture" : "You are about to devoute city to culture",
+    "devouttoculture" : "Devote To Culture",
+    "youareabouttodevoutcitytoculture" : "You are about to devote city to culture",
     "cityculture" : "City culture :",
     "noscoutsforculture" : "No scouts to send culture",
     "selectscoutsonmap" : "Select {num} scouts on the map",
