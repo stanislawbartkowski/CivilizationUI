@@ -515,8 +515,10 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                   const command = y.commands[i]
                   var id = command.command.toLowerCase()
                   if (id == "killfigure") {
-                	  if (this._youactive()) C.executeKillFigure()
-                	  C.alertdialog(C.localize("figureswillbekilled"))
+                	  if (this._youactive()) {
+                		  C.executeKillFigure()
+                	      C.alertdialog(C.localize("figureswillbekilled"))
+                	  }
                 	  return
                   }
                   if (C.getActionTechnology(id) != null) id = "technologyaction"
