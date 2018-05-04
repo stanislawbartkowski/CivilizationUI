@@ -11,6 +11,19 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 
 ## History
 
+## 2018/05/03: new version deployed
+https://hoteljavaopensource.blogspot.com/2018/05/civilization-board-game-next-version.html
+
+Features implemented:
+* Culture track
+* Spend culture tokens to advance a culture level
+* Devout city to arts
+* MetalWorking
+* Code Of Laws
+* Currency
+* Irrigation
+* Navigation
+
 ## 2018/04/05: new version deployed
 http://hoteljavaopensource.blogspot.de/2018/04/introduction-i-deployed-new-version-of.html
 
