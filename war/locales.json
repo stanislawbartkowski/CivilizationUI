@@ -138,6 +138,7 @@
     "armiesleft" : "Armies left",
     "scoutsleft" : "Scouts left", 
     "handsize" : "Hand",
+    "figureswillbekilled" : "Sorry, figures will be killed",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

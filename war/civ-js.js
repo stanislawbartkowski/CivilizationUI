@@ -968,6 +968,12 @@ var C = (function() {
        }
        return false
     },
+    
+    executeKillFigure() {
+      const command = "killfigure"
+      C._logautomatemove(command,null)
+      C.executeC(command)
+    },
 
     _checkEndOfPhase(commands) {
        if (commands.length == 1 && commands[0].command.toLowerCase() == "endofphase") {
