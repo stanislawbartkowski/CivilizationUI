@@ -103,7 +103,7 @@ https://hoteljavaopensource.blogspot.com/2017/09/introduction-i-deployed-next-ve
 
 ## Game progress saved
 
-The game progress is saved in persistent memory. This process is done in the background in transparent way. Game is stored in ![redis](https://redis.io/) key/value database. 
+The game progress is saved in persistent memory. This process is done in the background in transparent way. Game is stored in ![redis](https://redis.io/images/redis-white.png) key/value database. 
 
 ## Game resume
 
