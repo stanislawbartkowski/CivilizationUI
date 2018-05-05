@@ -149,7 +149,8 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
     	if (b == null) {
     		res.draw(null)
     		this._clearunits(this.$.units)
-            this._clearunits(this.$.killed)
+    		this._clearunits(this.$.killed)
+    		this.$.culture.draw(null)
     		return
     	}
     	const units = b.board.units
