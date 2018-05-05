@@ -21,12 +21,14 @@ import civilization.RR;
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
 
 	private final static String REDIS_URL = "REDIS_URL";
+	private static boolean logged = false;
 
 	private void setRedis() {
 
 		// Heroku
 		if (System.getenv().containsKey(REDIS_URL)) {
 			String val = System.getenv().get(REDIS_URL);
+			if (!logged) System.out.println("Connecting to:" + val);
 			RR.setConnection(val);
 		} else {
 
@@ -36,12 +38,14 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 				Context xmlNode = (Context) context.lookup("java:comp/env");
 				Integer port = (Integer) xmlNode.lookup("redisport");
 				String host = (String) xmlNode.lookup("redishost");
+				if (!logged) System.out.println("Connecting to redis host:" + host + " port:" + port);
 				RR.setConnection(host, port, 0);
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
+			logged = true;
 		}
 
 		II.setR(RR.RA());
