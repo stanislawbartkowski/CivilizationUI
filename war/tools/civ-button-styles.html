@@ -1,0 +1,83 @@
+
+<dom-module id="civ-paper-button-styles">
+  <template>
+    <style>
+    
+ paper-icon-button[hidden] {
+       display: none;
+ }
+        
+  paper-button.pink {
+    color: var(--paper-pink-a200);
+    --paper-button-ink-color: var(--paper-pink-a200);
+  }
+  paper-button.pink:hover {
+    background-color: var(--paper-pink-100);
+  }
+    
+  paper-button.pink {
+    color: var(--paper-pink-a200);
+    --paper-button-ink-color: var(--paper-pink-a200);
+  }
+  
+  paper-button.pink:hover {
+    background-color: var(--paper-pink-100);
+  }
+  
+  paper-button.indigo {
+    background-color: var(--paper-indigo-500);
+    color: white;
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--paper-pink-a200) !important;
+      color: white !important;
+    };
+  }
+  
+  paper-button.indigo:hover {
+    background-color: var(--paper-indigo-400);
+  }
+  
+  paper-button.green {
+    background-color: var(--paper-green-500);
+    color: white;
+  }
+  
+  paper-button.green[active] {
+    background-color: var(--paper-red-500);
+  }
+    
+  paper-button.disabled {
+    color: white;
+  }
+  
+  hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #ccc;
+        margin: 1em 0;
+        padding: 0;
+  }
+  
+  
+  /* ---------- */
+  .actionbox {
+     margin-left: 5px;
+     margin-top: 2px;
+     border:1px ridge gray ; 
+     display: block; 
+     border-radius: 5px;
+     width: 90%;
+  }
+  
+  .notimplemented {
+       position:absolute;
+       bottom : 5px;
+       right : 5px;
+       height:15px;
+     }
+    
+    
+   </style>
+  </template>
+</dom-module>

@@ -20,6 +20,7 @@
   <civ-stateelem id="state4"></civ-stateelem>
   <civ-stateelem id="state6"></civ-stateelem>
   <civ-stateelem id="state5"></civ-stateelem>
+  <civ-stateelem id="state7"></civ-stateelem>
   
 </span>
 
@@ -66,6 +67,8 @@ class CivPlayerState extends Polymer.CivData(Polymer.Element) {
         this._disp(this.$.state6,"icons/speed.svg",this._createinfo("travelspeed",y.travelspeed),"icons/stacklimit.svg",this._createinfo("stacklimit",y.stacklimit))        
         this._disp(this.$.state5,"cities/research.svg",C.localize('researchlabel'),"icons/buywonder.svg",C.localize('wonders'),
         		() => C.showresearch(this.data), () => C.showwonders(this.data) )        
+        this._disp(this.$.state7,"icons/greatpersona.svg",C.localize('greatperson'),"icons/cards.svg",C.localize('culturecards'),
+                        () => C.showculturecards(this.data), () => C.showculturecards(this.data) )        
     }
 }
 

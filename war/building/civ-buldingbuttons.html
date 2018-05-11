@@ -1,0 +1,99 @@
+<dom-module id="civ-buildingbuttons">
+<template>
+
+<custom-style>
+
+<style is="custom-style" include="civ-paper-button-styles" >
+
+:host {
+    display: inline-block;
+  }
+
+</style>
+
+</custom-style>
+
+<div>
+   <div id="buildd" style="display:none">
+     <paper-button id="build" class="green" on-click="_onClick">{{localize('build')}}</paper-button>
+     <civ-square id="b1"></civ-square>
+   </div>  
+   <div id="replaced" style="display:none">
+     <paper-button id="replace" class="indigo" on-click="_onClick">{{localize('replace')}}</paper-button> 
+     <civ-square id="r1"></civ-square>
+     <civ-square id="r2" style="display:none"></civ-square>  
+   </div>
+</div>
+
+</template>
+
+<script>
+class CivBuldingButtons extends Polymer.CivData(Polymer.Element) {
+
+    static get is() {
+        return 'civ-buildingbuttons';
+        }
+    
+    static get properties() {
+        return {
+            replace: {
+              type : Boolean,
+              value : false
+            },
+            build : {
+              type : Boolean,
+              value : false
+            },
+            click : {
+            	type : Object,
+            	value : null
+            }
+          }
+        }
+
+    _hide() {
+        C.displayelem(this.$.replaced,false)
+        C.displayelem(this.$.buildd,false)
+    }
+    
+    _onClick(e) {
+    	if (this.click == null) return
+    	this.click(this.build)    	
+    }
+    
+    _draws(r,p) {
+    	// absolute coordinates
+    	const s = C.wgetsquare(p.row,p.col)
+    	C.displayelem(r,true,true)
+    	r.draw(s)
+    }
+
+    refresh(data) {
+    	this._hide()
+    	if (data == null) return
+    	if (this.replace) { 
+    		if (data.pp.list.length == 0) return
+            const r1 = this.$.r1
+            const r2 = this.$.r2
+            C.displayelem(r2,false)
+            C.displayelem(this.$.replaced,true,true)
+    		this._draws(r1,data.pp.list[0])
+    		if (data.pp.list.length > 1)
+    			this._draws(this.$.r2,data.pp.list[1])
+    	}
+    	if (this.build) {
+            if (data.pp.list.length > 0) return
+            C.displayelem(this.$.buildd,true,true)
+            const b1 = this.$.b1
+            b1.draw(data.p)
+    	}
+    	
+    }
+
+}
+
+customElements.define(CivBuldingButtons.is, CivBuldingButtons);
+
+</script>
+
+</dom-module>

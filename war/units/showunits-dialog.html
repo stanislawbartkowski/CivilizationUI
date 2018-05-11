@@ -1,0 +1,27 @@
+ <dom-module id="showunits-dialog">
+    <template>
+  
+    <paper-dialog id="dialog">
+    
+       <civ-listunits id="list"></civ-listunits>
+        
+    </paper-dialog>
+  </template>
+
+  <script>
+      class ShowUnitsDialog extends Polymer.CivDialog(Polymer.Element) {
+    	  
+      static get is() { return 'showunits-dialog'; }
+                                    
+      openIt(pa) {
+    	  const d = this.$.list
+    	  super.openIt(pa)
+    	  d.draw(pa)
+          super.openIt(pa)
+      }
+      
+    }
+
+    window.customElements.define(ShowUnitsDialog.is, ShowUnitsDialog);
+  </script>
+</dom-module>

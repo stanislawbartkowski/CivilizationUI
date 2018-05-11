@@ -1,0 +1,178 @@
+<dom-module id="civ-tech">
+<template>
+
+<custom-style>
+
+<style is="custom-style" >
+
+:host {
+    display: inline-block;
+    border : 1px solid;
+    border-radius: 5px;
+    width: 115px;
+    height: 60px;
+    vertical-align: top;
+    padding : 5px;
+    position: relative;
+
+  }
+
+:host([disa]) {
+  background-color : #afa7a7
+}
+
+.name {
+  display:inline-block;
+  width:80%;
+  height:50%
+}
+
+.gover {
+  background-color: #ecd6ba;
+  padding : 2px;
+}
+
+.building {
+  background-color: #dfeaf1;
+  position:absolute;
+  bottom : 0px;
+  width: 93%;
+}
+
+.text {
+  position:absolute;
+  bottom : 0px;
+  right: 2px;
+}
+
+.not {
+  height:15px;
+  vertical-align: top;
+}
+
+.coins {
+  position:absolute;
+  bottom : 2px;
+  right : 35px;
+  height:15px;
+}
+
+</style>
+
+</custom-style>
+
+<div>
+   <div class="name">{{name}}</div>
+   <civ-implemented id="notimplemented" class="not"></civ-implemented>
+   <div class="gover" id="gover">{{gover}}</div>
+   <div class="building" id="building">{{building}}</div>
+   
+   <img id="coins" hidden class="coins" src="images/resource/coin.svg"  title="{{localize('coinlabel')}}"/>
+   <paper-badge hidden id="coinsnumber" for="coins" label="99">
+   </paper-badge>
+      
+   <civ-helptext id="helptext" class="text"></civ-helptext>
+</div>
+
+</template>
+
+<script>
+class CivTech extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
+
+    constructor() {
+       super();
+       Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
+    }
+
+    static get is() {
+    	return 'civ-tech';
+    	}
+
+      static get properties() {
+        return {
+            name: {
+              type: String
+            },
+            level : {
+              type : Number
+            },
+            tech : {
+            	type : Object
+            }
+          }
+        }
+
+    handleClick() {
+      if (this.data.disa) return
+      if (this.fun != null) this.fun(this.data)
+    }
+
+    _name() {
+      const n = this.tech
+      return n.name
+    }
+
+    _gover() {
+      const n = this.tech
+      return n.gover
+    }
+
+    _building() {
+        const n = this.tech
+        return n.building
+    }
+
+    _ni() {
+      const n = this.tech
+      return n.ni
+    }
+
+    _level() {
+        return this.tech.n.level
+    }
+
+    _setuptech() {
+      this.tech = C.findTech(this.data.tech)
+    }
+
+    _disa() {
+        if (this.data.disa) C.setattr(this,"disa",1)
+        else C.removeattr(this,"disa")
+    }
+    
+    _coins() {
+    	const coins = this.$.coins
+    	const coinsnumber = this.$.coinsnumber
+    	if (this.data.coins == null || this.data.coins == 0) {    		
+    		C.showeleme(coins,false)
+    		C.showeleme(coinsnumber,false)
+    		return
+    	}
+    	C.showeleme(coins,true)
+        C.displaybadge(coinsnumber,this.data.coins)
+    }
+
+    refresh(data) {
+      this._setuptech()
+      const h = this.$.helptext
+      h.setHelpText(this.tech.desc)
+      this.name = C.localize(this._name())
+      if (this.name == null || this.name == "") this.name = "*" + this._name()
+      const ni = this.$.notimplemented
+      ni.draw(this._ni())
+      C.displayelemid(this,"gover",false,true)
+      C.displayelemid(this,"building",false,true)
+      this.gover = this._gover()
+      this.building = C.localize(this._building())
+      if (this.gover != null) C.displayelemid(this,"gover",true)
+      if (this.building != null) C.displayelemid(this,"building",true)
+      this._disa()
+      this._coins()
+    }
+}
+
+customElements.define(CivTech.is, CivTech);
+
+</script>
+
+</dom-module>

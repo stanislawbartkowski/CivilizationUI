@@ -1,0 +1,40 @@
+<dom-module id="civ-dispwonders">
+  <template>
+
+<style>
+    :host {
+      display: inline-block;
+/*      width: 20px; */
+    }
+    </style>
+
+
+   <template id="list" is="dom-repeat" items="{{list}}">
+     <civ-wonder data="{{item}}"></civ-wonder>
+   </template>
+
+  </template>
+  <script>
+  class CivDispWonders extends Polymer.CivData(Polymer.Element) {
+
+  static get is() { return 'civ-dispwonders'; }
+
+  static get properties() {
+      return {
+          list: {
+              type: Array
+          }
+      }
+  }
+
+  refresh(pa) {
+    this.list = pa
+  }
+
+}
+
+window.customElements.define(CivDispWonders.is, CivDispWonders);
+
+  </script>
+
+</dom-module>

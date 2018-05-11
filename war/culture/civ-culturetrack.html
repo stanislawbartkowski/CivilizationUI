@@ -3,17 +3,15 @@
 <template>
 
   <style>
-     :host {
-      }
 
-       .vertical {
+     .vertical {
          @apply(--layout-vertical);
          width : 25px;
          background-color: #fbf1dc;
-       }
-       .culture {
-         width : 25px;
-       }
+     }
+     .culture {
+       width : 25px;
+     }
 
   </style>
 
@@ -45,9 +43,9 @@
      refresh(pa) {
   	   this.res = []
        for (var i=C.getMaxCultureProgress(); i>0; i--) {
-         const a = {}
-         this.res.push(i)
-       }
+         const c = C.findCulturePoint(i)
+         this.res.push(c)
+         }
      }
 
    }

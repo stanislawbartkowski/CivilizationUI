@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/05/05",
+    "appversion": "Version: 2018/05/12",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -139,6 +139,9 @@
     "scoutsleft" : "Scouts left", 
     "handsize" : "Hand",
     "figureswillbekilled" : "Sorry, figures will be killed",
+    "culturecards" : "Culture cards",
+    "noculturecards" : "No culture cards yet",
+    "noresources" : "No resources yet",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

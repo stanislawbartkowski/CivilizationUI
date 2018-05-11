@@ -1,0 +1,33 @@
+<dom-module id="civ-showculturecards">
+    <template>
+
+    <paper-dialog id="dialog">
+
+     <paper-dialog-scrollable>
+
+        <civ-culturecardlist id="resources" style="display:none"></civ-culturecardlist>
+        
+        <div id="empty" style="display:none">
+          {{localize('noculturecards')}}
+        </div>
+        
+      </paper-dialog-scrollable>
+        
+    
+     </paper-dialog>
+    
+  </template>
+
+  <script>
+   class CivShowCultureCards extends  Polymer.CivDialog(Polymer.Element) {
+          
+      static get is() { return 'civ-showculturecards'; }
+            
+      refresh(data) {
+    	 super.drawlistorempty(data)
+      }   
+      
+   } 
+   window.customElements.define(CivShowCultureCards.is, CivShowCultureCards);
+  </script>
+</dom-module>

@@ -10,6 +10,7 @@
 .culture {
   display : none;
   width : 25px;
+  @apply --culture-css;
 }
 
 </style>
@@ -46,8 +47,7 @@ class CivCulturePoint extends Polymer.CivData(Polymer.Element) {
       }
 
 
-    refresh(data) {
-      const c = C.findCulturePoint(data)
+    refresh(c) {
       this.culturep = c
       this.titlestring = C.advanceculturecost(c.culture.cost)
       if (c.greatperson) this.titlestring = C.localize("greatperson") + ", " + this.titlestring

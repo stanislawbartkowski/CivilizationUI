@@ -1,0 +1,26 @@
+<dom-module id="civ-content">
+
+<template>
+
+   <template id="list" is="dom-repeat" items="{{civs}}">
+        <civ-choose data="{{item}}"></civ-choose>
+   </template>
+   
+</template>
+
+
+  <script>
+    class CivContent extends Polymer.CivData(Polymer.Element) {
+    	
+        static get is() { return 'civ-content'; }
+        
+        refresh(data) {
+        	if (data == null) this.civs = []
+        	else this.civs = data.civ
+        }
+      };
+    
+window.customElements.define(CivContent.is, CivContent);    
+  </script>
+
+</dom-module>

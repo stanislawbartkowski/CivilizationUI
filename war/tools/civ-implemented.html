@@ -1,0 +1,40 @@
+<dom-module id="civ-implemented">
+<template>
+
+<style>
+ 
+ .not {
+   height:15px;
+   display:none
+ }
+
+</style>
+
+  <img id="notimplemented" class="not" src="images/icons/thumbdown.svg" title="{{localize('notimplemented')}}"></img>
+  <img id="implemented" class="not" src="images/icons/thumbup.svg" title="{{localize('implemented')}}"></img>
+
+</template>
+
+<script>
+class CivImplemented extends Polymer.CivData(Polymer.Element) {
+
+
+    static get is() {
+        return 'civ-implemented';
+        }
+    
+    draw(data) {
+    	const ni = this.$.notimplemented
+    	const ii = this.$.implemented
+    	C.displayelem(ni,false)
+    	C.displayelem(ii,false)
+    	if (data) C.displayelem(ni,true,true)
+    	else C.displayelem(ii,true,true)
+    }
+}
+
+customElements.define(CivImplemented.is, CivImplemented);
+
+</script>
+
+</dom-module>

@@ -1,0 +1,71 @@
+<dom-module id="civ-listbuildbuy">
+
+<template>
+
+  <custom-style>
+
+  <style is="custom-style" >
+
+  .build {
+       display: inline-block;
+       border: 1px solid;
+       border-radius: 5px;
+       padding : 2px;
+    }
+
+  </style>
+
+  </custom-style>
+
+
+ <civ-buildinginfo class="build" id="granary"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="aqueduct"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="tradingpost"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="harbor"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="shipyard"></civ-buildinginfo>
+
+ <civ-buildinginfo class="build" id="market"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="bank"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="barracks"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="academy"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="temple"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="cathedral"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="library"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="university"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="workshop"></civ-buildinginfo>
+ <civ-buildinginfo class="build" id="ironmine"></civ-buildinginfo>
+
+ </template>
+
+ <script>
+     class CivListBuildToBuy extends Polymer.CivData(Polymer.Element) {
+
+     static get is() { return 'civ-listbuildbuy'; }
+
+     static get properties() {
+         return {
+             builds : {
+                 type: Array
+             }
+         }
+     }
+
+     refresh(pa) {
+       const b = C.listofallbuildings()
+       for (var i=0; i<b.length; i++)
+         C.displayelemid(this,b[i],false)
+       for (var i=0; i<pa.length; i++) {
+    	 const bi = pa[i].toLowerCase()
+         const p = this.$[bi]
+         if (this.fun != null)
+            p.fun = e => this.fun(e)
+         C.displayelem(p,true,true)
+         p.draw(bi)
+       }
+     }
+
+   }
+
+   window.customElements.define(CivListBuildToBuy.is, CivListBuildToBuy);
+ </script>
+</dom-module>

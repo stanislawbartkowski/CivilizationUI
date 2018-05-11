@@ -1,0 +1,59 @@
+ <dom-module id="figurenumber-widget">
+  <template>
+  
+    <style>   
+       :host {
+        display: block;
+      }
+            
+    </style>
+    
+     <div>{{text}} 
+        <iron-input bind-value="{{numb}}" auto-validate allowed-pattern="[0-9]">
+            <input id="input" type="number" min="0" max="1" disabled>
+        </iron-input>
+     </div>
+ 
+    
+  </template>
+
+  <script>
+    class FigureNumber extends Polymer.CivLocalize(Polymer.Element) {
+      static get is() { return 'figurenumber-widget'; }
+      
+      static get properties() {
+          return {
+            label: {
+              text: Object,
+              value: undefined
+            },
+            numb : {
+            	type : Number,
+            	observer: 'numberChanged'
+            }
+          
+          }
+      }
+      
+      numberChanged(newValue,oldValue) {    	  
+      }
+      
+      draw(label,numb,max) {
+    	  this.text = this.localize(label)
+    	  this.numb = numb
+    	  if (max == null) max=numb
+    	  this.$.input.max = max
+    	  if (numb == 0) C.disableleme(this.$.input, true)
+    	  else C.disableleme(this.$.input, false)
+      }
+      
+      getNumb() {
+    	  if (this.numb == null) return 0
+    	  return Number(this.numb)
+      }
+                 
+    }
+
+    window.customElements.define(FigureNumber.is, FigureNumber);
+  </script>
+</dom-module>
