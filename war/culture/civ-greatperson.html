@@ -10,6 +10,11 @@
         height: 150px;
         border: 1px solid;
       }
+      :host([Empty]) {
+        background-image: url("../images/icons/greatpersona.svg");
+        background-repeat: no-repeat;
+        background-size: 90% 90%;
+      }
       .header {
          font-size : 85%
       }
@@ -55,7 +60,7 @@
     </style>
 
     <div>
-      <div class="header name">{{person.t}}&nbsp;&nbsp;{{person.name}}&nbsp;:&nbsp;{{person.type}}</div>
+      <div class="header name">{{person.t}}&nbsp;&nbsp;{{person.name}}&nbsp;&nbsp;&nbsp;&nbsp;{{person.type}}</div>
       <hr/>
       <civ-square class="sq" id="sq" ></civ-square>
       <div class="header desc">{{person.desc}}</div>
@@ -79,8 +84,20 @@
           }
          }
 
-        refresh(data) {
+        _clear() {
+          C.removeattr(this,"Empty")
+        }
 
+        // data : great person name
+        //        null : clear
+        //        "" : empty
+        refresh(data) {
+          this._clear()
+          if (data == null) return
+          if (data == "") {
+            this.setAttribute("Empty",1)
+            return
+          }
           const g = C.findGreatPerson(data)
           this.person = g.person
           this.ptype = g.type

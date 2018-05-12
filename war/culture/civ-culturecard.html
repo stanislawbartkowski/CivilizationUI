@@ -8,12 +8,19 @@
         display: inline-block;
         position : relative;
         width : 145px;
-        height: 190px;
+        height: 200px;
         border: 1px solid;
       }
       .header {
          font-size : 85%
       }
+
+      :host([Empty]) {
+        background-image: url("../images/icons/cards.svg");
+        background-repeat: no-repeat;
+        background-size: 95% 95%;
+      }
+
       .name {
         display: inline-block;
         position:absolute;
@@ -83,9 +90,21 @@
           }
          }
 
-        refresh(data) {
+         _clear() {
+           C.removeattr(this,"Empty")
+         }
 
+        // data : culture card name
+        //        "" (empty string)
+        //        null
+      refresh(data) {
+
+          this._clear()
           if (data == null) return
+          if (data == "") {
+            this.setAttribute("Empty",1)
+            return
+          }
           this.card = C.findCard(data)
 
           const ni = this.$.notimplemented

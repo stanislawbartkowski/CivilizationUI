@@ -596,12 +596,15 @@ var C = (function() {
     showwonders(p) {
         C.opendialogwithpar("showwonders-dialog",p.wonders)
     },
-    
+
     showculturecards(p) {
-        C.opendialogwithpar("showculturecards-dialog",p.cultureresource.cards)
+        C.opendialogwithpar("showculturecards-dialog",p.cultureresource)
+    },
+
+    showgreatpersons(p) {
+        C.opendialogwithpar("showgreatpersons-dialog",p.cultureresource)
     },
     
-
     showcivinfo(civ) {
        C.opendialogwithpar("showciv-info",civ)
     },
@@ -1043,11 +1046,15 @@ var C = (function() {
         C.internalerroralert("Cannot find "+ error + " definition " + n)
     },
 
+    findGreatPersonType(tperson) {
+      const ptype = C.getgreatpersontype()
+      return C._findName(ptype,tperson,"Cannot find" + tperson + " in Great Person Type list")
+    },
+
     findGreatPerson(person) {
       const greatp = C.getgreatpersons()
       const pe = this._findName(greatp,person,"Cannot find " + person + " in Great Person list")
-      const ptype = C.getgreatpersontype()
-      const ty = C._findName(ptype,pe.type,"Cannot find" + pe.type + " in Great Person Type list")
+      const ty = C.findGreatPersonType(pe.type)
       const res = {}
       res.person = pe
       res.type = ty

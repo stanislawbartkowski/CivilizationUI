@@ -547,34 +547,6 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
      this.setAttribute(b,1)
      if (bd.star) C.showeleme(this.$.star,true)
      this._displaytokens(bd)
-
-//     const production = bd.tokens.Production
-//     const trade = bd.tokens.Trade
-//     const culture = bd.tokens.Culture
-//     const battle = bd.tokens.Battle
-//     if (trade == 1) {
-//       C.showeleme(this.$.trade1,true)
-//       if (production >= 1) C.showeleme(this.$.prod2,true)
-//       if (production >= 2) C.showeleme(this.$.prod3,true)
-//     }
-//     if (trade == 2) {
-//       C.showeleme(this.$.trade1,true)
-//       C.showeleme(this.$.trade2,true)
-//       if (production >= 1) C.showeleme(this.$.prod3,true)
-//       if (production >= 2) C.showeleme(this.$.prod4,true)
-//     }
-//     if ((trade == null || trade == 0) && production > 0) {
-//       if (production >= 1) C.showeleme(this.$.prod1,true)
-//       if (production >= 2) C.showeleme(this.$.prod2,true)
-//       if (production >= 3) C.showeleme(this.$.prod3,true)
-//       if (production >= 4) C.showeleme(this.$.prod4,true)
-//     }
-//     if (culture >= 1) C.showeleme(this.$.culture1,true)
-//     if (culture >= 2) C.showeleme(this.$.culture2,true)
-//     if (culture >= 3) C.showeleme(this.$.culture3,true)
-//     if (battle == 2) C.showeleme(this.$.battle2,true)
-//     if (battle == 4) C.showeleme(this.$.battle4,true)
-//     if (bd.tokens.Coin >=1) C.showeleme(this.$.coinup,true)
    }
 
    _displayterrain(j) {
@@ -599,13 +571,18 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
      C.displayelem(wo,true)
    }
 
-   _displaygreatperson(person) {
+   _displaygreatperson(person,gperson) {
      this.setAttribute("greatperson",1)
-     const g = C.findGreatPerson(person)
-     const pe = g.person
-     const ty = g.type
+     var ty
+     this.greatpersont = ""
+     if (gperson) {
+       const g = C.findGreatPerson(person)
+       const pe = g.person
+       this.greatpersont = pe.t
+       ty = g.type
+     }
+     else ty = C.findGreatPersonType(person)
      this._displaytokens(ty)
-     this.greatpersont = pe.t
      C.displayelem(this.$.greatperson,true,true)
    }
 
@@ -651,7 +628,8 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
 
          if (j.building != null) this._displaybuilding(j.building)
          else if (j.wonder != null) this._displaywonder(j.wonder)
-         else if (j.greatperson != null) this._displaygreatperson(j.greatperson)
+         else if (j.greatperson != null) this._displaygreatperson(j.greatperson,true)
+         else if (j.greatpersontype != null) this._displaygreatperson(j.greatpersontype,false)
          else this._displayterrain(j)
 
          if (j.numberofScouts > 0) {
