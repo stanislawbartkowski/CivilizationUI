@@ -2,7 +2,10 @@
 
 <template>
 
-<style>
+ <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+ 
+ <style is="custom-style" include="civ-paper-button-styles">
+ 
 
 :host {
     text-transform: none;
@@ -72,7 +75,7 @@
    
   </style>
   
-<div style="display:flex; float : left">"
+<div style="display:flex; float : left">
 
   <div>  
   <div class="units">
@@ -95,12 +98,21 @@
    </div>
        
     <civ-buildings class="buildings" id="bld"></civ-buildings>
+        
   
+   <div style="float:left">
     <div class="resourcesbox">
       <div class="unitname">{{localize('resources')}}</div>
-      <civ-resources id="resources"> </civ-resources>
+      <civ-resources id="resources"> </civ-resources>           
     </div>
-           
+    
+    <div>
+      <paper-button class="indigo" on-click="_showCultureCards">
+       {{localize('culturecards')}}
+      </paper-button>
+    </div>
+    </div>
+               
     <div class="wondersbox">
       <div class="unitname">{{localize('wonders')}}</div>      
       <civ-dispwonders id="wonders"></civ-dispwonders>
@@ -112,8 +124,6 @@
   
   </div>
                  
-  
-</span>
   
   </template>
 
@@ -129,6 +139,10 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
    	       const elem = C._getbyid(e,u)
    	       elem.draw(null) 
 	     }     		
+    }
+    
+    _showCultureCards() {
+    	C.showcultureusedcards(this.data)
     }
     
     _displayres() {

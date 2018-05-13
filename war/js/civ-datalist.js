@@ -11,6 +11,14 @@ Polymer.CivDataList = function(superClass) {
      	 return this.res
       }
 
+      getChoosed() {
+        return this.choosed
+      }
+
+      setChoosed(choosed) {
+        this.choosed = choosed
+      }
+
       funmap(cc,pa) {
          const id = cc.id
          cc.fun = d => this.fun(d,id)

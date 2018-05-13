@@ -130,12 +130,17 @@
   <link rel="import" href="culture/civ-cultureprogresselem.html">
   <link rel="import" href="culture/civ-cultureplayers.html">
   <link rel="import" href="culture/civ-advanceculture.html">
-  <link rel="import" href="culture/civ-greatperson.html">
-  <link rel="import" href="culture/civ-greatpersonlist.html">
   <link rel="import" href="culture/civ-culturecard.html">
   <link rel="import" href="culture/civ-culturecardlist.html">
   <link rel="import" href="culture/civ-showculturecards.html">
-  <link rel="import" href="culture/civ-showgreatpersons.html">
+  <link rel="import" href="culture/civ-chooseculturecard.html">
+  <link rel="import" href="culture/civ-discardcard.html">
+
+
+  <link rel="import" href="greatperson/civ-greatperson.html">
+  <link rel="import" href="greatperson/civ-greatpersonlist.html">
+  <link rel="import" href="greatperson/civ-showgreatpersons.html">
+
 
 
   <link rel="import" href="battle/attackconf-dialog.html">
@@ -325,6 +330,12 @@
   </template>
 </dom-bind>
 
+<dom-bind id="discardcard-dialog">
+  <template>
+   <civ-discardcarddialog id="dialog"></civ-discardcarddialog>
+  </template>
+</dom-bind>
+
 
 </head>
 
@@ -345,8 +356,7 @@
             }
           )
   </script>
--->  
-
+-->
 
 </body>
 </html>

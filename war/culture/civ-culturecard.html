@@ -8,7 +8,7 @@
         display: inline-block;
         position : relative;
         width : 145px;
-        height: 200px;
+        height: 220px;
         border: 1px solid;
       }
       .header {
@@ -79,7 +79,17 @@
 
   <script>
 
-  class CivCultureCard extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)) {
+  class CivCultureCard extends Polymer.CivData(Polymer.CivLocalize(Polymer.GestureEventListeners(Polymer.Element))) {
+
+       constructor() {
+         super();
+         Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
+       }
+
+       handleClick() {
+         if (this.fun == null) return
+         this.fun(this.data)
+       }
 
         static get is() {return 'civ-culturecard'}
         static get properties() {

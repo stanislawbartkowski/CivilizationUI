@@ -50,10 +50,10 @@ Polymer.CivData = function(superClass) {
            this.refresh(newdata)
 	   }
 
-       draw1set(newdata,olddata) {
+    draw1set(newdata,olddata) {
            if (!this._different(newdata,olddata)) return
            this.refresh1(newdata)
-       }
+    }
 
 	 _drawmap(data) {
 		if (this.funmap == null || this.elemmap == null) return
@@ -65,10 +65,10 @@ Polymer.CivData = function(superClass) {
 			  if (cc.nodeName == this.elemmap.toUpperCase()) {
 				 this.funmap(cc,data)
 		      }
-            } // for
+        } // for
 		 }
 		)
-     }
+   }
 
      draw(data) {
     	   this.data = data
@@ -81,8 +81,23 @@ Polymer.CivData = function(superClass) {
              )
        }
 
-       draw1(data) {
+     draw1(data) {
 			   this.data1 = data
-       }
+     }
+
+
+    drawlistorempty(data) {
+     const r = this.$.resources
+     const e = this.$.empty
+     if (data.length == 0) {
+         C.displayelem(r,false)
+         C.displayelem(e,true)
+     } else {
+       C.displayelem(e,false)
+       C.displayelem(r,true,true)
+       r.draw(data)
+     }
    }
+
+  }
 }

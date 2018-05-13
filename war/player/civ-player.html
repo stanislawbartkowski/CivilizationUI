@@ -494,7 +494,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                // player status
                const yp = this.$.playerstate
                yp.draw(y)
-               
+                              
                const g = b.board.game
                const pha = g.phase.toLowerCase()
                for (var i=0; i < this.actionpanels.length; i++) {
@@ -503,7 +503,6 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                    if (id == pha || ((id=="researchmenu" && pha=="research"))) C.displayelem(pa,true)
                    else C.displayelem(pa,false)
                 }
-
                
                for (var i=0; i < this.buttons.length; i++) {
                   const id = this.buttons[i]
@@ -514,6 +513,10 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
               for (var i=0; i<y.commands.length; i++) {
                   const command = y.commands[i]
                   var id = command.command.toLowerCase()
+                  if (id == "discardcard") {
+                	  C.discardcarddialog(y)
+                	  return
+                  }
                   if (id == "killfigure") {
                 	  if (this._youactive()) {
                 		  C.executeKillFigure()

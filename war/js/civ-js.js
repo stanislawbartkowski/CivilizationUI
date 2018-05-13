@@ -597,14 +597,23 @@ var C = (function() {
         C.opendialogwithpar("showwonders-dialog",p.wonders)
     },
 
+    discardcarddialog(p) {
+//      C.opendialogwithpar("discardcard-dialog",p.cultureresource.cards)
+      C.opendialogwithpar("discardcard-dialog",p)
+    },
+
     showculturecards(p) {
         C.opendialogwithpar("showculturecards-dialog",p.cultureresource)
+    },
+    
+    showcultureusedcards(p) {
+        C.opendialogwithpar("showculturecards-dialog",p.board.cultureused)
     },
 
     showgreatpersons(p) {
         C.opendialogwithpar("showgreatpersons-dialog",p.cultureresource)
     },
-    
+
     showcivinfo(civ) {
        C.opendialogwithpar("showciv-info",civ)
     },
