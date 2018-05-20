@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/05/12",
+    "appversion": "Version: 2018/05/21",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -146,6 +146,9 @@
     "nogreatpersons" : "No great persons yet",
     "choosecardtodiscard" : "Choose culture card event to discard",
     "discardcard" : "Discard card",
+    "putgreatperson" : "Place Great Person on the map or hold in reserve",
+    "place" : "Place",
+    "reserve" : "Hold in reserve",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

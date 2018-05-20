@@ -7,8 +7,11 @@ import javax.naming.NamingException;
 import com.civilization.ui.client.GreetingService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import civilization.I.II;
-import civilization.RR;
+//import civilization.I.II;
+//import civilization.RR;
+
+import civilization.II.interfaces.IC;
+import civilization.II.interfaces.RAccess;
 
 /**
  * The server-side implementation of the RPC service.
@@ -22,6 +25,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	private final static String REDIS_URL = "REDIS_URL";
 	private static boolean logged = false;
+	
+	private static final IC II = civilization.II.factory.Factory$.MODULE$.getI();
+	private static final RAccess RA = civilization.II.factory.Factory$.MODULE$.getR();
 
 	private void setRedis() {
 
@@ -29,7 +35,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		if (System.getenv().containsKey(REDIS_URL)) {
 			String val = System.getenv().get(REDIS_URL);
 			if (!logged) System.out.println("Connecting to:" + val);
-			RR.setConnection(val);
+			RA.getConn().setConnection(val);
 		} else {
 
 			InitialContext context;
@@ -39,7 +45,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 				Integer port = (Integer) xmlNode.lookup("redisport");
 				String host = (String) xmlNode.lookup("redishost");
 				if (!logged) System.out.println("Connecting to redis host:" + host + " port:" + port);
-				RR.setConnection(host, port, 0);
+				RA.getConn().setConnection(host, port, 0);
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -48,7 +54,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			logged = true;
 		}
 
-		II.setR(RR.RA());
+		II.setR(RA);
 
 	}
 

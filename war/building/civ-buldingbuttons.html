@@ -7,6 +7,8 @@
 
 :host {
     display: inline-block;
+    @apply --layout-horizontal;
+    vertical-align: top;    
   }
 
 </style>
@@ -15,8 +17,8 @@
 
 <div>
    <div id="buildd" style="display:none">
-     <paper-button id="build" class="green" on-click="_onClick">{{localize('build')}}</paper-button>
-     <civ-square id="b1"></civ-square>
+     <paper-button style="vertical-align: top" id="build" class="green" on-click="_onClick">{{localize('build')}}</paper-button>
+     <civ-square style="vertical-align: top" id="b1"></civ-square>
    </div>  
    <div id="replaced" style="display:none">
      <paper-button id="replace" class="indigo" on-click="_onClick">{{localize('replace')}}</paper-button> 

@@ -377,6 +377,16 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     	const a = C.getlistofpoints(this.currentcommand,newValue);
     	this.setListOfPoints(a)
     	if (a != null) C.checkAutomateButton()
+    	const co = C.getcurrentcommand()
+        if (co == "advanceculture") {
+            C.advanceculture(this.y)
+            return
+         }
+         
+         if (co == "greatpersonputnow") {
+            C.greatpersononmapnow(this.y,newValue)
+            return
+         }
     }
                  
     _callitemize(id) {
@@ -514,9 +524,14 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                   const command = y.commands[i]
                   var id = command.command.toLowerCase()
                   if (id == "discardcard") {
-                	  C.discardcarddialog(y)
+                	  if (this._youactive()) C.discardcarddialog(y)
                 	  return
                   }
+                  if (id == "greatpersonputnow") {
+                      if (this._youactive()) this._callitemize(id)
+                      continue
+                  }
+                  if (id == "greatpersonputnowresign") continue
                   if (id == "killfigure") {
                 	  if (this._youactive()) {
                 		  C.executeKillFigure()

@@ -197,7 +197,12 @@ var C = (function() {
     const dialog = document.getElementById("buy-building")
     dialog.$.dialog.setBuildingPoint(pa)
   }
-
+  
+  function _setgreatpersonpoint(pa) {
+    const dialog = document.getElementById("putgreatperson-dialog")    
+    dialog.$.dialog.setGreatPersonPoint(pa)
+  }
+  
   function _attackconfirmation(pa) {
     C.opendialogwithpar("attackconf-dialog",pa)
   }
@@ -219,7 +224,7 @@ var C = (function() {
 
   return {
 
-  sleep(ms) {
+  sleep(ms = 500) {
     return new Promise(resolve => setTimeout(resolve, ms));
   },
 
@@ -268,11 +273,6 @@ var C = (function() {
 
   getlistofpoints(co,itemize) {
      if (itemize == null) return null
-     // TODO: do not like it
-     if (co == "advanceculture") {
-        C.advanceculture(this.y)
-        return null
-     }
 
      if (co == "startmove" || co == "buyinfantry" ||
          co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade" ||
@@ -481,6 +481,10 @@ var C = (function() {
       _setbuildingpoint(pa)
       return
     }
+    if (co == "greatpersonputnow") {
+     _setgreatpersonpoint(pa)
+     return
+    }    
     if (co == "attack") {
     	_attackconfirmation(pa)
     	return
@@ -574,11 +578,6 @@ var C = (function() {
       else showhideclosebuttuon(false)
     } ,
 
-//    getlistofcivs : function() {
-//      const civse = findbytag("civ-content")
-//      return civse.civs
-//    } ,
-
     getlistofgames : function() {
       const gamese = findbytag("civ-games")
       return gamese.listofgames
@@ -613,7 +612,14 @@ var C = (function() {
     showgreatpersons(p) {
         C.opendialogwithpar("showgreatpersons-dialog",p.cultureresource)
     },
-
+    
+    greatpersononmapnow(y,itemize) {
+        if (itemize == null) return
+        C.opendialogwithpar("putgreatperson-dialog",itemize)
+        const dialog = document.getElementById("putgreatperson-dialog").$.dialog
+        dialog.setCommandNames("greatpersonputnow","greatpersonputnowresign")  
+    },
+    
     showcivinfo(civ) {
        C.opendialogwithpar("showciv-info",civ)
     },
@@ -627,6 +633,8 @@ var C = (function() {
     },
 
     advanceculture(y) {
+    // TODO: verify later
+        if (C.getitemizedcommand() == null) return
         C.opendialogwithpar("civ-advanceculture",y)
     },
 
@@ -1107,6 +1115,11 @@ var C = (function() {
        if (list[i] == name) return true
      return false
    },
+   
+   addToListU(list,name) {
+     if (this.onList(list,name)) return
+     list.push(name)
+   },
 
    convertResourcesToList(data,data1,resource) {
       const da = []
@@ -1208,6 +1221,58 @@ var C = (function() {
        this._addhv(a,h,"Village")
        return a
     },
+    
+    // list
+    getIListOfNames(itemize,name) {
+      const ii = itemize
+      const res = []
+      for (var i=0; i<ii.length; i++) {
+        const l = ii[i].list
+        for (var j=0; j<l.length; j++) {
+          const n = l[j][name]
+          this.addToListU(res,n)
+        }
+       }
+      return res  
+    },
+    
+    getIListOfPointsForName(itemize,name,nc) {
+      const ii = itemize
+      const res = []
+      for (var i=0; i<ii.length; i++) {
+        const l = ii[i].list
+        for (var j=0; j<l.length; j++) {
+          const n = l[j][name]
+          if (n == nc) res.push(l[j].p)
+        }
+       }
+      return res  
+    },
+        
+    getIListOfReplace(itemize,name,nc,p) {
+      const ii = itemize
+      for (var i=0; i<ii.length; i++) {
+        const l = ii[i].list
+        for (var j=0; j<l.length; j++) {
+          const n = l[j][name]
+          if (n == nc && C.eqp(p,l[j].p)) return l[j].list
+        }
+       }
+      return []  
+    },
+    
+    getIListCityP(itemize,name,nc,p) {
+      const ii = itemize
+      for (var i=0; i<ii.length; i++) {
+        const l = ii[i].list
+        for (var j=0; j<l.length; j++) {
+          const n = l[j][name]
+          if (n == nc && C.eqp(p,l[j].p)) return ii[i].p
+        }
+       }
+     const mess = "Cannot find city for this point " + nc + " " + p  
+     C.internalerroralert(mess)
+    },    
 
     getBaseURL() {
       const base = location.pathname
@@ -1217,6 +1282,7 @@ var C = (function() {
       // no base URL
       return "/" + s[1]
     }
+    
 
   }  // return
  } // function

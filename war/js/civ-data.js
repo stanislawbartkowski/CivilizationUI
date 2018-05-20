@@ -21,6 +21,10 @@ Polymer.CivData = function(superClass) {
               },
               fun : {
                 type : Object
+              },
+              refreshalways : {
+                type : Boolean,
+                value : false
               }
 	        }
 	    }
@@ -37,6 +41,7 @@ Polymer.CivData = function(superClass) {
 	   }
 
 	   _different(thisdata,data) {
+          if (this.refreshalways) return true
 	      if (thisdata == null && data == null) return false
 	      if (thisdata == null) return true
 	      if (data == null) return true
@@ -57,7 +62,7 @@ Polymer.CivData = function(superClass) {
 
 	 _drawmap(data) {
 		if (this.funmap == null || this.elemmap == null) return
-		C.sleep(500).then(
+		C.sleep().then(
 		 () => {
 			const s = this.$.map
 		    for (var i=0; i < s.childNodes.length; i++) {
@@ -71,18 +76,16 @@ Polymer.CivData = function(superClass) {
    }
 
      draw(data) {
-    	   this.data = data
-	       this._drawmap(data)
-    	   if (this.afterdraw != null)
-             C.sleep(500).then(
-                () => {
-                   this.afterdraw(data)
-                   }
+   	   this.data = data
+       this._drawmap(data)
+   	   if (this.afterdraw != null)
+            C.sleep().then(
+             () => { this.afterdraw(data) }
              )
        }
 
      draw1(data) {
-			   this.data1 = data
+	   this.data1 = data
      }
 
 

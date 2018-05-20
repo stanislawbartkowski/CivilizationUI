@@ -7,7 +7,7 @@
         display: inline-block;
         position : relative;
         width : 260px;
-        height: 150px;
+        height: 165px;
         border: 1px solid;
       }
       :host([Empty]) {
@@ -71,8 +71,10 @@
 
   <script>
 
-  class CivGreatPerson extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)) {
+  class CivGreatPerson extends Polymer.CivChooseData(Polymer.Element) {
+
         static get is() {return 'civ-greatperson'}
+        
         static get properties() {
           return {
             person : {

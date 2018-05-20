@@ -1,0 +1,101 @@
+<dom-module id="civ-putgreatperson">
+    <template>
+    
+<style is="custom-style" include="civ-paper-button-styles" >
+
+      .reserve {
+         position: absolute;
+         bottom : 10px;
+      }
+      .vertical {
+      }
+      
+    </style>
+
+    <paper-dialog id="dialog">
+
+     <paper-dialog-scrollable>
+
+        <civ-choosegreatperson id="list">
+        <div slot="title">
+              <H1>{{localize('putgreatperson')}}</H1>
+        </div>
+        
+        <slot>
+        <div style="margin-left:20px">
+          <civ-choosesequareplace class="vertical" id="choose" nameid="greatperson" buildbutton="{{localize('place')}}"></civ-choosesequareplace>
+          <paper-button class="vertical reserve green" on-click="_onReserve">{{localize('reserve')}}</paper-button>                                    
+        <div>
+        </slot>
+                
+        </civ-choosegreatperson>
+        
+      </paper-dialog-scrollable>
+        
+    
+     </paper-dialog>
+    
+  </template>
+
+  <script>
+   class CivPutGreatPersonOnMap extends  Polymer.CivDialog(Polymer.Element) {
+          
+      static get is() { return 'civ-putgreatperson'; }
+      
+      static get properties() {
+          return {
+              refreshalways: {
+                  type : Boolean,
+                  readOnly : true,
+                  value : true
+              },
+              reservecommand : {
+            	  type : String,
+            	  value : null
+              }          
+            }
+         }
+
+      setCommandNames(buildcommand,reservecommand) {
+    	  this.reservecommand = reservecommand
+    	  this.$.choose.setBuildCommand(buildcommand)
+      }
+      
+      _clickedgreat(g) {
+          const res = C.getIListOfPointsForName(this.data,"greatperson",g)
+          C.setlistofpoints(res)          
+          this.$.choose.draw(null)
+      }
+      
+      _onReserve() {
+    	  if (this.reservecommand != null)
+              C.executewithconf(null,this.reservecommand.toUpperCase())
+
+    	  super.closeIt()
+      }
+            
+      _clear() {
+    	  this.$.choose.draw(null)
+          C.setlistofpoints(null)
+      }
+      
+      setGreatPersonPoint(p) {
+         this.$.choose.draw(this.data)
+         this.$.choose.setPoint(p,this.$.list.getChoosed())
+      }
+      
+      refresh(data) {
+    	 super.noCancelOnOutsideClick()
+    	 this._clear()
+    	 const names = C.getIListOfNames(data,"greatperson")
+    	 const l = this.$.list
+    	 l.fun = g => this._clickedgreat(g)
+    	 const c = this.$.choose
+    	 c.fun = p => super.closeIt()
+    	 l.draw(names)
+      }   
+      
+   } 
+   window.customElements.define(CivPutGreatPersonOnMap.is, CivPutGreatPersonOnMap);
+  </script>
+</dom-module>

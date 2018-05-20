@@ -79,17 +79,7 @@
 
   <script>
 
-  class CivCultureCard extends Polymer.CivData(Polymer.CivLocalize(Polymer.GestureEventListeners(Polymer.Element))) {
-
-       constructor() {
-         super();
-         Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
-       }
-
-       handleClick() {
-         if (this.fun == null) return
-         this.fun(this.data)
-       }
+  class CivCultureCard extends Polymer.CivChooseData(Polymer.Element) {
 
         static get is() {return 'civ-culturecard'}
         static get properties() {
