@@ -2,8 +2,9 @@
 
 <template>
 
-<style>
-    /* local styles go here */
+ <style is="custom-style" include="civ-paper-button-styles" >
+ 
+      /* local styles go here */
     :host {
       display: inline-block;
       text-transform: none;
@@ -23,6 +24,11 @@
 .desc {
   background-color: #f3f3f7;
 }
+
+.not {
+       margin-left : 2px;
+       height:15px;
+}
   </style>
   
   
@@ -39,14 +45,14 @@
       <div style="display:inline-block">             
         <span style="padding-left:10px;">{{data.civ}}</span> 
         <p/> 
-        <iron-icon src="images/cities/research.svg" slot="item-icon"></iron-icon> <span style="padding-left:10px;">{{data.tech}}</span> 
+        <iron-icon src="images/cities/research.svg" slot="item-icon" on-click="showtech"></iron-icon> <span style="padding-left:10px;">{{data.tech}}</span> 
         <p/> 
         <iron-icon src="images/cities/gover.svg" slot="item-icon"></iron-icon> <span style="padding-left:10px;">{{data.gover}}</span>
       </div> 
       
       
       <paper-menu-button id="buttons" style="vertical-align: top;">
-         <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
+         <paper-icon-button on-click="twoplayersClick" icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
          <paper-listbox slot="dropdown-content">
             <paper-item on-click="twoplayersClick">{{localize('twoplayersgamelabel')}}</paper-item>
             <paper-item on-click="handleClick">{{localize('traininggamelabel')}}</paper-item>
@@ -55,9 +61,9 @@
       
       <div class="desc">
         {{data.desc}}
+        <civ-implemented id="notimplemented" class="not"></civ-implemented>
       </div>
-      
-      
+           
     </div>
   </template>
 
@@ -86,15 +92,20 @@ class CivChoose extends Polymer.CivData(Polymer.Element) {
       C.startgamedialog(this.civname())
     }
     
+    showtech() {
+      C.showsingletech(this.data.tech)
+    }
+    
     twoplayersClick() {
       C.joindialog(this.civname())
     }
         
     refresh(data) {    	
-//    	this.letter = this.civname()[0]
         this.letter = C.getCivShort(this.civname())
         const b = this.$.buttons        
-        C.displayelem(b,!this.info,true)    		
+        C.displayelem(b,!this.info,true)   
+        const ni = this.$.notimplemented
+        ni.draw(this.data.ni)
     }
 
   }

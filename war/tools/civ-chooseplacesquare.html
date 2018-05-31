@@ -76,8 +76,7 @@ class CivChooseSquarePlace extends Polymer.CivData(Polymer.Element) {
         pa.row = city.row
         pa.col = city.col
         const param = {}
-        param.p.row = p.row
-        param.p.col = p.col
+        param.p = { "row" : p.row, "col" : p.col }
         param[this.nameid] = name
         pa.param = param
         C.executewithconf(null,this.buildcommand.toUpperCase(),pa)
@@ -92,8 +91,9 @@ class CivChooseSquarePlace extends Polymer.CivData(Polymer.Element) {
        for (var i=0; i<l.length; i++) C.displayelemid(this,l[i],false)
     }
     
-    setBuildCommand(command) {
+    setBuildCommand(command,nameid) {
     	this.buildcommand = command
+    	this.nameid = nameid
     }
     
     setPoint(p,name) {

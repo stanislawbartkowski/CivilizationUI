@@ -1,0 +1,43 @@
+<dom-module id="civ-choosewonder">
+    <template>
+
+<style is="custom-style" include="civ-paper-button-styles" >
+
+      .horizontal {
+          @apply(--layout-horizontal);
+          margin-top : 12px;
+      }
+            
+      </style>
+
+
+     <div>
+        <slot name="title"></slot>
+        <civ-dispwonders id="resources" style="display:none"></civ-dispwonders>
+
+        <div id="empty" style="display:none">
+          {{localize('nowonders')}}
+        </div>
+
+        <div class="horizontal">
+          <civ-wonder id=choosed></civ-wonder>
+          <slot></slot>
+        </div>
+      </div>
+
+  </template>
+
+  <script>
+
+  class CivChooseWonder extends  Polymer.CivDataList(Polymer.Element) {
+      static get is() { return 'civ-choosewonder'; }
+
+      // data: list of wonders
+      refresh(data) {
+        super.refreshchooselist(data)
+      }
+
+   }
+   window.customElements.define(CivChooseWonder.is, CivChooseWonder);
+  </script>
+</dom-module>

@@ -3,9 +3,6 @@
 <template>
 
 <style>
-    paper-button {
-      text-transform: none;
-   }
 
   :host {
     display: inline-block;
@@ -607,6 +604,8 @@ class CivSquare extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
          }
          if (j.terrain == null) return
          if (j.hv != null) {
+             this._removearmy()
+             this._removescout()
            	 this.setAttribute(j.hv,1)
              if (j.hv == "Hut") C.showeleme(this.$.hut,true)
              if (j.hv == "Village") C.showeleme(this.$.village,true)

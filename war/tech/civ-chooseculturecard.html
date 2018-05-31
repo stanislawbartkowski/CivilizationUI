@@ -1,0 +1,40 @@
+<dom-module id="civ-chooseculturecards">
+    <template>
+
+     <style>
+      .horizontal {
+          @apply(--layout-horizontal);
+      }
+      </style>
+
+
+     <div>
+        <slot name="title"></slot>
+        <civ-culturecardlist id="resources" style="display:none"></civ-culturecardlist>
+
+        <div id="empty" style="display:none">
+          {{localize('noculturecards')}}
+        </div>
+
+        <div class="horizontal">
+          <civ-culturecard id=choosed></civ-culturecard>
+          <slot></slot>
+      </div>
+      </div>
+
+  </template>
+
+  <script>
+
+  class CivChooseCultureCards extends  Polymer.CivDataList(Polymer.Element) {
+      static get is() { return 'civ-chooseculturecards'; }
+
+      // data: cards
+      refresh(data) {
+        super.refreshchooselist(data)
+      }
+
+   }
+   window.customElements.define(CivChooseCultureCards.is, CivChooseCultureCards);
+  </script>
+</dom-module>

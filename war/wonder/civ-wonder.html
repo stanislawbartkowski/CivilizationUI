@@ -11,7 +11,9 @@
         border: 1px solid;
       }
       .header {
-         font-size : 85%
+/*         font-size : 85% */
+          font-size : 0.9em;
+          line-height : 1.2em;
       }
       .name {
         display: inline-block;
@@ -67,8 +69,9 @@
 
   <script>
 
-  class CivWonder extends Polymer.CivData(Polymer.CivLocalize(Polymer.Element)) {
+  class CivWonder extends Polymer.CivChooseData(Polymer.Element) {
         static get is() {return 'civ-wonder'}
+        
         static get properties() {
           return {
             w : {

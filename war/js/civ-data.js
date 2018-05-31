@@ -25,6 +25,10 @@ Polymer.CivData = function(superClass) {
               refreshalways : {
                 type : Boolean,
                 value : false
+              },
+              header : {
+                type : String,
+                value : null
               }
 	        }
 	    }
@@ -58,7 +62,11 @@ Polymer.CivData = function(superClass) {
     draw1set(newdata,olddata) {
            if (!this._different(newdata,olddata)) return
            this.refresh1(newdata)
-    }
+     }
+
+     setHeader(title) {
+       this.header = title
+     }
 
 	 _drawmap(data) {
 		if (this.funmap == null || this.elemmap == null) return

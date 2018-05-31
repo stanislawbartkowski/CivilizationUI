@@ -1,209 +1,56 @@
 <dom-module id="buy-building">
   <template>
-    <style>
+  
+<style is="custom-style" include="civ-paper-button-styles" >
     
-      :host {
-        display: inline-block;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        margin-left : 10px;
-        border: 1px solid;
-        padding : 5px;
-        width: 500px;
-      }
+   .reserve {
+         position: absolute;
+         bottom : 10px;
+    }
+    
+                            
     </style>
     
        <paper-dialog id="dialog">
        
-              
-         <div id="dbuilding" style="display:none">
-           <div>{{localize('buildingstobuy')}}</div>
-           <civ-listbuildbuy id="listbuy"></civ-listbuildbuy>          
-         </div>
-         
-         <div id="dwonder" style="display:none">
-           <div>{{localize('wonderstobuy')}}</div>
-           <civ-listwondersbuy id="listwonders"></civ-listwondersbuy>          
-         </div>         
-           
-          <div style="display:inline-block; position:relative; width:250px"> 
-            <civ-buildinginfo id="building"></civ-buildinginfo>
-            <civ-square id="wonder"></civ-square>
-            
-            <div style="display:inline-block">
-              <civ-buildingbuttons replace id="replace" style="position:absolute; top:0px"></civ-buildingbuttons>
-              <civ-buildingbuttons build id="build" style="position:absolute; bottom:0px"></civ-buildingbuttons>
-             </div>
-         </div>
-         
-       <div class="buttons">
-         <paper-button dialog-dismiss>{{localize('cancellabel')}}</paper-button>
-       </div>
-         
-       </paper-dialog>
+       <h2>{{localize('buildingstobuy')}}</h2>
+
+       <div>
+
+        <civ-choosebuilding id="list">
+     
+        <div style="margin-left:20px;">
+          <civ-choosesequareplace class="vertical" id="choose" buildbutton="{{localize('build')}}"></civ-choosesequareplace>
+          <paper-button class="reserve green" dialog-dismiss>{{localize('cancellabel')}}</paper-button>            
+        </div>
+                
+        </civ-choosebuilding>
+        
+      </div>
+      
+      </paper-dialog>
+       
   </template>
 
   <script>
 
-  class BuyBuilding extends Polymer.CivDialog(Polymer.DialDraggable(Polymer.Element)) {
-	  
-        static get is() {return 'buy-building'}
-     
+    
+    class BuyBuilding extends Polymer.BuyStructure(Polymer.Element) {
+        
+        static get is() { return 'buy-building'; }
+        
         static get properties() {
             return {
-                b: {
-                    type: Array
-                  },
-                building : {
-                	type : String
-                },
-                p : {
-                	type : Object
-                },
-                wonder : {
-                	type : Boolean
-                }
-             }
-        }
-        
-        _iswonder() {
-        	return this.wonder
-        }
-        
-        _extractbuildings(b) {
-        	const buildings = []
-        	for (var i=0; i<b.length; i++) {
-                var bname = this.getb(b,i)
-        		var i1;
-        		// remove duplicates
-        		for (i1=0;i1<buildings.length;i1++)
-        			if (buildings[i1] == bname) break
-        		if (i1 >= buildings.length) buildings.push(bname)
-        	}
-        	return buildings
-        }
-        
-        buy() {
-        	if (this.p == null) return
-        	const pa = {}
-        	pa.row = this.data.row
-        	pa.col = this.data.col
-        	const param = {}
-        	param.p = {}
-        	param.p.row = this.p.row
-        	param.p.col = this.p.col
-        	if (this._iswonder()) {
-                param.wonder = this.building
-                pa.param = param
-        		C.executewithconf(null,"BUYWONDER",pa)
-        	}
-        	else {
-                param.building = this.building
-                pa.param = param
-        		C.executewithconf(null,"BUYBUILDING",pa)
-        	}
-        	super.closeIt()
-        }
-        
-        getb(b,i) {
-            var na = b[i].building
-            if (this._iswonder()) na = b[i].wonder
-            return na        	
-        }
-        
-        setBuildingPoint(p) {
-        	this.p = p
-        	const e = this.building
-        	if (e == null) return
-            const b = this.b
-            const rr = this.$.replace
-            const bb = this.$.build
-            var pp = null
-            for (var i=0; i<b.length; i++) {
-                var na = this.getb(b,i)
-                if (na == e && C.eqp(p,b[i].p)) pp = b[i]                
+              nameid : {
+              type : String,
+              value : "building",
+              readOnly : true
+              }
             }
-        	const pa = {}
-        	pa.p = p.square
-        	pa.pp = pp
-            rr.draw(pa)
-            bb.draw(pa)            
         }
+     }
         
-        clickbuilding(e) {
-        	const b = this.b
-        	const li = []
-        	for (var i=0; i<b.length; i++) {
-                var na = this.getb(b,i)
-        		if (na == e) li.push(b[i].p)
-        	}
-        	C.setlistofpoints(li)	
-            this.building = e
-            this._drawbuilding()
-            this._clearbuttons()
-         }
-        
-        _drawbuilding() {
-        	const e = this.building 
-        	const b = this.$.building
-        	const w = this.$.wonder
-        	if (e == null) {
-        		C.displayelem(b,false)
-        		C.displayelem(w,false)
-        	}
-        	else 
-        		if (this._iswonder()) {
-        			C.displayelem(w,true,true)
-        			const data = {}
-        			data.terrain = ""
-        			data.wonder = e
-        			w.draw(data)
-        		}
-        		else {
-        		  C.displayelem(b,true,true)
-        		  b.draw(e)
-        		}        	
-        }
-        
-        _clearbuttons() {
-            const rr = this.$.replace
-            const bb = this.$.build
-            rr.click = e => this.buy()
-            bb.click = e => this.buy()
-            rr.draw(null)
-            bb.draw(null)
-        }
-        
-        openIt(data) {
-        	this.wonder = data.co == "buywonder"
-            const dw = this.$.dwonder
-            const db = this.$.dbuilding
-            C.displayelem(dw,false)
-            C.displayelem(db,false)
-            this._clearbuttons()
-            this.b = null
-            this.building = null
-            for (var i=0; i<data.list.length; i++)
-                if (C.eqp(data,data.list[i].p)) this.b = data.list[i].list
-            const buildings = this._extractbuildings(this.b)
-            if (this._iswonder()) {
-            	C.displayelem(this.$.dwonder,true)
-            	const wo = this.$.listwonders
-                wo.fun = e => this.clickbuilding(e)
-                wo.draw(buildings)            	
-            } else {
-              C.displayelem(this.$.dbuilding,true)
-              const bu = this.$.listbuy
-              bu.fun = e => this.clickbuilding(e)
-              bu.draw(buildings)
-            }
-            super.noCancelOnOutsideClick()
-            this._drawbuilding()
-            C.setcurrentcommand("selectbuildingpoint")
-            super.openIt(data)        	
-        }
-        
-    }
-    customElements.define(BuyBuilding.is, BuyBuilding);
+     window.customElements.define(BuyBuilding.is, BuyBuilding);
+
   </script>
 </dom-module>

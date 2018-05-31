@@ -64,7 +64,7 @@ Polymer.CivDataList = function(superClass) {
          if (data.length== 1)
           C.sleep().then(
              () => { this._clicked(data[0]) }
-          ) 
+          )
       }
 
    }

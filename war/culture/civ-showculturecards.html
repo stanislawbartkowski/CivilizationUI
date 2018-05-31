@@ -2,16 +2,16 @@
     <template>
 
     <paper-dialog id="dialog">
-
-     <paper-dialog-scrollable>
-
-        <civ-culturecardlist id="resources" style="display:none"></civ-culturecardlist>
+     
+        <h2>{{header}}</h2>
+     
+        <div>
+           <civ-culturecardlist id="resources" style="display:none"></civ-culturecardlist>
+        </div>
         
         <div id="empty" style="display:none">
           {{localize('noculturecards')}}
         </div>
-        
-      </paper-dialog-scrollable>
         
     
      </paper-dialog>
@@ -24,6 +24,7 @@
       static get is() { return 'civ-showculturecards'; }
             
       refresh(data) {
+    	 const aa = this.header
     	 if (data.cards != null) super.drawlistorempty(data.cards)
     	 else {
     		 const elist = [] 

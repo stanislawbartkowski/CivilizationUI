@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/05/21",
+    "appversion": "Version: 2018/05/31",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -86,6 +86,8 @@
     "explorehut" : "Explore Hut",
     "attack" : "Attack",
     "doyouwanttoattack" : "Do you want to attack this ",
+    "civarmy" : "{civ} army",
+    "civscout" : "{civ} scout",
     "combatbonus" : "Combat bonus",
     "useiron" : "Use iron",
     "increaseattack" : "Attack +3",
@@ -149,6 +151,16 @@
     "putgreatperson" : "Place Great Person on the map or hold in reserve",
     "place" : "Place",
     "reserve" : "Hold in reserve",
+    "greatpersonplace" : "Place Great Person",
+    "nobuildings" : "No buildings yet",
+    "yourculturecards" : "{civ} Culture Cards",
+    "cultureusedcards" : "Used or dropped Culture Cards",
+    "yourwonders" : "{civ} Wonders of the World",
+    "yourgreatpersons" : "{civ} Great Persons",
+    "unitslevel" : "{units}  Level: {level}",
+    "unitsall" : "All units  Level : {level}",
+    "nounits" : "No units",
+    "buyunit" : "Purchase Unit",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",
@@ -174,6 +186,8 @@
     "Mysticism" : "Mysticism",
     "PrintingPress" : "Printing Press",
     "Sailing" : "Sailing",
+    "Logistics" : "Logistics",
+    "Bureaucracy" : "Bureaucracy",
 
     "Banking" : "Banking",
     "Biology" : "Biology",
@@ -185,6 +199,7 @@
     "RailRoad" : "Railroad",
     "SteamPower" : "Steam Power",
     "Theology" : "Theology",
+    "Education" : "Education",
 
     "NuclearFusion" : "Atomic Theory",
     "Ballistics" : "Ballistics",
@@ -194,6 +209,7 @@
     "Plastics" : "Plastics",
     "ReplaceableParts" : "Replacement Parts",
     "Combustion" : "Combustion",
+    "MassMedia" : "Mass Media",
 
     "Harbor" : "Harbor",
     "Shipyard" : "Shipyard",

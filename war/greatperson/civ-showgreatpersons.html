@@ -2,17 +2,17 @@
     <template>
 
     <paper-dialog id="dialog">
+    
+      <h2>{{header}}</h2>
 
-     <paper-dialog-scrollable>
-
+       <div>
         <civ-greatpersonlist id="resources" style="display:none"></civ-greatpersonlist>
+       </div> 
         
         <div id="empty" style="display:none">
           {{localize('nogreatpersons')}}
         </div>
-        
-      </paper-dialog-scrollable>
-        
+                
     
      </paper-dialog>
     

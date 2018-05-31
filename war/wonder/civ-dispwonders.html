@@ -8,27 +8,20 @@
     }
     </style>
 
-
-   <template id="list" is="dom-repeat" items="{{list}}">
+<div id="map">
+   <template is="dom-repeat" items="{{res}}">
      <civ-wonder data="{{item}}"></civ-wonder>
    </template>
+</div>   
 
   </template>
   <script>
-  class CivDispWonders extends Polymer.CivData(Polymer.Element) {
+  class CivDispWonders extends Polymer.CivDataList(Polymer.Element) {
 
   static get is() { return 'civ-dispwonders'; }
 
-  static get properties() {
-      return {
-          list: {
-              type: Array
-          }
-      }
-  }
-
   refresh(pa) {
-    this.list = pa
+    super.refreshmap(pa,"civ-wonder")
   }
 
 }

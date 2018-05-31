@@ -197,12 +197,22 @@ var C = (function() {
     const dialog = document.getElementById("buy-building")
     dialog.$.dialog.setBuildingPoint(pa)
   }
-  
-  function _setgreatpersonpoint(pa) {
-    const dialog = document.getElementById("putgreatperson-dialog")    
-    dialog.$.dialog.setGreatPersonPoint(pa)
+
+  function _setwonderpoint(pa) {
+    const dialog = document.getElementById("buywonder-dialog")
+    dialog.$.dialog.setBuildingPoint(pa)
   }
-  
+
+  function _setbuyunitpoint(pa) {
+    const dialog = document.getElementById("civ-buyunitdialog")
+    dialog.$.dialog.setPoint(pa)
+  }
+
+  function _setgreatpersonpoint(pa) {
+    const dialog = document.getElementById("putgreatperson-dialog")
+    dialog.$.dialog.setBuildingPoint(pa)
+  }
+
   function _attackconfirmation(pa) {
     C.opendialogwithpar("attackconf-dialog",pa)
   }
@@ -218,10 +228,6 @@ var C = (function() {
       })
   }
 
-  function _buybuilding(iparam) {
-       C.opendialogwithpar("buy-building",iparam)
-  }
-
   return {
 
   sleep(ms = 500) {
@@ -233,8 +239,9 @@ var C = (function() {
     return s
   },
 
-  opendialogwithpar(id,pa) {
+  opendialogwithpar(id,pa,title = null) {
 	 const dialog = document.getElementById(id)
+     dialog.$.dialog.setHeader(title)
 	 dialog.$.dialog.openIt(pa)
   },
 
@@ -281,7 +288,7 @@ var C = (function() {
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
      }
-     if (co == "buybuilding" || co == "buywonder" || co == "devouttoculture")  {
+     if (co == "devouttoculture")  {
         const a = []
         for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
         return a
@@ -438,8 +445,13 @@ var C = (function() {
     iparam.co = co
     var pa = verifycommand(co,iparam)
     if (pa == null) return
-    if (co == "buybuilding" || co == "buywonder") {
-       _buybuilding(iparam)
+    if (C.isBuyUnitCommand(co)) {
+      _setbuyunitpoint(iparam)
+      return
+    }
+    
+    if (co == "buywonder") {
+       _setwonderpoint(iparam)
        return
     }
     if (co == "revealtile")
@@ -477,14 +489,14 @@ var C = (function() {
       _senddevoutscout(pa)
       return
     }
-    if (co == "selectbuildingpoint") {
+    if (co == "buybuilding") {
       _setbuildingpoint(pa)
       return
     }
-    if (co == "greatpersonputnow") {
+    if (co == "greatpersonputnow" || co == "greatpersonput") {
      _setgreatpersonpoint(pa)
      return
-    }    
+    }
     if (co == "attack") {
     	_attackconfirmation(pa)
     	return
@@ -593,33 +605,49 @@ var C = (function() {
     },
 
     showwonders(p) {
-        C.opendialogwithpar("showwonders-dialog",p.wonders)
+        C.opendialogwithpar("showwonders-dialog",p.wonders,C.localize("yourwonders","civ",p.civ))
     },
 
     discardcarddialog(p) {
-//      C.opendialogwithpar("discardcard-dialog",p.cultureresource.cards)
       C.opendialogwithpar("discardcard-dialog",p)
     },
 
-    showculturecards(p) {
-        C.opendialogwithpar("showculturecards-dialog",p.cultureresource)
+    showculturecards(p,title) {
+        C.opendialogwithpar("showculturecards-dialog",p.cultureresource,title)
     },
-    
+
+    showsingletech(p) {
+        C.opendialogwithpar("civ-showtech",p )
+    },
+
     showcultureusedcards(p) {
-        C.opendialogwithpar("showculturecards-dialog",p.board.cultureused)
+        C.opendialogwithpar("showculturecards-dialog",p.board.cultureused,C.localize('cultureusedcards'))
     },
 
     showgreatpersons(p) {
-        C.opendialogwithpar("showgreatpersons-dialog",p.cultureresource)
+        C.opendialogwithpar("showgreatpersons-dialog",p.cultureresource,C.localize("yourgreatpersons","civ",p.civ))
     },
-    
-    greatpersononmapnow(y,itemize) {
+
+    // buy structure
+    _buystructure(dname,y,itemize,id,resign) {
         if (itemize == null) return
-        C.opendialogwithpar("putgreatperson-dialog",itemize)
-        const dialog = document.getElementById("putgreatperson-dialog").$.dialog
-        dialog.setCommandNames("greatpersonputnow","greatpersonputnowresign")  
+        C.opendialogwithpar(dname,itemize)
+        const dialog = document.getElementById(dname).$.dialog
+        dialog.setParameters(id,resign)
     },
-    
+
+    greatpersononmap(y,itemize,id,resign) {
+    	this._buystructure("putgreatperson-dialog",y,itemize,id,resign)
+    },
+
+    buywonder(y,itemize,id,resign) {
+        this._buystructure("buywonder-dialog",y,itemize,id)
+    },
+
+    buybuilding(y,itemize,id) {
+    	this._buystructure("buy-building",y,itemize,id)
+   },
+
     showcivinfo(civ) {
        C.opendialogwithpar("showciv-info",civ)
     },
@@ -632,6 +660,24 @@ var C = (function() {
         C.opendialogwithpar("tech-dialog",y)
     },
 
+    buyunitdialog(data) {
+        C.opendialogwithpar("civ-buyunitdialog",data)
+    },
+    
+    buyunits(y) {
+        const da = []
+        for (var j=0; j<C.unittypes().length; j++) {
+          const p = { "name" : C.unittypes()[j], "num" : 0 }
+          for (var i=0; i<y.commands.length; i++) { 
+            const command = y.commands[i]
+            var id = command.command.toLowerCase()
+            if ("buy" + p.name == id) p.num = 1
+          }
+          da.push(p)  
+        } 
+        C.buyunitdialog({"units" : da })    
+    },
+    
     advanceculture(y) {
     // TODO: verify later
         if (C.getitemizedcommand() == null) return
@@ -649,7 +695,7 @@ var C = (function() {
 
     getcurrentcommand : function() {
         return this.getyouplay().currentcommand
-      },
+    },
 
     iscurrentcommand : function(co) {
         return this.getcurrentcommand() == co
@@ -657,6 +703,10 @@ var C = (function() {
 
     setcurrentcommand : function(co) {
        this.getyouplay().currentcommand = co
+    },
+    
+    itemizecommand : function(co) {
+      this.getyouplay().callitemize(co)
     },
 
     getitemizedcommand : function() {
@@ -923,6 +973,12 @@ var C = (function() {
     unittypes() {
      return ["mounted","aircraft","infantry","artillery"]
     },
+    
+    isBuyUnitCommand(co) {
+      for (var i=0; i<C.unittypes().length; i++) 
+        if ("buy" + C.unittypes()[i] == co) return true
+      return false  
+    },
 
     findUnitLevel(units,name) {
       if (units == null) return null
@@ -1115,7 +1171,7 @@ var C = (function() {
        if (list[i] == name) return true
      return false
    },
-   
+
    addToListU(list,name) {
      if (this.onList(list,name)) return
      list.push(name)
@@ -1221,7 +1277,7 @@ var C = (function() {
        this._addhv(a,h,"Village")
        return a
     },
-    
+
     // list
     getIListOfNames(itemize,name) {
       const ii = itemize
@@ -1233,9 +1289,9 @@ var C = (function() {
           this.addToListU(res,n)
         }
        }
-      return res  
+      return res
     },
-    
+
     getIListOfPointsForName(itemize,name,nc) {
       const ii = itemize
       const res = []
@@ -1246,9 +1302,9 @@ var C = (function() {
           if (n == nc) res.push(l[j].p)
         }
        }
-      return res  
+      return res
     },
-        
+
     getIListOfReplace(itemize,name,nc,p) {
       const ii = itemize
       for (var i=0; i<ii.length; i++) {
@@ -1258,9 +1314,9 @@ var C = (function() {
           if (n == nc && C.eqp(p,l[j].p)) return l[j].list
         }
        }
-      return []  
+      return []
     },
-    
+
     getIListCityP(itemize,name,nc,p) {
       const ii = itemize
       for (var i=0; i<ii.length; i++) {
@@ -1270,9 +1326,9 @@ var C = (function() {
           if (n == nc && C.eqp(p,l[j].p)) return ii[i].p
         }
        }
-     const mess = "Cannot find city for this point " + nc + " " + p  
+     const mess = "Cannot find city for this point " + nc + " " + p
      C.internalerroralert(mess)
-    },    
+    },
 
     getBaseURL() {
       const base = location.pathname
@@ -1282,7 +1338,7 @@ var C = (function() {
       // no base URL
       return "/" + s[1]
     }
-    
+
 
   }  // return
  } // function

@@ -51,7 +51,9 @@
       }
             
       openIt(pa) {
-    	  this.object = "village"
+    	  if (pa.square.numberofArmies > 0) this.object = C.localize('civarmy','civ',pa.square.civ)
+    	  else if (pa.square.numberofScouts > 0) this.object = C.localize('civscout','civ',pa.square.civ)
+    	  else this.object = C.localize('villagelabel') 
           const sq = this.$.square
           sq.draw(pa.square)
           super.openIt(pa)

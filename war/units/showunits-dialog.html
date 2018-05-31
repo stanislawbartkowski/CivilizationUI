@@ -3,7 +3,10 @@
   
     <paper-dialog id="dialog">
     
+     <div>
+    
        <civ-listunits id="list"></civ-listunits>
+     </div>
         
     </paper-dialog>
   </template>
@@ -14,10 +17,8 @@
       static get is() { return 'showunits-dialog'; }
                                     
       openIt(pa) {
-    	  const d = this.$.list
     	  super.openIt(pa)
-    	  d.draw(pa)
-          super.openIt(pa)
+    	  this.$.list.draw(pa)
       }
       
     }

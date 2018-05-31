@@ -128,6 +128,11 @@
 	  <iron-icon src="images/figures/scout.svg"  slot="item-icon"></iron-icon> 
 	  <span>{{localize('deployscout')}}</span> 
    </paper-icon-item>
+   
+    <paper-icon-item id="greatpersonput" on-click="_onClick"> 
+      <iron-icon src="images/icons/greatpersona.svg""  slot="item-icon"></iron-icon> 
+      <span>{{localize('greatpersonplace')}}</span> 
+   </paper-icon-item>
 </span>
 
 <span id="trade" class="actionbox" style="display:none">
@@ -135,20 +140,22 @@
 
 <span id="citymanagement" class="actionbox" style="display:none">
 
-<paper-menu-button> 
+<!--  <paper-menu-button> --> 
 
-    <paper-icon-item id="unitmenu" slot="dropdown-trigger">
+    <paper-icon-item id="unitmenu" on-click="_onClick">
       <iron-icon icon="menu" slot="item-icon"></iron-icon>       
       <span>{{localize('units')}}</span>
     </paper-icon-item>
 
+<!-- 
     <paper-tabs  slot="dropdown-content" class="dropdown-content">
         <paper-item id="buyinfantry" on-click="_onClick">{{localize('buyinfantry')}}</paper-item>
         <paper-item id="buymounted" on-click="_onClick">{{localize('buymounted')}}</paper-item>
         <paper-item id="buyartillery" on-click="_onClick">{{localize('buyartillery')}}</paper-item>
         <paper-item id="buyaircraft" on-click="_onClick">{{localize('buyaircraft')}}</paper-item>
     </paper-tabs>
-</paper-menu-button>		
+</paper-menu-button>
+ -->		
 		
 	<paper-icon-item id="buyarmy" on-click="_onClick"> 
 	  <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon> 
@@ -344,10 +351,6 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "undospendtrade",
                             "sendproduction",
                             "undosendproduction",
-                            "buymounted",
-                            "buyartillery",
-                            "buyinfantry",
-                            "buyaircraft",
                             "harvestresource",
                             "explorehut",
                             "attack",
@@ -356,7 +359,9 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "buywonder",
                             "technologyaction",
                             "devouttoculture",
-                            "advanceculture"
+                            "advanceculture",
+                            "greatpersonput",
+                            "unitmenu"
                   ]
              }
 	   }
@@ -366,6 +371,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     	const c = this.civname
     	C.showcivinfo(c)
     }
+    
     
     setListOfPoints(a) {
         C.highlightGame(this.listofpoints,false);
@@ -382,14 +388,26 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
             C.advanceculture(this.y)
             return
          }
-         
-         if (co == "greatpersonputnow") {
-            C.greatpersononmapnow(this.y,newValue)
+    	
+    	if (co == "buybuilding") {
+    		C.buybuilding(this.y,newValue,co)
+    		return
+    	}
+
+        if (co == "buywonder") {
+            C.buywonder(this.y,newValue,co)
+            return
+        }
+
+         if (co == "greatpersonputnow" || co == "greatpersonput") {
+        	var resign = null
+        	if (co == "greatpersonputnow") resign = "greatpersonputnowresign"
+            C.greatpersononmap(this.y,newValue,co,resign)
             return
          }
     }
                  
-    _callitemize(id) {
+    callitemize(id) {
        this.currentcommand = id
        window.itemizecommand(id.toUpperCase())	
     }
@@ -436,6 +454,10 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     	    	 return
     	     }    	     
              var id = source.currentTarget.id
+             if (id == "unitmenu") {
+                 C.buyunits(this.y)
+                 return
+             }
              if (id == "endofphase") {
                  this._endofphase()
             	 return
@@ -453,7 +475,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
             	C.technologyaction(this.y)
             	return
             }
-           this._callitemize(id) 
+           this.callitemize(id) 
          }
     
      
@@ -519,7 +541,6 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                   const bu = this.shadowRoot.getElementById(id);
                   C.disableleme(bu,true)
                }
-              var disableu = true
               for (var i=0; i<y.commands.length; i++) {
                   const command = y.commands[i]
                   var id = command.command.toLowerCase()
@@ -528,10 +549,15 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                 	  return
                   }
                   if (id == "greatpersonputnow") {
-                      if (this._youactive()) this._callitemize(id)
+                      if (this._youactive()) this.callitemize(id)
                       continue
                   }
                   if (id == "greatpersonputnowresign") continue
+
+                  if (C.isBuyUnitCommand(id)) {
+                    C.disableleme(this.$.unitmenu,false)
+                    continue
+                  }
                   if (id == "killfigure") {
                 	  if (this._youactive()) {
                 		  C.executeKillFigure()
@@ -547,14 +573,12 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                 	  	  && this.currentcommand != "revealtile" 
                 		  && this.currentcommand != "explorehut" 
                 		  && this.currentcommand != "attack") 
-                	  this._callitemize(id)
-                 // check units menu
-                 for (var j=0; j< this.unitsmenu.length; j++)
-                	 if (this.unitsmenu[j] == id) disableu = false                 
+                	  this.callitemize(id)
               }
-              const u = this.$.unitmenu
-              C.disableleme(u,disableu)
               C.setUnitsNumb(this,y.units)
+              for (var j=0; j<C.unittypes().length; j++) 
+            	  this.$[C.unittypes()[j]].fun = p => C.showunits(y.units)
+
               this._displayres()
               if (this._youactive()) {
             	  var s = null

@@ -64,8 +64,18 @@
       _drawunits(pa) {
           this._showunits(true)
           C.setUnitsNumb(this.$.units,pa)
+          const fun = this.fun
+          for (var i=0; i<pa.units.length; i++) {
+            const n = pa.units[i].name.toLowerCase()
+            const ee = this.$[n]
+            if (pa.units[i].num >= 1) ee.fun = p => fun(p)
+            else ee.fun = null
+          }
       }
 
+      //  pa.list (of units)
+      //  or
+      //
       refresh(pa) {
     	  if (this._islist(pa)) this._drawlist(pa)
     	  else this._drawunits(pa)

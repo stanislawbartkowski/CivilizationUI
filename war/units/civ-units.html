@@ -85,14 +85,14 @@ paper-badge {
 
 </custom-style>
 
-<div style="height:100%; width:100%" draggable="true" 
+<div style="height:100%; width:100%" draggable="true"
    ondragstart="CivUnitsDraggable.ondragStart(event)"
    >
   <div class="top">
- 
+
       <span id="strengthvalue" style="width:10%; display=none; color:red">{{strengthvalue}}</span>
-      <span id="unitname" style="width:60%; font-size:80%" >{{unitname}}</span> 
-            
+      <span id="unitname" style="width:60%; font-size:80%" >{{unitname}}</span>
+
       <s-svg id="imagelevel0" class="imagelevel" style="width:10px"src="images/units/unit-level0.svg"></s-svg>
       <s-svg id="imagelevel1" class="imagelevel" src="images/units/unit-level1.svg"></s-svg>
       <s-svg id="imagelevel3" class="imagelevel" src="images/units/unit-star.svg"></s-svg>
@@ -105,12 +105,6 @@ paper-badge {
      <div id="level3" class="unitstrength"></div>
   </div>
   <div class="main" >
-<!--   
-     <s-svg id="mounted" class="unitfigure" style="display:none" fill="DarkSlateGray" src="images/units/unit-mounted.svg"></s-svg>
-     <s-svg id="artillery" class="unitfigure" style="display:none"  fill="DarkSlateGray" src="images/units/unit-artillery.svg"></s-svg>
-     <s-svg id="infantry" class="unitfigure" style="display:none" fill="DarkSlateGray" src="images/units/unit-infantry.svg"></s-svg>
-     <s-svg id="aircraft" class="unitfigure" style="display:none" fill="DarkSlateGray" src="images/units/unit-aircraft.svg"></s-svg>
--->     
      <img id="mounted" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-mounted.svg"></img>
      <img id="artillery" class="unitfigure" hidden  fill="DarkSlateGray" src="images/units/unit-artillery.svg"></img>
      <img id="infantry" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-infantry.svg"></img>
@@ -130,12 +124,7 @@ paper-badge {
 
 <script>
 
-class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
-
-    constructor() {
-        super();
-        Polymer.Gestures.addListener(this, 'tap', () => this.handleClick());
-    }
+class CivUnits extends Polymer.CivChooseData(Polymer.Element) {
 
     static get is() {
     	return 'civ-units';
@@ -198,11 +187,11 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
     return u
   }
 
-  handleClick() {
-	  if (this.units == null) return
-	  C.showunits(this.units)
-  }
-  
+//  handleClick() {
+//	  if (this.units == null) return
+//	  C.showunits(this.units)
+//  }
+
   _displaysvg(n,display) {
       const u = this.$[n]
       C.showeleme(u,display)
@@ -210,7 +199,7 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
 
   _clearimages() {
   	this.listofunits = null
-    for (var i=0; i<this.unittypes.length; i++) 
+    for (var i=0; i<this.unittypes.length; i++)
       this._displaysvg(this.unittypes[i],false)
     for (var i=0; i<this.unittypes.length; i++)
       C.showeleme(this.$[this.unittypes[i]+'number'],false)
@@ -225,6 +214,13 @@ class CivUnits extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Ele
      return C.localize(n)
   }
 
+  // data {
+  // {
+  //     data.name
+  //     data.strength (can be null)
+  //     data.level (can be null)
+  //     data.num (1 or > 1)
+  // }
   refresh(data) {
 //    if (this.isDraggable()) this.setAttribute("draggable","true")
     this._clearimages()

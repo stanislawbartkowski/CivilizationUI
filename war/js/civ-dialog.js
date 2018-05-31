@@ -14,12 +14,13 @@ Polymer.CivDialog = function(superClass) {
 
      	noCancelOnOutsideClick() {
      	   this.$.dialog.noCancelOnOutsideClick = true
+     	   this.$.noCancelOnEscKey = true
   	    }
 
        closeIt() {
            this.$.dialog.close()
        }
-
+       
        opened() {
     	   return this.$.dialog.opened
        }       

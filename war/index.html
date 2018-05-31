@@ -1,7 +1,9 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
+
+  <meta
+   charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
   <title>Civilization, Getting Started</title>
@@ -63,6 +65,7 @@
 <script type="text/javascript" language="javascript" src="js/civ-dragg.js"></script>
 <script type="text/javascript" language="javascript" src="js/civ-datalist.js"></script>
 <script type="text/javascript" language="javascript" src="js/civ-choosedata.js"></script>
+<script type="text/javascript" language="javascript" src="js/buystructure-behavior.js"></script>
 
   <link rel="import" href="x-app.html">
 
@@ -80,7 +83,7 @@
   <link rel="import" href="tools/figurenumber-dialog.html">
   <link rel="import" href="tools/s-svg.html">
   <link rel="import" href="tools/civ-chooseplacesquare.html">
-  
+
 
   <link rel="import" href="board/civ-map.html">
   <link rel="import" href="board/civ-gamestate.html">
@@ -112,12 +115,14 @@
   <link rel="import" href="tech/civ-tlevel.html">
   <link rel="import" href="tech/civ-techdialog.html">
   <link rel="import" href="tech/civ-showtechdialog.html">
-
+  <link rel="import" href="tech/civ-showtech.html">
 
   <link rel="import" href="wonder/civ-wonder.html">
   <link rel="import" href="wonder/civ-dispwonders.html">
-  <link rel="import" href="wonder/civ-listwonderstobuy.html">
+<!-- <link rel="import" href="wonder/civ-listwonderstobuy.html"> -->
   <link rel="import" href="wonder/civ-showwondersdialog.html">
+  <link rel="import" href="wonder/civ-choosewonder.html">
+  <link rel="import" href="wonder/civ-buywonder.html">
 
 
   <link rel="import" href="player/civ-playerstate.html">
@@ -161,23 +166,30 @@
   <link rel="import" href="units/civ-listunits.html">
   <link rel="import" href="units/civ-units.html">
   <link rel="import" href="units/showunits-dialog.html">
-
+  <link rel="import" href="units/civ-chooseunits.html">
+  <link rel="import" href="units/civ-buyunit.html">
 
   <link rel="import" href="building/civ-buildinginfo.html">
   <link rel="import" href="building/civ-buildings.html">
   <link rel="import" href="building/civ-marketbuilding.html">
   <link rel="import" href="building/civ-listbuildtobuy.html">
   <link rel="import" href="building/civ-buybuilding.html">
-  <link rel="import" href="building/civ-buldingbuttons.html">
+<!--  <link rel="import" href="building/civ-buldingbuttons.html"> -->
+  <link rel="import" href="building/civ-choosebuilding.html">
 
 
   <script src="test-set.js"></script>
 
   <style>
     body {
+/*
       margin: 0;
       font-family: sans-serif;
       background-color: #f1f1f1;
+*/
+      font-family: Arial Unicode MS, Arial, sans-serif;
+      font-size: small;
+
     }
   </style>
 
@@ -350,6 +362,25 @@
   </template>
 </dom-bind>
 
+<dom-bind id="buywonder-dialog">
+  <template>
+   <buy-wonder id="dialog"></buy-wonder>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-showtech">
+  <template>
+   <civ-showtech id="dialog"></civ-showtech>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-buyunitdialog">
+  <template>
+   <civ-buyunitdialog id="dialog"></civ-buyunitdialog>
+  </template>
+</dom-bind>
+
+civ-buyunitdialog
 
 </head>
 
@@ -370,8 +401,7 @@
             }
           )
   </script>
--->
-
+ -->
 
 </body>
 </html>

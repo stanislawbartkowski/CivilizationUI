@@ -68,7 +68,7 @@ class CivPlayerState extends Polymer.CivData(Polymer.Element) {
         this._disp(this.$.state5,"cities/research.svg",C.localize('researchlabel'),"icons/buywonder.svg",C.localize('wonders'),
         		() => C.showresearch(this.data), () => C.showwonders(this.data) )        
         this._disp(this.$.state7,"icons/greatpersona.svg",C.localize('greatperson'),"icons/cards.svg",C.localize('culturecards'),
-                        () => C.showgreatpersons(this.data), () => C.showculturecards(this.data) )
+                        () => C.showgreatpersons(this.data), () => C.showculturecards(this.data,C.localize('yourculturecards','civ',y.civ)) )
     }
 }
 

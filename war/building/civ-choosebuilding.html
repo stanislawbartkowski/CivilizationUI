@@ -1,0 +1,43 @@
+<dom-module id="civ-choosebuilding">
+    <template>
+
+<style is="custom-style" include="civ-paper-button-styles" >
+
+      .horizontal {
+          @apply(--layout-horizontal);
+          margin-top : 12px;
+      }
+            
+      </style>
+
+
+     <div>
+        <slot name="title"></slot>
+        <civ-listbuildbuy  id="resources" style="display:none"></civ-listbuildbuy>
+
+        <div id="empty" style="display:none">
+          {{localize('nobuildings')}}
+        </div>
+
+        <div class="horizontal">
+          <civ-buildinginfo class="building" id=choosed></civ-buildinginfo>
+          <slot></slot>
+        </div>
+      </div>
+
+  </template>
+
+  <script>
+
+  class CivChooseBuilding extends  Polymer.CivDataList(Polymer.Element) {
+      static get is() { return 'civ-choosebuilding'; }
+
+      // data: list of buildings
+      refresh(data) {
+        super.refreshchooselist(data)
+      }
+
+   }
+   window.customElements.define(CivChooseBuilding.is, CivChooseBuilding);
+  </script>
+</dom-module>
