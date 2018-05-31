@@ -6,6 +6,10 @@
    <template id="map" is="dom-repeat" items="{{units}}">
            <civ-units class="unit" data="{{item}}" draggable="{{draggable}}" num="{{index}}" you="{{you}}"></civ-units>
     </template>
+    
+    <div id="empty" style="display:none">
+       {{localize('nounits')}}
+    </div>
 
     <span id="units" style="display:none">
       <civ-units class="unitelem" id="infantry"></civ-units>
@@ -50,7 +54,12 @@
 
       _drawlist(pa) {
     	  this._showunits(false)
+          C.displayelemid(this,"empty",false)    	  
           const l = pa.list
+          if (l.length == 0) {
+              C.displayelemid(this,"empty",true)       
+        	  return
+          }
           this.units = []
           for (var i=0; i<l.length; i++) {
               const elem = {}

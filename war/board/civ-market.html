@@ -185,6 +185,11 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
         if (b.board.others.length == 1) plcul.push(this._createcul(b.board.others[0]))
         cul.draw(plcul)
         
+        const ekilled = this.$.killed
+        for (var j=0; j<C.unittypes().length; j++) {
+        	const e = C._getbyid(ekilled,C.unittypes()[j])
+            e.fun = p => C.showunits(killed)
+        }        
     }
 }
     
