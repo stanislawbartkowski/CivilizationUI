@@ -72,6 +72,7 @@
 
       _drawunits(pa) {
           this._showunits(true)
+          this.units = []
           C.setUnitsNumb(this.$.units,pa)
           const fun = this.fun
           for (var i=0; i<pa.units.length; i++) {

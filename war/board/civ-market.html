@@ -132,6 +132,17 @@ class CivMarket extends Polymer.CivData(Polymer.Element) {
 
     static get is() { return 'civ-market'; }
     
+    static get properties() {
+        
+        return {                              
+            refreshalways : {
+                type : Boolean,
+                value : false
+              }
+        }
+    }
+
+    
     _clearunits(e) {
     	const na = C.unittypes()
     	for (var i=0; i<na.length; i++) {

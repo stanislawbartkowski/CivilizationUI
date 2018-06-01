@@ -34,6 +34,15 @@ class CivPlayerState extends Polymer.CivData(Polymer.Element) {
         return 'civ-playerstate';
         }
     
+    static get properties() {
+        
+        return {                              
+            refreshalways : {
+                type : Boolean,
+                value : false
+              }
+        }
+    }
     
     _disp(e,image1,text1,image2,text2,fun1,fun2) {
     	const r = {}

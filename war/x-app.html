@@ -147,12 +147,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get is() { return 'x-app'; }
       
       static get properties() {
+    	  
           return {
             resou: {
               type: Object
-            }
+            },
+            refreshalways : {
+                type : Boolean,
+                value : false
+              }
           }
-        }
+      }
                 
       attached() {
            this.loadResources(this.resolveUrl('locales.json'));           

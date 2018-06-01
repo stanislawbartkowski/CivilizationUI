@@ -276,7 +276,12 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     static get properties() {
 		
 		return {
-                               
+                              
+            refreshalways : {
+                type : Boolean,
+                value : false
+              },
+
               civname: {
                   type: String,
                    value: undefined
@@ -477,8 +482,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
             }
            this.callitemize(id) 
          }
-    
-     
+         
          clear() {
              this.itemizedcommand = null;
              this.listofpoints = null;
@@ -514,13 +518,11 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
         		   this.clear()
                    const respanel = this.$.resourcespanel
                    respanel.draw(null)
-                   respanel.draw1(null)
         		   return;
         	   }
-        	   var y
-        	   if (this.opponent) y = b.board.others[0]
-        	   else y = b.board.you
-        	   this.y = y
+        	   if (this.opponent) this.y = b.board.others[0]
+        	   else this.y = b.board.you
+        	   const y = this.y
                C.setColorForCity(this,"civname",C.backcolorForCiv(y.civ))
                this.civname=y.civ
                // player status

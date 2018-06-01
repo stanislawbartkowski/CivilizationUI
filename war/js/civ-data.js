@@ -15,16 +15,12 @@ Polymer.CivData = function(superClass) {
               datas: {
             	  type : String
               },
-              data1: {
-                type : Object,
-                observer: 'draw1set'
-              },
               fun : {
                 type : Object
               },
               refreshalways : {
                 type : Boolean,
-                value : false
+                value : true
               },
               header : {
                 type : String,
@@ -59,11 +55,6 @@ Polymer.CivData = function(superClass) {
            this.refresh(newdata)
 	   }
 
-    draw1set(newdata,olddata) {
-           if (!this._different(newdata,olddata)) return
-           this.refresh1(newdata)
-     }
-
      setHeader(title) {
        this.header = title
      }
@@ -90,12 +81,7 @@ Polymer.CivData = function(superClass) {
             C.sleep().then(
              () => { this.afterdraw(data) }
              )
-       }
-
-     draw1(data) {
-	   this.data1 = data
      }
-
 
     drawlistorempty(data) {
      const r = this.$.resources
@@ -109,6 +95,6 @@ Polymer.CivData = function(superClass) {
        r.draw(data)
      }
    }
-
+    
   }
 }
