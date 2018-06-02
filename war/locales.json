@@ -161,6 +161,7 @@
     "unitsall" : "All units  Level : {level}",
     "nounits" : "No units",
     "buyunit" : "Purchase Unit",
+    "productionspendincrease" : "Production points : ",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

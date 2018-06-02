@@ -10,13 +10,14 @@
     
     
     <paper-dialog id="dialog" modal>
-      <h3>{{localize('youareabouttospendtrade')}}</h3>
+      <h2>{{localize('youareabouttospendtrade')}}</h2>
       <p/>
       
       <div>{{localize('specifyamountofproduction')}}</div>
       
       <div>{{localize('tradetospend')}}{{tradetospend}}</div>
       <div>{{localize('reduceratio')}}[[reduceratio]]</div>
+      <div>{{localize('productionspendincrease')}}[[increasepoints]]</div>
       
      
       <figurenumber-widget id="numbproduction"></figurenumber-widget>
@@ -35,7 +36,7 @@
   </template>
 
   <script>
-      class SpendTradeDialog extends Polymer.CivDialog(Polymer.DialDraggable(Polymer.Element)) {
+      class SpendTradeDialog extends Polymer.CivDialog(Polymer.Element) {
       static get is() { return 'spendtrade-dialog'; }
       
       static get properties() {
@@ -49,6 +50,14 @@
             },
             
             maxproduction : {
+            	type : Number
+            },
+            
+            increasepoints : {
+            	type : Number
+            },
+            
+            exchangeratio : {
             	type : Number
             }
                        
@@ -73,7 +82,8 @@
       
       _numberChanged(newValue,oldValue) {
           const y = C.getyourdeck()
-          this.tradetospend = (this.maxproduction -newValue) * y.tradeforprod
+//          this.tradetospend = (this.maxproduction -newValue) * y.tradeforprod
+          this.tradetospend = Math.floor((this.maxproduction -newValue) * this.exchangeratio)
           if (this.tradetospend < 0) this.tradetospend = "?" 
       }
                   
@@ -82,10 +92,13 @@
           super.openIt(pa)
           const e = this.$.numbproduction
           this.reduceratio = y.tradeforprod
-          this.maxproduction = Math.floor(y.trade/y.tradeforprod)
+          this.increasepoints = y.prodfortrade
+          this.exchangeratio = (y.tradeforprod / y.prodfortrade) 
+//          this.maxproduction = Math.floor(y.trade/( y.tradeforprod)
+          this.maxproduction = Math.floor(y.trade/this.exchangeratio)
           e.numberChanged = (newValue,oldValue) => this._numberChanged(newValue,oldValue)
-          this._numberChanged(1,0)
-          e.draw('amountofproduction',1,this.maxproduction)
+          this._numberChanged(y.prodfortrade,0)
+          e.draw('amountofproduction',y.prodfortrade,this.maxproduction)
       }
            
     }

@@ -1,6 +1,6 @@
 Polymer.CivDialog = function(superClass) {
 
-    return class extends Polymer.CivData(superClass) {
+    return class extends Polymer.CivData(Polymer.DialDraggable(superClass)) {
 
 	    constructor() {
 	      super();
