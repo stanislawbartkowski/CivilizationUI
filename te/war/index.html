@@ -1,0 +1,426 @@
+<!doctype html>
+<html>
+<head>
+
+  <meta
+   charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <title>Civilization, Getting Started</title>
+
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  <script type="text/javascript" language="javascript" src="civilizationui/civilizationui.nocache.js"></script>
+
+
+  <link rel="import" href="bower_components/polymer/polymer.html">
+
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="bower_components/paper-item/paper-item.html">
+<link rel="import" href="bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+<link rel="import" href="bower_components/paper-badge/paper-badge.html">
+<link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+
+<link rel="import" href="bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="bower_components/font-roboto/roboto.html">
+
+<link rel="import" href="bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="bower_components/iron-input/iron-input.html">
+<link rel="import" href="bower_components/iron-icons/editor-icons.html">
+
+<link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="bower_components/neon-animation/web-animations.html">
+
+<link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog.html">
+<link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog-icon-header.html">
+<link rel="import" href="bower_components/app-localize-behavior/app-localize-behavior.html">
+<link rel="import" href="bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+
+<script type="text/javascript" language="javascript" src="bower_components/deep-diff/index.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/civ-js.js"></script>
+<script type="text/javascript" language="javascript" src="js/civ-localize.js"></script>
+<script type="text/javascript" language="javascript" src="js/civ-data.js"></script>
+<script type="text/javascript" language="javascript" src="js/m-draggable.js"></script>
+<script type="text/javascript" language="javascript" src="js/civ-dialog.js"></script>
+<script type="text/javascript" language="javascript" src="js/civ-dragg.js"></script>
+<script type="text/javascript" language="javascript" src="js/civ-datalist.js"></script>
+<script type="text/javascript" language="javascript" src="js/civ-choosedata.js"></script>
+<script type="text/javascript" language="javascript" src="js/buystructure-behavior.js"></script>
+<script type="text/javascript" language="javascript" src="js/civ-nondraggabledialog.js"></script>
+
+  <link rel="import" href="x-app.html">
+
+
+  <link rel="import" href="play/reveal2-dialog.html">
+  <link rel="import" href="play/multifigures-dialog.html">
+  <link rel="import" href="play/spendtrade-dialog.html">
+  <link rel="import" href="play/sendproduction-dialog.html">
+  <link rel="import" href="play/civ-showhv.html">
+  <link rel="import" href="play/civ-showciv.html">
+
+  <link rel="import" href="tools/civ-button-styles.html">
+  <link rel="import" href="tools/civ-helptext.html">
+  <link rel="import" href="tools/civ-implemented.html">
+  <link rel="import" href="tools/figurenumber-dialog.html">
+  <link rel="import" href="tools/s-svg.html">
+  <link rel="import" href="tools/civ-chooseplacesquare.html">
+
+
+  <link rel="import" href="board/civ-map.html">
+  <link rel="import" href="board/civ-gamestate.html">
+  <link rel="import" href="board/civ-market.html">
+
+
+  <link rel="import" href="square/civ-square.html">
+  <link rel="import" href="square/civ-selectsquare.html">
+  <link rel="import" href="square/civ-listofsquares.html">
+
+
+  <link rel="import" href="game/civ-choose.html">
+  <link rel="import" href="game/civ-gameline.html">
+  <link rel="import" href="game/civ-content.html">
+  <link rel="import" href="game/civ-games.html">
+  <link rel="import" href="game/civ-join.html">
+  <link rel="import" href="game/civ-joingame.html">
+  <link rel="import" href="game/join-dialog.html">
+
+
+  <link rel="import" href="resources/civ-resources.html">
+  <link rel="import" href="resources/civ-displistres.html">
+  <link rel="import" href="resources/civ-dispres.html">
+  <link rel="import" href="resources/civ-chooseresource.html">
+  <link rel="import" href="resources/civ-takeresource.html">
+
+  <link rel="import" href="tech/civ-tech.html">
+  <link rel="import" href="tech/civ-listtech.html">
+  <link rel="import" href="tech/civ-leveltech.html">
+  <link rel="import" href="tech/civ-tlevel.html">
+  <link rel="import" href="tech/civ-techdialog.html">
+  <link rel="import" href="tech/civ-showtechdialog.html">
+  <link rel="import" href="tech/civ-showtech.html">
+
+  <link rel="import" href="wonder/civ-wonder.html">
+  <link rel="import" href="wonder/civ-dispwonders.html">
+  <link rel="import" href="wonder/civ-showwondersdialog.html">
+  <link rel="import" href="wonder/civ-choosewonder.html">
+  <link rel="import" href="wonder/civ-buywonder.html">
+
+
+  <link rel="import" href="player/civ-playerstate.html">
+  <link rel="import" href="player/civ-player.html">
+  <link rel="import" href="player/civ-stateelem.html">
+
+
+  <link rel="import" href="technologyaction/civ-technologyaction.html">
+
+
+  <link rel="import" href="culture/civ-devoutcitytoculture.html">
+  <link rel="import" href="culture/civ-culturepoint.html">
+  <link rel="import" href="culture/civ-culturetrack.html">
+  <link rel="import" href="culture/civ-cultureprogress.html">
+  <link rel="import" href="culture/civ-cultureprogresselem.html">
+  <link rel="import" href="culture/civ-cultureplayers.html">
+  <link rel="import" href="culture/civ-advanceculture.html">
+  <link rel="import" href="culture/civ-culturecard.html">
+  <link rel="import" href="culture/civ-culturecardlist.html">
+  <link rel="import" href="culture/civ-showculturecards.html">
+  <link rel="import" href="culture/civ-chooseculturecard.html">
+  <link rel="import" href="culture/civ-discardcard.html">
+
+
+  <link rel="import" href="greatperson/civ-greatperson.html">
+  <link rel="import" href="greatperson/civ-greatpersonlist.html">
+  <link rel="import" href="greatperson/civ-showgreatpersons.html">
+  <link rel="import" href="greatperson/civ-choosegreatperson.html">
+  <link rel="import" href="greatperson/civ-putgreatperson.html">
+
+
+  <link rel="import" href="battle/attackconf-dialog.html">
+  <link rel="import" href="battle/battle-side.html">
+  <link rel="import" href="battle/battle-dialog.html">
+  <link rel="import" href="battle/civ-frontunit.html">
+  <link rel="import" href="battle/battle-desc.html">
+  <link rel="import" href="battle/battle-loot.html">
+  <link rel="import" href="battle/battle-result.html">
+  <link rel="import" href="battle/battle-saveunit.html">
+
+
+  <link rel="import" href="units/civ-listunits.html">
+  <link rel="import" href="units/civ-units.html">
+  <link rel="import" href="units/showunits-dialog.html">
+  <link rel="import" href="units/civ-chooseunits.html">
+  <link rel="import" href="units/civ-buyunit.html">
+
+  <link rel="import" href="building/civ-buildinginfo.html">
+  <link rel="import" href="building/civ-buildings.html">
+  <link rel="import" href="building/civ-marketbuilding.html">
+  <link rel="import" href="building/civ-listbuildtobuy.html">
+  <link rel="import" href="building/civ-buybuilding.html">
+  <link rel="import" href="building/civ-choosebuilding.html">
+  
+
+  <link rel="import" href="city/city-action.html">
+
+  <script src="test-set.js"></script>
+
+  <style>
+    body {
+/*
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f1f1f1;
+*/
+      font-family: Arial Unicode MS, Arial, sans-serif;
+      font-size: small;
+
+    }
+  </style>
+
+<dom-bind id="dialog-question">
+  <template>
+      <paper-alert-dialog id="dialog" title="Congratulations" dismiss-button="Cancel"
+	                      confirm-button="OK" on-confirm="confirm" on-dismiss="dismiss">
+        {{message}}
+      </paper-alert-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="dialog-alert">
+  <template>
+      <paper-alert-dialog id="dialog" confirm-button="OK">
+      <paper-alert-dialog-icon-header icon="icons:warning"></paper-alert-dialog-icon-header>
+      {{message}}
+      </paper-alert-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="dialog-command-failure">
+  <template>
+    <paper-alert-dialog id="dialog" confirm-button="Got it">
+      <paper-alert-dialog-icon-header icon="icons:warning">Action failed, read message below from server</paper-alert-dialog-icon-header>
+      {{message}}
+    </paper-alert-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="dialog-command-alert">
+  <template>
+    <paper-alert-dialog id="dialog" confirm-button="Got it">
+      <paper-alert-dialog-icon-header icon="icons:warning">Cannot execute action</paper-alert-dialog-icon-header>
+      {{message}}
+    </paper-alert-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="join-dialog">
+  <template>
+   <join-dialog id="dialog"></join-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="reveal2-dialog">
+  <template>
+   <reveal2-dialog id="dialog"></reveal2-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="multifigures-dialog">
+  <template>
+   <multifigures-dialog id="dialog"></multifigures-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="spendtrade-dialog">
+  <template>
+   <spendtrade-dialog id="dialog"></spendtrade-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="sendproduction-dialog">
+  <template>
+   <sendproduction-dialog id="dialog"></sendproduction-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showunits-dialog">
+  <template>
+   <showunits-dialog id="dialog"></showunits-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showhv-dialog">
+  <template>
+   <show-hvdialog id="dialog"></show-hvdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="attackconf-dialog">
+  <template>
+   <attackconf-dialog id="dialog"></attackconf-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="battle-dialog">
+  <template>
+   <battle-dialog id="dialog"></battle-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="battle-result">
+  <template>
+   <battle-result id="dialog"></battle-result>
+  </template>
+</dom-bind>
+
+<dom-bind id="tech-dialog">
+  <template>
+   <civ-techdialog id="dialog"></civ-techdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showtech-dialog">
+  <template>
+   <civ-showtechdialog id="dialog"></civ-showtechdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showwonders-dialog">
+  <template>
+     <civ-showwondersdialog id="dialog"></civ-showwondersdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showciv-info">
+  <template>
+   <civ-showcivinfo id="dialog"></civ-showcivinfo>
+  </template>
+</dom-bind>
+
+<dom-bind id="buy-building">
+  <template>
+   <buy-building id="dialog"></buy-building>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-technologyaction">
+  <template>
+   <civ-technologyaction id="dialog"></civ-technologyaction>
+  </template>
+</dom-bind>
+
+
+<dom-bind id="civ-devoutcitytoculture">
+  <template>
+   <civ-devoutcitytoculture id="dialog"></civ-devoutcitytoculture>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-advanceculture">
+  <template>
+   <civ-advanceculture id="dialog"></civ-advanceculture>
+  </template>
+</dom-bind>
+
+<dom-bind id="showculturecards-dialog">
+  <template>
+   <civ-showculturecards id="dialog"></civ-showculturecards>
+  </template>
+</dom-bind>
+
+<dom-bind id="showgreatpersons-dialog">
+  <template>
+   <civ-showgreatpersons id="dialog"></civ-showgreatpersons>
+  </template>
+</dom-bind>
+
+<dom-bind id="discardcard-dialog">
+  <template>
+   <civ-discardcarddialog id="dialog"></civ-discardcarddialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="putgreatperson-dialog">
+  <template>
+   <civ-putgreatperson id="dialog"></civ-putgreatperson>
+  </template>
+</dom-bind>
+
+<dom-bind id="buywonder-dialog">
+  <template>
+   <buy-wonder id="dialog"></buy-wonder>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-showtech">
+  <template>
+   <civ-showtech id="dialog"></civ-showtech>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-buyunitdialog">
+  <template>
+   <civ-buyunitdialog id="dialog"></civ-buyunitdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-buyincity">
+  <template>
+   <civ-buyincity id="dialog"></civ-buyincity>
+  </template>
+</dom-bind>
+
+<dom-bind id="battlesaveunit-dialog">
+  <template>
+   <battlesaveunit-dialog id="dialog"></battlesaveunit-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-takeresourcedialog">
+  <template>
+   <civ-takeresourcedialog id="dialog"></civ-takeresourcedialog>
+  </template>
+</dom-bind>
+
+</head>
+
+<body unresolved>
+
+  <x-app></x-app>
+
+<!-- 
+  <script>
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+     const xa = document.getElementsByTagName("x-app")[0];
+     sleep(1000).then(
+            () => {
+              xa.draw()
+            }
+          )
+  </script>
+ -->
+
+</body>
+</html>

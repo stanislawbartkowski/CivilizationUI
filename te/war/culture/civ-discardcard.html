@@ -1,0 +1,69 @@
+<dom-module id="civ-discardcarddialog">
+    <template>
+
+    <paper-dialog id="dialog" modal>
+
+     <paper-dialog-scrollable>
+
+       <civ-chooseculturecards id="choose">
+           <div slot="title">
+              <H3>{{handsize}}</H3>
+              <H1>{{localize('choosecardtodiscard')}}</H1>
+           </div>
+
+           <div class="buttons">
+             <paper-button id="discard" on-click="_discard">
+                 <iron-icon src="images/icons/cards.svg"></iron-icon>
+                {{localize('discardcard')}}
+             </paper-button>
+           </div>
+
+        </civ-chooseculturecards>
+
+      </paper-dialog-scrollable>
+
+
+     </paper-dialog>
+
+  </template>
+
+  <script>
+   class CivDiscardCardDialog extends  Polymer.CivDialog(Polymer.Element) {
+
+      static get is() { return 'civ-discardcarddialog'; }
+
+      static get properties() {
+          return {
+              handsize : {
+                  type : String
+              }
+          }
+      }
+
+      _clicked(p) {
+        C.displayelem(this.$.discard,true)
+      }
+
+      _discard() {
+        const card = this.$.choose.getChoosed()
+        this.closeIt()
+        const pa = {}
+        pa.row = -1
+        pa.col = -1
+        pa.param = card
+        C.executeC("DISCARDCARD",pa)        
+      }
+
+      refresh(data) {
+        const cards = data.cultureresource.cards
+        const handsize = data.handsize
+        this.$.choose.fun = (p) => this._clicked(p)
+        C.displayelem(this.$.discard,false)
+        this.handsize = C.localize("handsizemore","handsize",""+handsize)
+        this.$.choose.draw(cards)
+      }
+
+   }
+   window.customElements.define(CivDiscardCardDialog.is, CivDiscardCardDialog);
+  </script>
+</dom-module>

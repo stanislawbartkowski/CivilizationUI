@@ -1,0 +1,33 @@
+<dom-module id="civ-dispwonders">
+  <template>
+
+<style>
+    :host {
+      display: inline-block;
+/*      width: 20px; */
+    }
+    </style>
+
+<div id="map">
+   <template is="dom-repeat" items="{{res}}">
+     <civ-wonder data="{{item}}"></civ-wonder>
+   </template>
+</div>   
+
+  </template>
+  <script>
+  class CivDispWonders extends Polymer.CivDataList(Polymer.Element) {
+
+  static get is() { return 'civ-dispwonders'; }
+
+  refresh(pa) {
+    super.refreshmap(pa,"civ-wonder")
+  }
+
+}
+
+window.customElements.define(CivDispWonders.is, CivDispWonders);
+
+  </script>
+
+</dom-module>

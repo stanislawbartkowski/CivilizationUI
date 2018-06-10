@@ -1,0 +1,40 @@
+<dom-module id="civ-chooseunits">
+    <template>
+
+     <style>
+      .horizontal {
+          @apply(--layout-horizontal);
+          margin-top: 10px;
+      }
+      </style>
+
+
+     <div>
+        <civ-listunits id="resources" style="display:none"></civ-listunits>
+
+        <div id="empty" style="display:none">
+          {{localize('nounits')}}
+        </div>
+
+        <div class="horizontal">
+          <civ-units id=choosed></civ-units>
+          <slot></slot>
+        </div>
+       </div>
+
+  </template>
+
+  <script>
+
+  class CivChooseUnits extends  Polymer.CivDataList(Polymer.Element) {
+      static get is() { return 'civ-chooseunits'; }
+
+      // data: units
+      refresh(data) {
+        super.refreshchooselist(data)
+      }
+
+   }
+   window.customElements.define(CivChooseUnits.is, CivChooseUnits);
+  </script>
+</dom-module>

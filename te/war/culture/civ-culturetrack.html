@@ -1,0 +1,55 @@
+<dom-module id="civ-culturetrack">
+
+<template>
+
+  <style>
+
+     .vertical {
+         @apply(--layout-vertical);
+         width : 25px;
+         background-color: #fbf1dc;
+     }
+     .culture {
+       width : 25px;
+     }
+
+  </style>
+
+<div id="map" class="vertical">
+  <img src="images/culturetrack/finish.svg" class="culture" title="{{localize('cultureend')}}"/>
+  <template is="dom-repeat" items="{{res}}">
+    <civ-culturepoint data="{{item}}"></civ-culturepoint>
+ </template>
+ <img src="images/culturetrack/start.svg" class="culture" title="{{localize('culturestart')}}"/>
+<div>
+
+ </template>
+
+ <script>
+     class CivCultureTrack extends Polymer.CivData(Polymer.Element) {
+
+     static get is() { return 'civ-culturetrack'; }
+
+     static get properties() {
+         return {
+             res : {
+                 type: Array
+             }
+         }
+     }
+
+
+     // pa = {} empty
+     refresh(pa) {
+  	   this.res = []
+       for (var i=C.getMaxCultureProgress(); i>0; i--) {
+         const c = C.findCulturePoint(i)
+         this.res.push(c)
+         }
+     }
+
+   }
+
+   window.customElements.define(CivCultureTrack.is, CivCultureTrack);
+ </script>
+</dom-module>
