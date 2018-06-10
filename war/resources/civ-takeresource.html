@@ -38,7 +38,8 @@
       static get is() { return 'civ-takeresourcedialog'; }
       
       _click() {
-    	  const res = this.$.list.getChoosed()
+    	  const res = this.$.list.getChoosed()[0]
+          C.executeC(super.getCommand(),{ "param" : res.resource})          
       }
       
       _take(e) {

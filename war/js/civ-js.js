@@ -259,9 +259,10 @@ var C = (function() {
     return s
   },
 
-  opendialogwithpar(id,pa,title = null) {
+  opendialogwithpar(id,pa,title = null, command = null) {
 	 const dialog = document.getElementById(id)
      dialog.$.dialog.setHeader(title)
+     dialog.$.dialog.setCommand(command)     
 	 dialog.$.dialog.openIt(pa)
   },
   
@@ -270,7 +271,7 @@ var C = (function() {
 	  const data=_getdata(co)
 	  var header = null
 	  if (data.header != null) header = C.localize(data.header)
-	  C.opendialogwithpar(data.dialog,pa,header)
+	  C.opendialogwithpar(data.dialog,pa,header,co)
   },
 
   showunits(units) {
@@ -446,6 +447,8 @@ var C = (function() {
       pa.col = -1
       pa.param = null
     }
+    if (pa.row == null) pa.row = -1
+    if (pa.col == null) pa.col = -1
     var stype = typeof pa.param
     if(pa.param != null && pa.param.constructor == Array) stype = "array"
     if (pa.param == null) window.executecommandNull(co.toUpperCase(),pa.row,pa.col)

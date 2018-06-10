@@ -25,6 +25,9 @@ Polymer.CivData = function(superClass) {
 				header : {
 					type : String,
 					value : null
+				},
+				command : {
+				    type : String
 				}
 			}
 		}
@@ -58,6 +61,14 @@ Polymer.CivData = function(superClass) {
 		setHeader(title) {
 			this.header = title
 		}
+		
+		setCommand(command) {
+		  this.command = command
+		}
+		
+		getCommand() {
+		  return this.command
+	    }
 		
 		// only if you do not need this
 		runmap(data,elemmap,funmap) {
