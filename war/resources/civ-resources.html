@@ -91,7 +91,7 @@
   </template>
 
   <script>
-   class CivResources extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.Element)) {
+   class CivResources extends Polymer.CivData(Polymer.Element) {
 
       static get is() { return 'civ-resources'; }
 
@@ -113,12 +113,17 @@
       _clear() {
          for (var i=0; i<this.names.length; i++) this._remove(this.names[i])
       }
-
+      
       click(e) {
     	  if (this.fun != null) {
     		  const id = e.srcElement.id
-    		  this.fun(id)
-    		  return
+    		  const r = this.data
+              for (var j=0; j < r.length; j++)
+                  if (id ==  r[j].resource.toLowerCase()) {
+                	  // array of single resource
+                	  this.fun([r[j]])
+                	  return
+                  }
     	  }
       }
 

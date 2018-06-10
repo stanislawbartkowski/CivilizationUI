@@ -1,6 +1,6 @@
 Polymer.BuyStructure = function(superClass) {
 
-    return class extends Polymer.CivDialog(Polymer.DialDraggable(superClass)) {
+    return class extends Polymer.CivDialog(superClass) {
 
         constructor() {
           super();
@@ -8,11 +8,6 @@ Polymer.BuyStructure = function(superClass) {
 
       static get properties() {
           return {
-              refreshalways: {
-                  type : Boolean,
-                  readOnly : true,
-                  value : true
-              },
               reservecommand : {
                   type : String,
                   value : null
@@ -43,7 +38,7 @@ Polymer.BuyStructure = function(superClass) {
           C.setlistofpoints(null)
       }
       
-      setBuildingPoint(p) {
+      setPoint(p) {
          this.$.choose.draw(this.data)
          this.$.choose.setPoint(p,this.$.list.getChoosed())
       }

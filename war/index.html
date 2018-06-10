@@ -66,6 +66,7 @@
 <script type="text/javascript" language="javascript" src="js/civ-datalist.js"></script>
 <script type="text/javascript" language="javascript" src="js/civ-choosedata.js"></script>
 <script type="text/javascript" language="javascript" src="js/buystructure-behavior.js"></script>
+<script type="text/javascript" language="javascript" src="js/civ-nondraggabledialog.js"></script>
 
   <link rel="import" href="x-app.html">
 
@@ -107,7 +108,8 @@
   <link rel="import" href="resources/civ-resources.html">
   <link rel="import" href="resources/civ-displistres.html">
   <link rel="import" href="resources/civ-dispres.html">
-
+  <link rel="import" href="resources/civ-chooseresource.html">
+  <link rel="import" href="resources/civ-takeresource.html">
 
   <link rel="import" href="tech/civ-tech.html">
   <link rel="import" href="tech/civ-listtech.html">
@@ -119,7 +121,6 @@
 
   <link rel="import" href="wonder/civ-wonder.html">
   <link rel="import" href="wonder/civ-dispwonders.html">
-<!-- <link rel="import" href="wonder/civ-listwonderstobuy.html"> -->
   <link rel="import" href="wonder/civ-showwondersdialog.html">
   <link rel="import" href="wonder/civ-choosewonder.html">
   <link rel="import" href="wonder/civ-buywonder.html">
@@ -161,6 +162,7 @@
   <link rel="import" href="battle/battle-desc.html">
   <link rel="import" href="battle/battle-loot.html">
   <link rel="import" href="battle/battle-result.html">
+  <link rel="import" href="battle/battle-saveunit.html">
 
 
   <link rel="import" href="units/civ-listunits.html">
@@ -174,9 +176,10 @@
   <link rel="import" href="building/civ-marketbuilding.html">
   <link rel="import" href="building/civ-listbuildtobuy.html">
   <link rel="import" href="building/civ-buybuilding.html">
-<!--  <link rel="import" href="building/civ-buldingbuttons.html"> -->
   <link rel="import" href="building/civ-choosebuilding.html">
+  
 
+  <link rel="import" href="city/city-action.html">
 
   <script src="test-set.js"></script>
 
@@ -380,7 +383,23 @@
   </template>
 </dom-bind>
 
-civ-buyunitdialog
+<dom-bind id="civ-buyincity">
+  <template>
+   <civ-buyincity id="dialog"></civ-buyincity>
+  </template>
+</dom-bind>
+
+<dom-bind id="battlesaveunit-dialog">
+  <template>
+   <battlesaveunit-dialog id="dialog"></battlesaveunit-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-takeresourcedialog">
+  <template>
+   <civ-takeresourcedialog id="dialog"></civ-takeresourcedialog>
+  </template>
+</dom-bind>
 
 </head>
 

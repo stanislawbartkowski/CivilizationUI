@@ -2,9 +2,9 @@ var C = (function() {
 
   function confirmaction(co) {
     const c = co.toLowerCase()
-//    if (c == "endofphase") return true
-//    if (c == "startmove") return true
-//    if (c == "revealtile") return true
+// if (c == "endofphase") return true
+// if (c == "startmove") return true
+// if (c == "revealtile") return true
     return false
   };
 
@@ -192,25 +192,46 @@ var C = (function() {
   function _devoutcityforculture(pa) {
      C.opendialogwithpar("civ-devoutcitytoculture",pa)
   }
-
-  function _setbuildingpoint(pa) {
-    const dialog = document.getElementById("buy-building")
-    dialog.$.dialog.setBuildingPoint(pa)
-  }
-
-  function _setwonderpoint(pa) {
-    const dialog = document.getElementById("buywonder-dialog")
-    dialog.$.dialog.setBuildingPoint(pa)
-  }
-
-  function _setbuyunitpoint(pa) {
-    const dialog = document.getElementById("civ-buyunitdialog")
-    dialog.$.dialog.setPoint(pa)
-  }
-
+    
   function _setgreatpersonpoint(pa) {
     const dialog = document.getElementById("putgreatperson-dialog")
     dialog.$.dialog.setBuildingPoint(pa)
+  }
+  
+  function _getdata(co) {
+	  const data = {
+			     "buyinfantry" : { "dialog" : "civ-buyunitdialog" },
+		         "buymounted" : { "dialog" : "civ-buyunitdialog" },
+			     "buyartillery" : { "dialog" : "civ-buyunitdialog" },
+			     "buyaircraft" : { "dialog" : "civ-buyunitdialog" },
+			     "freewonder" : { "dialog" : "buywonder-dialog" },
+			     "buywonder" : { "dialog" : "buywonder-dialog" },
+			     "buybuilding" : { "dialog" : "buy-building", "header" : "buildingstobuy" },
+			     "freebuildingcityaction" : { "dialog" : "buy-building" , "header" : "unlockedbuildings" },
+			     "greatpersonputnow" : { "dialog" : "putgreatperson-dialog" },
+			     "greatpersonput": { "dialog" : "putgreatperson-dialog" },
+			     "getfreeresource" : {"dialog" : "civ-takeresourcedialog"}
+			  }	  
+	  return data[co]		     
+  }
+  
+  function _setpoint(co,pa) {
+	  const data = _getdata(co)
+	  if (data == null) return false
+      const dialog = document.getElementById(data.dialog)
+      dialog.$.dialog.setPoint(pa)
+      return true
+  }
+  
+  function _getheader(co) {
+	  const data = _getdata(co)
+	  if (data == null) return null
+	  return data.header
+  }
+  
+  function _setpointincity(pa) {
+    const dialog = document.getElementById("civ-buyincity")
+    dialog.$.dialog.setPoint(pa)
   }
 
   function _attackconfirmation(pa) {
@@ -233,7 +254,6 @@ var C = (function() {
   sleep(ms = 500) {
     return new Promise(resolve => setTimeout(resolve, ms));
   },
-
   getShadow(e) {
     var s = e.shadowRoot
     return s
@@ -243,6 +263,14 @@ var C = (function() {
 	 const dialog = document.getElementById(id)
      dialog.$.dialog.setHeader(title)
 	 dialog.$.dialog.openIt(pa)
+  },
+  
+  rundialog(co,pa) {
+	  if (pa == null) return
+	  const data=_getdata(co)
+	  var header = null
+	  if (data.header != null) header = C.localize(data.header)
+	  C.opendialogwithpar(data.dialog,pa,header)
   },
 
   showunits(units) {
@@ -276,6 +304,12 @@ var C = (function() {
 
   currentlistofpoints() {
     return C.getyouplay().listofpoints
+  },
+  
+  listofpointsp(itemize) {
+    var a = []
+    for (var i=0; i<itemize.length; i++) a.push(itemize[i].p)
+    return a
   },
 
   getlistofpoints(co,itemize) {
@@ -445,15 +479,14 @@ var C = (function() {
     iparam.co = co
     var pa = verifycommand(co,iparam)
     if (pa == null) return
-    if (C.isBuyUnitCommand(co)) {
-      _setbuyunitpoint(iparam)
+    
+    if (_setpoint(co,iparam)) return true
+        
+    if (co == "buycitywall") {
+      _setpointincity(iparam)
       return
     }
-    
-    if (co == "buywonder") {
-       _setwonderpoint(iparam)
-       return
-    }
+        
     if (co == "revealtile")
        if (_twotilereveal(iparam)) return
     if (co == "startmove")
@@ -489,14 +522,6 @@ var C = (function() {
       _senddevoutscout(pa)
       return
     }
-    if (co == "buybuilding") {
-      _setbuildingpoint(pa)
-      return
-    }
-    if (co == "greatpersonputnow" || co == "greatpersonput") {
-     _setgreatpersonpoint(pa)
-     return
-    }
     if (co == "attack") {
     	_attackconfirmation(pa)
     	return
@@ -505,7 +530,7 @@ var C = (function() {
     this.executewithconf(question,co,pa)
   },
 
-//  dialog-command-alert
+// dialog-command-alert
 
    dialogexecutefailure : function(message) {
       dialogalert("dialog-command-failure",message)
@@ -575,9 +600,9 @@ var C = (function() {
     },
 
     // what = 1 show civs (switch off the rest)
-    //      = 2 show games (switch off the test)
-    //      = 3 show joins
-    //      = 0 switch off all
+    // = 2 show games (switch off the test)
+    // = 3 show joins
+    // = 0 switch off all
     showcivorgames : function(what) {
       C.seconddrawerClose(true)
       var gamese = findbytag("civ-games")
@@ -634,19 +659,29 @@ var C = (function() {
         C.opendialogwithpar(dname,itemize)
         const dialog = document.getElementById(dname).$.dialog
         dialog.setParameters(id,resign)
+        const header = _getheader(id)
+        if (header != null) dialog.setHeader(C.localize(header))
     },
 
     greatpersononmap(y,itemize,id,resign) {
     	this._buystructure("putgreatperson-dialog",y,itemize,id,resign)
     },
+    
+//    freeresource(y,itemize,id) {
+//        C.opendialogwithpar("showciv-info",civ)
+//    },
 
     buywonder(y,itemize,id,resign) {
         this._buystructure("buywonder-dialog",y,itemize,id)
     },
-
+    
+    freewonder(y,itemize,id,resign) {
+        this._buystructure("buywonder-dialog",y,itemize,id)
+    },
+    
     buybuilding(y,itemize,id) {
     	this._buystructure("buy-building",y,itemize,id)
-   },
+    },
 
     showcivinfo(civ) {
        C.opendialogwithpar("showciv-info",civ)
@@ -682,6 +717,12 @@ var C = (function() {
     // TODO: verify later
         if (C.getitemizedcommand() == null) return
         C.opendialogwithpar("civ-advanceculture",y)
+    },
+    
+    // civ-buyincity
+    buycitywall(y) {
+      const data = { "header" : C.localize("buycitywallheader"), "buttonbuy" : C.localize("build") }
+        C.opendialogwithpar("civ-buyincity",data)      
     },
 
     localize : function(...args) {
@@ -886,7 +927,7 @@ var C = (function() {
     civtonumb : function(civ) {
       return window.civtonumb(civ)
       // TODO: for test
-//      return 0
+// return 0
     },
 
     colorForCiv : function(civ) {
@@ -929,7 +970,7 @@ var C = (function() {
 
     setShadowStyleAttribute : function(e,selval,attr,value) {
       selval = selval.toLowerCase()
-//      const sha = e.shadowRoot
+// const sha = e.shadowRoot
       const sha = this.getShadow(e)
       const st = sha.styleSheets
       const rule = st[0]
@@ -1017,13 +1058,27 @@ var C = (function() {
      const open = (b.board.battle != null) && b.board.battle.endofbattle
      this._dialogopen("battle-result",open,b)
    },
-
+   
+   saveunitbattledialog : function(b) {
+      const ba = b.board.battle
+      if (ba == null || !ba.endofbattle) return false
+      if (ba.attacker.saveunit && ba.attacker.you) {
+        C.opendialogwithpar("battlesaveunit-dialog",ba.attacker)
+        return true
+      }
+      if (ba.defender.saveunit && ba.defender.you) {
+        C.opendialogwithpar("battlesaveunit-dialog",ba.defender)
+        return true
+      }
+      return false
+   },
+   
    battleDialog : function(b) {
      if (b == null) return
      const open = (b.board.battle != null)
      if (open) C.setcurrentcommand(null)
      this._dialogopen("battle-dialog",open,b)
-     C.endofbattledialog(b)
+     if (!C.saveunitbattledialog(b)) C.endofbattledialog(b)
    },
 
     getSideName(data) {
@@ -1199,7 +1254,7 @@ var C = (function() {
      const tab = [
        { "name" : "potteryaction", "tech" : "Pottery" },
        { "name" : "currencyaction", "tech" : "Currency" }
-//       { "name" : "philosophyaction", "tech" : "Philosophy" }
+// { "name" : "philosophyaction", "tech" : "Philosophy" }
      ]
      return tab
    },

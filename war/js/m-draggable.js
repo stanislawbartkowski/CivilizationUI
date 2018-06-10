@@ -22,7 +22,7 @@ Polymer.DialDraggable = function(superClass) {
 
       ready() {
         super.ready()
-        this.$.dialog.setAttribute("draggable","true")
+//        this.$.dialog.setAttribute("draggable","true")
         Polymer.Gestures.addListener(this, 'track', e => this.handleTrack(e));
       }
 

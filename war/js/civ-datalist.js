@@ -17,8 +17,6 @@ Polymer.CivDataList = function(superClass) {
           }
       }
 
-
-
       getRes() {
      	 if (this.res == null) return []
      	 return this.res

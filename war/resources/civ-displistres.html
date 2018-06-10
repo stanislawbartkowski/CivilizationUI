@@ -41,11 +41,8 @@
      }
 
      refresh(pa) {
-       this.res = []
+       this.res = pa
        this.elemmap = null
-       if (pa == null) return
-       for (var i=0; i<pa.length; i++)
-    	   this.res.push(pa[i])
        if (this.fun == null) return
        this.elemmap = "civ-dispres"    	   
      }

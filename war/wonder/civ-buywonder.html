@@ -21,7 +21,7 @@
      
         <div style="margin-left:20px;">
           <civ-choosesequareplace class="vertical" id="choose" buildbutton="{{localize('build')}}"></civ-choosesequareplace>
-          <paper-button class="reserve green" dialog-dismiss>{{localize('cancellabel')}}</paper-button>            
+          <paper-button id="resign" class="reserve green" dialog-dismiss>{{localize('cancellabel')}}</paper-button>            
         </div>
                 
         </civ-choosewonder>
@@ -48,6 +48,12 @@
               }
             }
         }
+        
+        setParameters(id,resign) {
+        	super.setParameters(id,resign)
+        	C.displayelem(this.$.resign,id != "freewonder",true)
+        }
+        
      }
         
      window.customElements.define(BuyWonder.is, BuyWonder);

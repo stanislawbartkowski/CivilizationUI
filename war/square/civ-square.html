@@ -27,7 +27,7 @@
     background-color: #ccffcc;
   }
 
-  :host([Capital]) {
+  :host([Capital]),:host([WalledCapital]) {
     background-image: url("../images/cities/capital.svg");
     background-repeat: no-repeat;
     background-color: ForestGreen;
@@ -35,14 +35,13 @@
     background-position: top;
   }
 
-  :host([Normal]) {
+  :host([Normal]),:host([WalledNormal]) {
     background-image: url("../images/cities/city.svg");
     background-repeat: no-repeat;
     background-color: ForestGreen;
     background-size: 60%;
     background-position: top;
   }
-
 
   :host([Forest]) {
     background-image: url("../images/terrain/forest.svg");

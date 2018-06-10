@@ -28,35 +28,20 @@
 
      static get is() { return 'civ-dispres'; }
 
-     static get properties() {
-       return {
-           tech: {
-               type: Object,
-               value: null
-           }
-         }
-       }
-
-/*
-  hv : Hut or Village or findUnitLevel
-  res : Resource
-
-*/
-
      handleClick() {
 	   if (this.fun == null) return
 	   this.fun(this.data)	  
      }
      
      _createres(res) {
-    	 const a = []
-    	 const r = {}
-    	 r.resource = res
-    	 r.num = 1
-    	 a.push(r)
-    	 return a
-     }
+         return [ {"resource" : res, "num" : 1}]
+     } 
  
+   /*
+     hv : Hut or Village or findUnitLevel
+     resource : resources
+
+   */
      refresh(data) {
        const hv = this.$.hv
        const hvx = this.$.hvx

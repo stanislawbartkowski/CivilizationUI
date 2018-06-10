@@ -1,0 +1,41 @@
+<dom-module id="civ-chooseresource">
+    <template>
+
+     <style>
+      .horizontal {
+          @apply(--layout-horizontal);
+      }
+      </style>
+
+
+     <div>
+        <civ-resources id="resources" style="display:none"></civ-resources>
+
+        <div id="empty" style="display:none">
+          {{localize('noresources')}}
+        </div>
+
+        <hr></hr>
+
+        <div class="horizontal">
+          <civ-resources id=choosed></civ-resources>
+          <slot></slot>
+      </div>
+      </div>
+
+  </template>
+
+  <script>
+
+  class CivChooseResource extends  Polymer.CivDataList(Polymer.Element) {
+      static get is() { return 'civ-chooseresource'; }
+            
+      // data: list of resource
+      refresh(data) {
+        super.refreshchooselist(data)
+      }
+
+   }
+   window.customElements.define(CivChooseResource.is, CivChooseResource);
+  </script>
+</dom-module>

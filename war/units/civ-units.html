@@ -187,10 +187,6 @@ class CivUnits extends Polymer.CivChooseData(Polymer.Element) {
     return u
   }
 
-//  handleClick() {
-//	  if (this.units == null) return
-//	  C.showunits(this.units)
-//  }
 
   _displaysvg(n,display) {
       const u = this.$[n]
@@ -222,7 +218,6 @@ class CivUnits extends Polymer.CivChooseData(Polymer.Element) {
   //     data.num (1 or > 1)
   // }
   refresh(data) {
-//    if (this.isDraggable()) this.setAttribute("draggable","true")
     this._clearimages()
     if (data == null) return
     const n = data.name.toLowerCase()

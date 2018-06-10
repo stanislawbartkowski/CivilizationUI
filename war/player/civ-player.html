@@ -93,7 +93,7 @@
 <span id="unitbox" class="unitbox" >
   <civ-units id="infantry"></civ-units>
   <civ-units id="artillery"></civ-units>
-  <civ-units id="mounted"></civ-units>f
+  <civ-units id="mounted"></civ-units>
   <civ-units id="aircraft"></civ-units>
 </span>
 
@@ -146,16 +146,6 @@
       <iron-icon icon="menu" slot="item-icon"></iron-icon>       
       <span>{{localize('units')}}</span>
     </paper-icon-item>
-
-<!-- 
-    <paper-tabs  slot="dropdown-content" class="dropdown-content">
-        <paper-item id="buyinfantry" on-click="_onClick">{{localize('buyinfantry')}}</paper-item>
-        <paper-item id="buymounted" on-click="_onClick">{{localize('buymounted')}}</paper-item>
-        <paper-item id="buyartillery" on-click="_onClick">{{localize('buyartillery')}}</paper-item>
-        <paper-item id="buyaircraft" on-click="_onClick">{{localize('buyaircraft')}}</paper-item>
-    </paper-tabs>
-</paper-menu-button>
- -->		
 		
 	<paper-icon-item id="buyarmy" on-click="_onClick"> 
 	  <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon> 
@@ -183,6 +173,11 @@
       <span>{{localize('buybuilding')}}</span>
     </paper-icon-item>
 
+    <paper-icon-item id="freebuildingcityaction" on-click="_onClick"> 
+      <iron-icon src="images/icons/buybuilding.svg" slot="item-icon"></iron-icon> 
+      <span>{{localize('freebuilding')}}</span>
+    </paper-icon-item>
+
     <paper-icon-item id="buywonder" on-click="_onClick"> 
       <iron-icon src="images/icons/buywonder.svg" slot="item-icon"></iron-icon> 
       <span>{{localize('buywonder')}}</span>
@@ -197,7 +192,12 @@
       <iron-icon src="images/tokens/culture.svg" slot="item-icon"></iron-icon> 
       <span>{{localize('advanceculture')}}</span>
     </paper-icon-item>
-    
+
+    <paper-icon-item id="buycitywall" on-click="_onClick"> 
+      <iron-icon src="images/tokens/culture.svg" slot="item-icon"></iron-icon> 
+      <span>{{localize('buycitywall')}}</span>
+    </paper-icon-item>
+        
     <div class="undobuttons">
             
       <paper-icon-item id="sendproduction" on-click="_onClick"> 
@@ -336,6 +336,23 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "buyaircraft"
                   ]            	   
                },
+               
+               excludebuttons : {
+            	   type : Object,
+                   readOnly: true,
+                   value : {
+                	   "buybuilding" : "freebuildingcityaction",
+                	   "freebuildingcityaction" : "buybuilding"
+                   }
+               },
+               
+               displaybuttons : {
+                   type : Array,
+                   readOnly: true,
+                   value : [
+                	   "buybuilding"
+                   ]   
+               },
                  
                buttons : {
             	   type : Array,
@@ -366,7 +383,9 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                             "devouttoculture",
                             "advanceculture",
                             "greatpersonput",
-                            "unitmenu"
+                            "unitmenu",
+                            "buycitywall",
+                            "freebuildingcityaction"
                   ]
              }
 	   }
@@ -389,12 +408,26 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
     	this.setListOfPoints(a)
     	if (a != null) C.checkAutomateButton()
     	const co = C.getcurrentcommand()
+    	
+    	if (co == "getfreeresource") {
+    		C.rundialog(co,newValue)
+            return    		
+    	}
+    	
+    	if (co == "freewonder") {    		
+            C.freewonder(this.y,newValue,co)
+            return
+    	}
+    	if (co == "buycitywall") {
+    		C.buycitywall(this.y)
+    		return
+    	}
         if (co == "advanceculture") {
             C.advanceculture(this.y)
             return
-         }
+        }
     	
-    	if (co == "buybuilding") {
+    	if (co == "buybuilding" || co == "freebuildingcityaction") {
     		C.buybuilding(this.y,newValue,co)
     		return
     	}
@@ -540,9 +573,18 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                
                for (var i=0; i < this.buttons.length; i++) {
                   const id = this.buttons[i]
-                  const bu = this.shadowRoot.getElementById(id);
+                  const bu = this.shadowRoot.getElementById(id)
                   C.disableleme(bu,true)
                }
+              for (var i=0; i<this.displaybuttons.length; i++) {
+                  const id = this.displaybuttons[i]
+                  const bu = this.shadowRoot.getElementById(id)
+                  C.showeleme(bu,true)
+                  if (this.excludebuttons[id] != null) {
+                      const bue = this.shadowRoot.getElementById(this.excludebuttons[id]);
+                      C.showeleme(bue,false)                      
+                  }
+              } 
               for (var i=0; i<y.commands.length; i++) {
                   const command = y.commands[i]
                   var id = command.command.toLowerCase()
@@ -550,7 +592,7 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                 	  if (this._youactive()) C.discardcarddialog(y)
                 	  return
                   }
-                  if (id == "greatpersonputnow") {
+                  if (id == "greatpersonputnow" || id == "freewonder" || id == "getfreeresource") {
                       if (this._youactive()) this.callitemize(id)
                       continue
                   }
@@ -570,6 +612,12 @@ class CivPlayer extends Polymer.CivData(Polymer.GestureEventListeners(Polymer.El
                   if (C.getActionTechnology(id) != null) id = "technologyaction"
                   const bu = this.shadowRoot.getElementById(id);
                   C.disableleme(bu,false)
+                  if (this.excludebuttons[id] != null) {
+                	  C.showeleme(bu,true)
+                      const bue = this.shadowRoot.getElementById(this.excludebuttons[id]);
+                      C.showeleme(bue,false)                	  
+                  }
+                	 
                   if (this._youactive())
                     if (!this.opponent && id == "move" 
                 	  	  && this.currentcommand != "revealtile" 

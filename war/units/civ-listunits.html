@@ -3,9 +3,11 @@
 
 <template>
 
-   <template id="map" is="dom-repeat" items="{{units}}">
-           <civ-units class="unit" data="{{item}}" draggable="{{draggable}}" num="{{index}}" you="{{you}}"></civ-units>
-    </template>
+   <span id="map">
+     <template is="dom-repeat" items="{{units}}">
+             <civ-units class="unit" data="{{item}}" draggable="{{draggable}}" num="{{index}}" you="{{you}}"></civ-units>
+     </template>
+    </span>
     
     <div id="empty" style="display:none">
        {{localize('nounits')}}
@@ -56,18 +58,25 @@
     	  this._showunits(false)
           C.displayelemid(this,"empty",false)    	  
           const l = pa.list
+          this.units = []
           if (l.length == 0) {
               C.displayelemid(this,"empty",true)       
         	  return
           }
-          this.units = []
           for (var i=0; i<l.length; i++) {
               const elem = {}
               elem.name = l[i].name
               elem.strength = l[i].strength
               elem.level = this._findLevel(pa,elem.name)
+              elem.index = i
               this.units.push(elem)
           }
+          const fun = this.fun
+          if (fun != null)
+          super.runmap(pa,"civ-units",
+        		  elem => {
+        			  elem.fun = p => fun(p)
+        		  }) 
       }
 
       _drawunits(pa) {
