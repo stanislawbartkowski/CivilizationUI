@@ -1,187 +1,179 @@
-<!doctype html>
-<html>
-<head>
+<!DOCTYPE html><html><head>
 
-  <meta
-   charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
   <title>Civilization, Getting Started</title>
 
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+ <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 
-  <script type="text/javascript" language="javascript" src="civilizationui/civilizationui.nocache.js"></script>
-
-
-  <link rel="import" href="bower_components/polymer/polymer.html">
-
-<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="bower_components/paper-item/paper-icon-item.html">
-<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="bower_components/paper-item/paper-item.html">
-<link rel="import" href="bower_components/paper-menu-button/paper-menu-button.html">
-<link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
-<link rel="import" href="bower_components/paper-button/paper-button.html">
-<link rel="import" href="bower_components/paper-badge/paper-badge.html">
-<link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">
-<link rel="import" href="bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
-
-<link rel="import" href="bower_components/app-localize-behavior/app-localize-behavior.html">
-<link rel="import" href="bower_components/font-roboto/roboto.html">
-
-<link rel="import" href="bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="bower_components/iron-input/iron-input.html">
-<link rel="import" href="bower_components/iron-icons/editor-icons.html">
-
-<link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="bower_components/app-layout/app-toolbar/app-toolbar.html">
-
-<link rel="import" href="bower_components/neon-animation/web-animations.html">
-
-<link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog.html">
-<link rel="import" href="bower_components/paper-alert-dialog/paper-alert-dialog-icon-header.html">
-<link rel="import" href="bower_components/app-localize-behavior/app-localize-behavior.html">
-<link rel="import" href="bower_components/polymer/lib/mixins/gesture-event-listeners.html">
-
-<script type="text/javascript" language="javascript" src="bower_components/deep-diff/index.js"></script>
-
-<script type="text/javascript" language="javascript" src="js/civ-js.js"></script>
-<script type="text/javascript" language="javascript" src="js/civ-localize.js"></script>
-<script type="text/javascript" language="javascript" src="js/civ-data.js"></script>
-<script type="text/javascript" language="javascript" src="js/m-draggable.js"></script>
-<script type="text/javascript" language="javascript" src="js/civ-dialog.js"></script>
-<script type="text/javascript" language="javascript" src="js/civ-dragg.js"></script>
-<script type="text/javascript" language="javascript" src="js/civ-datalist.js"></script>
-<script type="text/javascript" language="javascript" src="js/civ-choosedata.js"></script>
-<script type="text/javascript" language="javascript" src="js/buystructure-behavior.js"></script>
-<script type="text/javascript" language="javascript" src="js/civ-nondraggabledialog.js"></script>
-
-  <link rel="import" href="x-app.html">
+  <script type="text/javascript" language="javascript" src="./civilizationui/civilizationui.nocache.js"></script>
 
 
-  <link rel="import" href="play/reveal2-dialog.html">
-  <link rel="import" href="play/multifigures-dialog.html">
-  <link rel="import" href="play/spendtrade-dialog.html">
-  <link rel="import" href="play/sendproduction-dialog.html">
-  <link rel="import" href="play/civ-showhv.html">
-  <link rel="import" href="play/civ-showciv.html">
+<script type="module" src="./node_modules/@polymer/polymer/polymer-legacy.js"></script>
 
-  <link rel="import" href="tools/civ-button-styles.html">
-  <link rel="import" href="tools/civ-helptext.html">
-  <link rel="import" href="tools/civ-implemented.html">
-  <link rel="import" href="tools/figurenumber-dialog.html">
-  <link rel="import" href="tools/s-svg.html">
-  <link rel="import" href="tools/civ-chooseplacesquare.html">
+<!-- <link rel="import" href="bower_components/neon-animation/web-animations.html"> -->
 
 
-  <link rel="import" href="board/civ-map.html">
-  <link rel="import" href="board/civ-gamestate.html">
-  <link rel="import" href="board/civ-market.html">
+
+<script type="module" src="./node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-item/paper-icon-item.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-item/paper-item.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-menu-button/paper-menu-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-spinner/paper-spinner.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-button/paper-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-badge/paper-badge.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-toggle-button/paper-toggle-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-listbox/paper-listbox.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-tabs/paper-tabs.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-dialog/paper-dialog.js"></script>
+
+<script type="module" src="./node_modules/@polymer/font-roboto/roboto.js"></script>
+
+<script type="module" src="./node_modules/@polymer/iron-icons/iron-icons.js"></script>
+<script type="module" src="./node_modules/@polymer/iron-flex-layout/iron-flex-layout.js"></script>
+<script type="module" src="./node_modules/@polymer/iron-flex-layout/iron-flex-layout-classes.js"></script>
+<script type="module" src="./node_modules/@polymer/iron-input/iron-input.js"></script>
+<script type="module" src="./node_modules/@polymer/iron-icons/editor-icons.js"></script>
+
+<script type="module" src="./node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-header/app-header.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js"></script>
+
+<script type="module" src="./node_modules/@polymer/app-localize-behavior/app-localize-behavior.js"></script>
+<script type="module" src="./node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js"></script>
+
+<script type="text/javascript" language="javascript" src="deep-diff/index.js"></script>
+<script type="module" src="./paper-alert-dialog/paper-alert-dialog.js"></script>
+<script type="module" src="./paper-alert-dialog/paper-alert-dialog-icon-header.js"></script>
+
+<script type="text/javascript" language="javascript" src="./js/civ-js.js"></script>
+<script type="text/javascript" language="javascript" src="./js/civ-dragg.js"></script>
 
 
-  <link rel="import" href="square/civ-square.html">
-  <link rel="import" href="square/civ-selectsquare.html">
-  <link rel="import" href="square/civ-listofsquares.html">
+<!-- <script type="text/javascript" language="javascript" src="./x-app.js"></script> -->
+
+<script type="module" src="./x-app.js"></script>
+
+  <script type="module" src="./play/reveal2-dialog.js"></script>
+  <script type="module" src="./play/multifigures-dialog.js"></script>
+  <script type="module" src="./play/spendtrade-dialog.js"></script>
+  <script type="module" src="./play/sendproduction-dialog.js"></script>
+  <script type="module" src="./play/civ-showhv.js"></script>
+  <script type="module" src="./play/civ-showciv.js"></script>
+
+  <script type="module" src="./tools/civ-button-styles.js"></script>
+  <script type="module" src="./tools/civ-helptext.js"></script>
+  <script type="module" src="./tools/civ-implemented.js"></script>
+  <script type="module" src="./tools/figurenumber-dialog.js"></script>
+  <script type="module" src="./tools/s-svg.js"></script>
+  <script type="module" src="./tools/civ-chooseplacesquare.js"></script>
 
 
-  <link rel="import" href="game/civ-choose.html">
-  <link rel="import" href="game/civ-gameline.html">
-  <link rel="import" href="game/civ-content.html">
-  <link rel="import" href="game/civ-games.html">
-  <link rel="import" href="game/civ-join.html">
-  <link rel="import" href="game/civ-joingame.html">
-  <link rel="import" href="game/join-dialog.html">
+  <script type="module" src="./board/civ-map.js"></script>
+  <script type="module" src="./board/civ-gamestate.js"></script>
+  <script type="module" src="./board/civ-market.js"></script>
 
 
-  <link rel="import" href="resources/civ-resources.html">
-  <link rel="import" href="resources/civ-displistres.html">
-  <link rel="import" href="resources/civ-dispres.html">
-  <link rel="import" href="resources/civ-chooseresource.html">
-  <link rel="import" href="resources/civ-takeresource.html">
-
-  <link rel="import" href="tech/civ-tech.html">
-  <link rel="import" href="tech/civ-listtech.html">
-  <link rel="import" href="tech/civ-leveltech.html">
-  <link rel="import" href="tech/civ-tlevel.html">
-  <link rel="import" href="tech/civ-techdialog.html">
-  <link rel="import" href="tech/civ-showtechdialog.html">
-  <link rel="import" href="tech/civ-showtech.html">
-
-  <link rel="import" href="wonder/civ-wonder.html">
-  <link rel="import" href="wonder/civ-dispwonders.html">
-  <link rel="import" href="wonder/civ-showwondersdialog.html">
-  <link rel="import" href="wonder/civ-choosewonder.html">
-  <link rel="import" href="wonder/civ-buywonder.html">
+  <script type="module" src="./square/civ-square.js"></script>
+  <script type="module" src="./square/civ-selectsquare.js"></script>
+  <script type="module" src="./square/civ-listofsquares.js"></script>
 
 
-  <link rel="import" href="player/civ-playerstate.html">
-  <link rel="import" href="player/civ-player.html">
-  <link rel="import" href="player/civ-stateelem.html">
+  <script type="module" src="./game/civ-choose.js"></script>
+  <script type="module" src="./game/civ-gameline.js"></script>
+  <script type="module" src="./game/civ-content.js"></script>
+  <script type="module" src="./game/civ-games.js"></script>
+  <script type="module" src="./game/civ-join.js"></script>
+  <script type="module" src="./game/civ-joingame.js"></script>
+  <script type="module" src="./game/join-dialog.js"></script>
 
 
-  <link rel="import" href="technologyaction/civ-technologyaction.html">
+  <script type="module" src="./resources/civ-resources.js"></script>
+  <script type="module" src="./resources/civ-displistres.js"></script>
+  <script type="module" src="./resources/civ-dispres.js"></script>
+  <script type="module" src="./resources/civ-chooseresource.js"></script>
+  <script type="module" src="./resources/civ-takeresource.js"></script>
+
+  <script type="module" src="./tech/civ-tech.js"></script>
+  <script type="module" src="./tech/civ-listtech.js"></script>
+  <script type="module" src="./tech/civ-leveltech.js"></script>
+  <script type="module" src="./tech/civ-tlevel.js"></script>
+  <script type="module" src="./tech/civ-techdialog.js"></script>
+  <script type="module" src="./tech/civ-showtechdialog.js"></script>
+  <script type="module" src="./tech/civ-showtech.js"></script>
+
+  <script type="module" src="./wonder/civ-wonder.js"></script>
+  <script type="module" src="./wonder/civ-dispwonders.js"></script>
+  <script type="module" src="./wonder/civ-showwondersdialog.js"></script>
+  <script type="module" src="./wonder/civ-choosewonder.js"></script>
+  <script type="module" src="./wonder/civ-buywonder.js"></script>
 
 
-  <link rel="import" href="culture/civ-devoutcitytoculture.html">
-  <link rel="import" href="culture/civ-culturepoint.html">
-  <link rel="import" href="culture/civ-culturetrack.html">
-  <link rel="import" href="culture/civ-cultureprogress.html">
-  <link rel="import" href="culture/civ-cultureprogresselem.html">
-  <link rel="import" href="culture/civ-cultureplayers.html">
-  <link rel="import" href="culture/civ-advanceculture.html">
-  <link rel="import" href="culture/civ-culturecard.html">
-  <link rel="import" href="culture/civ-culturecardlist.html">
-  <link rel="import" href="culture/civ-showculturecards.html">
-  <link rel="import" href="culture/civ-chooseculturecard.html">
-  <link rel="import" href="culture/civ-discardcard.html">
+  <script type="module" src="./player/civ-playerstate.js"></script>
+  <script type="module" src="./player/civ-player.js"></script>
+  <script type="module" src="./player/civ-stateelem.js"></script>
 
 
-  <link rel="import" href="greatperson/civ-greatperson.html">
-  <link rel="import" href="greatperson/civ-greatpersonlist.html">
-  <link rel="import" href="greatperson/civ-showgreatpersons.html">
-  <link rel="import" href="greatperson/civ-choosegreatperson.html">
-  <link rel="import" href="greatperson/civ-putgreatperson.html">
+  <script type="module" src="./technologyaction/civ-technologyaction.js"></script>
 
 
-  <link rel="import" href="battle/attackconf-dialog.html">
-  <link rel="import" href="battle/battle-side.html">
-  <link rel="import" href="battle/battle-dialog.html">
-  <link rel="import" href="battle/civ-frontunit.html">
-  <link rel="import" href="battle/battle-desc.html">
-  <link rel="import" href="battle/battle-loot.html">
-  <link rel="import" href="battle/battle-result.html">
-  <link rel="import" href="battle/battle-saveunit.html">
+  <script type="module" src="./culture/civ-devoutcitytoculture.js"></script>
+  <script type="module" src="./culture/civ-culturepoint.js"></script>
+  <script type="module" src="./culture/civ-culturetrack.js"></script>
+  <script type="module" src="./culture/civ-cultureprogress.js"></script>
+  <script type="module" src="./culture/civ-cultureprogresselem.js"></script>
+  <script type="module" src="./culture/civ-cultureplayers.js"></script>
+  <script type="module" src="./culture/civ-advanceculture.js"></script>
+  <script type="module" src="./culture/civ-culturecard.js"></script>
+  <script type="module" src="./culture/civ-culturecardlist.js"></script>
+  <script type="module" src="./culture/civ-showculturecards.js"></script>
+  <script type="module" src="./culture/civ-chooseculturecard.js"></script>
+  <script type="module" src="./culture/civ-discardcard.js"></script>
 
 
-  <link rel="import" href="units/civ-listunits.html">
-  <link rel="import" href="units/civ-units.html">
-  <link rel="import" href="units/showunits-dialog.html">
-  <link rel="import" href="units/civ-chooseunits.html">
-  <link rel="import" href="units/civ-buyunit.html">
+  <script type="module" src="./greatperson/civ-greatperson.js"></script>
+  <script type="module" src="./greatperson/civ-greatpersonlist.js"></script>
+  <script type="module" src="./greatperson/civ-showgreatpersons.js"></script>
+  <script type="module" src="./greatperson/civ-choosegreatperson.js"></script>
+  <script type="module" src="./greatperson/civ-putgreatperson.js"></script>
 
-  <link rel="import" href="building/civ-buildinginfo.html">
-  <link rel="import" href="building/civ-buildings.html">
-  <link rel="import" href="building/civ-marketbuilding.html">
-  <link rel="import" href="building/civ-listbuildtobuy.html">
-  <link rel="import" href="building/civ-buybuilding.html">
-  <link rel="import" href="building/civ-choosebuilding.html">
-  
 
-  <link rel="import" href="city/city-action.html">
+  <script type="module" src="./battle/attackconf-dialog.js"></script>
+  <script type="module" src="./battle/battle-side.js"></script>
+  <script type="module" src="./battle/battle-dialog.js"></script>
+  <script type="module" src="./battle/civ-frontunit.js"></script>
+  <script type="module" src="./battle/battle-desc.js"></script>
+  <script type="module" src="./battle/battle-loot.js"></script>
+  <script type="module" src="./battle/battle-result.js"></script>
+  <script type="module" src="./battle/battle-saveunit.js"></script>
 
-  <script src="test-set.js"></script>
+  <script type="module" src="./units/civ-listunits.js"></script>
+  <script type="module" src="./units/civ-units.js"></script>
+  <script type="module" src="./units/showunits-dialog.js"></script>
+  <script type="module" src="./units/civ-chooseunits.js"></script>
+  <script type="module" src="./units/civ-buyunit.js"></script>
+
+  <script type="module" src="./building/civ-buildinginfo.js"></script>
+  <script type="module" src="./building/civ-buildings.js"></script>
+  <script type="module" src="./building/civ-marketbuilding.js"></script>
+  <script type="module" src="./building/civ-listbuildtobuy.js"></script>
+  <script type="module" src="./building/civ-buybuilding.js"></script>
+  <script type="module" src="./building/civ-choosebuilding.js"></script>
+
+
+  <script type="module" src="./city/city-action.js"></script>
+
+  <script type="module" src="./test-set.js"></script>
 
   <style>
     body {
@@ -196,10 +188,11 @@
     }
   </style>
 
+</head>
+
 <dom-bind id="dialog-question">
   <template>
-      <paper-alert-dialog id="dialog" title="Congratulations" dismiss-button="Cancel"
-	                      confirm-button="OK" on-confirm="confirm" on-dismiss="dismiss">
+      <paper-alert-dialog id="dialog" title="Congratulations" dismiss-button="Cancel" confirm-button="OK" on-confirm="confirm" on-dismiss="dismiss">
         {{message}}
       </paper-alert-dialog>
   </template>
@@ -401,9 +394,7 @@
   </template>
 </dom-bind>
 
-</head>
-
-<body unresolved>
+<body>
 
   <x-app></x-app>
 
@@ -413,14 +404,15 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-     const xa = document.getElementsByTagName("x-app")[0];
-     sleep(1000).then(
+     sleep(2000).then(
             () => {
+              const xa = document.getElementsByTagName("x-app")[0];
               xa.draw()
             }
           )
   </script>
- -->
-
+-->
 </body>
+
+
 </html>

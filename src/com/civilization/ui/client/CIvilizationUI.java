@@ -276,8 +276,9 @@ public class CIvilizationUI implements EntryPoint {
 			IMapDimension d = getDimensions();
 			Element fe = findContent(CIVMAP);
 			fe.removeAttribute("hidden");
-			fe.setAttribute("rownumb", "" + d.rows());
-			fe.setAttribute("colnumb", "" + d.cols());
+//			fe.setAttribute("rownumb", "" + d.rows());
+//			fe.setAttribute("colnumb", "" + d.cols());
+			rendermap(d.rows(),d.cols());
 			redrawheader();
 			// there is a delay until map is available
 			t.schedule(100);
@@ -437,6 +438,11 @@ public class CIvilizationUI implements EntryPoint {
 	public static native void showcivorgames(int what)/*-{
 		$wnd.C.showcivorgames(what);
 	}-*/;
+	
+	public static native void rendermap(int rownum,int colnum)/*-{
+    	$wnd.C.rendermap(rownum,colnum);
+    }-*/;
+
 
 	public static native void closejoindialog()/*-{
 		$wnd.C.closejoindialog();
