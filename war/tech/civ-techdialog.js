@@ -129,7 +129,10 @@ class CivTechDialog extends CivDialog(PolymerElement) {
   */
 
   refresh(data) {
-    C.displayelem(this.$.cancel,data.cancel,true)
+  
+    if (data.nocancel) C.displayelem(this.$.cancel,false)
+    else C.removedisplay(this.$.cancel)
+      
     this._clear();
 
     this._preparetechnology(data);

@@ -16,24 +16,20 @@ class CivTakeResource extends CivDialog(PolymerElement) {
 
     <paper-dialog id="dialog" modal="">
 
-     <h2>{{localize('chooseresourceforfree')}}</h2>
+     <h2>{{header}}</h2>
 
      <div>
 
         <civ-chooseresource id="list">
 
         <div class="button">
-          <paper-button id="take" class="green" dialog-dismiss="" on-click="_click">{{localize('takebutton')}}</paper-button>
+          <paper-button id="take" class="green" dialog-dismiss on-click="_click">{{localize('takebutton')}}</paper-button>
         <div>
-
-
-
-      </div>
-
-
-
-
-  </div></civ-chooseresource></div></paper-dialog>
+      
+        </civ-chooseresource>
+    </div>
+    
+    </paper-dialog>
 `;
   }
 

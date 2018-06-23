@@ -252,6 +252,7 @@ C = function () {
       },
       "getfreeresource": {
         "dialog": "civ-takeresourcedialog",
+        "header" : "chooseresourceforfree",
         "runplayer" : true
       },
       "sacrificefigurefortech" : {
@@ -647,7 +648,8 @@ C = function () {
     },
     
     showeleme: function (e, show) {
-      if (show) C.removeattr(e, "hidden");else e["hidden"] = true;
+      if (show) C.removeattr(e, "hidden");
+      else e["hidden"] = true;
     },
     
     displayelem: function (e, display, inblock) {
@@ -659,8 +661,14 @@ C = function () {
           return;
         }
 
-        if (inblock) e.style.display = 'inline-block';else e.style.display = 'block';
+        if (inblock) e.style.display = 'inline-block';
+           else e.style.display = 'block';
+           
       } else e.style.display = 'none';
+    },
+    
+    removedisplay(e) {
+       e.style.display=null
     },
 
     displayelemid(e, id, display, inblock) {
@@ -682,7 +690,8 @@ C = function () {
     },
     
     disableleme: function (e, disable) {
-      if (disable) C.setattr(e, "disabled", true);else C.removeattr(e, "disabled");
+      if (disable) C.setattr(e, "disabled", true);
+      else C.removeattr(e, "disabled");
     },
     
     showelem: function (id, show) {
