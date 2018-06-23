@@ -51,9 +51,11 @@ class CivBuyInCity extends CivDialog(PolymerElement) {
     C.displayelem(this.$.city, true, true);
     this.$.city.draw(p);
     C.displayelem(this.$.button, true, true);
-  } // data
+  } 
+  
+  // data
   // {
-  //	header : title
+  //  header : title
   //  buttonbuy : button text
   // }
 

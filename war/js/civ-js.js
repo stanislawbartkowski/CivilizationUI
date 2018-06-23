@@ -56,18 +56,14 @@ C = function () {
     }
 
     return null;
-  }
-
-  ;
+  } ;
 
   function verifymove(co, iparam, pa) {
     var list = iparam.list.moves;
     var i = findpoint(iparam, list);
     if (i != -1) return pa;
     return null;
-  }
-
-  ;
+  };
 
   function verifysetcity(co, iparam, pa) {
     var list = iparam.list;
@@ -145,7 +141,7 @@ C = function () {
     var e = document.getElementsByTagName("x-app");
     return e[0];
   };
-  
+
   function _resumemultidialog(e) {
     const dialogDemo = document.getElementById("join-dialog");
 
@@ -255,7 +251,13 @@ C = function () {
         "dialog": "putgreatperson-dialog"
       },
       "getfreeresource": {
-        "dialog": "civ-takeresourcedialog"
+        "dialog": "civ-takeresourcedialog",
+        "runplayer" : true
+      },
+      "sacrificefigurefortech" : {
+        "dialog": "civ-sacrificefigure",
+        "header": "sacrificefigureheader",
+        "runplayer" : true
       }
     };
     return data[co];
@@ -301,7 +303,7 @@ C = function () {
     sleep(ms = 500) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
-    
+
     rendermap(rownum,colnum) {
       const x = _getxapp();
       x.rendermap({"rownum" : rownum,"colnum" : colnum})
@@ -319,14 +321,24 @@ C = function () {
       dialog.$.dialog.openIt(pa);
     },
 
+    setDialogFun(dname,fun) {
+      const dialog = document.getElementById(dname);
+      dialog.$.dialog.fun = fun
+    },
+
     rundialog(co, pa) {
-      if (pa == null) return;
+      if (pa == null) return true
 
       const data = _getdata(co);
+
+      if (data == null) return false
+
+      if (!data.runplayer) return false
 
       var header = null;
       if (data.header != null) header = C.localize(data.header);
       C.opendialogwithpar(data.dialog, pa, header, co);
+      return true
     },
 
     showunits(units) {
@@ -395,9 +407,7 @@ C = function () {
 
     listofpointsp(itemize) {
       var a = [];
-
       for (var i = 0; i < itemize.length; i++) a.push(itemize[i].p);
-
       return a;
     },
 
@@ -406,25 +416,19 @@ C = function () {
 
       if (co == "startmove" || co == "buyinfantry" || co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade" || co == "harvestresource" || co == "sendproduction" || co == "undosendproduction") {
         var a = [];
-
         for (var i = 0; i < itemize.length; i++) a.push(itemize[i].p);
-
         return a;
       }
 
       if (co == "devouttoculture") {
         const a = [];
-
         for (var i = 0; i < itemize.length; i++) a.push(itemize[i].p);
-
         return a;
       }
 
       if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") {
         var a = [];
-
         for (var i = 0; i < itemize.length; i++) a.push(itemize[i].param);
-
         return a;
       }
 
@@ -439,17 +443,13 @@ C = function () {
 
       if (co == "explorehut") {
         var a = [];
-
         for (var i = 0; i < itemize.explore.length; i++) a.push(itemize.explore[i]);
-
         return a;
       }
 
       if (co == "attack") {
         var a = [];
-
         for (var i = 0; i < itemize.attack.length; i++) a.push(itemize.attack[i]);
-
         return a;
       }
 
@@ -524,13 +524,16 @@ C = function () {
       const gameid = e.gameid;
       this.confirmdialog(C.localize('doyouwanttoresumequestion', 'civ', civ), e => C.resumegame(gameid, civ));
     },
+    
     leavedialog: function () {
       this.confirmdialog(C.localize('leavegamequestion'), e => C.leavegame());
     },
+    
     closejoindialog: function () {
       const dialogjoin = document.getElementById("join-dialog");
       dialogjoin.$.dialog.closeIt();
     },
+    
     joindialog: function (civ) {
       const dialogDemo = document.getElementById("join-dialog");
 
@@ -563,16 +566,19 @@ C = function () {
       if (pa.param != null && pa.param.constructor == Array) stype = "array";
       if (pa.param == null) window.executecommandNull(co.toUpperCase(), pa.row, pa.col);else if (stype == "string") window.executecommandS(co.toUpperCase(), pa.row, pa.col, pa.param);else if (stype == "number") window.executecommandN(co.toUpperCase(), pa.row, pa.col, pa.param);else if (stype == "object") window.executecommandO(co.toUpperCase(), pa.row, pa.col, pa.param);else window.executecommandA(co.toUpperCase(), pa.row, pa.col, pa.param);
     },
+    
     executewithconffun: function (question, co, fun) {
       if (question == null) question = C.localize("executecommandquestion", "command", co);
       if (!confirmaction(co)) fun();else this.confirmdialog(question, fun);
     },
+    
     executewithconf: function (question, co, pa, mdial) {
       C.executewithconffun(question, co, e => {
         if (mdial != null) mdial.closeIt();
         C.executeC(co, pa);
       });
     },
+    
     confexecutedialog: function (question, co, row, col, param) {
       var iparam = {};
       iparam.square = null;
@@ -587,7 +593,6 @@ C = function () {
 
       if (co == "buycitywall") {
         _setpointincity(iparam);
-
         return;
       }
 
@@ -596,49 +601,41 @@ C = function () {
 
       if (C.getActionTechnology(co) != null) {
         _setcitytotechnology(iparam);
-
         return;
       }
 
       if (co == "devouttoculture") {
         _devoutcityforculture(iparam);
-
         return;
       }
 
       if (co == "sendproduction" || co == "harvestresource") {
         _sendproductioncommand(pa);
-
         return;
       }
 
       if (co == "undosendproduction") {
         _undosendproductioncommand(question, pa);
-
         return;
       }
 
       if (co == "spendtrade") {
         _spendtradecommand(pa);
-
         return;
       }
 
       if (co == "selectscout") {
         _sendproductionsetscout(pa);
-
         return;
       }
 
       if (co == "selectscoutdevout") {
         _senddevoutscout(pa);
-
         return;
       }
 
       if (co == "attack") {
         _attackconfirmation(pa);
-
         return;
       }
 
@@ -648,9 +645,11 @@ C = function () {
     dialogexecutefailure: function (message) {
       dialogalert("dialog-command-failure", message);
     },
+    
     showeleme: function (e, show) {
       if (show) C.removeattr(e, "hidden");else e["hidden"] = true;
     },
+    
     displayelem: function (e, display, inblock) {
       if (display) {
         const stype = typeof inblock;
@@ -681,21 +680,26 @@ C = function () {
         e.label = number;
       }
     },
+    
     disableleme: function (e, disable) {
       if (disable) C.setattr(e, "disabled", true);else C.removeattr(e, "disabled");
     },
+    
     showelem: function (id, show) {
       const x = _getxapp();
 
       const e = this.getShadow(x).getElementById(id);
       C.showeleme(e, show);
     },
+    
     setattr: function (e, attr, value) {
       e.setAttribute(attr, value);
     },
+    
     settitle: function (e, title) {
       C.setattr(e, "title", title);
     },
+    
     removeattr: function (e, attr) {
       e.removeAttribute(attr);
     },
@@ -766,9 +770,6 @@ C = function () {
       this._buystructure("putgreatperson-dialog", y, itemize, id, resign);
     },
 
-    //    freeresource(y,itemize,id) {
-    //        C.opendialogwithpar("showciv-info",civ)
-    //    },
     buywonder(y, itemize, id, resign) {
       this._buystructure("buywonder-dialog", y, itemize, id);
     },
@@ -789,10 +790,18 @@ C = function () {
       C.opendialogwithpar("civ-technologyaction", y);
     },
 
-    researchdialog(y) {
-      C.opendialogwithpar("tech-dialog", y);
+    researchdialog(itemi,co) {
+      const y = this.you()
+      C.opendialogwithpar("tech-dialog", { "tech" : y.tech, "toresearch" : itemi},null,co );
+      C.setDialogFun("tech-dialog",null)
     },
-
+    
+    sacrificefortech(itemi,co,fun) {
+      const y = this.you()
+      C.opendialogwithpar("civ-choosetechdialog", { "tech" : y.tech, "toresearch" : itemi, "nocancel" : true},null,co );
+      C.setDialogFun("civ-choosetechdialog",fun)
+    },
+    
     buyunitdialog(data) {
       C.opendialogwithpar("civ-buyunitdialog", data);
     },
@@ -863,27 +872,38 @@ C = function () {
     setyouplayparam: function (attr, value) {
       this.getyouplay()[attr] = value;
     },
+    
     getyouplay: function () {
       const y = _getxapp().$.youplay;
 
       return y;
     },
+    
+    you: function() {
+      const y = _getxapp().$.youplay
+      return y.y
+    },
+    
     getmarket: function () {
       const y = _getxapp().$.market;
 
       return y;
     },
+    
     getyourdeck: function () {
       return C.getjsboard().board.you;
     },
+    
     getopponentplay: function () {
       var y = _getxapp().$.opponentplay;
 
       return y;
     },
+    
     setjsboard: function (jsboard) {
       _getxapp().draw(jsboard);
     },
+    
     setresources: function (rese) {
       const x = _getxapp();
 
@@ -1122,6 +1142,7 @@ C = function () {
     setColorForCity: function (e, city, color) {
       C.setShadowStyleAttribute(e, city, "backgroundColor", color);
     },
+    
     _dialogopen: function (dname, open, data) {
       const d = document.getElementById(dname).$.dialog;
 
@@ -1134,11 +1155,13 @@ C = function () {
         });
       } else d.draw(data);
     },
+    
     endofbattledialog: function (b) {
       const open = b.board.battle != null && b.board.battle.endofbattle;
 
       this._dialogopen("battle-result", open, b);
     },
+    
     saveunitbattledialog: function (b) {
       const ba = b.board.battle;
       if (ba == null || !ba.endofbattle) return false;
@@ -1155,6 +1178,7 @@ C = function () {
 
       return false;
     },
+    
     battleDialog: function (b) {
       if (b == null) return;
       const open = b.board.battle != null;

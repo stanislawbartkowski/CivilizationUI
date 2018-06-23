@@ -18,8 +18,9 @@ class CivShowTech extends CivDialog(PolymerElement) {
 
   static get is() {
     return 'civ-showtech';
-  } // parameter: playertech
+  }
 
+  // parameter: playertec
 
   refresh(data) {
     const tech = C.findTech(data);

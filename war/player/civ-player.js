@@ -237,6 +237,10 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
 	<iron-icon icon="fingerprint" slot="item-icon"></iron-icon> <span>{{localize('startmove')}}</span>
 	</paper-icon-item>
 
+    <paper-icon-item id="sacrificefigurefortech" on-click="_onClick">
+      <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon> <span>{{localize('sacrificefigurefortech')}}</span>
+    </paper-icon-item>
+
 	<paper-icon-item id="move" on-click="_onClick"> <iron-icon icon="rowing" slot="item-icon"></iron-icon> <span>{{localize('continuemove')}}</span>
 	</paper-icon-item>
 
@@ -333,10 +337,15 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
         readOnly: true,
         value: ["buybuilding"]
       },
+      hidebuttons : {
+        type: Array,
+        readOnly: true,
+        value: ["sacrificefigurefortech"]
+      },
       buttons: {
         type: Array,
         readOnly: true,
-        value: ["setcapital", "endofphase", "setarmy", "setscout", "buyarmy", "buyscout", "startmove", "move", "revealtile", "endofmove", "setcity", "spendtrade", "undospendtrade", "sendproduction", "undosendproduction", "harvestresource", "explorehut", "attack", "research", "buybuilding", "buywonder", "technologyaction", "devouttoculture", "advanceculture", "greatpersonput", "unitmenu", "buycitywall", "freebuildingcityaction"]
+        value: ["setcapital", "endofphase", "setarmy", "setscout", "buyarmy", "buyscout", "startmove", "move", "revealtile", "endofmove", "setcity", "spendtrade", "undospendtrade", "sendproduction", "undosendproduction", "harvestresource", "explorehut", "attack", "research", "buybuilding", "buywonder", "technologyaction", "devouttoculture", "advanceculture", "greatpersonput", "unitmenu", "buycitywall", "freebuildingcityaction","sacrificefigurefortech"]
       }
     };
   }
@@ -354,15 +363,18 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
 
   _itemized(newValue, oldValue) {
     const a = C.getlistofpoints(this.currentcommand, newValue);
+    const itemi = newValue
     this.setListOfPoints(a);
     if (a != null) C.checkAutomateButton();
     const co = C.getcurrentcommand();
 
-    if (co == "getfreeresource") {
-      C.rundialog(co, newValue);
+    if (C.rundialog(co, newValue)) return
+    
+    if (co == "research") {
+      C.researchdialog(itemi,co)
       return;
     }
-
+    
     if (co == "freewonder") {
       C.freewonder(this.y, newValue, co);
       return;
@@ -465,11 +477,6 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
       return;
     }
 
-    if (id == "research") {
-      C.researchdialog(this.y);
-      return;
-    }
-
     if (id == "technologyaction") {
       C.technologyaction(this.y);
       return;
@@ -531,7 +538,8 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
     for (var i = 0; i < this.actionpanels.length; i++) {
       const id = this.actionpanels[i];
       const pa = this.shadowRoot.getElementById(id);
-      if (id == pha || id == "researchmenu" && pha == "research") C.displayelem(pa, true);else C.displayelem(pa, false);
+      if (id == pha || id == "researchmenu" && pha == "research") C.displayelem(pa, true)
+        else C.displayelem(pa, false)
     }
 
     for (var i = 0; i < this.buttons.length; i++) {
@@ -539,6 +547,9 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
       const bu = this.shadowRoot.getElementById(id);
       C.disableleme(bu, true);
     }
+    
+    for (var i = 0; i < this.hidebuttons.length; i++) 
+       C.showeleme(this.$[this.hidebuttons[i]],false)
 
     for (var i = 0; i < this.displaybuttons.length; i++) {
       const id = this.displaybuttons[i];
@@ -582,8 +593,9 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
       }
 
       if (C.getActionTechnology(id) != null) id = "technologyaction";
-      const bu = this.shadowRoot.getElementById(id);
+      const bu = this.$[id];
       C.disableleme(bu, false);
+      C.showeleme(bu, true);
 
       if (this.excludebuttons[id] != null) {
         C.showeleme(bu, true);

@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/06/16",
+    "appversion": "Version: 2018/06/24",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -170,6 +170,9 @@
     "unlockedbuildings" : "Unlocked buildings for free",
     "chooseresourceforfree" : "Choose resource for free",
     "takebutton" : "Take it",
+    "sacrificefigurefortech" : "Sacrifice for Tech",
+    "sacrificefigureheader" : "Sacrifice figure for Tech",
+    "choosetechdialogsacrificeheader" : "Research technology for free",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

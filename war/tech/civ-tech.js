@@ -181,12 +181,15 @@ class CivTech extends CivChooseData(GestureEventListeners(PolymerElement)) {
     const u = this._units();
 
     if (u.name != null) this.units = C.localize("unitslevel", "units", u.name, "level", u.level);else this.units = C.localize("unitsall", "level", u.level);
-  } // data : {
-  //   tech : techname
-  //   disa : true diabled
-  //   coins : number of coins on technology
-  // }
+  }
 
+  /** Display single technlogoy
+   * data  tech : technology name
+   * data  disa : disabled or null
+   * data  coins : number of coins, can be null
+   * data  level : player level (including initial tech)
+   *   Example: {"tech":"Communism","level":1,"coins":0,"disa" : true}
+  */
 
   refresh(data) {
     super.setDisa(data.disa);

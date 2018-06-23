@@ -20,30 +20,38 @@ class CivListTech extends CivData(PolymerElement) {
       techs: {
         type: Array
       },
+      /**
+       * Techonlogy level tyo be displayed
+      */
       level: {
         type: Number
       }
     };
-  } // parameter:
-  // data.playertech
-  // data.disa (can be null), list of technologies disabled
+  }
 
 
+  /**
+   * List of technologies at particular level
+   * Attribut level: Numbet - level of techonlogy to display
+   * Parameter
+   *  data playetech : list of technologies to display,  { tech : technology name, coins : number of coins or null, level : level }
+   *
+   * data disa : List of names of technologies to be disabled, could be null
+  */
   refresh(data) {
     this.techs = [];
     if (data == null || data.playertech == null) return;
     const leve = this.level;
     const pa = data.playertech;
-
     for (var i = 0; i < pa.length; i++) {
-      // make a copy
-      if (pa[i].level != leve) continue;
-      const c = {};
-      c.tech = pa[i].tech;
-      c.ni = pa[i].ni;
-      c.level = pa[i].level;
-      c.disa = false;
-      c.coins = pa[i].coins;
+      const p = pa[i]
+      if (p.level != leve) continue;
+      const c = {
+        "tech" : p.tech,
+        "disa" : false,
+        "coins" : p.coins,
+        "level" : p.level
+      }
       if (data.disa != null) c.disa = C.onList(data.disa, c.tech);
       this.techs.push(c);
     }

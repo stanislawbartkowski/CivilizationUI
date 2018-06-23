@@ -15,7 +15,6 @@
 <!-- <link rel="import" href="bower_components/neon-animation/web-animations.html"> -->
 
 
-
 <script type="module" src="./node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
 <script type="module" src="./node_modules/@polymer/paper-item/paper-icon-item.js"></script>
 <script type="module" src="./node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
@@ -62,7 +61,7 @@
 
 <!-- <script type="text/javascript" language="javascript" src="./x-app.js"></script> -->
 
-<script type="module" src="./x-app.js"></script>
+  <script type="module" src="./x-app.js"></script>
 
   <script type="module" src="./play/reveal2-dialog.js"></script>
   <script type="module" src="./play/multifigures-dialog.js"></script>
@@ -111,6 +110,7 @@
   <script type="module" src="./tech/civ-techdialog.js"></script>
   <script type="module" src="./tech/civ-showtechdialog.js"></script>
   <script type="module" src="./tech/civ-showtech.js"></script>
+  <script type="module" src="./tech/civ-choosetechnology.js"></script>
 
   <script type="module" src="./wonder/civ-wonder.js"></script>
   <script type="module" src="./wonder/civ-dispwonders.js"></script>
@@ -172,8 +172,9 @@
 
 
   <script type="module" src="./city/city-action.js"></script>
+  <script type="module" src="./city/civ-sacrificefigure.js"></script>
 
-  <script type="module" src="./test-set.js"></script>
+  <script type="text/javascript" language="javascript" src="./test-set.js"></script>
 
   <style>
     body {
@@ -382,6 +383,12 @@
   </template>
 </dom-bind>
 
+<dom-bind id="civ-sacrificefigure">
+  <template>
+   <civ-sacrificefigure id="dialog"></civ-sacrificefigure>
+  </template>
+</dom-bind>
+
 <dom-bind id="battlesaveunit-dialog">
   <template>
    <battlesaveunit-dialog id="dialog"></battlesaveunit-dialog>
@@ -394,11 +401,17 @@
   </template>
 </dom-bind>
 
+<dom-bind id="civ-choosetechdialog">
+  <template>
+   <civ-choosetechdialog id="dialog"></civ-choosetechdialog>
+  </template>
+</dom-bind>
+
 <body>
 
   <x-app></x-app>
 
-<!-- 
+
   <script>
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -411,7 +424,7 @@
             }
           )
   </script>
--->
+
 </body>
 
 

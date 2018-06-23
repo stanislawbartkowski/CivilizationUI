@@ -2,6 +2,8 @@ import { html } from "../node_modules/@polymer/polymer/lib/utils/html-tag.js";
 import { PolymerElement } from "../node_modules/@polymer/polymer/polymer-element.js";
 import { CivDialog } from "../js/civ-dialog.js";
 
+export { CivTechDialog }
+
 class CivTechDialog extends CivDialog(PolymerElement) {
   static get template() {
     return html`
@@ -43,12 +45,12 @@ class CivTechDialog extends CivDialog(PolymerElement) {
         </span>
 
 
-       <paper-button on-click="_onResearch">
+       <paper-button on-click="onResearch">
            <iron-icon icon="fingerprint"></iron-icon>
           {{localize('youresearch')}}
        </paper-button>
 
-       <paper-button on-click="_clear" dialog-dismiss="">{{localize('cancellabel')}}</paper-button>
+       <paper-button id="cancel" on-click="_clear" dialog-dismiss="">{{localize('cancellabel')}}</paper-button>
 
      </span>
 
@@ -74,15 +76,11 @@ class CivTechDialog extends CivDialog(PolymerElement) {
     C.displayelemid(this, "research", false);
   }
 
-  _onResearch() {
+  onResearch() {
     if (this.tech == null) return;
-    const p = {};
-    p.row = -1;
-    p.col = -1;
-    p.param = this.tech.tech;
-    C.executewithconf(null, "RESEARCH", p, this);
-
+    C.executewithconf(null, this.getCommand().toUpperCase(), { "row" : -1, "col" : -1, "param" : this.tech.tech}, this);
     this._clear();
+    if (this.fun != null) this.fun()
   }
 
   clickTech(d) {
@@ -95,13 +93,11 @@ class CivTechDialog extends CivDialog(PolymerElement) {
     tr.draw(d);
   }
 
-  _preparetechnology(y) {
+  _preparetechnology(data) {
     const p = {};
     p.disa = [];
     p.playertech = [];
-    const tt = y.tech;
-
-    for (var i = 0; i < tt.length; i++) p.disa.push(tt[i].tech);
+    const tt = data.tech;
 
     const tech = C.getlistoftech();
 
@@ -109,7 +105,7 @@ class CivTechDialog extends CivDialog(PolymerElement) {
       const t = tech[i];
       const nt = C.toTech(t);
       p.playertech.push(nt);
-      if (nt.level > y.tradelevel) p.disa.push(nt.tech);
+      if (!C.onList(data.toresearch,nt.tech)) p.disa.push(nt.tech);
     }
 
     const dtech = this.$.tech;
@@ -119,19 +115,26 @@ class CivTechDialog extends CivDialog(PolymerElement) {
     dtech.draw(p);
   }
 
-  _prepareplayer(y) {
-    const p = {};
-    p.playertech = y.tech;
+  _prepareplayer(data) {
     const dcurrenttech = this.$.currenttech;
-    dcurrenttech.draw(p);
+    dcurrenttech.draw({ "playertech" : data.tech});
   }
 
-  refresh(y) {
+  /** Display list of tech to research
+   * Parameter
+   * data tech: list of player tech alredy researched { "tech" : techname, "coins" : coins, "level" : level }
+   *    Example: {"tech":"Communism","initial":true,"level":1,"coins":0}
+   * data toresearch : list of tech to research, enabled tech
+   * data nocancel : true, switch off Cancel button
+  */
+
+  refresh(data) {
+    C.displayelem(this.$.cancel,data.cancel,true)
     this._clear();
 
-    this._preparetechnology(y);
+    this._preparetechnology(data);
 
-    this._prepareplayer(y);
+    this._prepareplayer(data);
 
     C.displayelemid(this, "choosemessage", true);
   }
