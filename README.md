@@ -11,6 +11,13 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 
 ## History
 
+## 2018/06/24 : new version deployed
+https://hoteljavaopensource.blogspot.com/2018/06/civilization-board-game-next-version_24.html
+
+Features implemented
+* Some civilizations features implemented: America, China, Egypt, Germany, Rome and Russia
+* Upgrade from Polymer 2 to Polymer 3
+
 ## 2018/06/02: new version deployed
 https://hoteljavaopensource.blogspot.com/2018/06/civilization-board-game-next-version.html
 
