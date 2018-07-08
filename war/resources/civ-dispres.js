@@ -44,9 +44,10 @@ class CivDispRes extends CivData(GestureEventListeners(PolymerElement)) {
       "num": 1
     }];
   }
-  /*
-    hv : Hut or Village or findUnitLevel
-    resource : resources
+  
+  /**
+   * hv : Hut or Village or findUnitLevel
+   * resource : resources
    */
 
 

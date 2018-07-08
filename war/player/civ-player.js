@@ -134,12 +134,16 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
    </paper-icon-item>
 
     <paper-icon-item id="greatpersonput" on-click="_onClick">
-      <iron-icon src="images/icons/greatpersona.svg" "="" slot="item-icon"></iron-icon>
+      <iron-icon src="images/icons/greatpersona.svg" slot="item-icon"></iron-icon>
       <span>{{localize('greatpersonplace')}}</span>
    </paper-icon-item>
 </span>
 
 <span id="trade" class="actionbox" style="display:none">
+    <paper-icon-item id="usesilkfortrade9" on-click="_onClick">
+      <iron-icon src="images/resource/silk.svg" slot="item-icon"></iron-icon>
+      <span>{{localize('spendsilkfortrade')}}</span>
+    </paper-icon-item>
 </span>
 
 <span id="citymanagement" class="actionbox" style="display:none">
@@ -233,6 +237,7 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
 
 <span id="movement" class="actionbox" style="display:none">
 
+
 	<paper-icon-item id="startmove" on-click="_onClick">
 	<iron-icon icon="fingerprint" slot="item-icon"></iron-icon> <span>{{localize('startmove')}}</span>
 	</paper-icon-item>
@@ -247,6 +252,10 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
 	<paper-icon-item id="revealtile" on-click="_onClick">
 	<iron-icon icon="lock-open" slot="item-icon"></iron-icon> <span>{{localize('revealtile')}}</span>
 	</paper-icon-item>
+
+    <paper-icon-item id="freenonupgradedbuilding" on-click="_onClick">
+    <iron-icon src="images/icons/buybuilding.svg" slot="item-icon"></iron-icon> <span>{{localize('freenonupgradebuildinglabel')}}</span>
+    </paper-icon-item>
 
 	<paper-icon-item id="explorehut" on-click="_onClick">
       <iron-icon src="images/huts/hut.svg" slot="item-icon"></iron-icon>
@@ -340,7 +349,7 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
       hidebuttons : {
         type: Array,
         readOnly: true,
-        value: ["sacrificefigurefortech"]
+        value: ["sacrificefigurefortech","freenonupgradedbuilding","usesilkfortrade9"]
       },
       buttons: {
         type: Array,
@@ -390,7 +399,7 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
       return;
     }
 
-    if (co == "buybuilding" || co == "freebuildingcityaction") {
+    if (co == "buybuilding" || co == "freebuildingcityaction" || co == "freenonupgradedbuilding") {
       C.buybuilding(this.y, newValue, co);
       return;
     }

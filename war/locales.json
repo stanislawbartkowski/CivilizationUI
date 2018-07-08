@@ -173,6 +173,11 @@
     "sacrificefigurefortech" : "Sacrifice for Tech",
     "sacrificefigureheader" : "Sacrifice figure for Tech",
     "choosetechdialogsacrificeheader" : "Research technology for free",
+    "freenonupgradebuildinglabel" : "Free nonupgraded Building",
+    "nonupgradedbuildings" : "Non-upgraded buildings for free",
+    "spendsilkfortrade" : "Spend Silk for Trade",
+    "youreceive9trade" : "You receive 9 trade ",
+    "youropponentreceive9trade" : "Youe opponent receive 6 trade ",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

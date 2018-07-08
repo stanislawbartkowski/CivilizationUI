@@ -135,8 +135,12 @@ class CivResources extends CivData(PolymerElement) {
       C.displayelemid(this, "span" + n, true, true);
       C.displaybadge(this.$[n + "number"], num);
     }
-  } // r : array of resources
-  // [{ "resource" : name, "num" : number},....]
+  } 
+  
+  /**
+  * r : array of resources
+  *    [{ "resource" : name, "num" : number},....]
+  */
 
 
   refresh(r) {

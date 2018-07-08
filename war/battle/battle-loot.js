@@ -31,10 +31,14 @@ class BattleLoot extends CivDialog(PolymerElement) {
     return null;
   }
 
+  /**
+   * List of resources
+   */
   clickres(id) {
     if (this.fun == null) return;
 
-    const n = this._toname(id);
+    // single resource here
+    const n = this._toname(id[0].resource);
 
     this.fun(n);
   }

@@ -240,6 +240,10 @@ C = function () {
         "dialog": "buy-building",
         "header": "buildingstobuy"
       },
+      "freenonupgradedbuilding": {
+        "dialog": "buy-building",
+        "header": "nonupgradedbuildings"
+      },
       "freebuildingcityaction": {
         "dialog": "buy-building",
         "header": "unlockedbuildings"
@@ -258,6 +262,11 @@ C = function () {
       "sacrificefigurefortech" : {
         "dialog": "civ-sacrificefigure",
         "header": "sacrificefigureheader",
+        "runplayer" : true
+      },      
+      "usesilkfortrade9" : {
+        "dialog": "civ-silkfortrade",
+        "header": "spendsilkfortrade",
         "runplayer" : true
       }
     };
@@ -791,6 +800,10 @@ C = function () {
       this._buystructure("buy-building", y, itemize, id);
     },
 
+    nonupgradedbuilding(y, itemize, id) {
+      this._buystructure("buybuilding", y, itemize, id);
+    },
+    
     showcivinfo(civ) {
       C.opendialogwithpar("showciv-info", civ);
     },
@@ -869,9 +882,11 @@ C = function () {
     setcurrentcommand: function (co) {
       this.getyouplay().currentcommand = co;
     },
+    
     itemizecommand: function (co) {
       this.getyouplay().callitemize(co);
     },
+    
     getitemizedcommand: function () {
       return this.getyouplay().itemizedcommand;
     },
@@ -1391,9 +1406,24 @@ C = function () {
         "tech": "Pottery"
       }, {
         "name": "currencyaction",
-        "tech": "Currency" // { "name" : "philosophyaction", "tech" : "Philosophy" }
-
-      }];
+        "tech": "Currency" 
+      }, {
+        "name": "philosophyaction",
+        "tech": "Philosophy" 
+      }, {
+        "name": "constructionaction",
+        "tech": "Construction" 
+      }, {
+        "name": "metalcastingaction",
+        "tech": "MetalCasting" 
+      }, {
+        "name": "bankingaction",
+        "tech": "Banking"   
+      }, {
+        "name": "chivalryaction",
+        "tech": "Chivalry" 
+      }
+      ];
       return tab;
     },
 

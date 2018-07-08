@@ -96,8 +96,9 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
     te.draw(d);
     this.tech = C.findTech(d.tech);
     const tech = C.getTechnologyAction(d.tech);
-    C.setcurrentcommand(tech.name);
-    window.itemizecommand(tech.name.toUpperCase());
+//    C.setcurrentcommand(tech.name);
+//    window.itemizecommand(tech.name.toUpperCase());
+    C.itemizecommand(tech.name)
 
     this._cleartech();
   }
