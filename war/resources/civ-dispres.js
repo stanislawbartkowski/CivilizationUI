@@ -38,13 +38,6 @@ class CivDispRes extends CivData(GestureEventListeners(PolymerElement)) {
     this.fun(this.data);
   }
 
-  _createres(res) {
-    return [{
-      "resource": res,
-      "num": 1
-    }];
-  }
-  
   /**
    * hv : Hut or Village or findUnitLevel
    * resource : resources
@@ -57,7 +50,7 @@ class CivDispRes extends CivData(GestureEventListeners(PolymerElement)) {
     const res = this.$.res;
 
     if (data.hv != null) {
-      hv.draw(this._createres(data.hv));
+      hv.draw(C.createRes(data.hv));
       C.displayelem(hvx, false);
       C.displayelem(hv, true, true);
     } else {
@@ -65,7 +58,7 @@ class CivDispRes extends CivData(GestureEventListeners(PolymerElement)) {
       C.displayelem(hvx, true, true);
     }
 
-    res.draw(this._createres(data.resource));
+    res.draw(C.createRes(data.resource));
   }
 
 }

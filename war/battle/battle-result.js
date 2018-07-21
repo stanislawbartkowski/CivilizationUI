@@ -38,17 +38,11 @@ class BattleResult extends CivDialog(PolymerElement) {
            {{youresult}}
          </div>
 
-         <battle-loot id="battlelot">
-         </battle-loot>
-
-         <div id="winnerlootmessage">
-          {{localize("takeloot")}}
-         </div>
+         <battle-takeloot id="battlelot">
+         </battle-takeloot>
 
         <div class="buttons">
-         <battle-loot class="chooseloot" id="chooselot">
-         </battle-loot>
-          <paper-button id="close" on-click="_onCancel">{{localize('endofbattle')}}</paper-button>
+          <paper-button id="close" on-click="_endofbattle">{{localize('endofbattle')}}</paper-button>
        </div>
 
     </paper-dialog>
@@ -69,27 +63,23 @@ class BattleResult extends CivDialog(PolymerElement) {
       },
       youresult: {
         type: String
-      },
-      loot: {
-        type: String,
-        value: null
       }
     };
   }
 
   clickres(id) {
-    this._messageloot(false);
-
-    this.loot = id;
-    const chooselot = this.$.chooselot;
-    C.displayelem(chooselot, true);
-    const rlist = [id];
-    chooselot.draw(rlist);
+    this._refreshclose()
   }
 
   _isloot() {
     const battle = this.data.board.battle;
-    return battle.winnerloot != null && battle.winnerloot.length > 0;
+    return battle.winnerloot != null && battle.winnerloot.list.length > 0;
+  }
+  
+  _refreshclose() {
+    const res = this.$.battlelot.getRes()
+    if (res.length > 0 || !this._isloot()) this._disableclose(false);
+    else this._disableclose(true);
   }
 
   _drawloot() {
@@ -98,40 +88,16 @@ class BattleResult extends CivDialog(PolymerElement) {
 
     if (this._isloot()) {
       loot.fun = n => this.clickres(n);
-
       C.displayelem(loot, true);
       loot.draw(battle.winnerloot);
     }
+    this._refreshclose()
   }
 
-  _messageloot(display) {
-    const m = this.$.winnerlootmessage;
-    C.displayelem(m, display);
-  }
-
-  _removeloot() {
-    this._messageloot(false);
-
-    const loot = this.$.battlelot;
-    const chooselot = this.$.chooselot;
-    C.displayelem(loot, false);
-    C.displayelem(chooselot, false);
-    this.loot = null;
-  }
-
-  _onCancel() {
-    if (this._isloot() && this.loot == null) {
-      this._messageloot(true);
-
-      return;
-    }
-
+  _endofbattle() {
     this.closeIt();
-    const pa = {};
-    pa.row = -1;
-    pa.col = -1;
-    pa.param = this.loot;
-    C.executeC("ENDBATTLE", pa);
+    const res = this.$.battlelot.getRes()
+    C.executeC("ENDBATTLE", { "param" : res });
   }
 
   _disableclose(disable) {
@@ -140,7 +106,6 @@ class BattleResult extends CivDialog(PolymerElement) {
   }
 
   refresh(data) {
-    this._removeloot();
 
     const battle = data.board.battle;
     const a = battle.attacker;
@@ -160,12 +125,10 @@ class BattleResult extends CivDialog(PolymerElement) {
     this.youresult = C.localize(lname);
 
     this._disableclose(true);
+    C.displayelem(this.$.battlelot, false);
 
-    if (battle.bothsides || battle.attackerwinner && a.you || !battle.attackerwinner && d.you) {
-      this._disableclose(false);
-
-      this._drawloot();
-    }
+    if (battle.bothsides || battle.attackerwinner && a.you || !battle.attackerwinner && d.you) 
+      this._drawloot(); 
   }
 
 }

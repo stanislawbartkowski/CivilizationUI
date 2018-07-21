@@ -8,9 +8,6 @@ export const CivDataList = function (superClass) {
 
     static get properties() {
       return {
-        res: {
-          type: Array
-        },
         choosed: {
           type: Object
         }
@@ -40,7 +37,9 @@ export const CivDataList = function (superClass) {
       this.res = pa;
       if (this.fun == null) return;
       this.elemmap = id;
-    } // --------------------------
+    } 
+    
+    // --------------------------
     // choose from list
     // --------------------------
 

@@ -7,9 +7,7 @@ C = function () {
     // if (c == "revealtile") return true
 
     return false;
-  }
-
-  ;
+  } ;
 
   function verifysetfigures(co, iparam, pa) {
     var list = iparam.list;
@@ -22,16 +20,12 @@ C = function () {
     }
 
     return null;
-  }
-
-  ;
+  } ;
 
   function checkarmy(iparam) {
     if (iparam.square.numberofArmies > 0 || iparam.square.numberofScouts > 0) return true;
     return false;
-  }
-
-  ;
+  } ;
 
   function findpointp(iparam, list) {
     for (var i = 0; i < list.length; i++) if (C.eqp(iparam, list[i].p)) return i;
@@ -109,9 +103,7 @@ C = function () {
     if (co == "setcapital" || co == "setcity") return verifysetcity(co, iparam, pa);
     if (co == "endofmove") return pa;
     return verifypoints(pa);
-  }
-
-  ;
+  };
 
   function dialogalert(dialogid, message) {
     const dialogDemo = document.getElementById(dialogid);
@@ -122,16 +114,12 @@ C = function () {
 
     dialogDemo.message = message;
     dialogDemo.openDialog();
-  }
-
-  ;
+  };
 
   function findbytag(tag) {
     var ee = window.findbytag(tag);
     return ee;
-  }
-
-  ; // id="close-button"
+  }; // id="close-button"
 
   function showhideclosebuttuon(show) {
     C.showelem("close-button", show);
@@ -158,9 +146,7 @@ C = function () {
     };
 
     dialogDemo.openDialog();
-  }
-
-  ;
+  } ;
 
   function _twotilereveal(iparam) {
     if (iparam.list.tiles.length <= 1) return false;
@@ -263,7 +249,7 @@ C = function () {
         "dialog": "civ-sacrificefigure",
         "header": "sacrificefigureheader",
         "runplayer" : true
-      },      
+      },
       "usesilkfortrade9" : {
         "dialog": "civ-silkfortrade",
         "header": "spendsilkfortrade",
@@ -471,6 +457,7 @@ C = function () {
       d.$.dialog.title = C.localize('confirmdialogtitle');
       return d;
     },
+
     joingamedialog: function (gameid, civ) {
       const dialogDemo = C.getconfirmdialog();
 
@@ -485,9 +472,11 @@ C = function () {
       dialogDemo.message = C.localize("doyouwanttojoin", "civ", civ);
       dialogDemo.openDialog();
     },
+
     startgamedialog: function (civ) {
       this.confirmdialog(C.localize("doyouwantstartnegamequestion", "civ", civ), e => window.chooseciv(civ));
     },
+
     confirmdialog: function (message, fun) {
       const dialogDemo = this.getconfirmdialog();
 
@@ -503,6 +492,7 @@ C = function () {
       dialogDemo.message = message;
       dialogDemo.openDialog();
     },
+
     alertdialog: function (message) {
       const dialogalert = document.getElementById("dialog-alert");
 
@@ -534,16 +524,16 @@ C = function () {
       const gameid = e.gameid;
       this.confirmdialog(C.localize('doyouwanttoresumequestion', 'civ', civ), e => C.resumegame(gameid, civ));
     },
-    
+
     leavedialog: function () {
       this.confirmdialog(C.localize('leavegamequestion'), e => C.leavegame());
     },
-    
+
     closejoindialog: function () {
       const dialogjoin = document.getElementById("join-dialog");
       dialogjoin.$.dialog.closeIt();
     },
-    
+
     joindialog: function (civ) {
       const dialogDemo = document.getElementById("join-dialog");
 
@@ -576,19 +566,19 @@ C = function () {
       if (pa.param != null && pa.param.constructor == Array) stype = "array";
       if (pa.param == null) window.executecommandNull(co.toUpperCase(), pa.row, pa.col);else if (stype == "string") window.executecommandS(co.toUpperCase(), pa.row, pa.col, pa.param);else if (stype == "number") window.executecommandN(co.toUpperCase(), pa.row, pa.col, pa.param);else if (stype == "object") window.executecommandO(co.toUpperCase(), pa.row, pa.col, pa.param);else window.executecommandA(co.toUpperCase(), pa.row, pa.col, pa.param);
     },
-    
+
     executewithconffun: function (question, co, fun) {
       if (question == null) question = C.localize("executecommandquestion", "command", co);
       if (!confirmaction(co)) fun();else this.confirmdialog(question, fun);
     },
-    
+
     executewithconf: function (question, co, pa, mdial) {
       C.executewithconffun(question, co, e => {
         if (mdial != null) mdial.closeIt();
         C.executeC(co, pa);
       });
     },
-    
+
     confexecutedialog: function (question, co, row, col, param) {
       var iparam = {};
       iparam.square = null;
@@ -655,12 +645,12 @@ C = function () {
     dialogexecutefailure: function (message) {
       dialogalert("dialog-command-failure", message);
     },
-    
+
     showeleme: function (e, show) {
       if (show) C.removeattr(e, "hidden");
       else e["hidden"] = true;
     },
-    
+
     displayelem: function (e, display, inblock) {
       if (display) {
         const stype = typeof inblock;
@@ -672,10 +662,10 @@ C = function () {
 
         if (inblock) e.style.display = 'inline-block';
            else e.style.display = 'block';
-           
+
       } else e.style.display = 'none';
     },
-    
+
     removedisplay(e) {
        e.style.display=null
     },
@@ -697,27 +687,27 @@ C = function () {
         e.label = number;
       }
     },
-    
+
     disableleme: function (e, disable) {
       if (disable) C.setattr(e, "disabled", true);
       else C.removeattr(e, "disabled");
     },
-    
+
     showelem: function (id, show) {
       const x = _getxapp();
 
       const e = this.getShadow(x).getElementById(id);
       C.showeleme(e, show);
     },
-    
+
     setattr: function (e, attr, value) {
       e.setAttribute(attr, value);
     },
-    
+
     settitle: function (e, title) {
       C.setattr(e, "title", title);
     },
-    
+
     removeattr: function (e, attr) {
       e.removeAttribute(attr);
     },
@@ -735,6 +725,7 @@ C = function () {
       if (what == 0 || what == 1 || what == 2) C.setattr(civjoin, "listofjoins", "");
       if (what == 0) showhideclosebuttuon(true);else showhideclosebuttuon(false);
     },
+
     getlistofgames: function () {
       const gamese = findbytag("civ-games");
       return gamese.listofgames;
@@ -803,7 +794,7 @@ C = function () {
     nonupgradedbuilding(y, itemize, id) {
       this._buystructure("buybuilding", y, itemize, id);
     },
-    
+
     showcivinfo(civ) {
       C.opendialogwithpar("showciv-info", civ);
     },
@@ -817,13 +808,13 @@ C = function () {
       C.opendialogwithpar("tech-dialog", { "tech" : y.tech, "toresearch" : itemi},null,co );
       C.setDialogFun("tech-dialog",null)
     },
-    
+
     sacrificefortech(itemi,co,fun) {
       const y = this.you()
       C.opendialogwithpar("civ-choosetechdialog", { "tech" : y.tech, "toresearch" : itemi, "nocancel" : true},null,co );
       C.setDialogFun("civ-choosetechdialog",fun)
     },
-    
+
     buyunitdialog(data) {
       C.opendialogwithpar("civ-buyunitdialog", data);
     },
@@ -869,65 +860,70 @@ C = function () {
     localize: function (...args) {
       return _getxapp().localize(...args);
     },
+
     getlistofjoingames: function () {
       var civjoin = findbytag("civ-join");
       return civjoin.listofjoins;
     },
+
     getcurrentcommand: function () {
       return this.getyouplay().currentcommand;
     },
     iscurrentcommand: function (co) {
       return this.getcurrentcommand() == co;
     },
+
     setcurrentcommand: function (co) {
       this.getyouplay().currentcommand = co;
     },
-    
+
     itemizecommand: function (co) {
       this.getyouplay().callitemize(co);
     },
-    
+
     getitemizedcommand: function () {
       return this.getyouplay().itemizedcommand;
     },
+
     issendproductionscout: function () {
       return C.getcurrentcommand() == "selectscout";
     },
+
     setyouplayparam: function (attr, value) {
       this.getyouplay()[attr] = value;
     },
-    
+
     getyouplay: function () {
       const y = _getxapp().$.youplay;
 
       return y;
     },
-    
+
     you: function() {
       const y = _getxapp().$.youplay
       return y.y
     },
-    
+
     getmarket: function () {
       const y = _getxapp().$.market;
 
       return y;
     },
-    
+
     getyourdeck: function () {
       return C.getjsboard().board.you;
     },
-    
+
     getopponentplay: function () {
       var y = _getxapp().$.opponentplay;
 
       return y;
     },
-    
+
     setjsboard: function (jsboard) {
       _getxapp().draw(jsboard);
     },
-    
+
     setresources: function (rese) {
       const x = _getxapp();
 
@@ -986,40 +982,52 @@ C = function () {
       if (row == null || col == null) return null;
       return window.getsquare(row, col);
     },
+
     log: function (s) {
       console.log(s);
     },
+
     readgames: function () {
       window.readgames();
     },
+
     readcivs: function () {
       window.readcivs();
     },
+
     readjoingames: function () {
       window.readjoingames();
     },
+
     isFireFox: function () {
       const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
       return isFirefox;
     },
+
     toS: function (o) {
       return JSON.stringify(o);
     },
+
     datetos: function (d) {
       return window.datetos(d);
     },
+
     resumegame: function (gameid, civ) {
       window.resumegame(gameid, civ);
     },
+
     unregistertoken: function () {
       window.unregistertoken();
     },
+
     registertwoplayersgame: function (civ1, civ2) {
       window.twoplayersgame(civ1, civ2);
     },
+
     resumetwoplayersgame: function (gameid, civ) {
       window.resumetwoplayersgame(gameid, civ);
     },
+
     leavegame: function () {
       window.stoprefresh();
 
@@ -1027,52 +1035,66 @@ C = function () {
 
       window.leavegame();
     },
+
     joingame: function (gameid, civ) {
       window.joingame(gameid, civ);
     },
+
     highlightGame: function (a, highlight) {
       window.highlightMap(a, highlight);
     },
+
     highlightSquare: function (e, hightlight) {
       e.highlight(hightlight);
     },
+
     clearCommand: function () {
       const y = C.getyouplay();
       y.clearCommand();
     },
+
     emptyS: function (s) {
       return s == null || s == "";
     },
+
     constructP: function (row, col) {
       return {
         "row": row,
         "col": col
       };
     },
+
     color1: function () {
       return "Aqua";
     },
+
     color2: function () {
       return "Red";
     },
+
     colorback1: function () {
       return "Aqua";
     },
+
     colorback2: function () {
       return "Red";
     },
+
     civtonumb: function (civ) {
       return window.civtonumb(civ); // TODO: for test
       // return 0
     },
+
     colorForCiv: function (civ) {
       if (C.civtonumb(civ) == 0) return this.color1();
       return this.color2();
     },
+
     backcolorForCiv: function (civ) {
       if (C.civtonumb(civ) == 0) return this.colorback1();
       return this.colorback2();
     },
+
     testcolorForCiv: function (civ) {
       var cMap = new Map();
       cMap.set('China', "Yellow");
@@ -1166,7 +1188,7 @@ C = function () {
     setColorForCity: function (e, city, color) {
       C.setShadowStyleAttribute(e, city, "backgroundColor", color);
     },
-    
+
     _dialogopen: function (dname, open, data) {
       const d = document.getElementById(dname).$.dialog;
 
@@ -1179,13 +1201,13 @@ C = function () {
         });
       } else d.draw(data);
     },
-    
+
     endofbattledialog: function (b) {
       const open = b.board.battle != null && b.board.battle.endofbattle;
 
       this._dialogopen("battle-result", open, b);
     },
-    
+
     saveunitbattledialog: function (b) {
       const ba = b.board.battle;
       if (ba == null || !ba.endofbattle) return false;
@@ -1202,7 +1224,7 @@ C = function () {
 
       return false;
     },
-    
+
     battleDialog: function (b) {
       if (b == null) return;
       const open = b.board.battle != null;
@@ -1380,6 +1402,13 @@ C = function () {
       list.push(name);
     },
 
+    createRes(res) {
+      return [{
+        "resource": res,
+        "num": 1
+      }];
+    },
+
     convertResourcesToList(data, data1, resource) {
       const da = [];
 
@@ -1406,22 +1435,22 @@ C = function () {
         "tech": "Pottery"
       }, {
         "name": "currencyaction",
-        "tech": "Currency" 
+        "tech": "Currency"
       }, {
         "name": "philosophyaction",
-        "tech": "Philosophy" 
+        "tech": "Philosophy"
       }, {
         "name": "constructionaction",
-        "tech": "Construction" 
+        "tech": "Construction"
       }, {
         "name": "metalcastingaction",
-        "tech": "MetalCasting" 
+        "tech": "MetalCasting"
       }, {
         "name": "bankingaction",
-        "tech": "Banking"   
+        "tech": "Banking"
       }, {
         "name": "chivalryaction",
-        "tech": "Chivalry" 
+        "tech": "Chivalry"
       }
       ];
       return tab;

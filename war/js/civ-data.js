@@ -28,6 +28,9 @@ export const CivData = function (superClass) {
         },
         command: {
           type: String
+        },
+        res: {
+          type: Array
         }
       };
     }

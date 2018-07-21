@@ -91,6 +91,25 @@ class CivResources extends CivData(PolymerElement) {
      <paper-badge hidden="" id="culturenumber" for="culture" label="X">
       </paper-badge>
     </span>
+
+    <span id="spancoin" class="resbox" style="display:none" on-click="click" title="{{localize('coinlabel')}}">
+      <s-svg id="coin" src="images/resource/coin.svg"></s-svg>
+      <paper-badge hidden="" id="coinnumber" for="coin" label="X">
+       </paper-badge>
+     </span>
+
+     <span id="spancard" class="resbox" style="display:none" on-click="click" title="{{localize('culturecards')}}">
+       <img id="card" src="images/icons/cards.svg"></img>
+       <paper-badge hidden="" id="cardnumber" for="card" label="X">
+        </paper-badge>
+      </span>
+
+      <span id="spantech" class="resbox" style="display:none" on-click="click" title="{{localize('technologylabel')}}">
+        <img id="tech" src="images/cities/research.svg"></img>
+        <paper-badge hidden="" id="technumber" for="tech" label="X">
+         </paper-badge>
+       </span>
+
 `;
   }
 
@@ -103,7 +122,7 @@ class CivResources extends CivData(PolymerElement) {
       names: {
         readOnly: true,
         type: Array,
-        value: ["silk", "iron", "wheat", "incense", "spy", "uranium", "culture", "hut", "village", "trade"]
+        value: ["silk", "iron", "wheat", "incense", "spy", "uranium", "culture", "hut", "village", "trade","coin","card","tech"]
       }
     };
   }
@@ -135,8 +154,8 @@ class CivResources extends CivData(PolymerElement) {
       C.displayelemid(this, "span" + n, true, true);
       C.displaybadge(this.$[n + "number"], num);
     }
-  } 
-  
+  }
+
   /**
   * r : array of resources
   *    [{ "resource" : name, "num" : number},....]
