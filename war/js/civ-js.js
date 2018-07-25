@@ -675,7 +675,8 @@ C = function () {
     },
 
     displaybadge: function (e, number) {
-      if (number <= 1) C.showeleme(e, false);else {
+      if (number <= 1) C.showeleme(e, false);
+      else {
         C.showeleme(e, true);
         var pa = e.offsetParent;
         var no = 0;

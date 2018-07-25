@@ -500,6 +500,9 @@ class CivSquare extends CivData(GestureEventListeners(PolymerElement)) {
     C.displayelem(this.$.wonder, false);
     C.displayelem(this.$.greatperson, false);
     C.showeleme(this.$.culture, false);
+    
+    // remove city
+    C.displayelem(this.$.attcity, false);
   }
 
   _clearsquare() {
