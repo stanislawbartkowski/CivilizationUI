@@ -732,8 +732,9 @@ C = function () {
       if (what == 0 || what == 2 || what == 3) civse.draw(null)
       if (what == 0 || what == 1 || what == 3) C.setattr(gamese, "listofgames", "")
       if (what == 0 || what == 1 || what == 2) C.setattr(civjoin, "listofjoins", "")
-      if (what == 0) showhideclosebuttuon(true)
+      
       if (what == 1) civse.draw(this.getlistofcivs())
+      if (what == 0) showhideclosebuttuon(true)
       else showhideclosebuttuon(false)
     },
 
