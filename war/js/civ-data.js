@@ -12,9 +12,6 @@ export const CivData = function (superClass) {
           type: Object,
           observer: 'drawset'
         },
-        datas: {
-          type: String
-        },
         fun: {
           type: Object
         },
@@ -31,16 +28,11 @@ export const CivData = function (superClass) {
         },
         res: {
           type: Array
+        },
+        wasdrawset : {
+        	type :Boolean
         }
       };
-    }
-
-    static get observers() {
-      return ['refreshs(datas)'];
-    }
-
-    refreshs(datas) {
-      if (datas == "") this.data = null;else this.data = JSON.parse(datas);
     }
 
     _different(thisdata, data) {
@@ -53,6 +45,7 @@ export const CivData = function (superClass) {
     }
 
     drawset(newdata, olddata) {
+      this.wasdrawset = true
       if (this.refresh == null) return;
       if (!this._different(newdata, olddata)) return;
       this.refresh(newdata);
@@ -104,7 +97,9 @@ export const CivData = function (superClass) {
     }
 
     draw(data) {
-      this.data = data;
+      this.wasdrawset = false
+      this.data = data
+      if (!this.wasdrawset) this.drawset(data,data)
 
       this._drawmap(data);
 

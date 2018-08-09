@@ -7,13 +7,12 @@
 
  <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 
-  <script type="text/javascript" language="javascript" src="./civilizationui/civilizationui.nocache.js"></script>
 
+ <script type="text/javascript" language="javascript" src="./civilizationui/civilizationui.nocache.js"></script>
 
-<script type="module" src="./node_modules/@polymer/polymer/polymer-legacy.js"></script>
+ <script type="module" src="./node_modules/@polymer/polymer/polymer-legacy.js"></script> 
 
 <!-- <link rel="import" href="bower_components/neon-animation/web-animations.html"> -->
-
 
 <script type="module" src="./node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
 <script type="module" src="./node_modules/@polymer/paper-item/paper-icon-item.js"></script>
@@ -58,8 +57,6 @@
 <script type="text/javascript" language="javascript" src="./js/civ-js.js"></script>
 <script type="text/javascript" language="javascript" src="./js/civ-dragg.js"></script>
 
-
-<!-- <script type="text/javascript" language="javascript" src="./x-app.js"></script> -->
 
   <script type="module" src="./x-app.js"></script>
 
@@ -123,6 +120,7 @@
   <script type="module" src="./player/civ-playerstate.js"></script>
   <script type="module" src="./player/civ-player.js"></script>
   <script type="module" src="./player/civ-stateelem.js"></script>
+  <script type="module" src="./player/civ-endofgame.js"></script>
 
 
   <script type="module" src="./technologyaction/civ-technologyaction.js"></script>
@@ -417,6 +415,14 @@
    <civ-silkfortrade id="dialog"></civ-silkfortrade>
   </template>
 </dom-bind>
+
+
+<dom-bind id="civ-endofgame">
+  <template>
+   <civ-endofgame id="dialog"></civ-endofgame>
+  </template>
+</dom-bind>
+
 
 <body>
 

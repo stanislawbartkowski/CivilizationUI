@@ -612,7 +612,8 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
         C.showeleme(bue, false);
       }
 
-      if (this._youactive()) if (!this.opponent && id == "move" && this.currentcommand != "revealtile" && this.currentcommand != "explorehut" && this.currentcommand != "attack") this.callitemize(id);
+      if (this._youactive()) 
+         if (!this.opponent && id == "move" && this.currentcommand != "revealtile" && this.currentcommand != "explorehut" && this.currentcommand != "attack") this.callitemize(id);
     }
 
     C.setUnitsNumb(this, y.units);

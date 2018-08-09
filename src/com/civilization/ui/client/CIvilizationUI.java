@@ -276,8 +276,6 @@ public class CIvilizationUI implements EntryPoint {
 			IMapDimension d = getDimensions();
 			Element fe = findContent(CIVMAP);
 			fe.removeAttribute("hidden");
-//			fe.setAttribute("rownumb", "" + d.rows());
-//			fe.setAttribute("colnumb", "" + d.cols());
 			rendermap(d.rows(),d.cols());
 			redrawheader();
 			// there is a delay until map is available
@@ -761,9 +759,9 @@ public class CIvilizationUI implements EntryPoint {
 		return fe;
 	}
 
-	private static Element findcivContent() {
-		return findContent("civ-content");
-	}
+//	private static Element findcivContent() {
+//		return findContent("civ-content");
+//	}
 
 	// ---------------------------------
 	// walk through DOM elements
@@ -793,10 +791,11 @@ public class CIvilizationUI implements EntryPoint {
 	 *            List of civ value
 	 */
 	private static void setListOfCiv(String listofciv) {
-		Element fe = findcivContent();
+//		Element fe = findcivContent();
 		JSONValue j = JSONParser.parseStrict(listofciv);
 		setresources(j.isObject().getJavaScriptObject());
-		fe.setAttribute("datas", listofciv);
+//		fe.setAttribute("datas", listofciv);
+//		fe.draw(JSON.parse(listofciv))
 	}
 
 	private static void setListOfGames(String listofgames) {

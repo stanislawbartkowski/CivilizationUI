@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/06/24",
+    "appversion": "Version: 2018/08/07",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -13,7 +13,7 @@
     "chooseopponentlabel" : "Choose opponent civilization to start",
     "cancellabel" : "Cancel",
     "doyouwanttostartquestion" : "Do you want to start two players game as {civname} against {civopposite} ?",
-    "resumegameline" : "{accesstime} Created: {createtime} Phase: {phase} Round : {roundno}",
+    "resumegameline" : "{accesstime} Created: {createtime} Phase: {phase} Round : {roundno} {winner}",
     "doyouwanttoresumequestion" : "Do you want to resume this gave as {civ} ?",
     "wheatlabel" : "Wheat",
     "ironlabel" : "Iron",
@@ -188,6 +188,12 @@
     "lootlabel" : "Loot",
     "takelabel" : "Take",
     "attacknormalcity" : "{civ} City",
+    "civ-endofgame" : "END OF GAME",
+    "Culturelabel" : "Culture Victory",
+    "Technologylabel" : "Techology Victory",
+    "wininfo" : " Winner: {civ} , {victory}",
+    "spend6trade" : "Spend 6 trade",
+    "spend5culture" : "Spend 5 culture",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

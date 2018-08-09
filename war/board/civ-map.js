@@ -62,9 +62,9 @@ class CivMap extends CivData(PolymerElement) {
     this.cols = [];
     if (data == null || data.rownum == -1 || data.colnum == -1) return;
 
-    for (var i = 0; i < data.rownum; i++) this.rows.push({});
+    for (var i = 0; i < data.rownum; i++) this.rows.push({})
 
-    for (var i = 0; i < data.colnum; i++) this.cols.push({});
+    for (var i = 0; i < data.colnum; i++) this.cols.push({})     
   }
 }
 

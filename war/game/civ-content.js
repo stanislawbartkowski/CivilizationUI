@@ -17,7 +17,8 @@ class CivContent extends CivData(PolymerElement) {
   }
 
   refresh(data) {
-    if (data == null) this.civs = [];else this.civs = data.civ;
+    if (data == null) this.civs = []
+    else this.civs = data
   }
 
 }

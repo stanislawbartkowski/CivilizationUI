@@ -43,7 +43,7 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
        </paper-dialog-scrollable>
 
        <div class="buttons">
-         <paper-button id="spendbutton" on-click="spendButton" style="display:none">{{localize('spendresourcebutton')}}</paper-button>
+         <paper-button id="spendbutton" on-click="spendButton" style="display:none">{{spendbutton}}</paper-button>
          <paper-button dialog-dismiss="">{{localize('cancellabel')}}</paper-button>
        </div>
 
@@ -67,6 +67,9 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
       },
       clicked: {
         type: Array
+      },
+      spendbutton : {
+        type : String
       }
     };
   }
@@ -78,14 +81,21 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
 
   spendButton() {
     const pa = {};
-    pa.row = this.$.city.getPoint().row;
-    pa.col = this.$.city.getPoint().col;
+    // city not important if tech without city
+    if (this._isCity()) {
+      pa.row = this.$.city.getPoint().row;
+      pa.col = this.$.city.getPoint().col;
+      }
+    else {
+      pa.row = -1
+      pa.col = -1
+    }
     const spend = this.$.resspend;
     var param = spend.getRes(); // only one
 
     if (this.tech.resourceany == null) param = param[0];
     pa.param = param;
-    const command = C.getcurrentcommand(); // run command
+    const command = C.getcurrentcommand() // run command
 
     C.executewithconf(null, command, pa, this);
   }
@@ -94,13 +104,18 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
     const te = this.$.tech;
     C.displayelem(te, true, true);
     te.draw(d);
+    this._cleartech();
     this.tech = C.findTech(d.tech);
     const tech = C.getTechnologyAction(d.tech);
-//    C.setcurrentcommand(tech.name);
-//    window.itemizecommand(tech.name.toUpperCase());
-    C.itemizecommand(tech.name)
-
-    this._cleartech();
+    // with city
+    C.setcurrentcommand(tech.name)
+    if (this._isCity()) C.itemizecommand(tech.name)
+    else this._drawResources()
+  }
+  
+  _isCity() {
+    const da = C.getActionTechnology(C.getcurrentcommand())
+    return da.city
   }
 
   _cleartech() {
@@ -138,8 +153,7 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
 
     listre.push(r);
     spend.draw(listre);
-    const butt = this.$.spendbutton;
-    if (this.clicked.length == this._getresno()) C.displayelem(butt, true);
+    if (this.clicked.length == this._getresno()) this._activateSpendButton(true)
   }
 
   _clearclicked(display) {
@@ -147,22 +161,36 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
     const spend = this.$.resspend;
     C.displayelem(spend, display);
     spend.draw(null);
-    const butt = this.$.spendbutton;
-    C.displayelem(butt, false);
+    this._activateSpendButton(false)
   }
 
   _clear() {
     C.setlistofpoints(null);
-    const te = this.$.tech;
-    C.displayelem(te, false);
-
+    C.displayelem(this.$.tech, false);
     this._cleartech();
   }
 
   setCity(city) {
-    const cit = this.$.city;
-    cit.draw(city);
-    C.displayelem(cit, true, true);
+    const cit = this.$.city
+    cit.draw(city)
+    C.displayelem(cit, true, true)
+    this._drawResources()
+  }
+  
+  _activateSpendButton(display) {
+     if (display) {
+       const da = C.getActionTechnology(C.getcurrentcommand())
+       if (da.button == null) this.spendbutton = C.localize('spendresourcebutton')
+       else this.spendbutton = C.localize(da.button)
+     }
+     C.displayelem(this.$.spendbutton, display)
+  }
+    
+  _drawResources() {  
+    if (this.tech.resource == null && this.tech.resourceany == null) {
+      this._activateSpendButton(true)
+      return
+    }  
     const y = C.getyourdeck();
     const listda = C.convertResourcesToList(y.resources, y.hutvillages, this.tech.resource);
     const res = this.$.resources;
@@ -177,8 +205,9 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
 
     this._clearclicked(true);
   }
-
-  openIt(data) {
+  
+  refresh(data) {
+      
     this._clear();
 
     const ta = C.getTechActionTable();
@@ -202,7 +231,6 @@ class CivTechnologyAction extends CivDialog(PolymerElement) {
     p.playertech = techs;
     tlevel.draw(p);
     super.noCancelOnOutsideClick();
-    super.openIt(data);
   }
 
 }

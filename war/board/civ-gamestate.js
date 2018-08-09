@@ -66,10 +66,11 @@ class CivGameState extends CivData(PolymerElement) {
       return;
     }
 
-    const g = b.board.game;
-    this.turnno = this.localize('labelroundno', 'roundno', g.roundno + 1);
-    this.activecivname = this.localize('nowplayinglabel', 'active', g.active);
-    this.phase = g.phase;
+    const g = b.board.game
+    this.turnno = this.localize('labelroundno', 'roundno', g.roundno + 1)
+    if (C.isendofgame(b)) this.activecivname = b.board.endofgame.winner + " : " + C.localize(b.board.endofgame.wintype + "label")
+    else this.activecivname = this.localize('nowplayinglabel', 'active', g.active)
+    this.phase = g.phase
   }
 
 }

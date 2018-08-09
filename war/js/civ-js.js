@@ -254,7 +254,13 @@ C = function () {
         "dialog": "civ-silkfortrade",
         "header": "spendsilkfortrade",
         "runplayer" : true
+      },
+      "civ-endofgame" : {
+        "dialog": "civ-endofgame",
+        "header": "civ-endofgame",
+        "runplayer" : true
       }
+      
     };
     return data[co];
   }
@@ -600,7 +606,8 @@ C = function () {
       if (co == "startmove") if (_multifigures(pa)) return;
 
       if (C.getActionTechnology(co) != null) {
-        _setcitytotechnology(iparam);
+        const da = C.getTechActionTable(co);
+        if (da.city) _setcitytotechnology(iparam);
         return;
       }
 
@@ -712,25 +719,29 @@ C = function () {
     removeattr: function (e, attr) {
       e.removeAttribute(attr);
     },
+    
     // what = 1 show civs (switch off the rest)
     // = 2 show games (switch off the test)
     // = 3 show joins
     // = 0 switch off all
     showcivorgames: function (what) {
-      C.seconddrawerClose(true);
-      var gamese = findbytag("civ-games");
-      var civse = findbytag("civ-content");
-      var civjoin = findbytag("civ-join");
-      if (what == 0 || what == 2 || what == 3) C.setattr(civse, "datas", "");
-      if (what == 0 || what == 1 || what == 3) C.setattr(gamese, "listofgames", "");
-      if (what == 0 || what == 1 || what == 2) C.setattr(civjoin, "listofjoins", "");
-      if (what == 0) showhideclosebuttuon(true);else showhideclosebuttuon(false);
+      C.seconddrawerClose(true)
+      var gamese = findbytag("civ-games")
+      var civse = findbytag("civ-content")
+      var civjoin = findbytag("civ-join")
+      if (what == 0 || what == 2 || what == 3) civse.draw(null)
+      if (what == 0 || what == 1 || what == 3) C.setattr(gamese, "listofgames", "")
+      if (what == 0 || what == 1 || what == 2) C.setattr(civjoin, "listofjoins", "")
+      if (what == 0) showhideclosebuttuon(true)
+      if (what == 1) civse.draw(this.getlistofcivs())
+      else showhideclosebuttuon(false)
     },
 
     getlistofgames: function () {
       const gamese = findbytag("civ-games");
       return gamese.listofgames;
     },
+    
     getgamestate: function () {
       const b = findbytag("civ-gamestate");
       return b;
@@ -1103,12 +1114,14 @@ C = function () {
       cMap.set('Germany', 'Red');
       return cMap.get(civ);
     },
+    
     findattribute: function (e, aname) {
       const al = e.attributes;
       const p = al.getNamedItem(aname);
       if (p == null) return null;
       return p.nodeValue;
     },
+    
     seconddrawerClose: function (close) {
       const x = _getxapp();
 
@@ -1142,6 +1155,7 @@ C = function () {
         }
       }
     },
+    
     _getbyid: function (e, id) {
       if (e.$ != null) return e.$[id];
       return e.querySelector("#" + id);
@@ -1149,6 +1163,7 @@ C = function () {
     getdomelem: function (e, id) {
       return e.$$("#" + id);
     },
+    
     setCivUnits: function (e, i, units) {
       const u = units.units[i];
       const name = u.name.toLowerCase();
@@ -1184,27 +1199,31 @@ C = function () {
     },
 
     setUnitsNumb: function (e, units) {
-      for (var i = 0; i < 4; i++) C.setCivUnits(e, i, units);
+      for (var i = 0; i < 4; i++) C.setCivUnits(e, i, units)
     },
+    
     setColorForCity: function (e, city, color) {
       C.setShadowStyleAttribute(e, city, "backgroundColor", color);
     },
 
     _dialogopen: function (dname, open, data) {
-      const d = document.getElementById(dname).$.dialog;
+      const d = document.getElementById(dname).$.dialog
 
       if (!open) {
-        if (d.opened()) d.closeIt();
-      } else if (!d.opened()) {
-        d.openIt(data);
+        if (d.opened()) d.closeIt()
+      } 
+      else 
+      if (!d.opened()) {
+        d.openIt(data)
         this.sleep(1000).then(() => {
-          d.draw(data);
-        });
-      } else d.draw(data);
+          d.draw(data)
+        })
+      } 
+      else d.draw(data)
     },
 
     endofbattledialog: function (b) {
-      const open = b.board.battle != null && b.board.battle.endofbattle;
+      const open = b.board.battle != null && b.board.battle.endofbattle
 
       this._dialogopen("battle-result", open, b);
     },
@@ -1234,6 +1253,16 @@ C = function () {
       this._dialogopen("battle-dialog", open, b);
 
       if (!C.saveunitbattledialog(b)) C.endofbattledialog(b);
+    },
+    
+    isendofgame(b) {
+      return b.board.endofgame != null
+    },
+   
+    endofgameDialog(b) {
+      if (b == null) return
+      if (! this.isendofgame(b)) return
+      C.rundialog("civ-endofgame",b)
     },
 
     getSideName(data) {
@@ -1433,7 +1462,7 @@ C = function () {
     getTechActionTable() {
       const tab = [{
         "name": "potteryaction",
-        "tech": "Pottery"
+        "tech": "Pottery",
       }, {
         "name": "currencyaction",
         "tech": "Currency"
@@ -1442,16 +1471,26 @@ C = function () {
         "tech": "Philosophy"
       }, {
         "name": "constructionaction",
-        "tech": "Construction"
+        "tech": "Construction",
+        "city" : true
       }, {
         "name": "metalcastingaction",
         "tech": "MetalCasting"
       }, {
         "name": "bankingaction",
-        "tech": "Banking"
+        "tech": "Banking",
+        "city" : true
       }, {
         "name": "chivalryaction",
         "tech": "Chivalry"
+      }, {
+        "name": "democracyaction",
+        "tech": "Democracy",
+        "button" : "spend6trade"
+      }, {
+        "name": "printingpressaction",
+        "tech": "PrintingPress",
+        "button" : "spend5culture"
       }
       ];
       return tab;

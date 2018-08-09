@@ -18,7 +18,8 @@ class CivSelectSquare extends CivData(PolymerElement) {
   }
 
   refresh(data) {
-    if (data == null) this.$.square.draw(null);else this.$.square.draw(data.square);
+    if (data == null) this.$.square.draw(null)
+    else this.$.square.draw(data.square)
   }
 
 }

@@ -219,7 +219,8 @@ class XApp extends CivData(PolymerElement) {
       }
     }
 
-    C.battleDialog(b);
+    C.battleDialog(b)
+    C.endofgameDialog(b)
   }
 
 }

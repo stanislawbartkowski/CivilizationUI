@@ -60,7 +60,9 @@ class CivGameLine extends PolymerElement {
     var accessedS = C.datetos(e.accesstime);
     var phaseS = e.phase;
     var no = e.round;
-    const q = C.localize('resumegameline', 'accesstime', accessedS, 'createtime', createdS, 'phase', phaseS, 'roundno', no + 1);
+    var wininfo = ""
+    if (e.endofgame != null) wininfo = C.localize('wininfo','civ',e.endofgame.winner,'victory',C.localize(e.endofgame.wintype + "label"))
+    const q = C.localize('resumegameline', 'accesstime', accessedS, 'createtime', createdS, 'phase', phaseS, 'roundno', no + 1,'winner',wininfo);
     return q;
   } // Declare properties for the element's public API
 
