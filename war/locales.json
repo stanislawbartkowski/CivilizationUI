@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/08/07",
+    "appversion": "Version: 2018/08/15",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -194,6 +194,8 @@
     "wininfo" : " Winner: {civ} , {victory}",
     "spend6trade" : "Spend 6 trade",
     "spend5culture" : "Spend 5 culture",
+    "Economiclabel" : "Economic Victory",
+    "Militarylabel" : "Military Victory",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",
