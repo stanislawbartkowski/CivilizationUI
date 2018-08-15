@@ -196,6 +196,7 @@
     "spend5culture" : "Spend 5 culture",
     "Economiclabel" : "Economic Victory",
     "Militarylabel" : "Military Victory",
+    "productionincreaseshouldbemultiplication" : "Production increase should be multiplication of {prodfortrade} !",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

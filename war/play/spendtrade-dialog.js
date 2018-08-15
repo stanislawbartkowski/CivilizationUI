@@ -64,11 +64,22 @@ class SpendTradeDialog extends CivDialog(PolymerElement) {
     };
   }
 
+ 
+  _okNumb(prod) {
+    const v = Math.floor(prod / this.increasepoints) * this.increasepoints
+    return v == prod
+  } 
+
   _onSpend() {
     const prod = this.$.numbproduction.getNumb();
 
     if (prod < 1 || prod > this.maxproduction) {
       C.alertdialog(this.localize('productionfromtradeshouldbe', "max", this.maxproduction));
+      return;
+    }
+    
+    if (!this._okNumb(prod)) {
+      C.alertdialog(this.localize('productionincreaseshouldbemultiplication', "prodfortrade", this.increasepoints));
       return;
     }
 
@@ -81,25 +92,25 @@ class SpendTradeDialog extends CivDialog(PolymerElement) {
   }
 
   _numberChanged(newValue, oldValue) {
-    const y = C.getyourdeck(); //          this.tradetospend = (this.maxproduction -newValue) * y.tradeforprod
+    if (!this._okNumb(newValue)) return 
+    const y = C.getyourdeck(); 
 
     this.tradetospend = Math.floor((this.maxproduction - newValue) * this.exchangeratio);
     if (this.tradetospend < 0) this.tradetospend = "?";
   }
 
-  openIt(pa) {
+  refresh(pa) {
     const y = C.getyourdeck();
-    super.openIt(pa);
-    const e = this.$.numbproduction;
     this.reduceratio = y.tradeforprod;
     this.increasepoints = y.prodfortrade;
-    this.exchangeratio = y.tradeforprod / y.prodfortrade; //          this.maxproduction = Math.floor(y.trade/( y.tradeforprod)
+    this.exchangeratio = y.tradeforprod / y.prodfortrade; 
 
     this.maxproduction = Math.floor(y.trade / this.exchangeratio);
 
+    const e = this.$.numbproduction;
     e.numberChanged = (newValue, oldValue) => this._numberChanged(newValue, oldValue);
 
-    this._numberChanged(y.prodfortrade, 0);
+//    this._numberChanged(y.prodfortrade, 0);
 
     e.draw('amountofproduction', y.prodfortrade, this.maxproduction);
   }

@@ -37,14 +37,16 @@ class FigureNumber extends CivLocalize(PolymerElement) {
     };
   }
 
+  // place holder here, should be overwritten
   numberChanged(newValue, oldValue) {}
-
+  
   draw(label, numb, max) {
     this.text = this.localize(label);
     this.numb = numb;
     if (max == null) max = numb;
     this.$.input.max = max;
-    if (numb == 0) C.disableleme(this.$.input, true);else C.disableleme(this.$.input, false);
+    if (numb == 0) C.disableleme(this.$.input, true);
+    else C.disableleme(this.$.input, false);
   }
 
   getNumb() {
