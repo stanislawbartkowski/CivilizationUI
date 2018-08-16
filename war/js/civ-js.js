@@ -606,7 +606,7 @@ C = function () {
       if (co == "startmove") if (_multifigures(pa)) return;
 
       if (C.getActionTechnology(co) != null) {
-        const da = C.getTechActionTable(co);
+        const da = C.getActionTechnology(co);
         if (da.city) _setcitytotechnology(iparam);
         return;
       }
