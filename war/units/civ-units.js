@@ -72,8 +72,7 @@ paper-badge {
      width:20%;
      top : 0px;
 /*     float:right; */
-     padding-top: 2px;
-     display:none;
+     padding-top: 2px
    }
 
    .strenghtup {
@@ -96,10 +95,10 @@ paper-badge {
       <span id="strengthvalue" style="width:10%; display=none; color:red">{{strengthvalue}}</span>
       <span id="unitname" style="width:60%; font-size:80%">{{unitname}}</span>
 
-      <s-svg id="imagelevel0" class="imagelevel" style="width:10px" src="images/units/unit-level0.svg"></s-svg>
-      <s-svg id="imagelevel1" class="imagelevel" src="images/units/unit-level1.svg"></s-svg>
-      <s-svg id="imagelevel3" class="imagelevel" src="images/units/unit-star.svg"></s-svg>
-      <s-svg id="imagelevel2" class="imagelevel" src="images/units/unit-level2.svg"></s-svg>
+      <img id="imagelevel0" class="imagelevel" style="width:10px" src="images/units/unit-level0.svg"></img>
+      <img id="imagelevel1" class="imagelevel" src="images/units/unit-level1.svg"></img>
+      <img id="imagelevel2" class="imagelevel" src="images/units/unit-level2.svg"></img>
+      <img id="imagelevel3" class="imagelevel" src="images/units/unit-star.svg"></img>
   </div>
   <div class="left" id="strength">
      <div id="level0" class="unitstrength"></div>
@@ -108,10 +107,10 @@ paper-badge {
      <div id="level3" class="unitstrength"></div>
   </div>
   <div class="main">
-     <img id="mounted" class="unitfigure" hidden="" fill="DarkSlateGray" src="images/units/unit-mounted.svg">
-     <img id="artillery" class="unitfigure" hidden="" fill="DarkSlateGray" src="images/units/unit-artillery.svg">
-     <img id="infantry" class="unitfigure" hidden="" fill="DarkSlateGray" src="images/units/unit-infantry.svg">
-     <img id="aircraft" class="unitfigure" hidden="" fill="DarkSlateGray" src="images/units/unit-aircraft.svg">
+     <img id="mounted" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-mounted.svg">
+     <img id="artillery" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-artillery.svg">
+     <img id="infantry" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-infantry.svg">
+     <img id="aircraft" class="unitfigure" hidden fill="DarkSlateGray" src="images/units/unit-aircraft.svg">
      <paper-badge hidden="" id="mountednumber" for="mounted" label="X">
       </paper-badge>
      <paper-badge hidden="" id="infantrynumber" for="infantry" label="X">
@@ -194,11 +193,11 @@ paper-badge {
 
     for (var i = 0; i < this.unittypes.length; i++) this._displaysvg(this.unittypes[i], false);
 
-    for (var i = 0; i < this.unittypes.length; i++) C.showeleme(this.$[this.unittypes[i] + 'number'], false);
+    for (var i = 0; i < this.unittypes.length; i++) this._displaysvg(this.unittypes[i] + 'number', false);
 
     C.displayelem(this.$.strengthvalue, false);
 
-    for (var i = 0; i <= 3; i++) C.showeleme(this.$["imagelevel" + i], false);
+    for (var i = 0; i <= 3; i++) this._displaysvg("imagelevel" + i, false);
 
     for (var i = 0; i < this.unittypes.length; i++) C.removeattr(this, this.unittypes[i]);
   }
@@ -207,14 +206,13 @@ paper-badge {
     return C.localize(n);
   } 
   
-  // data {
-  // {
-  //     data.name
-  //     data.strength (can be null)
-  //     data.level (can be null)
-  //     data.num (1 or > 1)
-  // }
-
+  /**
+   * unit description
+   * name : name of the unit
+   * strength : Number, can be null
+   * level : Number, can be null
+   * num : number of units, 1 or > 1
+   */
 
   refresh(data) {
     this._clearimages();
@@ -230,7 +228,7 @@ paper-badge {
     if (data.level != null) {
       C.displayelem(this.$.strengthvalue, true, true);
       if (data.strength != null) this.strengthvalue = data.strength[data.level];
-      C.displayelem(this.$["imagelevel" + data.level], true, true);
+      this._displaysvg("imagelevel" + data.level, true);
     }
 
     if (data.num != null && data.num > 0) this._displaysvg(n, true);

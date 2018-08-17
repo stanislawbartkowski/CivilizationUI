@@ -486,6 +486,7 @@ class CivSquare extends CivData(GestureEventListeners(PolymerElement)) {
     C.showeleme(this.$.prod1, false);
     C.showeleme(this.$.prod2, false);
     C.showeleme(this.$.prod3, false);
+    C.showeleme(this.$.prod4, false);
     C.showeleme(this.$.battle2, false);
     C.showeleme(this.$.battle4, false);
     C.showeleme(this.$.star, false);
