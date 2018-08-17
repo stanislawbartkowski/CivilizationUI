@@ -91,6 +91,7 @@ class BattleTakeLoot extends CivData(PolymerElement) {
    */
   refresh(data) {
      this._clear()
+     if (data == null) return
      this.$.totake.fun = (id,d) => this._clicked(id,d)
      this.$.totake.draw(data.list)
      this.$.loot.fun = () => this._clear()

@@ -91,6 +91,7 @@ class BattleResult extends CivDialog(PolymerElement) {
       C.displayelem(loot, true);
       loot.draw(battle.winnerloot);
     }
+    else loot.draw(null) // clear result to avoid error while running against village
     this._refreshclose()
   }
 
@@ -128,7 +129,8 @@ class BattleResult extends CivDialog(PolymerElement) {
     C.displayelem(this.$.battlelot, false);
 
     if (battle.bothsides || battle.attackerwinner && a.you || !battle.attackerwinner && d.you) 
-      this._drawloot(); 
+      this._drawloot();   
+    else this.$.battlelot.draw(null) // clear result to avoid error while running against village  
   }
 
 }

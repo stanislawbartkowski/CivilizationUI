@@ -84,6 +84,7 @@ class CivFrontUnit extends CivData(PolymerElement) {
   refresh(data) {
     if (data == null) {
       C.displayelemid(this, "front", false);
+      C.displayelemid(this, "wound", false);
       C.displayelemid(this, "blank", true);
       return;
     }
