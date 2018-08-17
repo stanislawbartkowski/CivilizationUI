@@ -16,7 +16,7 @@
 
    
    
-   <condition property="gwthome" value="${env.GWT_HOME}" else="/home/opt/gwt-2.8.1">
+   <condition property="gwthome" value="${env.GWT_HOME}" else="/opt/gwt-2.8.2">
     <isset property="env.GWT_HOME" />
    </condition>
    <echo message="GWT_HOME is set to ${gwthome}" />
