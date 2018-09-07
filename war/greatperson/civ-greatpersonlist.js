@@ -17,7 +17,6 @@ class CivGreatPersonList extends CivDataList(PolymerElement) {
  </template>
 <div>
 
- </div></div>
 `;
   }
 

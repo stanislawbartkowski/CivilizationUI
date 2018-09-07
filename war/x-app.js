@@ -217,9 +217,12 @@ class XApp extends CivData(PolymerElement) {
         C.seconddrawerClose(false);
         C.getopponentplay().draw(b);
       }
+      if (b.board.you.suspended != null) 
+        C.cancelactiondialog(b.board.you)
     }
 
     C.battleDialog(b)
+       
     C.endofgameDialog(b)
   }
 

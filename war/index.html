@@ -10,7 +10,7 @@
 
  <script type="text/javascript" language="javascript" src="./civilizationui/civilizationui.nocache.js"></script>
 
- <script type="module" src="./node_modules/@polymer/polymer/polymer-legacy.js"></script> 
+ <script type="module" src="./node_modules/@polymer/polymer/polymer-legacy.js"></script>
 
 <!-- <link rel="import" href="bower_components/neon-animation/web-animations.html"> -->
 
@@ -125,7 +125,8 @@
 
   <script type="module" src="./technologyaction/civ-technologyaction.js"></script>
   <script type="module" src="./technologyaction/civ-silkfortrade.js"></script>
-
+  <script type="module" src="./technologyaction/civ-cancelaction.js"></script>
+  <script type="module" src="./technologyaction/civ-cancelline.js"></script>
 
   <script type="module" src="./culture/civ-devoutcitytoculture.js"></script>
   <script type="module" src="./culture/civ-culturepoint.js"></script>
@@ -423,13 +424,18 @@
   </template>
 </dom-bind>
 
+<dom-bind id="civ-cancelaction">
+  <template>
+   <civ-cancelaction id="dialog"></civ-cancelaction>
+  </template>
+</dom-bind>
 
 <body>
 
   <x-app></x-app>
 
 <!-- 
-  <script>
+  <script> 
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -441,7 +447,7 @@
             }
           )
   </script>
--->
+-->  
 
 </body>
 

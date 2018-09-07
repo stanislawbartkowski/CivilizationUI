@@ -197,6 +197,12 @@
     "Economiclabel" : "Economic Victory",
     "Militarylabel" : "Military Victory",
     "productionincreaseshouldbemultiplication" : "Production increase should be multiplication of {prodfortrade} !",
+    "canceldialog-title" : "Cancel opponent action or let it go",
+    "opponentcivilization" : "Opponent civilization :",
+    "commandtocancel" : "Command to cancel :",
+    "writingaction" : "Writing",
+    "letitgolabel" : "Let It Go",
+    "usecommandtocancel" : "Use command to cancel",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

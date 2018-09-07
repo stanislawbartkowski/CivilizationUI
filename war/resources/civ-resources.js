@@ -25,7 +25,6 @@ class CivResources extends CivData(PolymerElement) {
          background-color: #e6e6ff;
          border-color : #3333ff;
          margin : 5px;
-
       }
 
     </style>

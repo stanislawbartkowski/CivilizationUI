@@ -1,6 +1,6 @@
 <Context>
   <Environment name="redisport" value="6379"
          type="java.lang.Integer"/>
-  <Environment name="redishost" value="think"
+  <Environment name="redishost" value="localhost"
          type="java.lang.String"/>
 </Context>

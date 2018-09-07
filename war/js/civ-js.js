@@ -260,7 +260,7 @@ C = function () {
         "header": "civ-endofgame",
         "runplayer" : true
       }
-      
+
     };
     return data[co];
   }
@@ -588,27 +588,27 @@ C = function () {
     confexecutedialog: function (question, co, row, col, param) {
       var iparam = {};
       iparam.square = null;
-      if (row != -1 && col != -1) iparam.square = C.getsquare(row, col);
-      iparam.row = window.fixrow(row);
-      iparam.col = window.fixcol(col);
-      iparam.param = param;
-      iparam.co = co;
-      var pa = verifycommand(co, iparam);
-      if (pa == null) return;
-      if (_setpoint(co, iparam)) return true;
+      if (row != -1 && col != -1) iparam.square = C.getsquare(row, col)
+      iparam.row = window.fixrow(row)
+      iparam.col = window.fixcol(col)
+      iparam.param = param
+      iparam.co = co
+      var pa = verifycommand(co, iparam)
+      if (pa == null) return
+      if (_setpoint(co, iparam)) return true
 
       if (co == "buycitywall") {
-        _setpointincity(iparam);
-        return;
+        _setpointincity(iparam)
+        return
       }
 
-      if (co == "revealtile") if (_twotilereveal(iparam)) return;
-      if (co == "startmove") if (_multifigures(pa)) return;
+      if (co == "revealtile") if (_twotilereveal(iparam)) return
+      if (co == "startmove") if (_multifigures(pa)) return
 
       if (C.getActionTechnology(co) != null) {
-        const da = C.getActionTechnology(co);
-        if (da.city) _setcitytotechnology(iparam);
-        return;
+        const da = C.getActionTechnology(co)
+        if (da.city) _setcitytotechnology(iparam)
+        return
       }
 
       if (co == "devouttoculture") {
@@ -719,7 +719,7 @@ C = function () {
     removeattr: function (e, attr) {
       e.removeAttribute(attr);
     },
-    
+
     // what = 1 show civs (switch off the rest)
     // = 2 show games (switch off the test)
     // = 3 show joins
@@ -732,7 +732,7 @@ C = function () {
       if (what == 0 || what == 2 || what == 3) civse.draw(null)
       if (what == 0 || what == 1 || what == 3) C.setattr(gamese, "listofgames", "")
       if (what == 0 || what == 1 || what == 2) C.setattr(civjoin, "listofjoins", "")
-      
+
       if (what == 1) civse.draw(this.getlistofcivs())
       if (what == 0) showhideclosebuttuon(true)
       else showhideclosebuttuon(false)
@@ -742,7 +742,7 @@ C = function () {
       const gamese = findbytag("civ-games");
       return gamese.listofgames;
     },
-    
+
     getgamestate: function () {
       const b = findbytag("civ-gamestate");
       return b;
@@ -814,6 +814,14 @@ C = function () {
 
     technologyaction(y) {
       C.opendialogwithpar("civ-technologyaction", y);
+    },
+
+    cancelactiondialog(y) {
+      C.opendialogwithpar("civ-cancelaction", y.suspended);
+    },
+
+    commandtoname(command) {
+      return C.localize(command.toLowerCase())
     },
 
     researchdialog(itemi,co) {
@@ -990,6 +998,7 @@ C = function () {
       if (row == null || col == null) return null;
       return window.getsquare(window.fixrow(row), window.fixcol(col));
     },
+    
     // get square directly without adjusting coordinates
     wgetsquare: function (row, col) {
       if (row == null || col == null) return null;
@@ -1115,14 +1124,14 @@ C = function () {
       cMap.set('Germany', 'Red');
       return cMap.get(civ);
     },
-    
+
     findattribute: function (e, aname) {
       const al = e.attributes;
       const p = al.getNamedItem(aname);
       if (p == null) return null;
       return p.nodeValue;
     },
-    
+
     seconddrawerClose: function (close) {
       const x = _getxapp();
 
@@ -1156,7 +1165,7 @@ C = function () {
         }
       }
     },
-    
+
     _getbyid: function (e, id) {
       if (e.$ != null) return e.$[id];
       return e.querySelector("#" + id);
@@ -1164,7 +1173,7 @@ C = function () {
     getdomelem: function (e, id) {
       return e.$$("#" + id);
     },
-    
+
     setCivUnits: function (e, i, units) {
       const u = units.units[i];
       const name = u.name.toLowerCase();
@@ -1202,7 +1211,7 @@ C = function () {
     setUnitsNumb: function (e, units) {
       for (var i = 0; i < 4; i++) C.setCivUnits(e, i, units)
     },
-    
+
     setColorForCity: function (e, city, color) {
       C.setShadowStyleAttribute(e, city, "backgroundColor", color);
     },
@@ -1212,14 +1221,14 @@ C = function () {
 
       if (!open) {
         if (d.opened()) d.closeIt()
-      } 
-      else 
+      }
+      else
       if (!d.opened()) {
         d.openIt(data)
         this.sleep(1000).then(() => {
           d.draw(data)
         })
-      } 
+      }
       else d.draw(data)
     },
 
@@ -1255,11 +1264,11 @@ C = function () {
 
       if (!C.saveunitbattledialog(b)) C.endofbattledialog(b);
     },
-    
+
     isendofgame(b) {
       return b.board.endofgame != null
     },
-   
+
     endofgameDialog(b) {
       if (b == null) return
       if (! this.isendofgame(b)) return

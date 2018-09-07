@@ -50,7 +50,7 @@ class CivTechDialog extends CivDialog(PolymerElement) {
           {{localize('youresearch')}}
        </paper-button>
 
-       <paper-button id="cancel" on-click="_clear" dialog-dismiss="">{{localize('cancellabel')}}</paper-button>
+       <paper-button id="cancel" on-click="_clear" dialog-dismiss>{{localize('cancellabel')}}</paper-button>
 
      </span>
 
