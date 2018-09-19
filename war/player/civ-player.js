@@ -113,6 +113,16 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
 
 <span id="startofturn" class="actionbox">
 
+    <paper-icon-item id="freearmy" on-click="_onClick">
+      <iron-icon src="images/figures/army.svg" slot="item-icon"></iron-icon>
+      <span>{{localize('getfreearmy')}}</span>
+    </paper-icon-item>
+
+    <paper-icon-item id="freescout" on-click="_onClick">
+      <iron-icon src="images/figures/scout.svg" slot="item-icon"></iron-icon>
+      <span>{{localize('getfreescout')}}</span>
+    </paper-icon-item>
+
 	<paper-icon-item id="setcapital" on-click="_onClick">
         <iron-icon src="images/cities/capital.svg" slot="item-icon"></iron-icon>
         <span>{{localize('capital')}}</span>
@@ -147,8 +157,6 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
 </span>
 
 <span id="citymanagement" class="actionbox" style="display:none">
-
-<!--  <paper-menu-button> -->
 
     <paper-icon-item id="unitmenu" on-click="_onClick">
       <iron-icon icon="menu" slot="item-icon"></iron-icon>
@@ -349,12 +357,12 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
       hidebuttons : {
         type: Array,
         readOnly: true,
-        value: ["sacrificefigurefortech","freenonupgradedbuilding","usesilkfortrade9"]
+        value: ["sacrificefigurefortech","freenonupgradedbuilding","usesilkfortrade9","freearmy","freescout","setcapital","setarmy", "setscout"]
       },
       buttons: {
         type: Array,
         readOnly: true,
-        value: ["setcapital", "endofphase", "setarmy", "setscout", "buyarmy", "buyscout", "startmove", "move", "revealtile", "endofmove", "setcity", "spendtrade", "undospendtrade", "sendproduction", "undosendproduction", "harvestresource", "explorehut", "attack", "research", "buybuilding", "buywonder", "technologyaction", "devouttoculture", "advanceculture", "greatpersonput", "unitmenu", "buycitywall", "freebuildingcityaction","sacrificefigurefortech"]
+        value: ["endofphase", "buyarmy", "buyscout", "startmove", "move", "revealtile", "endofmove", "setcity", "spendtrade", "undospendtrade", "sendproduction", "undosendproduction", "harvestresource", "explorehut", "attack", "research", "buybuilding", "buywonder", "technologyaction", "devouttoculture", "advanceculture", "greatpersonput", "unitmenu", "buycitywall", "freebuildingcityaction","sacrificefigurefortech"]
       }
     };
   }
@@ -422,76 +430,11 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
     window.itemizecommand(id.toUpperCase());
   }
 
-  _actionname(id) {
-    var name = C.localize(id);
-
-    if (name == null || name == "") {
-      if (id == "buyarmy") name = C.localize("purchasearmy");else if (id == "buyscout") name = C.localize("purchasescout");else name = id;
-    }
-
-    return name;
-  }
-
-  _endofphase() {
-    this.currentcommand = null;
-    const g = C.getjsboard().board.game;
-    const phase = g.phase;
-    const y = this.y; // do not ask if no more commands
-
-    if (y.commands.length == 1) {
-      C.executeEndOfPhase();
-      return;
-    }
-
-    var actions = null;
-
-    for (var i = 0; i < y.commands.length; i++) {
-      const command = y.commands[i];
-      const id = command.command.toLowerCase();
-      if (id == "endofphase") continue;
-
-      var name = this._actionname(id);
-
-      if (actions == null) actions = name;else actions = actions + ", " + name;
-    }
-
-    const labelphase = C.getphasedescr(phase);
-    C.confexecutedialog(this.localize("doyouwantendquestion", "phase", labelphase, "actions", actions), "endofphase", -1, -1, phase);
-  }
-
   _onClick(source) {
     if (this.opponent) return;
-
-    if (C.issendproductionscout()) {
-      C.alertdialog(C.localize('specifythesuqretoharvest') + " !");
-      return;
-    }
-
-    var id = source.currentTarget.id;
-
-    if (id == "unitmenu") {
-      C.buyunits(this.y);
-      return;
-    }
-
-    if (id == "endofphase") {
-      this._endofphase();
-
-      return;
-    }
-
-    if (id == "endofmove") {
-      this.currentcommand = null;
-      C.confexecutedialog(this.localize("doyouwantfinishmovequestion"), id, -1, -1, null);
-      return;
-    }
-
-    if (id == "technologyaction") {
-      C.technologyaction(this.y);
-      return;
-    }
-
-    this.callitemize(id);
+    const id = source.currentTarget.id;
+    CC.actionclick(id)
+    return
   }
 
   clear() {
@@ -601,7 +544,7 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
         return;
       }
 
-      if (C.getActionTechnology(id) != null) id = "technologyaction";
+      if (CC.getActionTechnology(id) != null) id = "technologyaction";
       const bu = this.$[id];
       C.disableleme(bu, false);
       C.showeleme(bu, true);

@@ -64,9 +64,7 @@ C = function () {
     var i = findpoint(iparam, list);
     if (i == -1) return null;
     return pa;
-  }
-
-  ;
+  };
 
   function verifyrevealtile(co, iparam, pa) {
     if (!checkarmy(iparam)) return null;
@@ -202,69 +200,10 @@ C = function () {
     dialog.$.dialog.setBuildingPoint(pa);
   }
 
-  function _getdata(co) {
-    const data = {
-      "buyinfantry": {
-        "dialog": "civ-buyunitdialog"
-      },
-      "buymounted": {
-        "dialog": "civ-buyunitdialog"
-      },
-      "buyartillery": {
-        "dialog": "civ-buyunitdialog"
-      },
-      "buyaircraft": {
-        "dialog": "civ-buyunitdialog"
-      },
-      "freewonder": {
-        "dialog": "buywonder-dialog"
-      },
-      "buywonder": {
-        "dialog": "buywonder-dialog"
-      },
-      "buybuilding": {
-        "dialog": "buy-building",
-        "header": "buildingstobuy"
-      },
-      "freenonupgradedbuilding": {
-        "dialog": "buy-building",
-        "header": "nonupgradedbuildings"
-      },
-      "freebuildingcityaction": {
-        "dialog": "buy-building",
-        "header": "unlockedbuildings"
-      },
-      "greatpersonputnow": {
-        "dialog": "putgreatperson-dialog"
-      },
-      "greatpersonput": {
-        "dialog": "putgreatperson-dialog"
-      },
-      "getfreeresource": {
-        "dialog": "civ-takeresourcedialog",
-        "header" : "chooseresourceforfree",
-        "runplayer" : true
-      },
-      "sacrificefigurefortech" : {
-        "dialog": "civ-sacrificefigure",
-        "header": "sacrificefigureheader",
-        "runplayer" : true
-      },
-      "usesilkfortrade9" : {
-        "dialog": "civ-silkfortrade",
-        "header": "spendsilkfortrade",
-        "runplayer" : true
-      },
-      "civ-endofgame" : {
-        "dialog": "civ-endofgame",
-        "header": "civ-endofgame",
-        "runplayer" : true
-      }
-
-    };
-    return data[co];
-  }
-
+   function _getdata(co) {
+      return CC.getdata(co)
+   }
+   
   function _setpoint(co, pa) {
     const data = _getdata(co);
 
@@ -352,47 +291,7 @@ C = function () {
     },
 
     getcommanddecr(co) {
-      var key = co;
-
-      switch (co) {
-        case "setcapital":
-          {
-            key = "capital";
-            break;
-          }
-
-        case "setarmy":
-          {
-            key = "deployarmy";
-            break;
-          }
-
-        case "setscout":
-          {
-            key = "deployscout";
-            break;
-          }
-
-        case "buyscout":
-          {
-            key = "purchasescout";
-            break;
-          }
-
-        case "buyarmy":
-          {
-            key = "purchasearmy";
-            break;
-          }
-
-        case "move":
-          {
-            key = "continuemove";
-            break;
-          }
-      }
-
-      return C.localize(key);
+      return CC.getcommanddecr(co)
     },
 
     getphasedescr(phase) {
@@ -412,52 +311,11 @@ C = function () {
       for (var i = 0; i < itemize.length; i++) a.push(itemize[i].p);
       return a;
     },
-
+    
     getlistofpoints(co, itemize) {
-      if (itemize == null) return null;
-
-      if (co == "startmove" || co == "buyinfantry" || co == "buyartillery" || co == "buymounted" || co == "buyaircraft" || co == "spendtrade" || co == "undospendtrade" || co == "harvestresource" || co == "sendproduction" || co == "undosendproduction") {
-        var a = [];
-        for (var i = 0; i < itemize.length; i++) a.push(itemize[i].p);
-        return a;
-      }
-
-      if (co == "devouttoculture") {
-        const a = [];
-        for (var i = 0; i < itemize.length; i++) a.push(itemize[i].p);
-        return a;
-      }
-
-      if (co == "setarmy" || co == "setscout" || co == "buyscout" || co == "buyarmy") {
-        var a = [];
-        for (var i = 0; i < itemize.length; i++) a.push(itemize[i].param);
-        return a;
-      }
-
-      if (co == "move") return itemize.moves;
-      if (co == "setcity" || co == "setcapital" || C.getActionTechnology(co) != null) return itemize;
-
-      if (co == "revealtile") {
-        var a = [];
-        a.push(itemize.p);
-        return a;
-      }
-
-      if (co == "explorehut") {
-        var a = [];
-        for (var i = 0; i < itemize.explore.length; i++) a.push(itemize.explore[i]);
-        return a;
-      }
-
-      if (co == "attack") {
-        var a = [];
-        for (var i = 0; i < itemize.attack.length; i++) a.push(itemize.attack[i]);
-        return a;
-      }
-
-      return null;
+      return CC.getlistofpoints(co, itemize)
     },
-
+    
     getconfirmdialog: function () {
       const d = document.getElementById("dialog-question");
       d.$.dialog.title = C.localize('confirmdialogtitle');
@@ -605,8 +463,8 @@ C = function () {
       if (co == "revealtile") if (_twotilereveal(iparam)) return
       if (co == "startmove") if (_multifigures(pa)) return
 
-      if (C.getActionTechnology(co) != null) {
-        const da = C.getActionTechnology(co)
+      if (CC.getActionTechnology(co) != null) {
+        const da = CC.getActionTechnology(co)
         if (da.city) _setcitytotechnology(iparam)
         return
       }
@@ -812,10 +670,6 @@ C = function () {
       C.opendialogwithpar("showciv-info", civ);
     },
 
-    technologyaction(y) {
-      C.opendialogwithpar("civ-technologyaction", y);
-    },
-
     cancelactiondialog(y) {
       C.opendialogwithpar("civ-cancelaction", y.suspended);
     },
@@ -834,33 +688,6 @@ C = function () {
       const y = this.you()
       C.opendialogwithpar("civ-choosetechdialog", { "tech" : y.tech, "toresearch" : itemi, "nocancel" : true},null,co );
       C.setDialogFun("civ-choosetechdialog",fun)
-    },
-
-    buyunitdialog(data) {
-      C.opendialogwithpar("civ-buyunitdialog", data);
-    },
-
-    buyunits(y) {
-      const da = [];
-
-      for (var j = 0; j < C.unittypes().length; j++) {
-        const p = {
-          "name": C.unittypes()[j],
-          "num": 0
-        };
-
-        for (var i = 0; i < y.commands.length; i++) {
-          const command = y.commands[i];
-          var id = command.command.toLowerCase();
-          if ("buy" + p.name == id) p.num = 1;
-        }
-
-        da.push(p);
-      }
-
-      C.buyunitdialog({
-        "units": da
-      });
     },
 
     advanceculture(y) {
@@ -890,6 +717,7 @@ C = function () {
     getcurrentcommand: function () {
       return this.getyouplay().currentcommand;
     },
+    
     iscurrentcommand: function (co) {
       return this.getcurrentcommand() == co;
     },
@@ -916,7 +744,6 @@ C = function () {
 
     getyouplay: function () {
       const y = _getxapp().$.youplay;
-
       return y;
     },
 
@@ -1467,59 +1294,6 @@ C = function () {
       for (var i = 0; i < da.length; i++) if (da[i].resource == resource) a.push(da[i]);
 
       return a;
-    },
-
-    getTechActionTable() {
-      const tab = [{
-        "name": "potteryaction",
-        "tech": "Pottery",
-      }, {
-        "name": "currencyaction",
-        "tech": "Currency"
-      }, {
-        "name": "philosophyaction",
-        "tech": "Philosophy"
-      }, {
-        "name": "constructionaction",
-        "tech": "Construction",
-        "city" : true
-      }, {
-        "name": "metalcastingaction",
-        "tech": "MetalCasting"
-      }, {
-        "name": "bankingaction",
-        "tech": "Banking",
-        "city" : true
-      }, {
-        "name": "chivalryaction",
-        "tech": "Chivalry"
-      }, {
-        "name": "democracyaction",
-        "tech": "Democracy",
-        "button" : "spend6trade"
-      }, {
-        "name": "printingpressaction",
-        "tech": "PrintingPress",
-        "button" : "spend5culture"
-      }
-      ];
-      return tab;
-    },
-
-    getActionTechnology(action) {
-      const tab = this.getTechActionTable();
-
-      for (var i = 0; i < tab.length; i++) if (tab[i].name == action) return tab[i];
-
-      return null;
-    },
-
-    getTechnologyAction(tech) {
-      const tab = this.getTechActionTable();
-
-      for (var i = 0; i < tab.length; i++) if (tab[i].tech == tech) return tab[i];
-
-      return null;
     },
 
     toTech(t) {
