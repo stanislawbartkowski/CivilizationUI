@@ -188,16 +188,21 @@ const CC = {
       }
       ],
        
+       
+    findName(t,name) {
+      const nn = name.toLowerCase()
+      for (var i = 0; i < t.length; i++) 
+        if (t[i].name.toLowerCase() == nn) return t[i]
+      return null
+    },
+           
     getActionTechnology(action) {
-      const tab = this.data
-
-      for (var i = 0; i < tab.length; i++) if (tab[i].name == action) return tab[i];
-
-      return null;
+      const tab = this.tab
+      return CC.findName(tab,action)
     },
 
     getTechnologyAction(tech) {
-      const tab = this.data
+      const tab = this.tab
 
       for (var i = 0; i < tab.length; i++) if (tab[i].tech == tech) return tab[i];
 
@@ -243,6 +248,6 @@ const CC = {
         "noitemize" : true
     }
   },
-     
+             
 
 };

@@ -1022,17 +1022,16 @@ C = function () {
     },
 
     isBuyUnitCommand(co) {
-      for (var i = 0; i < C.unittypes().length; i++) if ("buy" + C.unittypes()[i] == co) return true;
+      for (var i = 0; i < C.unittypes().length; i++) if ("buy" + C.unittypes()[i] == co) return true
 
-      return false;
+      return false
     },
 
     findUnitLevel(units, name) {
-      if (units == null) return null;
-
-      for (var i = 0; i < 4; i++) if (units[i].name == name) return units[i].militarystrength;
-
-      return null;
+      if (units == null) return null
+      const u = CC.findName(units,name)
+      if (u == null) return null
+      return u.militarystrength
     },
 
     setUnitsNumb: function (e, units) {
@@ -1202,20 +1201,21 @@ C = function () {
     },
 
     _findName(l, n, error) {
-      for (var i = 0; i < l.length; i++) if (l[i].name.toLowerCase() == n.toLowerCase()) return l[i];
+      const e = CC.findName(l,n)
+      if (e != null) return e
 
-      C.internalerroralert("Cannot find " + error + " definition " + n);
+      C.internalerroralert("Cannot find " + error + " definition " + n)
     },
 
     findGreatPersonType(tperson) {
       const ptype = C.getgreatpersontype();
-      return C._findName(ptype, tperson, "Cannot find" + tperson + " in Great Person Type list");
+      return C._findName(ptype, tperson,"on Great Person Type list");
     },
 
     findGreatPerson(person) {
       const greatp = C.getgreatpersons();
 
-      const pe = this._findName(greatp, person, "Cannot find " + person + " in Great Person list");
+      const pe = this._findName(greatp, person, person + "on Great Person list");
 
       const ty = C.findGreatPersonType(pe.type);
       const res = {};
