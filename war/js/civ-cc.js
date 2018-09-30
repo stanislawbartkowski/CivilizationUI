@@ -111,9 +111,9 @@ const CC = {
     
     
     getcommanddecr(co) {
-      var key = co;
+      var key = co.toLowerCase();
 
-      switch (co) {
+      switch (key) {
         case "setcapital":
           {
             key = "capital";

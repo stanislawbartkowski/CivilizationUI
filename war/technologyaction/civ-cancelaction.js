@@ -106,7 +106,7 @@ class CivCancelAction extends CivDialog(PolymerElement) {
 
   refresh(data) {
     this.commandtext = null
-    this.commandtocancel = C.commandtoname(data.command.command)
+    this.commandtocancel = CC.getcommanddecr(data.command.command)
     C.displayelem(this.$.building,false)
     if (data.command.param != null && data.command.param.building != null) {
       this.commandtext = C.localize(data.command.param.building)

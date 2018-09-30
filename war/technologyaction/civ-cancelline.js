@@ -43,7 +43,7 @@ class CivCancelLine extends CivChooseData(PolymerElement) {
   */
 
   refresh(data) {
-    this.commandtouse = C.commandtoname(data.command)
+    this.commandtouse = C.getcommanddecr(data.command)
     const r = this.$.reso
     r.draw([{ "resource" : data.param, "num" : 1}])
   }

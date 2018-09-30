@@ -674,10 +674,6 @@ C = function () {
       C.opendialogwithpar("civ-cancelaction", y.suspended);
     },
 
-    commandtoname(command) {
-      return C.localize(command.toLowerCase())
-    },
-
     researchdialog(itemi,co) {
       const y = this.you()
       C.opendialogwithpar("tech-dialog", { "tech" : y.tech, "toresearch" : itemi},null,co );

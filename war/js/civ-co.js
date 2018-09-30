@@ -55,7 +55,7 @@ const CO = {
       });
    },
    
-   endofmove() {
+   endofmove(y,id) {
       C.setcurrentcommand(null)
       C.confexecutedialog(C.localize("doyouwantfinishmovequestion"), id, -1, -1, null);
    },
