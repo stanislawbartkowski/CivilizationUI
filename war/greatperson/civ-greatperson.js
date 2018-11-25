@@ -92,7 +92,9 @@ class CivGreatPerson extends CivChooseData(PolymerElement) {
 
   _clear() {
     C.removeattr(this, "Empty");
-  } // data : great person name
+  }
+
+  // data : great person name
   //        null : clear
   //        "" : empty
 

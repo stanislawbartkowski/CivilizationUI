@@ -198,7 +198,7 @@ class CivTech extends CivChooseData(GestureEventListeners(PolymerElement)) {
 
     const h = this.$.helptext;
     h.setHelpText(this.tech.desc);
-    this.name = C.localize(this._name());
+    this.name = C.getTechnologyName(this._name());
     if (this.name == null || this.name == "") this.name = "*" + this._name();
     const ni = this.$.notimplemented;
     ni.draw(this._ni());

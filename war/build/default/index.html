@@ -1,0 +1,470 @@
+<!DOCTYPE html><html><head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <title>Civilization, Getting Started</title>
+
+ <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+
+
+ <script type="text/javascript" language="javascript" src="./civilizationui/civilizationui.nocache.js"></script>
+
+ <script type="module" src="./node_modules/@polymer/polymer/polymer-legacy.js"></script>
+
+<!-- <link rel="import" href="bower_components/neon-animation/web-animations.html"> -->
+
+<script type="module" src="./node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-item/paper-icon-item.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-icon-button/paper-icon-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-item/paper-item.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-menu-button/paper-menu-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-spinner/paper-spinner.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-button/paper-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-badge/paper-badge.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-toggle-button/paper-toggle-button.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-listbox/paper-listbox.js"></script>
+<!--  <script type="module" src="./node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script> -->
+<script type="module" src="./node_modules/@polymer/paper-tabs/paper-tabs.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-dialog/paper-dialog.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-dialog-scrollable/paper-dialog-scrollable.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-toast/paper-toast.js"></script>
+
+<script type="module" src="./node_modules/@polymer/font-roboto/roboto.js"></script>
+
+<script type="module" src="./node_modules/@polymer/iron-icons/iron-icons.js"></script>
+<script type="module" src="./node_modules/@polymer/iron-flex-layout/iron-flex-layout.js"></script>
+<script type="module" src="./node_modules/@polymer/iron-flex-layout/iron-flex-layout-classes.js"></script>
+<!-- <script type="module" src="./node_modules/@polymer/iron-input/iron-input.js"></script> -->
+<script type="module" src="./node_modules/@polymer/iron-icons/editor-icons.js"></script>
+<script type="module" src="./node_modules/@polymer/iron-scroll-threshold/iron-scroll-threshold.js"></script>
+
+<script type="module" src="./node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-header/app-header.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js"></script>
+<script type="module" src="./node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js"></script>
+
+<script type="module" src="./node_modules/@polymer/app-localize-behavior/app-localize-behavior.js"></script>
+<script type="module" src="./node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js"></script>
+
+<script type="text/javascript" language="javascript" src="deep-diff/index.js"></script>
+<script type="module" src="./paper-alert-dialog/paper-alert-dialog.js"></script>
+<script type="module" src="./paper-alert-dialog/paper-alert-dialog-icon-header.js"></script>
+
+<script type="text/javascript" language="javascript" src="./js/civ-co.js"></script>
+<script type="text/javascript" language="javascript" src="./js/civ-cc.js"></script>
+<script type="text/javascript" language="javascript" src="./js/civ-js.js"></script>
+<script type="text/javascript" language="javascript" src="./js/civ-dragg.js"></script>
+
+
+  <script type="module" src="./x-app.js"></script>
+
+  <script type="module" src="./play/reveal2-dialog.js"></script>
+  <script type="module" src="./play/multifigures-dialog.js"></script>
+  <script type="module" src="./play/spendtrade-dialog.js"></script>
+  <script type="module" src="./play/sendproduction-dialog.js"></script>
+  <script type="module" src="./play/civ-showhv.js"></script>
+  <script type="module" src="./play/civ-showciv.js"></script>
+
+  <script type="module" src="./tools/civ-button-styles.js"></script>
+  <script type="module" src="./tools/civ-helptext.js"></script>
+  <script type="module" src="./tools/civ-implemented.js"></script>
+  <script type="module" src="./tools/figurenumber-dialog.js"></script>
+  <script type="module" src="./tools/s-svg.js"></script>
+  <script type="module" src="./tools/civ-chooseplacesquare.js"></script>
+
+
+  <script type="module" src="./board/civ-map.js"></script>
+  <script type="module" src="./board/civ-gamestate.js"></script>
+  <script type="module" src="./board/civ-market.js"></script>
+
+
+  <script type="module" src="./square/civ-square.js"></script>
+  <script type="module" src="./square/civ-selectsquare.js"></script>
+  <script type="module" src="./square/civ-listofsquares.js"></script>
+
+  <script type="module" src="./journal/civ-journal.js"></script>
+  <script type="module" src="./journal/civ-journalline.js"></script>
+  <script type="module" src="./journal/civ-journalshow.js"></script>
+
+  <script type="module" src="./game/civ-choose.js"></script>
+  <script type="module" src="./game/civ-gameline.js"></script>
+  <script type="module" src="./game/civ-content.js"></script>
+  <script type="module" src="./game/civ-games.js"></script>
+  <script type="module" src="./game/civ-join.js"></script>
+  <script type="module" src="./game/civ-joingame.js"></script>
+  <script type="module" src="./game/join-dialog.js"></script>
+
+  <script type="module" src="./resources/civ-resources.js"></script>
+  <script type="module" src="./resources/civ-displistres.js"></script>
+  <script type="module" src="./resources/civ-dispres.js"></script>
+  <script type="module" src="./resources/civ-chooseresource.js"></script>
+  <script type="module" src="./resources/civ-takeresource.js"></script>
+  <script type="module" src="./resources/civ-choosedispresource.js"></script>
+
+  <script type="module" src="./tech/civ-tech.js"></script>
+  <script type="module" src="./tech/civ-listtech.js"></script>
+  <script type="module" src="./tech/civ-leveltech.js"></script>
+  <script type="module" src="./tech/civ-tlevel.js"></script>
+  <script type="module" src="./tech/civ-techdialog.js"></script>
+  <script type="module" src="./tech/civ-showtechdialog.js"></script>
+  <script type="module" src="./tech/civ-showtech.js"></script>
+  <script type="module" src="./tech/civ-choosetechnology.js"></script>
+
+  <script type="module" src="./wonder/civ-wonder.js"></script>
+  <script type="module" src="./wonder/civ-dispwonders.js"></script>
+  <script type="module" src="./wonder/civ-showwondersdialog.js"></script>
+  <script type="module" src="./wonder/civ-choosewonder.js"></script>
+  <script type="module" src="./wonder/civ-buywonder.js"></script>
+
+
+  <script type="module" src="./player/civ-playerstate.js"></script>
+  <script type="module" src="./player/civ-player.js"></script>
+  <script type="module" src="./player/civ-stateelem.js"></script>
+  <script type="module" src="./player/civ-endofgame.js"></script>
+
+
+  <script type="module" src="./technologyaction/civ-technologyaction.js"></script>
+  <script type="module" src="./technologyaction/civ-silkfortrade.js"></script>
+  <script type="module" src="./technologyaction/civ-cancelaction.js"></script>
+  <script type="module" src="./technologyaction/civ-cancelline.js"></script>
+
+  <script type="module" src="./culture/civ-devoutcitytoculture.js"></script>
+  <script type="module" src="./culture/civ-culturepoint.js"></script>
+  <script type="module" src="./culture/civ-culturetrack.js"></script>
+  <script type="module" src="./culture/civ-cultureprogress.js"></script>
+  <script type="module" src="./culture/civ-cultureprogresselem.js"></script>
+  <script type="module" src="./culture/civ-cultureplayers.js"></script>
+  <script type="module" src="./culture/civ-advanceculture.js"></script>
+  <script type="module" src="./culture/civ-culturecard.js"></script>
+  <script type="module" src="./culture/civ-culturecardlist.js"></script>
+  <script type="module" src="./culture/civ-showculturecards.js"></script>
+  <script type="module" src="./culture/civ-chooseculturecard.js"></script>
+  <script type="module" src="./culture/civ-discardcard.js"></script>
+
+
+  <script type="module" src="./greatperson/civ-greatperson.js"></script>
+  <script type="module" src="./greatperson/civ-greatpersonlist.js"></script>
+  <script type="module" src="./greatperson/civ-showgreatpersons.js"></script>
+  <script type="module" src="./greatperson/civ-choosegreatperson.js"></script>
+  <script type="module" src="./greatperson/civ-putgreatperson.js"></script>
+
+
+  <script type="module" src="./battle/attackconf-dialog.js"></script>
+  <script type="module" src="./battle/battle-side.js"></script>
+  <script type="module" src="./battle/battle-dialog.js"></script>
+  <script type="module" src="./battle/civ-frontunit.js"></script>
+  <script type="module" src="./battle/battle-desc.js"></script>
+  <script type="module" src="./battle/battle-result.js"></script>
+  <script type="module" src="./battle/battle-saveunit.js"></script>
+  <script type="module" src="./battle/loot-cost.js"></script>
+  <script type="module" src="./battle/civ-listofloots.js"></script>
+  <script type="module" src="./battle/battle-takeloot.js"></script>
+  <script type="module" src="./battle/civ-lootinfo.js"></script>
+
+  <script type="module" src="./units/civ-listunits.js"></script>
+  <script type="module" src="./units/civ-units.js"></script>
+  <script type="module" src="./units/showunits-dialog.js"></script>
+  <script type="module" src="./units/civ-chooseunits.js"></script>
+  <script type="module" src="./units/civ-buyunit.js"></script>
+
+  <script type="module" src="./building/civ-buildinginfo.js"></script>
+  <script type="module" src="./building/civ-buildings.js"></script>
+  <script type="module" src="./building/civ-marketbuilding.js"></script>
+  <script type="module" src="./building/civ-listbuildtobuy.js"></script>
+  <script type="module" src="./building/civ-buybuilding.js"></script>
+  <script type="module" src="./building/civ-choosebuilding.js"></script>
+
+
+  <script type="module" src="./city/city-action.js"></script>
+  <script type="module" src="./city/civ-sacrificefigure.js"></script>
+
+  <script type="text/javascript" language="javascript" src="./test-set.js"></script>
+
+  <style>
+    body {
+/*
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f1f1f1;
+*/
+      font-family: Arial Unicode MS, Arial, sans-serif;
+      font-size: small;
+
+    }
+  </style>
+
+</head>
+
+<dom-bind id="dialog-question">
+  <template>
+      <paper-alert-dialog id="dialog" title="Congratulations" dismiss-button="Cancel" confirm-button="OK" on-confirm="confirm" on-dismiss="dismiss">
+        {{message}}
+      </paper-alert-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="dialog-alert">
+  <template>
+      <paper-alert-dialog id="dialog" confirm-button="OK">
+      <paper-alert-dialog-icon-header icon="icons:warning"></paper-alert-dialog-icon-header>
+      {{message}}
+      </paper-alert-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="dialog-command-failure">
+  <template>
+    <paper-alert-dialog id="dialog" confirm-button="Got it">
+      <paper-alert-dialog-icon-header icon="icons:warning">Action failed, read message below from server</paper-alert-dialog-icon-header>
+      {{message}}
+    </paper-alert-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="dialog-command-alert">
+  <template>
+    <paper-alert-dialog id="dialog" confirm-button="Got it">
+      <paper-alert-dialog-icon-header icon="icons:warning">Cannot execute action</paper-alert-dialog-icon-header>
+      {{message}}
+    </paper-alert-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="join-dialog">
+  <template>
+   <join-dialog id="dialog"></join-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="reveal2-dialog">
+  <template>
+   <reveal2-dialog id="dialog"></reveal2-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="multifigures-dialog">
+  <template>
+   <multifigures-dialog id="dialog"></multifigures-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="spendtrade-dialog">
+  <template>
+   <spendtrade-dialog id="dialog"></spendtrade-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="sendproduction-dialog">
+  <template>
+   <sendproduction-dialog id="dialog"></sendproduction-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showunits-dialog">
+  <template>
+   <showunits-dialog id="dialog"></showunits-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showhv-dialog">
+  <template>
+   <show-hvdialog id="dialog"></show-hvdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="attackconf-dialog">
+  <template>
+   <attackconf-dialog id="dialog"></attackconf-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="battle-dialog">
+  <template>
+   <battle-dialog id="dialog"></battle-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="battle-result">
+  <template>
+   <battle-result id="dialog"></battle-result>
+  </template>
+</dom-bind>
+
+<dom-bind id="tech-dialog">
+  <template>
+   <civ-techdialog id="dialog"></civ-techdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showtech-dialog">
+  <template>
+   <civ-showtechdialog id="dialog"></civ-showtechdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showwonders-dialog">
+  <template>
+     <civ-showwondersdialog id="dialog"></civ-showwondersdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="showciv-info">
+  <template>
+   <civ-showcivinfo id="dialog"></civ-showcivinfo>
+  </template>
+</dom-bind>
+
+<dom-bind id="buy-building">
+  <template>
+   <buy-building id="dialog"></buy-building>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-technologyaction">
+  <template>
+   <civ-technologyaction id="dialog"></civ-technologyaction>
+  </template>
+</dom-bind>
+
+
+<dom-bind id="civ-devoutcitytoculture">
+  <template>
+   <civ-devoutcitytoculture id="dialog"></civ-devoutcitytoculture>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-advanceculture">
+  <template>
+   <civ-advanceculture id="dialog"></civ-advanceculture>
+  </template>
+</dom-bind>
+
+<dom-bind id="showculturecards-dialog">
+  <template>
+   <civ-showculturecards id="dialog"></civ-showculturecards>
+  </template>
+</dom-bind>
+
+<dom-bind id="showgreatpersons-dialog">
+  <template>
+   <civ-showgreatpersons id="dialog"></civ-showgreatpersons>
+  </template>
+</dom-bind>
+
+<dom-bind id="discardcard-dialog">
+  <template>
+   <civ-discardcarddialog id="dialog"></civ-discardcarddialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="putgreatperson-dialog">
+  <template>
+   <civ-putgreatperson id="dialog"></civ-putgreatperson>
+  </template>
+</dom-bind>
+
+<dom-bind id="buywonder-dialog">
+  <template>
+   <buy-wonder id="dialog"></buy-wonder>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-showtech">
+  <template>
+   <civ-showtech id="dialog"></civ-showtech>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-buyunitdialog">
+  <template>
+   <civ-buyunitdialog id="dialog"></civ-buyunitdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-buyincity">
+  <template>
+   <civ-buyincity id="dialog"></civ-buyincity>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-sacrificefigure">
+  <template>
+   <civ-sacrificefigure id="dialog"></civ-sacrificefigure>
+  </template>
+</dom-bind>
+
+<dom-bind id="battlesaveunit-dialog">
+  <template>
+   <battlesaveunit-dialog id="dialog"></battlesaveunit-dialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-takeresourcedialog">
+  <template>
+   <civ-takeresourcedialog id="dialog"></civ-takeresourcedialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-choosetechdialog">
+  <template>
+   <civ-choosetechdialog id="dialog"></civ-choosetechdialog>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-silkfortrade">
+  <template>
+   <civ-silkfortrade id="dialog"></civ-silkfortrade>
+  </template>
+</dom-bind>
+
+
+<dom-bind id="civ-endofgame">
+  <template>
+   <civ-endofgame id="dialog"></civ-endofgame>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-cancelaction">
+  <template>
+   <civ-cancelaction id="dialog"></civ-cancelaction>
+  </template>
+</dom-bind>
+
+<dom-bind id="civ-journaldial">
+  <template>
+   <civ-journaldial id="dialog"></civ-journaldial>
+  </template>
+</dom-bind>
+
+
+
+  <x-app>
+  </x-app>
+
+<!--
+  <script>
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+     sleep(2000).then(
+            () => {
+              const xa = document.getElementsByTagName("x-app")[0];
+              xa.draw()
+            }
+          )
+  </script>
+-->
+
+
+
+
+
+</html>

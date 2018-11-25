@@ -6,8 +6,8 @@ class CivListTech extends CivData(PolymerElement) {
   static get template() {
     return html`
   <template id="map" is="dom-repeat" items="{{techs}}">
-          <civ-tech data="{{item}}">
- </civ-tech></template>
+          <civ-tech data="{{item}}"></civ-tech>
+  </template>
 `;
   }
 

@@ -25,7 +25,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	private final static String REDIS_URL = "REDIS_URL";
 	private static boolean logged = false;
-	
+
 	private static final IC II = civilization.II.factory.Factory$.MODULE$.getI();
 	private static final RAccess RA = civilization.II.factory.Factory$.MODULE$.getR();
 
@@ -34,7 +34,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		// Heroku
 		if (System.getenv().containsKey(REDIS_URL)) {
 			String val = System.getenv().get(REDIS_URL);
-			if (!logged) System.out.println("Connecting to:" + val);
+			if (!logged)
+				System.out.println("Connecting to:" + val);
 			RA.getConn().setConnection(val);
 		} else {
 
@@ -44,7 +45,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 				Context xmlNode = (Context) context.lookup("java:comp/env");
 				Integer port = (Integer) xmlNode.lookup("redisport");
 				String host = (String) xmlNode.lookup("redishost");
-				if (!logged) System.out.println("Connecting to redis host:" + host + " port:" + port);
+				if (!logged)
+					System.out.println("Connecting to redis host:" + host + " port:" + port);
 				RA.getConn().setConnection(host, port, 0);
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block
@@ -84,6 +86,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			break;
 		case TWOPLAYERSGAME:
 			w = II.REGISTEROWNERTWOGAME();
+			break;
+		case GETJOURNAL:
+			w = II.GETJOURNAL();
 			break;
 		}
 		return II.getData(w, param, null);

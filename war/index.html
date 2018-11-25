@@ -24,17 +24,20 @@
 <script type="module" src="./node_modules/@polymer/paper-badge/paper-badge.js"></script>
 <script type="module" src="./node_modules/@polymer/paper-toggle-button/paper-toggle-button.js"></script>
 <script type="module" src="./node_modules/@polymer/paper-listbox/paper-listbox.js"></script>
-<script type="module" src="./node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script>
+<!--  <script type="module" src="./node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"></script> -->
 <script type="module" src="./node_modules/@polymer/paper-tabs/paper-tabs.js"></script>
 <script type="module" src="./node_modules/@polymer/paper-dialog/paper-dialog.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-dialog-scrollable/paper-dialog-scrollable.js"></script>
+<script type="module" src="./node_modules/@polymer/paper-toast/paper-toast.js"></script>
 
 <script type="module" src="./node_modules/@polymer/font-roboto/roboto.js"></script>
 
 <script type="module" src="./node_modules/@polymer/iron-icons/iron-icons.js"></script>
 <script type="module" src="./node_modules/@polymer/iron-flex-layout/iron-flex-layout.js"></script>
 <script type="module" src="./node_modules/@polymer/iron-flex-layout/iron-flex-layout-classes.js"></script>
-<script type="module" src="./node_modules/@polymer/iron-input/iron-input.js"></script>
+<!-- <script type="module" src="./node_modules/@polymer/iron-input/iron-input.js"></script> -->
 <script type="module" src="./node_modules/@polymer/iron-icons/editor-icons.js"></script>
+<script type="module" src="./node_modules/@polymer/iron-scroll-threshold/iron-scroll-threshold.js"></script>
 
 <script type="module" src="./node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js"></script>
 <script type="module" src="./node_modules/@polymer/app-layout/app-drawer/app-drawer.js"></script>
@@ -86,6 +89,9 @@
   <script type="module" src="./square/civ-selectsquare.js"></script>
   <script type="module" src="./square/civ-listofsquares.js"></script>
 
+  <script type="module" src="./journal/civ-journal.js"></script>
+  <script type="module" src="./journal/civ-journalline.js"></script>
+  <script type="module" src="./journal/civ-journalshow.js"></script>
 
   <script type="module" src="./game/civ-choose.js"></script>
   <script type="module" src="./game/civ-gameline.js"></script>
@@ -94,7 +100,6 @@
   <script type="module" src="./game/civ-join.js"></script>
   <script type="module" src="./game/civ-joingame.js"></script>
   <script type="module" src="./game/join-dialog.js"></script>
-
 
   <script type="module" src="./resources/civ-resources.js"></script>
   <script type="module" src="./resources/civ-displistres.js"></script>
@@ -432,12 +437,19 @@
   </template>
 </dom-bind>
 
+<dom-bind id="civ-journaldial">
+  <template>
+   <civ-journaldial id="dialog"></civ-journaldial>
+  </template>
+</dom-bind>
+
 <body>
 
-  <x-app></x-app>
+  <x-app>
+  </x-app>
 
-<!-- 
-  <script> 
+<!--
+  <script>
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -449,7 +461,7 @@
             }
           )
   </script>
--->  
+-->
 
 </body>
 

@@ -24,19 +24,13 @@ class CivPutGreatPersonOnMap extends BuyStructure(PolymerElement) {
 
         <civ-choosegreatperson id="list">
 
-        <div style="margin-left:20px">
-          <civ-choosesequareplace class="vertical" id="choose" buildbutton="{{localize('place')}}"></civ-choosesequareplace>
-          <paper-button class="vertical reserve green" on-click="_onReserve">{{localize('reserve')}}</paper-button>
-        <div>
-
-
-
-
-
-
-
-
-  </div></div></civ-choosegreatperson></paper-dialog-scrollable></paper-dialog>
+          <div style="margin-left:20px">
+            <civ-choosesequareplace class="vertical" id="choose" buildbutton="{{localize('place')}}"></civ-choosesequareplace>
+            <paper-button class="vertical reserve green" on-click="_onReserve">{{localize('reserve')}}</paper-button>
+          <div>
+        </civ-choosegreatperson>
+    </paper-dialog-scrollable>
+    </paper-dialog>
 `;
   }
 

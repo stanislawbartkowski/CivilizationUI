@@ -31,13 +31,16 @@ class CivMap extends CivData(PolymerElement) {
     
    <template id="map" is="dom-repeat" items="{{rows}}">
       <div class="layout horizontal">
+      
         <template is="dom-repeat" items="{{cols}}" index-as="colno">
           <div>
             <civ-square row="{{index}}" col="{{colno}}"></civ-square>
           </div>        
-        </template>        
+        </template>
+
       </div>        
-   </template>      
+   </template>
+
 `;
   }
 

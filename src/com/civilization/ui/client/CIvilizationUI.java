@@ -206,6 +206,10 @@ public class CIvilizationUI implements EntryPoint {
 			// refresh buttons
 			redrawheader();
 		});
+		call(GreetingService.GETJOURNAL, civtoken, js -> {
+			JSONValue j = JSONParser.parseStrict(js);
+			int a;
+		});		
 	}
 
 	/**

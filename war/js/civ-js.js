@@ -203,7 +203,7 @@ C = function () {
    function _getdata(co) {
       return CC.getdata(co)
    }
-   
+
   function _setpoint(co, pa) {
     const data = _getdata(co);
 
@@ -286,6 +286,10 @@ C = function () {
       C.opendialogwithpar("showunits-dialog", units);
     },
 
+    showjournal(list) {
+      C.opendialogwithpar("civ-journaldial", list);
+    },
+
     eqp(p1, p2) {
       return p1.row == p2.row && p1.col == p2.col;
     },
@@ -311,11 +315,11 @@ C = function () {
       for (var i = 0; i < itemize.length; i++) a.push(itemize[i].p);
       return a;
     },
-    
+
     getlistofpoints(co, itemize) {
       return CC.getlistofpoints(co, itemize)
     },
-    
+
     getconfirmdialog: function () {
       const d = document.getElementById("dialog-question");
       d.$.dialog.title = C.localize('confirmdialogtitle');
@@ -713,7 +717,7 @@ C = function () {
     getcurrentcommand: function () {
       return this.getyouplay().currentcommand;
     },
-    
+
     iscurrentcommand: function (co) {
       return this.getcurrentcommand() == co;
     },
@@ -814,6 +818,10 @@ C = function () {
       return C._getresources().greatpersontype;
     },
 
+    getjdict() {
+      return C._getresources().journal
+    },
+    
     // get square adjusting coordinates
     // coordinates form current map layout
     // adjust to absolute
@@ -821,7 +829,7 @@ C = function () {
       if (row == null || col == null) return null;
       return window.getsquare(window.fixrow(row), window.fixcol(col));
     },
-    
+
     // get square directly without adjusting coordinates
     wgetsquare: function (row, col) {
       if (row == null || col == null) return null;
@@ -1240,13 +1248,17 @@ C = function () {
     },
 
     findWonder(w) {
-      const wl = C.getlistofwonders();
-      return C._findName(wl, w, "wonder");
+      const wl = C.getlistofwonders()
+      return C._findName(wl, w, "wonder")
     },
 
     findTech(t) {
-      const te = C.getlistoftech();
-      return C._findName(te, t, "technology");
+      const te = C.getlistoftech()
+      return C._findName(te, t, "technology")
+    },
+
+    getTechnologyName(n) {
+      return C.localize(n)
     },
 
     findCard(n) {
@@ -1357,6 +1369,27 @@ C = function () {
       this._addhv(a, h, "Village");
 
       return a;
+    },
+
+    /**
+     *  id : Journal message identifier
+     *  params : List of parameters
+    **/
+    journalMessage(id,params) {
+      const jdic = C.getjdict()
+      const j = jdic[id]
+      var mess = ""
+      if (j == null) {
+        // prepare dirty message
+        mess = id
+        for (var i = 0; i < params.length; i++)
+           mess = mess + " " + params[i]
+        return mess
+      }
+      mess = j
+      for (var i = 0; i < params.length; i++)
+        mess = mess.replace("%" + i + "%",params[i])
+      return mess
     },
 
     // list

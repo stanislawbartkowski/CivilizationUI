@@ -20,7 +20,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
-	
+
 	int LISTOFRES = 0;
 	int REGISTEROWNER = 1;
 	int GETBOARD = 2;
@@ -28,18 +28,18 @@ public interface GreetingService extends RemoteService {
 	int UNREGISTERTOKEN = 4;
 	int WAITINGGAMES = 5;
 	int TWOPLAYERSGAME = 6;
+	int GETJOURNAL = 7;
 
-	
 	String getCivData(int what, String param);
-	
-	String executeCommand(String token,String action, int row, int col,String jsparam);
-	
-	String itemizeCommand(String token,String command);
-	
+
+	String executeCommand(String token, String action, int row, int col, String jsparam);
+
+	String itemizeCommand(String token, String command);
+
 	String resumeGame(int gameid, String civ);
-	
-	boolean allPlayersReady(String  token);	
-	
+
+	boolean allPlayersReady(String token);
+
 	String joinGame(int gameid, String civ);
-	
+
 }

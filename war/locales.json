@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/09/29",
+    "appversion": "Version: 2018/11/25",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -205,6 +205,7 @@
     "usecommandtocancel" : "Use command to cancel",
     "getfreescout" : "Free Scout",
     "getfreearmy" : "Free Army",
+    "hidelabel" : "Hide",
 
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",
