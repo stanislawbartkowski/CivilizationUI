@@ -10,8 +10,24 @@ class JournalCiv extends CivData(PolymerElement) {
         </template>
     `;
   }
+  
+  static get properties() {
+    return {
+      len: {
+        type: Number,
+        value: 0
+      }
+    };
+  }
+  
+  
+  _checkrenew(data) {
+    return this.len != data.length   
+  }
 
   refresh(data) {
+    if (!this._checkrenew(data)) return
+    this.len = data.length
     this.res = []
     if (data == null) return
     for (var i = data.length-1; i>=0; i--)

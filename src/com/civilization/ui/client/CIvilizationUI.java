@@ -187,6 +187,13 @@ public class CIvilizationUI implements EntryPoint {
 	};
 
 	// ===========================================
+	
+	private static void readJournal() {
+		call(GreetingService.GETJOURNAL, civtoken, js -> {
+			JSONValue j = JSONParser.parseStrict(js);
+			setjournal(j.isArray().getJavaScriptObject());
+		});		
+	}
 
 	/**
 	 * Read Map again from server
@@ -206,10 +213,7 @@ public class CIvilizationUI implements EntryPoint {
 			// refresh buttons
 			redrawheader();
 		});
-		call(GreetingService.GETJOURNAL, civtoken, js -> {
-			JSONValue j = JSONParser.parseStrict(js);
-			int a;
-		});		
+		readJournal();
 	}
 
 	/**
@@ -286,6 +290,7 @@ public class CIvilizationUI implements EntryPoint {
 			t.schedule(100);
 			showelem(GAMEMENU, true);
 		});
+		readJournal();
 	}
 
 	/**
@@ -453,6 +458,10 @@ public class CIvilizationUI implements EntryPoint {
 	public static native void setjsboard(JavaScriptObject board) /*-{
 		$wnd.C.setjsboard(board);
 	}-*/;
+
+	public static native void setjournal(JavaScriptObject j) /*-{
+	   $wnd.C.setjournal(j);
+    }-*/;
 
 	public static native void setresources(JavaScriptObject rese) /*-{
 		$wnd.C.setresources(rese);

@@ -15,8 +15,18 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
 /*    @apply --layout-end-justified; */
   }
 
+  .jebuttons {
+    margin: 0;
+    @apply --layout-horizontal;
+  }
+
   .endofphase {
-    margin-left : 130px;
+    position: absolute;
+    right: 20px;
+  }
+  
+  .journal {
+  
   }
 
   .undo {
@@ -109,7 +119,10 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
  </paper-item>
 -->
 
-<paper-button id="endofphase" class="green endofphase" on-click="_onClick">{{localize('endofphase')}}</paper-button>
+<div class="jebuttons">
+  <paper-button id="journal" class="green journal" on-click="_onJournal">{{localize('journal')}}</paper-button>
+  <paper-button id="endofphase" class="green endofphase" on-click="_onClick">{{localize('endofphase')}}</paper-button>
+</div>  
 
 <span id="startofturn" class="actionbox">
 
@@ -298,10 +311,6 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
 
   static get properties() {
     return {
-      refreshalways: {
-        type: Boolean,
-        value: false
-      },
       civname: {
         type: String,
         value: undefined
@@ -435,6 +444,10 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
     const id = source.currentTarget.id;
     CC.actionclick(id)
     return
+  }
+  
+  _onJournal() {
+    C.showjournal(this.opponent,this.civname)
   }
 
   clear() {

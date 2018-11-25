@@ -285,10 +285,31 @@ C = function () {
     showunits(units) {
       C.opendialogwithpar("showunits-dialog", units);
     },
-
-    showjournal(list) {
-      C.opendialogwithpar("civ-journaldial", list);
+    
+// ------- journal
+    
+    _getjournalid(opponent) {
+      if (opponent) return "civ-journaldial1"
+      else return "civ-journaldial"    
     },
+
+    _refreshjournal(opponent,data) {
+       const dialog = document.getElementById(this._getjournalid(opponent));
+       dialog.$.dialog.refresh(data)                
+    },
+
+    showjournal(opponent,civname) {
+       const dialog = document.getElementById(this._getjournalid(opponent));
+       dialog.$.dialog.setHeader(civname)     
+       dialog.$.dialog.open()            
+    },
+    
+    setjournal: function (j) {
+      this._refreshjournal(false,j)
+      this._refreshjournal(true,j)      
+    },
+          
+// ---------    
 
     eqp(p1, p2) {
       return p1.row == p2.row && p1.col == p2.col;
@@ -761,7 +782,7 @@ C = function () {
     getyourdeck: function () {
       return C.getjsboard().board.you;
     },
-
+    
     getopponentplay: function () {
       var y = _getxapp().$.opponentplay;
 
@@ -771,7 +792,7 @@ C = function () {
     setjsboard: function (jsboard) {
       _getxapp().draw(jsboard);
     },
-
+    
     setresources: function (rese) {
       const x = _getxapp();
 

@@ -5,6 +5,10 @@ export const CivNonDraggableDialog = function (superClass) {
     constructor() {
       super()
     }
+    
+    open() {
+      this.$.dialog.open()
+    }    
 
     openIt(data) {
 //      this.data = data

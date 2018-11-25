@@ -14,7 +14,9 @@ class CivJournalDialog extends CivDialog(PolymerElement) {
     }
     </style>
      <paper-dialog id="dialog">
-        <h2>Heading</h2>
+     
+        <h2>{{header}}</h2>
+        
         <paper-dialog-scrollable>
           <civ-journal id="j"></civ-journal>
         </paper-dialog-scrollable>
