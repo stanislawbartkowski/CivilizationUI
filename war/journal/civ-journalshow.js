@@ -28,6 +28,11 @@ class CivJournalDialog extends CivDialog(PolymerElement) {
       </paper-dialog>
     `;
   }
+  
+  setCiv(civ) {
+    this.$.j.setCiv(civ)
+    this.setHeader(civ)
+  }
 
   refresh(data) {
     if (data == null) return;

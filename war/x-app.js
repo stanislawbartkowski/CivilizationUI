@@ -200,9 +200,11 @@ class XApp extends CivData(PolymerElement) {
 
     if (b == null) {
       C.displayelem(C.getmarket(), false);
-      C.getyouplay().draw(b);
+      C.getyouplay().draw(null);
       C.seconddrawerClose(true);
-      C.getopponentplay().draw(b);
+      C.getopponentplay().draw(null);
+      C.showjournal(true,null)
+      C.showjournal(false,null)
     } else {
       C.displayelem(C.getmarket(), true);
 

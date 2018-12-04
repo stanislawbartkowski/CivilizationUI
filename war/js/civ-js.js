@@ -299,9 +299,10 @@ C = function () {
     },
 
     showjournal(opponent,civname) {
-       const dialog = document.getElementById(this._getjournalid(opponent));
-       dialog.$.dialog.setHeader(civname)     
-       dialog.$.dialog.open()            
+       const dialog = document.getElementById(this._getjournalid(opponent))
+       dialog.$.dialog.setCiv(civname)
+       if (civname == null) dialog.$.dialog.closeIt()
+       else dialog.$.dialog.open()            
     },
     
     setjournal: function (j) {
@@ -1408,6 +1409,8 @@ C = function () {
         return mess
       }
       mess = j
+      if (id == "DOACTION")
+        params[0] = CC.getcommanddecr(params[0].toLowerCase())  
       for (var i = 0; i < params.length; i++)
         mess = mess.replace("%" + i + "%",params[i])
       return mess

@@ -16,23 +16,42 @@ class JournalCiv extends CivData(PolymerElement) {
       len: {
         type: Number,
         value: 0
+      },
+      civ : {
+        type : String
       }
-    };
+    } 
   }
   
   
   _checkrenew(data) {
+    if (this.civ == null) return false
     return this.len != data.length   
+  }
+  
+  _drawj() {
+    const data = this.data
+    this.len = data.length
+    this.res = []
+    for (var i = data.length-1; i>=0; i--)
+      if (this.civ == data[i].elem.civ) this.res.push(data[i])
+    this.$.map.render()    
+  }
+  
+  setCiv(civ) {
+    const pciv = this.civ
+    this.civ = civ
+    if (pciv == null) this._drawj()
   }
 
   refresh(data) {
+    if (data == null) {
+      this.len = 0
+      this.civ = null
+      return
+    }
     if (!this._checkrenew(data)) return
-    this.len = data.length
-    this.res = []
-    if (data == null) return
-    for (var i = data.length-1; i>=0; i--)
-      this.res.push(data[i])
-    this.$.map.render()
+    this._drawj()    
   }
 }
 
