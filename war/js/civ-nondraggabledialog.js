@@ -8,6 +8,16 @@ export const CivNonDraggableDialog = function (superClass) {
     
     open() {
       this.$.dialog.open()
+    }
+    
+    setTopLeft(alignleft,alignbottom,height,width) {
+      const bott = window.innerHeight
+      const righ = window.innerWidth
+      var top = 5;
+      if (alignbottom) top = bott-height-5 
+      var left = 5;
+      if (! alignleft) left = righ - width      
+      C.setTopLeft(this.$.dialog,top,left)              
     }    
 
     openIt(data) {

@@ -286,6 +286,11 @@ C = function () {
       C.opendialogwithpar("showunits-dialog", units);
     },
     
+    setTopLeft(e,top,left) {
+      e.style.top = top + "px";
+      e.style.left = left + "px";
+    },
+    
 // ------- journal
     
     _getjournalid(opponent) {
@@ -300,9 +305,16 @@ C = function () {
 
     showjournal(opponent,civname) {
        const dialog = document.getElementById(this._getjournalid(opponent))
-       dialog.$.dialog.setCiv(civname)
-       if (civname == null) dialog.$.dialog.closeIt()
-       else dialog.$.dialog.open()            
+       const d = dialog.$.dialog
+       d.setCiv(civname)
+       // it does not work !
+       if (d.wasDragged()) {
+//         d.$.dialog.resetFit()
+         d.setLastDraggedPos()
+       }
+       else d.setTopLeft(!opponent,true,400,400)       
+       if (civname == null) d.closeIt()
+       else d.open()            
     },
     
     setjournal: function (j) {

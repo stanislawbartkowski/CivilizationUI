@@ -18,7 +18,13 @@ export const  DialDraggable = function (superClass) {
         },
         dragstarted: {
           type: Boolean
-        }
+        },
+        finaltop: {
+          type : Number	
+        },
+        finalleft: {
+          type : Number
+        }        
       };
     }
 
@@ -26,6 +32,15 @@ export const  DialDraggable = function (superClass) {
       super.ready(); //        this.$.dialog.setAttribute("draggable","true")
 
       addListener(this, 'track', e => this.handleTrack(e));
+    }
+    
+    wasDragged() {
+    	return this.finaltop != null && this.finalleft != null
+    }
+    
+    setLastDraggedPos() {
+        this.$.dialog.resetFit()
+        C.setTopLeft(this.$.dialog,this.finaltop,this.finalleft)
     }
 
     handleTrack(e) {
@@ -44,10 +59,9 @@ export const  DialDraggable = function (superClass) {
           this.dragstarted = false;
           const diffx = e.detail.x - this.startx;
           const diffy = e.detail.y - this.starty;
-          const top = parseInt(this.$.dialog.style.top);
-          const left = parseInt(this.$.dialog.style.left);
-          this.$.dialog.style.top = top + diffy + "px";
-          this.$.dialog.style.left = left + diffx + "px";
+          this.finaltop = parseInt(this.$.dialog.style.top) + diffy;
+          this.finalleft = parseInt(this.$.dialog.style.left) +diffx;
+          this.setLastDraggedPos()
           break;
       }
     }
