@@ -1405,29 +1405,6 @@ C = function () {
       return a;
     },
 
-    /**
-     *  id : Journal message identifier
-     *  params : List of parameters
-    **/
-    journalMessage(id,params) {
-      const jdic = C.getjdict()
-      const j = jdic[id]
-      var mess = ""
-      if (j == null) {
-        // prepare dirty message
-        mess = id
-        for (var i = 0; i < params.length; i++)
-           mess = mess + " " + params[i]
-        return mess
-      }
-      mess = j
-      if (id == "DOACTION")
-        params[0] = CC.getcommanddecr(params[0].toLowerCase())  
-      for (var i = 0; i < params.length; i++)
-        mess = mess.replace("%" + i + "%",params[i])
-      return mess
-    },
-
     // list
     getIListOfNames(itemize, name) {
       const ii = itemize;

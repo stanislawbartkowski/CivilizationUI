@@ -58,7 +58,7 @@ class CivGameLine extends PolymerElement {
     var e = li[this.index];
     var createdS = C.datetos(e.createtime);
     var accessedS = C.datetos(e.accesstime);
-    var phaseS = e.phase;
+    var phaseS = C.getphasedescr(e.phase)
     var no = e.round;
     var wininfo = ""
     if (e.endofgame != null) wininfo = C.localize('wininfo','civ',e.endofgame.winner,'victory',C.localize(e.endofgame.wintype + "label"))

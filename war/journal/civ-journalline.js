@@ -76,7 +76,7 @@ class JournalLineCiv extends CivData(PolymerElement) {
   refresh(data) {
     this.no = data.no
     if (data.elem.tech != null) this.tech = C.getTechnologyName(data.elem.tech)
-    this.message = C.journalMessage(data.elem.id,data.elem.param)
+    this.message = JM.journalMessage(data.elem)
   }
 }
 

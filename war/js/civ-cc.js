@@ -149,6 +149,12 @@ const CC = {
             key = "continuemove";
             break;
           }
+          
+        case "research" :
+        {
+          key = "researchlabel"
+          break
+        }  
       }
 
       return C.localize(key);
