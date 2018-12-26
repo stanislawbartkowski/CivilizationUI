@@ -1032,27 +1032,28 @@ C = function () {
     },
 
     _getbyid: function (e, id) {
-      if (e.$ != null) return e.$[id];
-      return e.querySelector("#" + id);
+      if (e.$ != null) return e.$[id]
+      return e.querySelector("#" + id)
     },
     getdomelem: function (e, id) {
-      return e.$$("#" + id);
+      return e.$$("#" + id)
     },
 
     setCivUnits: function (e, i, units) {
-      const u = units.units[i];
-      const name = u.name.toLowerCase();
-      const num = u.num;
-      const strength = u.militarystrength;
-      const param = {};
-      param.name = name;
-      param.num = num;
-      param.level = strength;
+      const u = units.units[i]
+      const name = u.name.toLowerCase()
+      const num = u.num
+      const strength = u.militarystrength
+      const param = {}
+      param.name = name
+      param.num = num
+      param.level = strength
 
-      const elem = C._getbyid(e, name);
+      const elem = C._getbyid(e, name)
 
       elem.draw(param);
-      if (units.list != null && units.list.length > 0) elem.units = units;else elem.units = null;
+      if (units.list != null && units.list.length > 0) elem.units = units
+        else elem.units = null
     },
 
     unittypes() {
@@ -1292,6 +1293,14 @@ C = function () {
     },
 
     getTechnologyName(n) {
+      return C.localize(n)
+    },
+    
+    getResourceName(n) {
+      return C.localize(n.toLowerCase() + "label")
+    },
+    
+    getUnitName(n) {
       return C.localize(n)
     },
 

@@ -29,13 +29,21 @@ class JournalLineCiv extends CivData(PolymerElement) {
         border-radius: 5px;
         background-color: #e3fbf8;
       }
+      
+      .resource {
+        border : 1px groove;
+        border-radius: 5px;
+        background-color: #c1e8a3;
+      }
+      
 
     </style>
 
       <paper-item>
          <div>
            <span class="no">{{data.no}}</span>
-           <span class="tech" hidden$="[[!data.elem.tech]]">{{tech}}</span>
+           <span class="tech" hidden$="[[!data.elem.jartifacts.tech]]">{{tech}}</span>
+           <span class="resource" hidden$="[[!data.elem.jartifacts.resource]]">{{resource}}</span>
            <span>{{message}}</span>
          </div>
       </paper-item>
@@ -53,6 +61,9 @@ class JournalLineCiv extends CivData(PolymerElement) {
         type: String
       },
       tech: {
+        type: String
+      },
+      resource: {
         type: String
       }
     };
@@ -75,7 +86,8 @@ class JournalLineCiv extends CivData(PolymerElement) {
   **/
   refresh(data) {
     this.no = data.no
-    if (data.elem.tech != null) this.tech = C.getTechnologyName(data.elem.tech)
+    if (data.elem.jartifacts.tech != null) this.tech = C.getTechnologyName(data.elem.jartifacts.tech)
+    if (data.elem.jartifacts.resource != null) this.resource = C.getResourceName(data.elem.jartifacts.resource)
     this.message = JM.journalMessage(data.elem)
   }
 }

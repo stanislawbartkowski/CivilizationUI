@@ -154,10 +154,22 @@ const CC = {
         {
           key = "researchlabel"
           break
-        }  
+        }
+          
+        case "usesilkfortrade9" :
+        {
+          key = "spendsilkfortrade"
+          break
+        }
+        
+        case "endbattle" :
+        {
+           key = "endofbattle"
+           break 
+        }
       }
 
-      return C.localize(key);
+      return C.localize(key)
     },
 
     tab : [{
