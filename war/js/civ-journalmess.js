@@ -33,10 +33,17 @@ const JM = {
       }
       return mess + C.localize("unitdesc","type",elem.jparam.param.name,"one",one,"two",two,"three",three,"four",four)
     },
-
+    
+    _messwithnumber(key,elem) {
+       return C.localize(key,"num",""+elem.jparam.param)
+    },
+    
     _doaction(elem) {
       const aid = elem.param[0].toLowerCase()      
       var mess = CC.getcommanddecr(aid)
+      if (CC.getActionTechnology(aid) != null) 
+        return C.localize("technologyactionused")
+         
       switch (aid) {
         case "endofphase" : 
            mess = mess + " : " + C.getphasedescr(elem.phase)
@@ -51,9 +58,6 @@ const JM = {
         case "spendtrade" :
           mess = mess + " : " + elem.jparam.param
           break  
-        case "buybuilding" :
-          mess = mess + " : " + elem.jparam.param.building                   
-          break
         case "startmove" :
           mess = mess + " : " + this._numberoffigures(elem)
           break     
@@ -61,14 +65,18 @@ const JM = {
           mess = mess + " : " + C.localize("revealedtiledirection","dir",elem.jparam.param)
           break  
         case "increasetrade" :
-          mess = C.localize("increasetradebynumb","num",""+elem.jparam.param)
+//          mess = C.localize("increasetradebynumb","num",""+elem.jparam.param)
+          mess = this._messwithnumber("increasetradebynumb",elem)
           break                
         case "playunit" :
           mess = C.localize("playunitcol","col",""+elem.jparam.p.col)
           break
         case "takeunit" :
           mess = this._unitdesc(mess,elem)
-          break                          
+          break
+        case "increaseproduction" :
+          mess = this._messwithnumber("increaseproductionincity",elem)
+          break
         default: 
           if (C.emptyS(mess)) mess = aid;
           break

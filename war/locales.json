@@ -217,7 +217,9 @@
     "playunitcol" : "Play unit standing in column {col}",
     "takeunit" : "You received the unit",
     "unitdesc" : "{type}, Unit strength: [{one},{two},{three},{four}]",
-
+    "technologyactionused" : "Technology/Resource used",
+    "increaseproductionincity" : "Production in city increased by {num}",
+    
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",
     "CodeOfLaw" : "Code of Laws",
