@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2018/11/25",
+    "appversion": "Version: 2019/01/03",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -211,7 +211,7 @@
     "placegreatperson" : "Place the Great Person : {greatperson}",
     "numberofscouts" : "Number of scouts : {num}",
     "numberofarmies" : "Number of armies : {num}",
-    "revealedtiledirection" : "revealed tile direction : {dir}",
+    "revealedtiledirection" : "Revealed tile direction : {dir}",
     "increasetradebynumb" : "Increase trade by {num}",
     "startbattle" : "Battle started",
     "playunitcol" : "Play unit standing in column {col}",
@@ -219,6 +219,7 @@
     "unitdesc" : "{type}, Unit strength: [{one},{two},{three},{four}]",
     "technologyactionused" : "Technology/Resource used",
     "increaseproductionincity" : "Production in city increased by {num}",
+    "getculturenum" : "You received {num} culture",
     
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

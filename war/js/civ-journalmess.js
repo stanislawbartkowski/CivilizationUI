@@ -49,7 +49,6 @@ const JM = {
            mess = mess + " : " + C.getphasedescr(elem.phase)
            break
         case "greatperson" :
-        case "culturecard" :
            mess = this._nprivatemessage(mess,elem)
            break       
         case "greatpersonput": 
@@ -65,7 +64,6 @@ const JM = {
           mess = mess + " : " + C.localize("revealedtiledirection","dir",elem.jparam.param)
           break  
         case "increasetrade" :
-//          mess = C.localize("increasetradebynumb","num",""+elem.jparam.param)
           mess = this._messwithnumber("increasetradebynumb",elem)
           break                
         case "playunit" :
@@ -76,6 +74,9 @@ const JM = {
           break
         case "increaseproduction" :
           mess = this._messwithnumber("increaseproductionincity",elem)
+          break
+        case "getculture" :
+          mess = this._messwithnumber("getculturenum",elem)
           break
         default: 
           if (C.emptyS(mess)) mess = aid;

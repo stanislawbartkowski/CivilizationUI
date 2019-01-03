@@ -41,6 +41,23 @@ class JournalLineCiv extends CivData(PolymerElement) {
         border-radius: 5px;
         background-color: #e0d6d6;
       }
+
+      .wonder {
+        border : 1px groove;
+        border-radius: 5px;
+        background-color: #edf98d;
+      }
+
+      .card {
+        border : 1px groove;
+        border-radius: 5px;
+        background-color: #aaec8e;
+      }
+      
+      iron-icon {
+          --iron-icon-height: 20px;
+          --iron-icon-width: 17px;
+        }
       
 
     </style>
@@ -48,10 +65,21 @@ class JournalLineCiv extends CivData(PolymerElement) {
       <paper-item>
          <div>
            <span class="no">{{data.no}}</span>
+           
            <span class="tech" hidden$="[[!data.elem.jartifacts.tech]]">{{tech}}</span>
+           
            <span class="resource" hidden$="[[!data.elem.jartifacts.resource]]">{{resource}}</span>
+           
            <span class="building" hidden$="[[!data.elem.jartifacts.building]]">{{building}}</span>
-           <span>{{message}}</span>
+           
+           <span class="wonder" hidden$="[[!data.elem.jartifacts.wonder]]">{{wonder}}</span>
+           
+           <span class="card" hidden$="[[!data.elem.jartifacts.card]]">
+             <iron-icon src="images/icons/cards.svg"></iron-icon>
+             {{card}}</span>
+           <span>
+           
+           {{message}}</span>
          </div>
       </paper-item>
 
@@ -75,7 +103,13 @@ class JournalLineCiv extends CivData(PolymerElement) {
       },
       building: {
         type: String
-      }      
+      },
+      wonder: {
+        type : String
+      },
+      card : {
+        type : String
+      }
     };
   }
 
@@ -99,6 +133,8 @@ class JournalLineCiv extends CivData(PolymerElement) {
     if (data.elem.jartifacts.tech != null) this.tech = C.getTechnologyName(data.elem.jartifacts.tech)
     if (data.elem.jartifacts.resource != null) this.resource = C.getResourceName(data.elem.jartifacts.resource)
     if (data.elem.jartifacts.building != null) this.building = data.elem.jartifacts.building
+    if (data.elem.jartifacts.wonder != null) this.wonder = data.elem.jartifacts.wonder
+    if (data.elem.jartifacts.card != null) this.card = data.elem.jartifacts.card
     this.message = JM.journalMessage(data.elem)
   }
 }
