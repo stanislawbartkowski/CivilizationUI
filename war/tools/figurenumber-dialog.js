@@ -41,7 +41,8 @@ class FigureNumber extends CivLocalize(PolymerElement) {
   numberChanged(newValue, oldValue) {}
   
   draw(label, numb, max) {
-    this.text = this.localize(label);
+//    this.text = this.localize(label);
+    this.text = label
     this.numb = numb;
     if (max == null) max = numb;
     this.$.input.max = max;

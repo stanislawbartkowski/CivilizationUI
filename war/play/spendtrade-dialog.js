@@ -100,19 +100,17 @@ class SpendTradeDialog extends CivDialog(PolymerElement) {
   }
 
   refresh(pa) {
-    const y = C.getyourdeck();
-    this.reduceratio = y.tradeforprod;
-    this.increasepoints = y.prodfortrade;
-    this.exchangeratio = y.tradeforprod / y.prodfortrade; 
+    const y = C.getyourdeck()
+    this.reduceratio = y.tradeforprod
+    this.increasepoints = y.prodfortrade
+    this.exchangeratio = y.tradeforprod / y.prodfortrade
 
-    this.maxproduction = Math.floor(y.trade / this.exchangeratio);
+    this.maxproduction = Math.floor(y.trade / this.exchangeratio)
 
-    const e = this.$.numbproduction;
-    e.numberChanged = (newValue, oldValue) => this._numberChanged(newValue, oldValue);
+    const e = this.$.numbproduction
+    e.numberChanged = (newValue, oldValue) => this._numberChanged(newValue, oldValue)
 
-//    this._numberChanged(y.prodfortrade, 0);
-
-    e.draw('amountofproduction', y.prodfortrade, this.maxproduction);
+    e.draw(C.localize('amountofproduction'), y.prodfortrade, this.maxproduction)
   }
 
 }

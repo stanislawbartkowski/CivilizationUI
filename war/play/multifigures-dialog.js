@@ -69,9 +69,9 @@ class MultiFiguresDialog extends CivDialog(PolymerElement) {
   openIt(pa) {
     super.openIt(pa);
     const e = this.$.armynumb;
-    e.draw('numberofarmies', pa.param.numberofArmies);
+    e.draw(C.localize('numberofarmies','num',pa.param.numberofArmies) + "  ", pa.param.numberofArmies);
     const e1 = this.$.scoutnumb;
-    e1.draw('numberofscouts', pa.param.numberofScouts);
+    e1.draw(C.localize('numberofscouts','num',pa.param.numberofScouts), pa.param.numberofScouts);
   }
 
 }

@@ -220,6 +220,7 @@
     "technologyactionused" : "Technology/Resource used",
     "increaseproductionincity" : "Production in city increased by {num}",
     "getculturenum" : "You received {num} culture",
+    "forcedmovefigures" : "Relocate figures",
     
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

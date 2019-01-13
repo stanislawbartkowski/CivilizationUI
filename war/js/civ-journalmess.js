@@ -58,6 +58,7 @@ const JM = {
           mess = mess + " : " + elem.jparam.param
           break  
         case "startmove" :
+        case "forcedmovefigures" :
           mess = mess + " : " + this._numberoffigures(elem)
           break     
         case "revealtile" :
