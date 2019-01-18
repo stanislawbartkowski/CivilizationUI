@@ -221,6 +221,7 @@
     "increaseproductionincity" : "Production in city increased by {num}",
     "getculturenum" : "You received {num} culture",
     "forcedmovefigures" : "Relocate figures",
+    "buildcitywallforfree" : "City wall was built for free in your city",
     
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",
