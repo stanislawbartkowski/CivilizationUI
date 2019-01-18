@@ -79,6 +79,9 @@ const JM = {
         case "getculture" :
           mess = this._messwithnumber("getculturenum",elem)
           break
+        case "greatpersonputnowresign" :
+          mess = C.localize("reserve")
+          break
         default: 
           if (C.emptyS(mess)) mess = aid;
           break
