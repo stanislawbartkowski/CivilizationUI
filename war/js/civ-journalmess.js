@@ -9,8 +9,8 @@ const JM = {
 
     _numberoffigures(elem) {
       var mess = ""
-      mess = this._addmess(mess,"numberofscouts",elem.jparam.param.numberofScouts)
-      return this._addmess(mess,"numberofarmies",elem.jparam.param.numberofArmies)
+      mess = this._addmess(mess,"numberofscoutsnum",elem.jparam.param.numberofScouts)
+      return this._addmess(mess,"numberofarmiesnum",elem.jparam.param.numberofArmies)
     },
     
     _nprivatemessage(mess,elem) {

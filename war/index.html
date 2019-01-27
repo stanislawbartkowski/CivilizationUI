@@ -213,7 +213,7 @@
 
 <dom-bind id="dialog-alert">
   <template>
-      <paper-alert-dialog id="dialog" confirm-button="OK">
+      <paper-alert-dialog id="dialog" confirm-button="OK" on-confirm="confirm">
       <paper-alert-dialog-icon-header icon="icons:warning"></paper-alert-dialog-icon-header>
       {{message}}
       </paper-alert-dialog>

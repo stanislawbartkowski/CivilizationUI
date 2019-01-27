@@ -195,6 +195,16 @@ public class CIvilizationUI implements EntryPoint {
 		});		
 	}
 
+	private static void readReady() {
+		greetingService.allPlayersReady(civtoken, new AsyncBackBoolean() {
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if (!result) signalnotready();
+			}
+		});
+	}
+
 	/**
 	 * Read Map again from server
 	 */
@@ -214,6 +224,7 @@ public class CIvilizationUI implements EntryPoint {
 			redrawheader();
 		});
 		readJournal();
+		readReady();
 	}
 
 	/**
@@ -445,7 +456,11 @@ public class CIvilizationUI implements EntryPoint {
 	public static native void showcivorgames(int what)/*-{
 		$wnd.C.showcivorgames(what);
 	}-*/;
-	
+
+	public static native void signalnotready()/*-{
+	    $wnd.C.signalnotready();
+    }-*/;
+
 	public static native void rendermap(int rownum,int colnum)/*-{
     	$wnd.C.rendermap(rownum,colnum);
     }-*/;

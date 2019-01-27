@@ -388,24 +388,33 @@ C = function () {
 
       dialogDemo.confirm = fun;
 
-      dialogDemo.dismiss =
-         e => {};
+      dialogDemo.dismiss = e => {};
 
       dialogDemo.message = message;
       dialogDemo.openDialog();
     },
+    
+    alertdialogopened() {
+      const dialogalert = document.getElementById("dialog-alert");
+      return dialogalert.$.dialog.opened
+    },    
 
-    alertdialog: function (message) {
+    alertdialogfun: function (message, fun) {
       const dialogalert = document.getElementById("dialog-alert");
 
       dialogalert.openDialog = function (e) {
         this.$.dialog.open();
       };
 
-      dialogalert.confirm = e => {};
+      dialogalert.confirm = fun;
 
       dialogalert.message = message;
       dialogalert.openDialog();
+    },
+    
+
+    alertdialog: function (message) {
+      this.alertdialogfun(message,e => {})
     },
 
     internalerroralert(message) {
@@ -617,9 +626,9 @@ C = function () {
     },
 
     // what = 1 show civs (switch off the rest)
-    // = 2 show games (switch off the test)
-    // = 3 show joins
-    // = 0 switch off all
+    //      = 2 show games (switch off the test)
+    //      = 3 show joins
+    //      = 0 switch off all, start the game
     showcivorgames: function (what) {
       C.seconddrawerClose(true)
       var gamese = findbytag("civ-games")
@@ -795,7 +804,7 @@ C = function () {
     getyourdeck: function () {
       return C.getjsboard().board.you;
     },
-    
+        
     getopponentplay: function () {
       var y = _getxapp().$.opponentplay;
 
@@ -914,7 +923,7 @@ C = function () {
     resumetwoplayersgame: function (gameid, civ) {
       window.resumetwoplayersgame(gameid, civ);
     },
-
+    
     leavegame: function () {
       window.stoprefresh();
 
@@ -922,7 +931,13 @@ C = function () {
 
       window.leavegame();
     },
-
+        
+    signalnotready() {
+      // check if opened already
+      if (C.alertdialogopened()) return
+      this.alertdialogfun(C.localize("youropponentleavethegame"),e => C.leavegame());      
+    },
+    
     joingame: function (gameid, civ) {
       window.joingame(gameid, civ);
     },

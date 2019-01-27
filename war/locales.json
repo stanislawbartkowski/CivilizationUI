@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2019/01/18",
+    "appversion": "Version: 2019/01/27",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -209,8 +209,8 @@
     "getfreearmy" : "Free Army",
     "hidelabel" : "Hide",
     "placegreatperson" : "Place the Great Person : {greatperson}",
-    "numberofscouts" : "Number of scouts : {num}",
-    "numberofarmies" : "Number of armies : {num}",
+    "numberofscoutsnum" : "Number of scouts : {num}",
+    "numberofarmiesnum" : "Number of armies : {num}",
     "revealedtiledirection" : "Revealed tile direction : {dir}",
     "increasetradebynumb" : "Increase trade by {num}",
     "startbattle" : "Battle started",
@@ -222,6 +222,7 @@
     "getculturenum" : "You received {num} culture",
     "forcedmovefigures" : "Relocate figures",
     "buildcitywallforfree" : "City wall was built for free in your city",
+    "youropponentleavethegame" : "Your opponent left the game, you have to quit also whatsoever.",
     
     "AnimalHusbandry" : "Animal Husbandry",
     "Agriculture" : "Agriculture",

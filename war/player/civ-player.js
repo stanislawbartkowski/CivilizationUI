@@ -373,8 +373,8 @@ class CivPlayer extends CivData(GestureEventListeners(PolymerElement)) {
         readOnly: true,
         value: ["endofphase", "buyarmy", "buyscout", "startmove", "move", "revealtile", "endofmove", "setcity", "spendtrade", "undospendtrade", "sendproduction", "undosendproduction", "harvestresource", "explorehut", "attack", "research", "buybuilding", "buywonder", "technologyaction", "devouttoculture", "advanceculture", "greatpersonput", "unitmenu", "buycitywall", "freebuildingcityaction","sacrificefigurefortech"]
       }
-    };
-  }
+    }
+   }
 
   _onCiv() {
     const c = this.civname;
