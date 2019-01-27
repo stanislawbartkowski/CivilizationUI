@@ -11,6 +11,18 @@ Demo version is deployed to Heroku https://civilizationboardgame.herokuapp.com/.
 
 ## History
 
+## 2019/01/19 : new version deployed
+https://hoteljavaopensource.blogspot.com/2019/01/civilization-board-game-next-version.html
+
+Journal panel is implemented.
+
+## 2018/09/30 : new version deployed
+http://hoteljavaopensource.blogspot.com/2018/09/civilization-board-game-next-version.html
+
+New features
+* "Writing" technology implemented, the player can cancel city action of his opponent
+* "HangingGarden" wonder implemented
+
 ## 2018/08/21 : new version deployed
 https://hoteljavaopensource.blogspot.com/2018/08/civilization-board-game-next-version.html
 
