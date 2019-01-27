@@ -1,5 +1,17 @@
-<project name="CivilizationBoardGame" default="build">
-  
+<project name="CivilizationBoardGame" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+   <target name="bootstrap" description="Install ivy">
+        <mkdir dir="${user.home}/.ant/lib"/>
+        <get dest="${user.home}/.ant/lib/ivy.jar" src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.4.0/ivy-2.4.0.jar"/>
+    </target>
+
+   <path id="ivy.lib.path">
+      <fileset dir="${user.home}/.ant/lib" includes="*.jar"/>
+   </path>
+
+   <taskdef resource="org/apache/ivy/ant/antlib.xml"
+      uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+    
    <property environment="env"/>
    <property name="proj.gwtCache" value="gwt-unitCache" /> 
    <property name="proj.target" value="target" />
@@ -14,8 +26,7 @@
       </fileset>
    </path>
 
-   
-   
+
    <condition property="gwthome" value="${env.GWT_HOME}" else="/opt/gwt-2.8.2">
     <isset property="env.GWT_HOME" />
    </condition>
@@ -25,12 +36,24 @@
    <property name="gwt-servlet" value="${gwthome}/gwt-servlet.jar" />
    <property name="gwt-validation" value="${gwthome}/validation-api-1.0.0.GA-sources.jar" />
    <property name="gwt-validation1" value="${gwthome}/validation-api-1.0.0.GA.jar"/>
+
+    <target name="ivy"> 
+      <ivy:retrieve />
+    </target>
+
    
+   <path id="ivy.dep.jars">
+      <fileset dir="lib">
+          <include name="**/*.jar"/>
+      </fileset>
+   </path>
+
     <target name="clean" description="clean up">
 	<delete dir="${proj.gwtCache}" />
 	<delete dir="${proj.target}" />
    	<delete dir="${proj.output}" />
         <delete dir="${proj.war}/WEB-INF/classes" />
+        <delete dir="lib" />
     </target>        
    
    <target name="javac" >
@@ -79,13 +102,15 @@
 
        <copy todir="${proj.war}/WEB-INF/lib">
            <fileset file="${gwt-servlet}"/>
+           <path refid="ivy.dep.jars" />
        </copy>
+
                      
        <jar destfile="target/civilization.war" compress="true" basedir="war"/>
 
     </target>
     
    
-   <target name="build" description="Build Civilization Board Game WAR" depends="clean, javac, gwtc, war"/>
+   <target name="build" description="Build Civilization Board Game WAR" depends="clean, javac, gwtc, bootstrap, ivy, war"/>
 
 </project>
