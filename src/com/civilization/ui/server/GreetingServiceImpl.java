@@ -3,6 +3,11 @@ package com.civilization.ui.server;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import com.civilization.ui.client.GreetingService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -20,6 +25,7 @@ import civilization.II.interfaces.RAccess;
 /**
  * The server-side implementation of the RPC service.
  */
+@Path("/")
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
 
@@ -59,9 +65,16 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		II.setR(RA);
 
 	}
+	
+	private static String extractToken(String s) {
+		return s.split(",")[0];
+	}
 
 	@Override
-	public String getCivData(int what, String param) {
+	@GET
+	@Path("civdata")
+	@Produces("text/json")
+	public String getCivData(@QueryParam("what") int what, @QueryParam("param") String param) {
 		int w = -1;
 		setRedis();
 		System.out.println("getCivData " + what);
@@ -70,8 +83,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			w = II.LISTOFRES();
 			break;
 		case REGISTEROWNER:
-			w = II.REGISTEROWNER();
-			break;
+			return extractToken(II.getData(II.REGISTEROWNER(), param, null));
 		case GETBOARD:
 			w = II.GETBOARDGAME();
 			break;
@@ -85,8 +97,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			w = II.LISTOFWAITINGGAMES();
 			break;
 		case TWOPLAYERSGAME:
-			w = II.REGISTEROWNERTWOGAME();
-			break;
+			return extractToken(II.getData(II.REGISTEROWNERTWOGAME(), param, null));
 		case GETJOURNAL:
 			w = II.GETJOURNAL();
 			break;
@@ -95,7 +106,11 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	}
 
 	@Override
-	public String executeCommand(String token, String action, int row, int col, String jsparam) {
+	@POST
+	@Path("commmand")
+	@Produces("text/plain")
+	public String executeCommand(@QueryParam("token") String token, @QueryParam("action") String action,
+			@QueryParam("row") int row, @QueryParam("col") int col, @QueryParam("jsparam") String jsparam) {
 		setRedis();
 		System.out.println(action + " row: " + row + " col:" + col + " " + jsparam);
 		String res = null;
@@ -109,7 +124,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	}
 
 	@Override
-	public String itemizeCommand(String token, String command) {
+	@GET
+	@Path("itemize")
+	@Produces("text/json")
+	public String itemizeCommand(@QueryParam("token") String token, @QueryParam("command") String command) {
 		setRedis();
 		return II.itemizeCommand(token, command);
 	}
@@ -122,7 +140,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	}
 
 	@Override
-	public boolean allPlayersReady(String token) {
+	@GET
+	@Path("allready")
+	@Produces("text/plain")
+	public boolean allPlayersReady(@QueryParam("token") String token) {
 		return II.allPlayersReady(token);
 	}
 
