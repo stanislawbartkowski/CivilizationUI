@@ -1,10 +1,14 @@
 package com.civilization.ui.server;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -34,6 +38,12 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	private static final IC II = civilization.II.factory.Factory$.MODULE$.getI();
 	private static final RAccess RA = civilization.II.factory.Factory$.MODULE$.getR();
+	
+	// if automation engine is ready
+	private static boolean automready = false;
+	
+	// list if games waiting for automation
+	private static List<String> waitinglist = new ArrayList<String>();
 
 	private void setRedis() {
 
@@ -66,8 +76,16 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	}
 	
-	private static String extractToken(String s) {
+	private String extractToken(String s) {
 		return s.split(",")[0];
+	}
+	
+	private String extractAutomatedToken(String s) {
+		if (!automready) throw new RuntimeException("Cannot run automated player, not registered");
+		String a[] = s.split(",");
+		waitinglist.add(a[1]);
+		return a[0];
+		
 	}
 
 	@Override
@@ -101,6 +119,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		case GETJOURNAL:
 			w = II.GETJOURNAL();
 			break;
+		case TWOPLAYERSGAMEWITHAUTOM :
+			return extractAutomatedToken(II.getData(II.REGISTEROWNERTWOGAME(), param, null));			
 		}
 		return II.getData(w, param, null);
 	}
@@ -148,9 +168,31 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	}
 
 	@Override
-	public String joinGame(int gameid, String civ) {
+	@POST
+	@Path("joingame")
+	@Produces("text/plain")
+	public String joinGame(@QueryParam("gameid") int gameid, @QueryParam("civ") String civ) {
 		System.out.println("Join game: " + civ + " " + gameid);
 		return II.joinGame(gameid, civ);
 	}
+	
+	@PUT
+	@Path("registerautom")
+	public void setRegisterAutom(@QueryParam("autom") boolean autom) {
+		System.out.println("Register autom engine " + autom);
+		this.automready = autom;
+	}
+	
+	@GET
+	@Path("getwaiting")
+	@Produces("text/plain")
+	public String getWaitingGame() {
+		if (waitinglist.isEmpty()) return "";
+		String gameid = waitinglist.get(0);
+		waitinglist.remove(0);
+		return gameid;
+	}
+
+		
 
 }
