@@ -127,7 +127,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	@Override
 	@POST
-	@Path("commmand")
+	@Path("command")
 	@Produces("text/plain")
 	public String executeCommand(@QueryParam("token") String token, @QueryParam("action") String action,
 			@QueryParam("row") int row, @QueryParam("col") int col, @QueryParam("jsparam") String jsparam) {
