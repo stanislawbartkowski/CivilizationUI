@@ -30,6 +30,7 @@ public interface GreetingService extends RemoteService {
 	int TWOPLAYERSGAME = 6;
 	int GETJOURNAL = 7;
 	int TWOPLAYERSGAMEWITHAUTOM = 8;
+	int SINGLEGAMEWITHAUTOM = 9;
 
 	String getCivData(int what, String param);
 
