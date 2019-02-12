@@ -5,6 +5,7 @@
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
     "leavegamebutton" : "Leave the game",
+    "downloadgame" : "Download the game",
     "labelroundno" : "Round {roundno}",
     "nowplayinglabel" : "Now playing: {active}",
     "twoplayersgamelabel" : "Two players game",

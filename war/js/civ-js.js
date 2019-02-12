@@ -120,6 +120,7 @@ C = function () {
   }; // id="close-button"
 
   function showhideclosebuttuon(show) {
+    C.showelem("download-button", show);
     C.showelem("close-button", show);
   };
 

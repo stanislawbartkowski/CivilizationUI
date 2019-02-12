@@ -46,6 +46,7 @@ public class CIvilizationUI implements EntryPoint {
 
 	private static String civ;
 	private static String civtoken;
+	private static int civgameid = -1;
 	private static JSONObject board;
 	private static List<String> civs = new ArrayList<String>();
 
@@ -325,7 +326,8 @@ public class CIvilizationUI implements EntryPoint {
 	};
 
 	private static void startGame(String token, T t) {
-		civtoken = token;
+//		civtoken = token;
+		toTokenId(token);
 		gamet = t;
 		showelem(STARTMENU, false);
 		startMap();
@@ -596,7 +598,7 @@ public class CIvilizationUI implements EntryPoint {
 				public void onSuccess(Boolean result) {
 					if (result) {
 						closejoindialog();
-						startGame(token, T.STARTTWOPLAYERGAME);
+						startGame(token + "," + civgameid, T.STARTTWOPLAYERGAME);
 						cancel();
 					}
 				}
@@ -612,6 +614,12 @@ public class CIvilizationUI implements EntryPoint {
 			twait.scheduleRepeating(500);
 		});
 	}
+	
+	private static void toTokenId(String s) {
+		String[] a = s.split(",");
+		civtoken = a[0];
+		civgameid = Integer.parseInt(a[1]);		
+	}
 
 	public static void resumeTwoPlayersGame(int gameid, String civ) {
 		greetingService.resumeGame(gameid, civ, new AsyncBack() {
@@ -620,8 +628,9 @@ public class CIvilizationUI implements EntryPoint {
 				// 2017/12/22
 				// set it now to allow unregister in case of cancel
 				// civtoken is set again by TWait when other player joins
-				civtoken = s;
-				twait = new TWait(s);
+				// s = token, gameid
+				toTokenId(s);
+				twait = new TWait(civtoken);
 				twait.scheduleRepeating(500);
 			}
 		});

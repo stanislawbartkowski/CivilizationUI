@@ -79,8 +79,11 @@ class XApp extends CivData(PolymerElement) {
               <civ-gamestate></civ-gamestate>
             </div>
             <div style="width:20%;"></div> 
+            <paper-icon-button id="download-button" hidden="true" icon="file-download" on-click="_onDownload" title="{{localize('downloadgame')}}">
+               </paper-icon-button>
             <paper-icon-button id="close-button" hidden="true" icon="close" on-click="_onClose" title="{{localize('leavegamebutton')}}">
-      </paper-icon-button></app-toolbar>
+               </paper-icon-button>
+      </app-toolbar>
     </app-header>
 
     <app-drawer-layout id="drawerLayout">

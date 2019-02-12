@@ -1,19 +1,23 @@
 package com.civilization.ui.server;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
-
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+//import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.civilization.ui.client.GreetingService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -79,7 +83,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	}
 
 	private String extractToken(String s) {
-		return s.split(",")[0];
+		System.out.println(s);
+        return s;		
+//		return s.split(",")[0];
 	}
 
 	private String extractAutomatedToken(String s) {
@@ -208,6 +214,16 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public void deleteGame(@QueryParam("gameid") int gameid) {
 		System.out.println("Delete game " + gameid);
 		II.deleteGame(gameid);
+	}
+		
+	@POST
+	@Path("loadsinglegame")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces("text/plain")
+//	public String loadsinglegame(  @FormDataParam("boardStream") InputStream boardStream, @FormDataParam("playStream") InputStream playStream ) {
+	public String loadsinglegame(@QueryParam("civ") String civ, InputStream playStream ) {
+//		return Response.ok("ok").build();
+		return "";
 	}
 
 }
