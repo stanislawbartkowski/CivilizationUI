@@ -932,6 +932,14 @@ C = function () {
 
       window.leavegame();
     },
+    
+    downloadGame() {
+        let a = document.createElement('a')
+        let g = window.getgameid()
+        a.href = "downloadgame?id=" + g
+        a.download = "game-" + g + ".json"
+        a.click()
+    },
         
     signalnotready() {
       // check if opened already

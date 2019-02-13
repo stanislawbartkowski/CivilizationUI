@@ -207,6 +207,10 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		waitinglist.remove(0);
 		return gameid;
 	}
+	
+	public static String getGame(int gameid) {
+		return II.downloadGame(gameid);		
+	}
 
 	@DELETE
 	@Path("delete")

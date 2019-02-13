@@ -34,6 +34,18 @@
         <servlet-name>Civ Rest Service</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
+
+<!--     
+    <servlet>
+        <servlet-name>Download Game</servlet-name>
+        <servlet-class>com.civilization.ui.server.DownloadServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>Download Game</servlet-name>
+        <url-pattern>/downloadgame</url-pattern>
+    </servlet-mapping>
+-->    
   
 
 </web-app>

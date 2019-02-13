@@ -78,8 +78,7 @@ public class CIvilizationUI implements EntryPoint {
 	 * Internal validation, if list of civilization is available Can happen if
 	 * resource directory is not copied
 	 * 
-	 * @param civList
-	 *            List of civilization retrieved from server
+	 * @param civList List of civilization retrieved from server
 	 */
 	private static void verifyListOfCiv(String civList) {
 		JSONValue j = JSONParser.parseStrict(civList);
@@ -188,12 +187,12 @@ public class CIvilizationUI implements EntryPoint {
 	};
 
 	// ===========================================
-	
+
 	private static void readJournal() {
 		call(GreetingService.GETJOURNAL, civtoken, js -> {
 			JSONValue j = JSONParser.parseStrict(js);
 			setjournal(j.isArray().getJavaScriptObject());
-		});		
+		});
 	}
 
 	private static void readReady() {
@@ -201,7 +200,8 @@ public class CIvilizationUI implements EntryPoint {
 
 			@Override
 			public void onSuccess(Boolean result) {
-				if (!result) signalnotready();
+				if (!result)
+					signalnotready();
 			}
 		});
 	}
@@ -232,10 +232,8 @@ public class CIvilizationUI implements EntryPoint {
 	 * Discovered by experience, sometimes it does not work from GWT mode, reuse
 	 * director JS code Set attribute in x-app tag
 	 * 
-	 * @param attr
-	 *            attribute name
-	 * @param value
-	 *            attribute value
+	 * @param attr  attribute name
+	 * @param value attribute value
 	 */
 	public static native void setyouplayparam(String attr, JavaScriptObject value)/*-{
 		$wnd.C.setyouplayparam(attr, value);
@@ -296,7 +294,7 @@ public class CIvilizationUI implements EntryPoint {
 			IMapDimension d = getDimensions();
 			Element fe = findContent(CIVMAP);
 			fe.removeAttribute("hidden");
-			rendermap(d.rows(),d.cols());
+			rendermap(d.rows(), d.cols());
 			redrawheader();
 			// there is a delay until map is available
 			t.schedule(100);
@@ -336,8 +334,7 @@ public class CIvilizationUI implements EntryPoint {
 	/**
 	 * Wrapper for command to register the game
 	 * 
-	 * @param civs
-	 *            Civilization
+	 * @param civs Civilization
 	 */
 	public static void chooseCiv(String civs) {
 		civ = civs;
@@ -347,8 +344,7 @@ public class CIvilizationUI implements EntryPoint {
 	/**
 	 * Adjust row attribute from screen element to row in the map
 	 * 
-	 * @param row
-	 *            row attribute value
+	 * @param row row attribute value
 	 * @return row of the square in the map
 	 */
 	public static int fixrow(int row) {
@@ -363,8 +359,7 @@ public class CIvilizationUI implements EntryPoint {
 	/**
 	 * Adjust column attribute
 	 * 
-	 * @param col
-	 *            col attribute
+	 * @param col col attribute
 	 * @return adjusted
 	 */
 	public static int fixcol(int col) {
@@ -380,10 +375,8 @@ public class CIvilizationUI implements EntryPoint {
 	 * Get square data Important: position, row and column represents postion in the
 	 * map, row attribute should be adjusted
 	 * 
-	 * @param row
-	 *            row position in the map
-	 * @param col
-	 *            column position in the map
+	 * @param row row position in the map
+	 * @param col column position in the map
 	 * @return map sqaure, JSON object
 	 */
 	public static JavaScriptObject getSquare(int row, int col) {
@@ -404,14 +397,10 @@ public class CIvilizationUI implements EntryPoint {
 	/**
 	 * Wrapper around command execution, reflects command format
 	 * 
-	 * @param s
-	 *            command
-	 * @param row
-	 *            row values
-	 * @param col
-	 *            column value
-	 * @param param
-	 *            parameter as JSON object
+	 * @param s     command
+	 * @param row   row values
+	 * @param col   column value
+	 * @param param parameter as JSON object
 	 */
 	public static void executeCommandA(String s, int row, int col, JavaScriptObject param, String tofparam) {
 		JavaScriptObject oo = (JavaScriptObject) param;
@@ -460,13 +449,12 @@ public class CIvilizationUI implements EntryPoint {
 	}-*/;
 
 	public static native void signalnotready()/*-{
-	    $wnd.C.signalnotready();
-    }-*/;
+		$wnd.C.signalnotready();
+	}-*/;
 
-	public static native void rendermap(int rownum,int colnum)/*-{
-    	$wnd.C.rendermap(rownum,colnum);
-    }-*/;
-
+	public static native void rendermap(int rownum, int colnum)/*-{
+		$wnd.C.rendermap(rownum, colnum);
+	}-*/;
 
 	public static native void closejoindialog()/*-{
 		$wnd.C.closejoindialog();
@@ -477,8 +465,8 @@ public class CIvilizationUI implements EntryPoint {
 	}-*/;
 
 	public static native void setjournal(JavaScriptObject j) /*-{
-	   $wnd.C.setjournal(j);
-    }-*/;
+		$wnd.C.setjournal(j);
+	}-*/;
 
 	public static native void setresources(JavaScriptObject rese) /*-{
 		$wnd.C.setresources(rese);
@@ -496,8 +484,7 @@ public class CIvilizationUI implements EntryPoint {
 	/**
 	 * Wrapper for server itemize command, Sets itemizedcommand attribute in x-app
 	 * 
-	 * @param command
-	 *            to itemized
+	 * @param command to itemized
 	 */
 	public static void itemizecommand(String command) {
 		greetingService.itemizeCommand(civtoken, command, new AsyncBack() {
@@ -614,11 +601,11 @@ public class CIvilizationUI implements EntryPoint {
 			twait.scheduleRepeating(500);
 		});
 	}
-	
+
 	private static void toTokenId(String s) {
 		String[] a = s.split(",");
 		civtoken = a[0];
-		civgameid = Integer.parseInt(a[1]);		
+		civgameid = Integer.parseInt(a[1]);
 	}
 
 	public static void resumeTwoPlayersGame(int gameid, String civ) {
@@ -739,16 +726,18 @@ public class CIvilizationUI implements EntryPoint {
 		$wnd.highlightMap = function(a, highlight) {
 			return @com.civilization.ui.client.CIvilizationUI::highlightMap(*)(a,highlight)
 		}
+		
+		$wnd.getgameid = function() {
+			return @com.civilization.ui.client.CIvilizationUI::civgameid;
+		}
 
 	}-*/;
 
 	/**
 	 * Look for Element by tagName
 	 * 
-	 * @param n
-	 *            Node to start
-	 * @param tagName
-	 *            tag name to search for
+	 * @param n       Node to start
+	 * @param tagName tag name to search for
 	 * @return ELement found
 	 */
 	static Element findelem(Node n, String tagName) {
@@ -824,8 +813,7 @@ public class CIvilizationUI implements EntryPoint {
 	/**
 	 * Set listofciv attribute
 	 * 
-	 * @param listofciv
-	 *            List of civ value
+	 * @param listofciv List of civ value
 	 */
 	private static void setListOfCiv(String listofciv) {
 //		Element fe = findcivContent();

@@ -191,6 +191,10 @@ class XApp extends CivData(PolymerElement) {
     C.leavedialog();
   }
   
+  _onDownload() {
+    C.downloadGame()
+  }
+  
   rendermap(data) {
      const m = this.$.map
      m.draw(data)
