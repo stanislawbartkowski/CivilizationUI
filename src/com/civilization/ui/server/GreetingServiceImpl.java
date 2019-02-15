@@ -1,6 +1,8 @@
 package com.civilization.ui.server;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ import javax.ws.rs.core.MediaType;
 //import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.civilization.ui.client.GreetingService;
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 //import civilization.I.II;
@@ -82,12 +86,6 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	}
 
-	private String extractToken(String s) {
-		System.out.println(s);
-        return s;		
-//		return s.split(",")[0];
-	}
-
 	private String extractAutomatedToken(String s) {
 		if (!automready)
 			throw new RuntimeException("Cannot run automated player, not registered");
@@ -96,6 +94,17 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		waitinglist.add(a[1]);
 		return a[0];
 
+	}
+
+	private String toS(InputStream i) {
+		String result;
+		try {
+			result = CharStreams.toString(new InputStreamReader(i, Charsets.UTF_8));
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -111,7 +120,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			w = II.LISTOFRES();
 			break;
 		case REGISTEROWNER:
-			return extractToken(II.getData(II.REGISTEROWNER(), param, null));
+			w = II.REGISTEROWNER();
+			break;
 		case GETBOARD:
 			w = II.GETBOARDGAME();
 			break;
@@ -125,7 +135,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			w = II.LISTOFWAITINGGAMES();
 			break;
 		case TWOPLAYERSGAME:
-			return extractToken(II.getData(II.REGISTEROWNERTWOGAME(), param, null));
+			w = II.REGISTEROWNERTWOGAME();
+			break;
 		case GETJOURNAL:
 			w = II.GETJOURNAL();
 			break;
@@ -207,9 +218,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		waitinglist.remove(0);
 		return gameid;
 	}
-	
+
 	public static String getGame(int gameid) {
-		return II.downloadGame(gameid);		
+		return II.downloadGame(gameid);
 	}
 
 	@DELETE
@@ -219,15 +230,15 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		System.out.println("Delete game " + gameid);
 		II.deleteGame(gameid);
 	}
-		
+
 	@POST
-	@Path("loadsinglegame")
+	@Path("deploygame")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("text/plain")
-//	public String loadsinglegame(  @FormDataParam("boardStream") InputStream boardStream, @FormDataParam("playStream") InputStream playStream ) {
-	public String loadsinglegame(@QueryParam("civ") String civ, InputStream playStream ) {
-//		return Response.ok("ok").build();
-		return "";
+	public String loadsinglegame(@QueryParam("civ") String civs, InputStream playStream) {
+		String board = toS(playStream);
+		String res = II.readPlayerGameS(board, civs);
+		return res;
 	}
 
 }
