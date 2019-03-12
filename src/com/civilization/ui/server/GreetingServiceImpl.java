@@ -179,6 +179,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	@Override
 	public String resumeGame(int gameid, String civ) {
+		setRedis();
 		System.out.println("Resume game: " + civ);
 		String token = II.resumeGame(gameid, civ);
 		return token;
@@ -204,6 +205,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@PUT
 	@Path("registerautom")
 	public void setRegisterAutom(@QueryParam("autom") boolean autom) {
+		setRedis();
 		System.out.println("Register autom engine " + autom);
 		this.automready = autom;
 	}
@@ -236,6 +238,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("text/plain")
 	public String loadsinglegame(@QueryParam("civ") String civs, InputStream playStream) {
+		setRedis();
 		String board = toS(playStream);
 		String res = II.readPlayerGameS(board, civs);
 		return res;
