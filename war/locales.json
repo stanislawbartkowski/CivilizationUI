@@ -1,6 +1,6 @@
 {
   "en": {
-    "appversion": "Version: 2019/01/27",
+    "appversion": "Version: 2019/05/01",
     "newgamebutton" : "New game",
     "resumegamebutton" : "Resume game",
     "joingamebutton" : "Join game",
@@ -164,7 +164,6 @@
     "unitsall" : "All units  Level : {level}",
     "nounits" : "No units",
     "buyunit" : "Purchase Unit",
-    "productionspendincrease" : "Production points : ",
     "buycitywall" : "City wall",
     "buycitywallheader" : "Build city wall",
     "saveyourunit" : "{civ} , choose the unit to be saved !",

@@ -13,8 +13,8 @@ class FigureNumber extends CivLocalize(PolymerElement) {
     </style>
 
      <div>{{text}}
-        <iron-input bind-value="{{numb}}" auto-validate="" allowed-pattern="[0-9]">
-            <input id="input" type="number" min="0" max="1" disabled="">
+        <iron-input bind-value="{{numb}}" auto-validate allowed-pattern="[0-9]" id="input1" >
+            <input id="input" value="{{value::input}}" type="number" min="0" max="1" disabled="">
         </iron-input>
      </div>
 `;
@@ -32,16 +32,16 @@ class FigureNumber extends CivLocalize(PolymerElement) {
       },
       numb: {
         type: Number,
+        notify: true,
         observer: 'numberChanged'
       }
     };
   }
 
   // place holder here, should be overwritten
-  numberChanged(newValue, oldValue) {}
+  numberChanged(newValue, oldValue) {  }
   
   draw(label, numb, max) {
-//    this.text = this.localize(label);
     this.text = label
     this.numb = numb;
     if (max == null) max = numb;

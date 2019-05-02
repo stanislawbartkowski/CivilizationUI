@@ -20,8 +20,7 @@ class SpendTradeDialog extends CivDialog(PolymerElement) {
       </p><div>{{localize('specifyamountofproduction')}}</div>
 
       <div>{{localize('tradetospend')}}{{tradetospend}}</div>
-      <div>{{localize('reduceratio')}}[[reduceratio]]</div>
-      <div>{{localize('productionspendincrease')}}[[increasepoints]]</div>
+      <div>{{localize('reduceratio')}}[[tradeforprod]]</div>
 
 
       <figurenumber-widget id="numbproduction"></figurenumber-widget>
@@ -49,26 +48,15 @@ class SpendTradeDialog extends CivDialog(PolymerElement) {
       tradetospend: {
         type: Number
       },
-      reduceratio: {
-        type: Number
-      },
       maxproduction: {
         type: Number
       },
-      increasepoints: {
-        type: Number
-      },
-      exchangeratio: {
+      tradeforprod: {
         type: Number
       }
     };
   }
 
- 
-  _okNumb(prod) {
-    const v = Math.floor(prod / this.increasepoints) * this.increasepoints
-    return v == prod
-  } 
 
   _onSpend() {
     const prod = this.$.numbproduction.getNumb();
@@ -78,11 +66,6 @@ class SpendTradeDialog extends CivDialog(PolymerElement) {
       return;
     }
     
-    if (!this._okNumb(prod)) {
-      C.alertdialog(this.localize('productionincreaseshouldbemultiplication', "prodfortrade", this.increasepoints));
-      return;
-    }
-
     C.executewithconffun(this.localize('areyousurequestion'), "SPENDTRADE", e => {
       this.closeIt();
       const pa = this.data;
@@ -92,25 +75,20 @@ class SpendTradeDialog extends CivDialog(PolymerElement) {
   }
 
   _numberChanged(newValue, oldValue) {
-    if (!this._okNumb(newValue)) return 
-    const y = C.getyourdeck(); 
-
-    this.tradetospend = Math.floor((this.maxproduction - newValue) * this.exchangeratio);
+    this.tradetospend = Math.floor((this.maxproduction - newValue) * this.tradeforprod);
     if (this.tradetospend < 0) this.tradetospend = "?";
   }
 
   refresh(pa) {
     const y = C.getyourdeck()
-    this.reduceratio = y.tradeforprod
-    this.increasepoints = y.prodfortrade
-    this.exchangeratio = y.tradeforprod / y.prodfortrade
+    this.tradeforprod = y.tradeforprod
 
-    this.maxproduction = Math.floor(y.trade / this.exchangeratio)
+    this.maxproduction = Math.floor(y.trade / this.tradeforprod)
 
     const e = this.$.numbproduction
     e.numberChanged = (newValue, oldValue) => this._numberChanged(newValue, oldValue)
 
-    e.draw(C.localize('amountofproduction'), y.prodfortrade, this.maxproduction)
+    e.draw(C.localize('amountofproduction'), 1, this.maxproduction)
   }
 
 }
