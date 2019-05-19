@@ -19,6 +19,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 //import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.civilization.ui.client.GreetingService;
@@ -54,14 +57,15 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 
 	// list if games waiting for automation
 	private static List<String> waitinglist = new ArrayList<String>();
+	
+	private static Log L = LogFactory.getLog("com.civilization.ui.server");
 
 	private void setRedis() {
 
 		// Heroku
 		if (System.getenv().containsKey(REDIS_URL)) {
 			String val = System.getenv().get(REDIS_URL);
-			if (!logged)
-				System.out.println("Connecting to:" + val);
+			if (!logged) L.info("Connecting to:" + val);
 			RA.getConn().setConnection(val);
 		} else {
 
@@ -72,11 +76,11 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 				Integer port = (Integer) xmlNode.lookup("redisport");
 				String host = (String) xmlNode.lookup("redishost");
 				if (!logged)
-					System.out.println("Connecting to redis host:" + host + " port:" + port);
+					L.info("Connecting to redis host:" + host + " port:" + port);
 				RA.getConn().setConnection(host, port, 0);
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				L.fatal(e);
 				throw new RuntimeException(e);
 			}
 			logged = true;
@@ -93,7 +97,11 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		// insert at the beginning
 		waitinglist.add(a[1]);
 		return a[0];
-
+	}
+	
+	private String extractToken(String s) {
+		String a[] = s.split(",");
+		return a[0];		
 	}
 
 	private String toS(InputStream i) {
@@ -102,7 +110,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			result = CharStreams.toString(new InputStreamReader(i, Charsets.UTF_8));
 			return result;
 		} catch (IOException e) {
-			e.printStackTrace();
+			L.fatal(e);
 			return null;
 		}
 	}
@@ -114,7 +122,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public String getCivData(@QueryParam("what") int what, @QueryParam("param") String param) {
 		int w = -1;
 		setRedis();
-		System.out.println("getCivData " + what);
+		L.info("getCivData " + what);
 		switch (what) {
 		case LISTOFRES:
 			w = II.LISTOFRES();
@@ -147,7 +155,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			w = II.REGISTEROWNER();
 			break;
 		}
-		return II.getData(w, param, null);
+		String res =  II.getData(w, param, null);
+		return res;
 	}
 
 	@Override
@@ -157,14 +166,14 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public String executeCommand(@QueryParam("token") String token, @QueryParam("action") String action,
 			@QueryParam("row") int row, @QueryParam("col") int col, @QueryParam("jsparam") String jsparam) {
 		setRedis();
-		System.out.println(action + " row: " + row + " col:" + col + " " + jsparam);
+		L.info(action + " row: " + row + " col:" + col + " " + jsparam);
 		String res = null;
 		// static synchronize
 		// all are blocked
 		synchronized (GreetingServiceImpl.class) {
 			res = II.executeCommand(token, action, row, col, jsparam);
 		}
-		System.out.println("res=" + res);
+		L.info("res=" + res);
 		return res;
 	}
 
@@ -180,7 +189,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@Override
 	public String resumeGame(int gameid, String civ) {
 		setRedis();
-		System.out.println("Resume game: " + civ);
+		L.info("Resume game: " + civ);
 		String token = II.resumeGame(gameid, civ);
 		return token;
 	}
@@ -190,7 +199,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@Path("allready")
 	@Produces("text/plain")
 	public boolean allPlayersReady(@QueryParam("token") String token) {
-		return II.allPlayersReady(token);
+		L.info(token + " wait for players ");
+		return II.allPlayersReady(extractToken(token));
 	}
 
 	@Override
@@ -198,7 +208,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@Path("joingame")
 	@Produces("text/plain")
 	public String joinGame(@QueryParam("gameid") int gameid, @QueryParam("civ") String civ) {
-		System.out.println("Join game: " + civ + " " + gameid);
+		L.info("Join game: " + civ + " " + gameid);
 		return II.joinGame(gameid, civ);
 	}
 
@@ -206,7 +216,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@Path("registerautom")
 	public void setRegisterAutom(@QueryParam("autom") boolean autom) {
 		setRedis();
-		System.out.println("Register autom engine " + autom);
+		L.info("Register autom engine " + autom);
 		this.automready = autom;
 	}
 
@@ -229,7 +239,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@Path("delete")
 	@Produces("text/plain")
 	public void deleteGame(@QueryParam("gameid") int gameid) {
-		System.out.println("Delete game " + gameid);
+		L.info("Delete game " + gameid);
 		II.deleteGame(gameid);
 	}
 
