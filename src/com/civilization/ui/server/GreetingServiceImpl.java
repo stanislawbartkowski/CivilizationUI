@@ -241,7 +241,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	public void deleteGame(@QueryParam("gameid") int gameid) {
 		L.info("Delete game " + gameid);
 		II.deleteGame(gameid);
-	}
+	}	
 
 	@POST
 	@Path("deploygame")
@@ -252,6 +252,15 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		String board = toS(playStream);
 		String res = II.readPlayerGameS(board, civs);
 		return res;
+	}
+
+	@POST
+	@Path("clearwaitinglist")
+	@Produces("text/plain")
+	public void clearwaitingList() {
+		L.info("Clear waiting list");
+		setRedis();
+		waitinglist.clear();		
 	}
 
 }
